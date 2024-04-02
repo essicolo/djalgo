@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "djalgo"
+version = "0.1-alpha"
+authors = [{name = "Essi Parent", email = "3pp0qk4a@duck.com"}]
+description = "A music composition toolkit"
+license = {file = "LICENSE"}
+keywords = ["midi", "music"]
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Topic :: Multimedia :: Sound/Audio :: MIDI",
+]
+urls = {
+    "Homepage": "https://github.com/essicolo/djalgo",
+}
+
+[project.urls]
+"Bug Tracker" = "https://github.com/essicolo/djalgo/issues"
+
+[project.optional-dependencies]
+extras = [
+    "music21",
+    "pretty-midi",
+    "scamp",
+    "tensorflow"
+]
+
+[tool.setuptools]
+install_requires = [
+    "numpy",
+    "scipy",
+    "plotly",
+]
+package_dir = {"": "src"}
+packages = find_namespace:
