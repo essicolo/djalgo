@@ -8,7 +8,7 @@
     <title>Usage &#8212; djalgo 0.1-alpha documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
-    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script src="_static/documentation_options.js?v=737112c1"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -67,9 +67,8 @@
 <li><p><strong>Utilities</strong>: <code class="docutils literal notranslate"><span class="pre">utils.py</span></code> provides essential tools for fine-tuning: repair, tune, and quantize your compositions to perfection.</p></li>
 <li><p><strong>Random and Kernel Walks</strong>: In <code class="docutils literal notranslate"><span class="pre">walk.py</span></code>, let music wander through algorithmic paths, guided by random and kernel-induced decisions.</p></li>
 </ul>
-</section>
 <section id="Utils">
-<h1>Utils<a class="headerlink" href="#Utils" title="Link to this heading">¶</a></h1>
+<h2>Utils<a class="headerlink" href="#Utils" title="Link to this heading">¶</a></h2>
 <p>What is MIDI note 60?</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -106,6 +105,7 @@
 80
 </pre></div></div>
 </div>
+</section>
 <section id="Harmony">
 <h2>Harmony<a class="headerlink" href="#Harmony" title="Link to this heading">¶</a></h2>
 <section id="Scale">
@@ -1072,112 +1072,6 @@ Cell <span class="ansi-green-fg">In[35], line 1</span>
 </section>
 </section>
 </section>
-<section id="Examples">
-<h1>Examples<a class="headerlink" href="#Examples" title="Link to this heading">¶</a></h1>
-<p><em>Djalgo</em> is based on Python base packages as most as possible. In the following code block, <code class="docutils literal notranslate"><span class="pre">scale_[35:43]</span></code> is just a list of integers. But feeded to a music21 stream, it becomes a musical object that can be printed out.</p>
-<section id="id1">
-<h2>Cellular automata<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[72]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">import</span> <span class="nn">music21</span> <span class="k">as</span> <span class="nn">m21</span>
-<span class="n">beat</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">rhythm</span><span class="o">.</span><span class="n">Rhythm</span><span class="p">(</span><span class="n">measure_length</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">durations</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]))</span>
-<span class="n">ca_genarator</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">fractal</span><span class="o">.</span><span class="n">CellularAutomata</span><span class="p">(</span>
-    <span class="n">scale</span><span class="o">=</span><span class="p">[</span><span class="mi">60</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">72</span><span class="p">,</span> <span class="mi">31</span><span class="p">],</span>
-    <span class="n">length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
-    <span class="n">rules</span><span class="o">=</span><span class="s1">&#39;097&#39;</span>
-<span class="p">)</span>
-<span class="n">ca_list</span> <span class="o">=</span> <span class="n">ca_genarator</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
-<span class="n">my_stream</span> <span class="o">=</span> <span class="n">m21</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">Stream</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">n_</span> <span class="ow">in</span> <span class="n">ca_list</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">n_</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">n_</span> <span class="o">=</span> <span class="n">m21</span><span class="o">.</span><span class="n">note</span><span class="o">.</span><span class="n">Rest</span><span class="p">(</span><span class="n">quarterLength</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">beat</span><span class="p">))</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n_</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-        <span class="n">n_</span> <span class="o">=</span> <span class="n">m21</span><span class="o">.</span><span class="n">note</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">n_</span><span class="p">,</span> <span class="n">quarterLength</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">beat</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">n_</span> <span class="o">=</span> <span class="n">m21</span><span class="o">.</span><span class="n">hord</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="n">n_</span><span class="p">,</span> <span class="n">quarterLength</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">beat</span><span class="p">))</span>
-    <span class="n">my_stream</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n_</span><span class="p">)</span>
-
-<span class="n">my_stream</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;midi&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[72], line 15</span>
-<span class="ansi-green-intense-fg ansi-bold">     13</span>     n_ <span style="color: rgb(98,98,98)">=</span> m21<span style="color: rgb(98,98,98)">.</span>note<span style="color: rgb(98,98,98)">.</span>Rest(quarterLength <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">next</span>(beat))
-<span class="ansi-green-intense-fg ansi-bold">     14</span> <span class="ansi-bold" style="color: rgb(0,135,0)">elif</span> <span style="color: rgb(0,135,0)">isinstance</span>(n_, <span style="color: rgb(0,135,0)">int</span>):
-<span class="ansi-green-fg">---&gt; 15</span>     n_ <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">m21</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">note</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">Note</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">n_</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">quarterLength</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">next</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">beat</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     16</span> <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
-<span class="ansi-green-intense-fg ansi-bold">     17</span>     n_ <span style="color: rgb(98,98,98)">=</span> m21<span style="color: rgb(98,98,98)">.</span>hord<span style="color: rgb(98,98,98)">.</span>Chord(n_, quarterLength <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">next</span>(beat))
-
-File <span class="ansi-green-fg">~/virtual-environments/musicbook/lib/python3.11/site-packages/music21/note.py:1536</span>, in <span class="ansi-cyan-fg">Note.__init__</span><span class="ansi-blue-fg">(self, pitch, name, nameWithOctave, **keywords)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1530</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">__init__</span>(<span style="color: rgb(0,135,0)">self</span>,
-<span class="ansi-green-intense-fg ansi-bold">   1531</span>              pitch: <span style="color: rgb(0,135,0)">str</span> <span style="color: rgb(98,98,98)">|</span> <span style="color: rgb(0,135,0)">int</span> <span style="color: rgb(98,98,98)">|</span> Pitch <span style="color: rgb(98,98,98)">|</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span> <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>,
-<span class="ansi-green-intense-fg ansi-bold">   1532</span>              <span style="color: rgb(98,98,98)">*</span>,
-<span class="ansi-green-intense-fg ansi-bold">   1533</span>              name: <span style="color: rgb(0,135,0)">str</span> <span style="color: rgb(98,98,98)">|</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span> <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>,
-<span class="ansi-green-intense-fg ansi-bold">   1534</span>              nameWithOctave: <span style="color: rgb(0,135,0)">str</span> <span style="color: rgb(98,98,98)">|</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span> <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>,
-<span class="ansi-green-intense-fg ansi-bold">   1535</span>              <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>keywords):
-<span class="ansi-green-fg">-&gt; 1536</span>     <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">super</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg" style="color: rgb(0,0,255)">__init__</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">keywords</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1537</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_chordAttached: chord<span style="color: rgb(98,98,98)">.</span>Chord <span style="color: rgb(98,98,98)">|</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>
-<span class="ansi-green-intense-fg ansi-bold">   1539</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> pitch <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
-
-File <span class="ansi-green-fg">~/virtual-environments/musicbook/lib/python3.11/site-packages/music21/note.py:1017</span>, in <span class="ansi-cyan-fg">NotRest.__init__</span><span class="ansi-blue-fg">(self, beams, **keywords)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1014</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">__init__</span>(<span style="color: rgb(0,135,0)">self</span>,
-<span class="ansi-green-intense-fg ansi-bold">   1015</span>              beams: beam<span style="color: rgb(98,98,98)">.</span>Beams <span style="color: rgb(98,98,98)">|</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span> <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>,
-<span class="ansi-green-intense-fg ansi-bold">   1016</span>              <span style="color: rgb(98,98,98)">*</span><span style="color: rgb(98,98,98)">*</span>keywords):
-<span class="ansi-green-fg">-&gt; 1017</span>     <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">super</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg" style="color: rgb(0,0,255)">__init__</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">keywords</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1018</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_notehead: <span style="color: rgb(0,135,0)">str</span> <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">normal</span><span style="color: rgb(175,0,0)">&#39;</span>
-<span class="ansi-green-intense-fg ansi-bold">   1019</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_noteheadFill: <span style="color: rgb(0,135,0)">bool</span> <span style="color: rgb(98,98,98)">|</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span> <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>
-
-File <span class="ansi-green-fg">~/virtual-environments/musicbook/lib/python3.11/site-packages/music21/note.py:614</span>, in <span class="ansi-cyan-fg">GeneralNote.__init__</span><span class="ansi-blue-fg">(self, duration, lyric, **keywords)</span>
-<span class="ansi-green-intense-fg ansi-bold">    612</span>     tempDuration <span style="color: rgb(98,98,98)">=</span> Duration(<span style="color: rgb(98,98,98)">1.0</span>)
-<span class="ansi-green-intense-fg ansi-bold">    613</span> <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
-<span class="ansi-green-fg">--&gt; 614</span>     tempDuration <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">Duration</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">keywords</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    615</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">quarterLength</span><span style="color: rgb(175,0,0)">&#39;</span> <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> keywords:
-<span class="ansi-green-intense-fg ansi-bold">    616</span>         <span class="ansi-bold" style="color: rgb(0,135,0)">del</span> keywords[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">quarterLength</span><span style="color: rgb(175,0,0)">&#39;</span>]
-
-File <span class="ansi-green-fg">~/virtual-environments/musicbook/lib/python3.11/site-packages/music21/duration.py:1728</span>, in <span class="ansi-cyan-fg">Duration.__init__</span><span class="ansi-blue-fg">(self, typeOrDuration, type, dots, quarterLength, durationTuple, components, client, **keywords)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1726</span> <span style="color: rgb(95,135,135)"># permit as keyword so can be passed from notes</span>
-<span class="ansi-green-intense-fg ansi-bold">   1727</span> <span class="ansi-bold" style="color: rgb(0,135,0)">elif</span> quarterLength <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
-<span class="ansi-green-fg">-&gt; 1728</span>     <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">quarterLength</span> <span style="color: rgb(98,98,98)">=</span> quarterLength
-<span class="ansi-green-intense-fg ansi-bold">   1729</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>expressionIsInferred <span style="color: rgb(98,98,98)">=</span> <span class="ansi-bold" style="color: rgb(0,135,0)">True</span>
-<span class="ansi-green-intense-fg ansi-bold">   1731</span> <span style="color: rgb(95,135,135)"># now assign the client so further changes are informed.</span>
-
-File <span class="ansi-green-fg">~/virtual-environments/musicbook/lib/python3.11/site-packages/music21/duration.py:2935</span>, in <span class="ansi-cyan-fg">Duration._setQuarterLength</span><span class="ansi-blue-fg">(self, value)</span>
-<span class="ansi-green-intense-fg ansi-bold">   2931</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_qtrLength <span style="color: rgb(98,98,98)">=</span> value
-<span class="ansi-green-intense-fg ansi-bold">   2932</span> <span class="ansi-bold" style="color: rgb(0,135,0)">elif</span> (<span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_qtrLength <span style="color: rgb(98,98,98)">!=</span> value
-<span class="ansi-green-intense-fg ansi-bold">   2933</span>         <span class="ansi-bold" style="color: rgb(175,0,255)">or</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_componentsNeedUpdating  <span style="color: rgb(95,135,135)"># skip a type update for next type check</span>
-<span class="ansi-green-intense-fg ansi-bold">   2934</span>         <span class="ansi-bold" style="color: rgb(175,0,255)">or</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>type <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">inexpressible</span><span style="color: rgb(175,0,0)">&#39;</span>):
-<span class="ansi-green-fg">-&gt; 2935</span>     value <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">opFrac</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">value</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   2936</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> value <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(98,98,98)">0.0</span> <span class="ansi-bold" style="color: rgb(175,0,255)">and</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>linked <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(0,135,0)">True</span>:
-<span class="ansi-green-intense-fg ansi-bold">   2937</span>         <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>clear()
-
-File <span class="ansi-green-fg">~/virtual-environments/musicbook/lib/python3.11/site-packages/music21/common/numberTools.py:358</span>, in <span class="ansi-cyan-fg">opFrac</span><span class="ansi-blue-fg">(num)</span>
-<span class="ansi-green-intense-fg ansi-bold">    356</span>         <span class="ansi-bold" style="color: rgb(0,135,0)">return</span> num  <span style="color: rgb(95,135,135)"># leave fraction alone</span>
-<span class="ansi-green-intense-fg ansi-bold">    357</span> <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
-<span class="ansi-green-fg">--&gt; 358</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">TypeError</span>(<span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">Cannot convert num: </span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>num<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">&#39;</span>)
-
-<span class="ansi-red-fg">TypeError</span>: Cannot convert num: (0.5, 0.0)
-</pre></div></div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-</div>
-</section>
-</section>
 
 
           </div>
@@ -1198,17 +1092,13 @@ File <span class="ansi-green-fg">~/virtual-environments/musicbook/lib/python3.11
 <h3>Navigation</h3>
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#Utils">Utils</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Utils">Utils</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Harmony">Harmony</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Rhythm">Rhythm</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Loops">Loops</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Minimalism">Minimalism</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Walk">Walk</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#Examples">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">Cellular automata</a></li>
 </ul>
 </li>
 </ul>
