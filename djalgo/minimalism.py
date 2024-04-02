@@ -37,20 +37,18 @@ class Minimalism:
         # -------------------
         def additive_forward(self):
             """
-            Applies the additive forward operation to the sequence with repetition, as
+            Applies the additive forward operation to the sequence with repetition, as::
 
-            ```
-            [
-                C4,
-                C4, D4,
-                C4, D4, E4,
-                C4, D4, E4, F4,
-                C4, D4, E4, F4, G4,
-                C4, D4, E4, F4, G4, A4, 
-                C4, D4, E4, F4, G4, A4, B4, 
-                C4, D4, E4, F4, G4, A4, B4, C5
-            ]
-            ```
+                [
+                    C4,
+                    C4, D4,
+                    C4, D4, E4,
+                    C4, D4, E4, F4,
+                    C4, D4, E4, F4, G4,
+                    C4, D4, E4, F4, G4, A4, 
+                    C4, D4, E4, F4, G4, A4, B4, 
+                    C4, D4, E4, F4, G4, A4, B4, C5
+                ]
 
             Returns:
                 list: The processed sequence.
@@ -64,20 +62,18 @@ class Minimalism:
         
         def additive_backward(self):
             """
-            Applies the additive backward operation to the sequence with repetition, as
+            Applies the additive backward operation to the sequence with repetition, as::
 
-            ```
-            [
-                C5,
-                B4, C5,
-                A4, B4, C5,
-                G4, A4, B4, C5,
-                F4, G4, A4, B4, C5,
-                E4, F4, G4, A4, B4, C5,
-                D4, E4, F4, G4, A4, B4, C5,
-                C4, D4, E4, F4, G4, A4, B4, C5,
-            ]
-            ```
+                [
+                    C5,
+                    B4, C5,
+                    A4, B4, C5,
+                    G4, A4, B4, C5,
+                    F4, G4, A4, B4, C5,
+                    E4, F4, G4, A4, B4, C5,
+                    D4, E4, F4, G4, A4, B4, C5,
+                    C4, D4, E4, F4, G4, A4, B4, C5,
+                ]
 
             Returns:
                 list: The processed sequence.
@@ -91,19 +87,19 @@ class Minimalism:
 
         def additive_inward(self):
             """
-            Applies the additive inward operation to the sequence, as
-            ```
-            [
-                'C4',                                     'C5',
-                'C4', 'D4',                         'B4', 'C5',
-                'C4', 'D4', 'E4',             'A4', 'B4', 'C5',
-                'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'
-            ]
-            ```
+            Applies the additive inward operation to the sequence, as::
+
+                [
+                    'C4',                                     'C5',
+                    'C4', 'D4',                         'B4', 'C5',
+                    'C4', 'D4', 'E4',             'A4', 'B4', 'C5',
+                    'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'
+                ]
 
             Returns:
                 list: The processed sequence.
             """
+
             n = len(self.sequence)
             processed = []
             segment = []
@@ -120,19 +116,19 @@ class Minimalism:
         
         def additive_outward(self):
             """
-            Applies the additive outward operation to the sequence with repetition, as
-            ```
-            [
-                                'F4', 'G4',
-                            'E4', 'F4', 'G4', 'A4',
-                    'D4', 'E4', 'F4', 'G4', 'A4', 'B4',
-                'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'
-            ]
-            ```
+            Applies the additive outward operation to the sequence with repetition, as::
+
+                [
+                                    'F4', 'G4',
+                                'E4', 'F4', 'G4', 'A4',
+                        'D4', 'E4', 'F4', 'G4', 'A4', 'B4',
+                    'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'
+                ]
 
             Returns:
                 list: The processed sequence.
             """
+
             n = len(self.sequence)
             processed = []
 
@@ -159,23 +155,23 @@ class Minimalism:
         # ----------------------
         def subtractive_forward(self):
             """
-            Applies the subtractive forward operation to the sequence, as
-            ```
-            [
-                C4, D4, E4, F4, G4, A4, B4, C5,
-                D4, E4, F4, G4, A4, B4, C5,
-                E4, F4, G4, A4, B4, C5,
-                F4, G4, A4, B4, C5,
-                G4, A4, B4, C5,
-                A4, B4, C5,
-                B4, C5,
-                C5
-            ]
-            ```
+            Applies the subtractive forward operation to the sequence, as::
+
+                [
+                    C4, D4, E4, F4, G4, A4, B4, C5,
+                    D4, E4, F4, G4, A4, B4, C5,
+                    E4, F4, G4, A4, B4, C5,
+                    F4, G4, A4, B4, C5,
+                    G4, A4, B4, C5,
+                    A4, B4, C5,
+                    B4, C5,
+                    C5
+                ]
 
             Returns:
                 list: The processed sequence.
             """
+
             processed = []
             for i in range(len(self.sequence)):
                 # Each time, remove one more note from the beginning
@@ -186,23 +182,23 @@ class Minimalism:
         
         def subtractive_backward(self):
             """
-            Applies the subtractive backward operation to the sequence, as
-            ```
-            [
-                C4, D4, E4, F4, G4, A4, B4, C5,
-                C4, D4, E4, F4, G4, A4, B4,
-                C4, D4, E4, F4, G4, A4,
-                C4, D4, E4, F4, G4,
-                C4, D4, E4, F4,
-                C4, D4, E4,
-                C4, D4,
-                C4
-            ]
-            ```
+            Applies the subtractive backward operation to the sequence, as::
+
+                [
+                    C4, D4, E4, F4, G4, A4, B4, C5,
+                    C4, D4, E4, F4, G4, A4, B4,
+                    C4, D4, E4, F4, G4, A4,
+                    C4, D4, E4, F4, G4,
+                    C4, D4, E4, F4,
+                    C4, D4, E4,
+                    C4, D4,
+                    C4
+                ]
 
             Returns:
                 list: The processed sequence.
             """
+
             processed = []
             for i in range(len(self.sequence), 0, -1):  # Start from the full sequence and decrement
                 # Each time, create a segment that removes one more note from the end
@@ -213,18 +209,19 @@ class Minimalism:
         
         def subtractive_inward(self):
             """
-            Applies the subtractive inward operation to the sequence, as
-            ```
+            Applies the subtractive inward operation to the sequence, as::
+
                 [
                     'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5',
                         'D4', 'E4', 'F4', 'G4', 'A4', 'B4',
                                 'E4', 'F4', 'G4', 'A4',
                                     'F4', 'G4',
                 ]
-            ```
+
             Returns:
                 list: The processed sequence.
             """
+
             n = len(self.sequence)
             steps = n // 2
             # Compute the steps for subtraction, which will be half the length of the sequence rounded down
@@ -239,19 +236,19 @@ class Minimalism:
         
         def subtractive_outward(self):
             """
-            Applies the subtractive outward operation to the sequence, as
-            ```
-            [
-                'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5',
-                'C4', 'D4', 'E4',           , 'A4', 'B4', 'C5',
-                'C4', 'D4',                         'B4', 'C5',
-                'C4',                                     'C5',
-            ]
-            ```
+            Applies the subtractive outward operation to the sequence, as::
+
+                [
+                    'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5',
+                    'C4', 'D4', 'E4',           , 'A4', 'B4', 'C5',
+                    'C4', 'D4',                         'B4', 'C5',
+                    'C4',                                     'C5',
+                ]
 
             Returns:
                 list: The processed sequence.
             """
+
             segment = self.sequence
             processed = segment * (self.repetition+1)
             while len(segment) > 2:

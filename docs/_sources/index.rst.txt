@@ -3,12 +3,9 @@ Welcome to djalgo's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
-   00_getting_started
-   01_usage
-   modules
-
+   00_getting-started.ipynb
+   01_usage.ipynb
 
 Modules
 =======

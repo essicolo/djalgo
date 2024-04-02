@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>djalgo.harmony &#8212; djalgo 0.1-alpha documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=12dfc556" />
+    <script src="../../_static/documentation_options.js?v=737112c1"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for djalgo.harmony</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">utils</span>
+
+<div class="viewcode-block" id="MusicTheoryConstants">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.MusicTheoryConstants">[docs]</a>
+<span class="k">class</span> <span class="nc">MusicTheoryConstants</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Base class defines a set of musical scales, intervals, and notes.</span>
+<span class="sd">    - scale_to_triad method returns the intervals for a triad based on the given scale intervals.</span>
+<span class="sd">    - note_to_triad method converts a note to a triad based on the given scale intervals.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">chromatic_scale</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;C#&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;D#&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;F#&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;G#&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;A#&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]</span>
+    <span class="n">scale_intervals</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;major&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span>  <span class="c1"># Ionian</span>
+        <span class="s1">&#39;minor&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>  <span class="c1"># Aeolian</span>
+        <span class="s1">&#39;diminished&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span>
+        <span class="s1">&#39;major pentatonic&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span>
+        <span class="s1">&#39;minor pentatonic&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+        <span class="s1">&#39;chromatic&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span>
+        <span class="s1">&#39;lydian&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span>
+        <span class="s1">&#39;mixolydian&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+        <span class="s1">&#39;dorian&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+        <span class="s1">&#39;phrygian&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+        <span class="s1">&#39;locrian&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+        <span class="s1">&#39;harmonic minor&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span>
+        <span class="s1">&#39;melodic minor ascending&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span>
+        <span class="s1">&#39;melodic minor descending&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>  <span class="c1"># same as natural minor</span>
+    <span class="p">}</span>
+    <span class="n">intervals</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;P1&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;m2&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;M2&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;m3&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;M3&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;P4&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;P5&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;m6&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;M6&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s1">&#39;m7&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;M7&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span> <span class="s1">&#39;P8&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">}</span>
+
+<div class="viewcode-block" id="MusicTheoryConstants.scale_to_triad">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.MusicTheoryConstants.scale_to_triad">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">scale_to_triad</span><span class="p">(</span><span class="n">scale</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the intervals for a triad based on the given scale intervals.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">scale</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]</span>  <span class="c1"># root, third, fifth</span></div>
+</div>
+
+
+    
+<div class="viewcode-block" id="Scale">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Scale">[docs]</a>
+<span class="k">class</span> <span class="nc">Scale</span><span class="p">(</span><span class="n">MusicTheoryConstants</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a musical scale.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tonic (str): The tonic note of the scale.</span>
+<span class="sd">        scale_type (str or list): The type of scale. Defaults to &#39;major&#39;. If a list is provided, it represents a custom scale.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        ValueError: If the tonic note is not a valid note or if the scale type is not a valid scale.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        tonic (str): The tonic note of the scale.</span>
+<span class="sd">        scale_type (str or list): The type of scale.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tonic</span><span class="p">,</span> <span class="n">scale_type</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">tonic</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromatic_scale</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">tonic</span><span class="si">}</span><span class="s2">&#39; is not a valid tonic note. Select one among &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">chromatic_scale</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonic</span> <span class="o">=</span> <span class="n">tonic</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scale_type</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="p">[</span><span class="s1">&#39;custom&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scale_type</span>
+            <span class="n">scale_type</span> <span class="o">=</span> <span class="s1">&#39;custom&#39;</span>
+        <span class="k">elif</span> <span class="n">scale_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">scale_type</span><span class="si">}</span><span class="s2">&#39; is not a valid scale. Select one among &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&#39; or a list of half steps such as [0, 2, 4, 5, 7, 9, 11] for a major scale.&quot;</span><span class="p">)</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale_type</span> <span class="o">=</span> <span class="n">scale_type</span>
+
+<div class="viewcode-block" id="Scale.generate">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Scale.generate">[docs]</a>
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates the full range of the scale.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of MIDI note numbers representing the full range of the scale.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tonic_note</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromatic_scale</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tonic</span><span class="p">)</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">])</span>
+        
+        <span class="n">full_range_scale</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">note</span> <span class="o">+</span> <span class="n">octave</span> <span class="o">*</span> <span class="mi">12</span> 
+            <span class="k">for</span> <span class="n">octave</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> 
+            <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="p">[(</span><span class="n">tonic_note</span> <span class="o">+</span> <span class="n">interval</span><span class="p">)</span> <span class="o">%</span> <span class="mi">12</span> <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="n">scale</span><span class="p">]</span> 
+            <span class="k">if</span> <span class="n">note</span> <span class="o">+</span> <span class="n">octave</span> <span class="o">*</span> <span class="mi">12</span> <span class="o">&lt;=</span> <span class="mi">127</span>
+        <span class="p">]</span>
+        <span class="n">full_range_scale</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">full_range_scale</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Progression">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Progression">[docs]</a>
+<span class="k">class</span> <span class="nc">Progression</span><span class="p">(</span><span class="n">MusicTheoryConstants</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A class representing a musical progression generator based on the circle of fifths (or any other interval).&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tonic_pitch</span><span class="o">=</span><span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="n">circle_of</span><span class="o">=</span><span class="s1">&#39;P5&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;chords&#39;</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a Progression object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tonic_pitch (str): The tonic pitch of the progression. Defaults to &#39;C4&#39;.</span>
+<span class="sd">            circle_of (str): The interval to form the circle of fifths. Defaults to &#39;P5&#39;.</span>
+<span class="sd">            type (str): The type of progression to generate. Can be &#39;chords&#39; or &#39;pitches&#39;. Defaults to &#39;chords&#39;.</span>
+<span class="sd">            radius (list): A list defining the range for major, minor, and diminished chords. Defaults to [3, 3, 1].</span>
+<span class="sd">            weights (list): The weights for selecting chord types. If not provided, the radius values will be used as weights.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the circle_of value is not among the available intervals.</span>
+<span class="sd">            ValueError: If the type value is not &#39;chords&#39; or &#39;pitches&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonic_midi</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">pitch_to_midi</span><span class="p">(</span><span class="n">tonic_pitch</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">circle_of</span> <span class="o">=</span> <span class="n">circle_of</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="nb">type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">radius</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">weights</span> <span class="k">if</span> <span class="n">weights</span> <span class="k">else</span> <span class="n">radius</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">circle_of</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Select a circle_of among </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;chords&#39;</span><span class="p">,</span> <span class="s1">&#39;pitches&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Type must either be &#39;pitches&#39; or &#39;chords&#39;.&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Progression.compute_circle">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Progression.compute_circle">[docs]</a>
+    <span class="k">def</span> <span class="nf">compute_circle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute chords based on the circle of fifths, thirds, etc., within the specified radius.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: A tuple containing lists of root MIDI notes for major, minor, and diminished chords.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n_semitones</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">circle_of</span><span class="p">]</span>
+        <span class="n">circle_notes</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tonic_midi</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)):</span>
+            <span class="n">next_note</span> <span class="o">=</span> <span class="p">(</span><span class="n">circle_notes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">n_semitones</span><span class="p">)</span> <span class="o">%</span> <span class="mi">12</span> <span class="o">+</span> <span class="p">(</span><span class="n">circle_notes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">12</span><span class="p">)</span> <span class="o">*</span> <span class="mi">12</span>
+            <span class="n">circle_notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">next_note</span><span class="p">)</span>
+
+        <span class="n">major_roots</span> <span class="o">=</span> <span class="n">circle_notes</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="n">minor_roots</span> <span class="o">=</span> <span class="n">circle_notes</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="n">diminished_roots</span> <span class="o">=</span> <span class="n">circle_notes</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+
+        <span class="k">return</span> <span class="n">major_roots</span><span class="p">,</span> <span class="n">minor_roots</span><span class="p">,</span> <span class="n">diminished_roots</span></div>
+
+
+<div class="viewcode-block" id="Progression.generate_chord">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Progression.generate_chord">[docs]</a>
+    <span class="k">def</span> <span class="nf">generate_chord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root_note_midi</span><span class="p">,</span> <span class="n">chord_type</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a chord based on root MIDI note and chord type.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            root_note_midi (int): The root MIDI note of the chord.</span>
+<span class="sd">            chord_type (str): The type of chord to generate. Can be &#39;major&#39;, &#39;minor&#39;, or &#39;diminished&#39;.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of MIDI notes representing the generated chord.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">chord_intervals</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;major&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+            <span class="s1">&#39;minor&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+            <span class="s1">&#39;diminished&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+        <span class="p">}</span>
+
+        <span class="n">intervals</span> <span class="o">=</span> <span class="n">chord_intervals</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">chord_type</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+
+        <span class="n">chord_notes</span> <span class="o">=</span> <span class="p">[(</span><span class="n">root_note_midi</span> <span class="o">+</span> <span class="n">interval</span><span class="p">)</span> <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">]</span>
+        <span class="n">chord_notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">note</span> <span class="k">if</span> <span class="n">note</span> <span class="o">&lt;=</span> <span class="mi">127</span> <span class="k">else</span> <span class="n">note</span> <span class="o">-</span> <span class="mi">12</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">chord_notes</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">chord_notes</span></div>
+
+
+<div class="viewcode-block" id="Progression.generate">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Progression.generate">[docs]</a>
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a musical progression.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            length (int): The length of the progression in number of chords. Defaults to 4.</span>
+<span class="sd">            seed (int): The seed value for the random number generator. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of lists, where each inner list represents a chord in the progression.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+        <span class="n">major_roots</span><span class="p">,</span> <span class="n">minor_roots</span><span class="p">,</span> <span class="n">diminished_roots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_circle</span><span class="p">()</span>
+
+        <span class="n">chord_roots</span> <span class="o">=</span> <span class="p">[</span><span class="n">major_roots</span><span class="p">,</span> <span class="n">minor_roots</span><span class="p">,</span> <span class="n">diminished_roots</span><span class="p">]</span>
+        <span class="n">progression</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
+            <span class="n">chord_type_index</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">weights</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">chord_roots</span><span class="p">[</span><span class="n">chord_type_index</span><span class="p">]:</span>
+                <span class="n">root_note_midi</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">chord_roots</span><span class="p">[</span><span class="n">chord_type_index</span><span class="p">])</span>
+                <span class="n">chord_type</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;diminished&#39;</span><span class="p">][</span><span class="n">chord_type_index</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root_note_midi</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Warning: root_note_midi was a list, taking first element.&#39;</span><span class="p">)</span>
+                    <span class="n">root_note_midi</span> <span class="o">=</span> <span class="n">root_note_midi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">chosen_chord</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_chord</span><span class="p">(</span><span class="n">root_note_midi</span><span class="p">,</span> <span class="n">chord_type</span><span class="p">)</span>
+                <span class="n">progression</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chosen_chord</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">progression</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Voice">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Voice">[docs]</a>
+<span class="k">class</span> <span class="nc">Voice</span><span class="p">(</span><span class="n">MusicTheoryConstants</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a musical voice that generates chords and arpeggios based on a given scale and degrees.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        scale_type (str, optional): The type of scale to generate. Defaults to &#39;major&#39;.</span>
+<span class="sd">        tonic (str, optional): The tonic note for the scale. Defaults to &#39;C&#39;.</span>
+<span class="sd">        degrees (list, optional): The degrees for chord formation. Defaults to [0, 2, 4].</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        scale_type (str): The type of scale to generate.</span>
+<span class="sd">        tonic (str): The tonic note for the scale.</span>
+<span class="sd">        tonic_index (int): The index of the tonic note in the chromatic scale.</span>
+<span class="sd">        tonic_midi (int): The MIDI number of the tonic note.</span>
+<span class="sd">        scale (list): A list of MIDI notes for the complete scale.</span>
+<span class="sd">        degrees (list): The degrees for chord formation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale_type</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">tonic</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="n">degrees</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale_type</span> <span class="o">=</span> <span class="n">scale_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonic</span> <span class="o">=</span> <span class="n">tonic</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonic_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromatic_scale</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">tonic</span><span class="p">)</span>  <span class="c1"># Index in chromatic scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonic_midi</span> <span class="o">=</span> <span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonic_index</span>  <span class="c1"># Assuming &#39;C&#39; starts at MIDI number 60</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_scale</span><span class="p">(</span><span class="n">tonic</span><span class="p">,</span> <span class="n">scale_type</span><span class="p">)</span>  <span class="c1"># This will be a list of MIDI notes for the scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">degrees</span> <span class="o">=</span> <span class="n">degrees</span>  <span class="c1"># Degrees for chord formation</span>
+
+<div class="viewcode-block" id="Voice.generate_scale">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Voice.generate_scale">[docs]</a>
+    <span class="k">def</span> <span class="nf">generate_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tonic</span><span class="p">,</span> <span class="n">scale_type</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a complete scale based on the tonic and scale type.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tonic (str): The tonic note for the scale.</span>
+<span class="sd">            scale_type (str): The type of scale to generate.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of MIDI notes for the complete scale.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">scale_pattern</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="p">[</span><span class="n">scale_type</span><span class="p">]</span>
+        <span class="n">scale_notes</span> <span class="o">=</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">tonic_index</span> <span class="o">+</span> <span class="n">interval</span><span class="p">)</span> <span class="o">%</span> <span class="mi">12</span> <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="n">scale_pattern</span><span class="p">]</span>  <span class="c1"># Pitch classes</span>
+        <span class="n">complete_scale</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># This will store the full scale in MIDI numbers</span>
+        <span class="k">for</span> <span class="n">octave</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>  <span class="c1"># Covering all MIDI octaves</span>
+            <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">scale_notes</span><span class="p">:</span>
+                <span class="n">midi_note</span> <span class="o">=</span> <span class="mi">12</span> <span class="o">*</span> <span class="n">octave</span> <span class="o">+</span> <span class="n">note</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">midi_note</span> <span class="o">&lt;=</span> <span class="mi">127</span><span class="p">:</span>  <span class="c1"># Valid MIDI range</span>
+                    <span class="n">complete_scale</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">midi_note</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">complete_scale</span></div>
+
+
+<div class="viewcode-block" id="Voice.midi_to_scale_degree">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Voice.midi_to_scale_degree">[docs]</a>
+    <span class="k">def</span> <span class="nf">midi_to_scale_degree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">midi_note</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert a MIDI note number to its corresponding scale degree index.&quot;&quot;&quot;</span>
+        <span class="n">note_in_scale</span> <span class="o">=</span> <span class="p">(</span><span class="n">midi_note</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonic_midi</span><span class="p">)</span> <span class="o">%</span> <span class="mi">12</span>
+        <span class="c1"># This checks if the pitch class of the note is in the scale</span>
+        <span class="k">if</span> <span class="n">note_in_scale</span> <span class="ow">in</span> <span class="p">[</span><span class="n">note</span> <span class="o">%</span> <span class="mi">12</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">]:</span>  <span class="c1"># Adjust this line</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">midi_note</span><span class="p">)</span>  <span class="c1"># Return index within actual MIDI scale</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Voice.pitch_to_chord">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Voice.pitch_to_chord">[docs]</a>
+    <span class="k">def</span> <span class="nf">pitch_to_chord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">midi_note</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert a MIDI note to a chord based on the scale using the specified degrees.&quot;&quot;&quot;</span>
+        <span class="n">scale_degree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">midi_to_scale_degree</span><span class="p">(</span><span class="n">midi_note</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scale_degree</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">chord_midi</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">[(</span><span class="n">scale_degree</span> <span class="o">+</span> <span class="n">degree</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)]</span> <span class="k">for</span> <span class="n">degree</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">degrees</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">chord_midi</span>  <span class="c1"># Chord is now directly from the scale</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>  <span class="c1"># Return empty list if note is not in scale</span></div>
+
+
+<div class="viewcode-block" id="Voice.generate">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Voice.generate">[docs]</a>
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pitches</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert the pitches to a list of chords based on the pitches.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pitch_to_chord</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span> <span class="k">for</span> <span class="n">pitch</span> <span class="ow">in</span> <span class="n">pitches</span><span class="p">]</span></div>
+
+    
+<div class="viewcode-block" id="Voice.generate_arpeggio">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Voice.generate_arpeggio">[docs]</a>
+    <span class="k">def</span> <span class="nf">generate_arpeggio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root_note</span><span class="p">,</span> <span class="n">pattern_length</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate an arpeggio based on the voice&#39;s scale and degrees.&quot;&quot;&quot;</span>
+        <span class="n">scale_degree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">midi_to_scale_degree</span><span class="p">(</span><span class="n">root_note</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scale_degree</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># If pattern_length is specified, extend the degrees to match the pattern length</span>
+            <span class="n">extended_degrees</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">degrees</span> <span class="o">*</span> <span class="p">(</span><span class="n">pattern_length</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">degrees</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">pattern_length</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">degrees</span>
+            <span class="n">arpeggio_midi</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">[(</span><span class="n">scale_degree</span> <span class="o">+</span> <span class="n">degree</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)]</span> <span class="k">for</span> <span class="n">degree</span> <span class="ow">in</span> <span class="n">extended_degrees</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">arpeggio_midi</span><span class="p">[:</span><span class="n">pattern_length</span><span class="p">]</span>  <span class="c1"># Trim the arpeggio to the pattern length if specified</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>  <span class="c1"># Return empty list if root note is not in scale</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Ornament">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Ornament">[docs]</a>
+<span class="k">class</span> <span class="nc">Ornament</span><span class="p">(</span><span class="n">MusicTheoryConstants</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;grace_note&#39;</span><span class="p">,</span> <span class="n">tonic</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scale_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+            <span class="n">grace_note_type</span><span class="o">=</span><span class="s1">&#39;acciaccatura&#39;</span><span class="p">,</span> <span class="n">grace_pitches</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trill_rate</span><span class="o">=</span><span class="mf">0.125</span><span class="p">,</span> <span class="n">arpeggio_degrees</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">slide_length</span><span class="o">=</span><span class="mf">4.0</span>
+        <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes an Ornament object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            type (str): The type of ornament to be processed. Supported types include &#39;grace_note&#39;, &#39;trill&#39;, and &#39;mordent&#39;.</span>
+<span class="sd">            tonic (str): The tonic note for the scale.</span>
+<span class="sd">            scale_type (str): The type of scale to generate.</span>
+<span class="sd">            by (float): The pitch step for the trill.</span>
+<span class="sd">            grace_note_type (str): Specifies the type of grace note (&#39;acciaccatura&#39; or &#39;appoggiatura&#39;) if applicable.</span>
+<span class="sd">            grace_pitches (list): The list of pitches for the grace note.</span>
+<span class="sd">            trill_rate (float): The duration of each individual note in the trill.</span>
+<span class="sd">            arpeggio_degrees (list of integers): degrees in the scale to run the arpeggio</span>
+<span class="sd">            slide_length (float): length of the slide</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="nb">type</span>
+        <span class="k">if</span> <span class="n">tonic</span> <span class="ow">and</span> <span class="n">scale_type</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tonic_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromatic_scale</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">tonic</span><span class="p">)</span>  <span class="c1"># Index in chromatic scale</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_scale</span><span class="p">(</span><span class="n">tonic</span><span class="p">,</span> <span class="n">scale_type</span><span class="p">)</span>  <span class="c1"># This will be a list of MIDI notes for the scale</span>
+            <span class="k">if</span> <span class="n">arpeggio_degrees</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">arpeggio_voice</span> <span class="o">=</span> <span class="n">Voice</span><span class="p">(</span><span class="n">scale_type</span><span class="o">=</span><span class="n">scale_type</span><span class="p">,</span> <span class="n">tonic</span><span class="o">=</span><span class="n">tonic</span><span class="p">,</span> <span class="n">degrees</span><span class="o">=</span><span class="n">arpeggio_degrees</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">arpeggio_voice</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">arpeggio_voice</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">by</span> <span class="o">=</span> <span class="n">by</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grace_note_type</span> <span class="o">=</span> <span class="n">grace_note_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grace_pitches</span> <span class="o">=</span> <span class="n">grace_pitches</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trill_rate</span> <span class="o">=</span> <span class="n">trill_rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slide_length</span> <span class="o">=</span> <span class="n">slide_length</span>
+        
+
+<div class="viewcode-block" id="Ornament.generate_scale">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Ornament.generate_scale">[docs]</a>
+    <span class="k">def</span> <span class="nf">generate_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tonic</span><span class="p">,</span> <span class="n">scale_type</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate a complete scale based on the tonic and scale type. This function is the same as the one in the Voice class.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tonic (str): The tonic note for the scale.</span>
+<span class="sd">            scale_type (str): The type of scale to generate.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of MIDI notes for the complete scale.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">scale_pattern</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="p">[</span><span class="n">scale_type</span><span class="p">]</span>
+        <span class="n">scale_notes</span> <span class="o">=</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">tonic_index</span> <span class="o">+</span> <span class="n">interval</span><span class="p">)</span> <span class="o">%</span> <span class="mi">12</span> <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="n">scale_pattern</span><span class="p">]</span>  <span class="c1"># Pitch classes</span>
+        <span class="n">complete_scale</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># This will store the full scale in MIDI numbers</span>
+        <span class="k">for</span> <span class="n">octave</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>  <span class="c1"># Covering all MIDI octaves</span>
+            <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">scale_notes</span><span class="p">:</span>
+                <span class="n">midi_note</span> <span class="o">=</span> <span class="mi">12</span> <span class="o">*</span> <span class="n">octave</span> <span class="o">+</span> <span class="n">note</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">midi_note</span> <span class="o">&lt;=</span> <span class="mi">127</span><span class="p">:</span>  <span class="c1"># Valid MIDI range</span>
+                    <span class="n">complete_scale</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">midi_note</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">complete_scale</span></div>
+
+
+<div class="viewcode-block" id="Ornament.add_grace_note">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Ornament.add_grace_note">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_grace_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a grace note (either acciaccatura or appoggiatura) to a specified note in the list.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            notes (list): The list of notes to be processed.</span>
+<span class="sd">            note_index (int): The index of the note to which the trill will be added.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: The list of notes with the specified grace note added.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">main_pitch</span><span class="p">,</span> <span class="n">main_duration</span><span class="p">,</span> <span class="n">main_offset</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[</span><span class="n">note_index</span><span class="p">]</span>
+        <span class="n">ornament_pitch</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grace_pitches</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">grace_note_type</span> <span class="o">==</span> <span class="s1">&#39;acciaccatura&#39;</span><span class="p">:</span>
+            <span class="c1"># Acciaccatura is very brief, does not alter the main note&#39;s start time.</span>
+            <span class="n">grace_duration</span> <span class="o">=</span> <span class="n">main_duration</span> <span class="o">*</span> <span class="mf">0.125</span>  <span class="c1"># Typically very short</span>
+            <span class="n">modified_main</span> <span class="o">=</span> <span class="p">(</span><span class="n">main_pitch</span><span class="p">,</span> <span class="n">main_duration</span><span class="p">,</span> <span class="n">main_offset</span> <span class="o">+</span> <span class="n">grace_duration</span><span class="p">)</span>
+            <span class="n">new_notes</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[:</span><span class="n">note_index</span><span class="p">]</span> <span class="o">+</span> <span class="p">[(</span><span class="n">ornament_pitch</span><span class="p">,</span> <span class="n">grace_duration</span><span class="p">,</span> <span class="n">main_offset</span><span class="p">),</span> <span class="n">modified_main</span><span class="p">]</span> <span class="o">+</span> <span class="n">notes</span><span class="p">[</span><span class="n">note_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">grace_note_type</span> <span class="o">==</span> <span class="s1">&#39;appoggiatura&#39;</span><span class="p">:</span>
+            <span class="c1"># Appoggiatura takes half the time of the main note and delays its start.</span>
+            <span class="n">grace_duration</span> <span class="o">=</span> <span class="n">main_duration</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="n">modified_main</span> <span class="o">=</span> <span class="p">(</span><span class="n">main_pitch</span><span class="p">,</span> <span class="n">grace_duration</span><span class="p">,</span> <span class="n">main_offset</span> <span class="o">+</span> <span class="n">grace_duration</span><span class="p">)</span>
+            <span class="n">new_notes</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[:</span><span class="n">note_index</span><span class="p">]</span> <span class="o">+</span> <span class="p">[(</span><span class="n">ornament_pitch</span><span class="p">,</span> <span class="n">grace_duration</span><span class="p">,</span> <span class="n">main_offset</span><span class="p">),</span> <span class="n">modified_main</span><span class="p">]</span> <span class="o">+</span> <span class="n">notes</span><span class="p">[</span><span class="n">note_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># If neither, return the list unchanged</span>
+            <span class="n">new_notes</span> <span class="o">=</span> <span class="n">notes</span>
+        <span class="k">return</span> <span class="n">new_notes</span></div>
+
+
+<div class="viewcode-block" id="Ornament.add_trill">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Ornament.add_trill">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_trill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simulates a trill ornament by alternating between the original pitch and one step above.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            notes (list): The list of notes to be processed.</span>
+<span class="sd">            note_index (int): The index of the note to which the trill will be added.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: The list of notes with the specified trill applied to the specified note.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">main_pitch</span><span class="p">,</span> <span class="n">main_duration</span><span class="p">,</span> <span class="n">main_offset</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[</span><span class="n">note_index</span><span class="p">]</span>
+        <span class="n">trill_notes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">current_offset</span> <span class="o">=</span> <span class="n">main_offset</span>
+        
+        <span class="c1"># Determine the pitch to trill with based on the scale or semitone adjustment</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="ow">and</span> <span class="n">main_pitch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">:</span>
+            <span class="n">pitch_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">main_pitch</span><span class="p">)</span>
+            <span class="n">trill_pitch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">[(</span><span class="n">pitch_index</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">by</span><span class="p">)))</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)]</span>  <span class="c1"># Ensure the index wraps around the scale</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">trill_pitch</span> <span class="o">=</span> <span class="n">main_pitch</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">by</span>  <span class="c1"># Default step if no scale is given or pitch is not in scale</span>
+
+        <span class="c1"># Generate the sequence of trill notes to insert</span>
+        <span class="k">while</span> <span class="n">current_offset</span> <span class="o">&lt;</span> <span class="n">main_offset</span> <span class="o">+</span> <span class="n">main_duration</span><span class="p">:</span>
+            <span class="n">trill_notes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">main_pitch</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trill_rate</span><span class="p">,</span> <span class="n">current_offset</span><span class="p">))</span>
+            <span class="n">trill_notes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">trill_pitch</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">trill_rate</span><span class="p">,</span> <span class="n">current_offset</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">trill_rate</span><span class="p">))</span>
+            <span class="n">current_offset</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">trill_rate</span>
+
+        <span class="c1"># Insert the trill notes into the original list, replacing the original note at note_index</span>
+        <span class="n">new_notes</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[:</span><span class="n">note_index</span><span class="p">]</span> <span class="o">+</span> <span class="n">trill_notes</span> <span class="o">+</span> <span class="n">notes</span><span class="p">[</span><span class="n">note_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="n">new_notes</span></div>
+
+
+
+<div class="viewcode-block" id="Ornament.add_mordent">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Ornament.add_mordent">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_mordent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simulates a mordent ornament by rapidly alternating between the original pitch and one step defined in `self.by`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            notes (list): The list of notes to be processed.</span>
+<span class="sd">            note_index (int): The index of the note to which the trill will be added.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list containing the notes that make up the mordent.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">main_pitch</span><span class="p">,</span> <span class="n">main_duration</span><span class="p">,</span> <span class="n">main_offset</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[</span><span class="n">note_index</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="ow">and</span> <span class="n">main_pitch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">:</span>
+            <span class="n">pitch_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">main_pitch</span><span class="p">)</span>
+            <span class="n">mordent_pitch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">[</span><span class="n">pitch_index</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">by</span><span class="p">))]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># If no scale is provided, default to moving a semitone down for a lower mordent</span>
+            <span class="c1"># or a semitone up for an upper mordent</span>
+            <span class="n">mordent_pitch</span> <span class="o">=</span> <span class="n">main_pitch</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">by</span>
+
+        <span class="c1"># The mordent splits the duration into three parts</span>
+        <span class="n">part_duration</span> <span class="o">=</span> <span class="n">main_duration</span> <span class="o">/</span> <span class="mi">3</span>
+        <span class="n">mordent_notes</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="n">main_pitch</span><span class="p">,</span> <span class="n">part_duration</span><span class="p">,</span> <span class="n">main_offset</span><span class="p">),</span>
+            <span class="p">(</span><span class="n">mordent_pitch</span><span class="p">,</span> <span class="n">part_duration</span><span class="p">,</span> <span class="n">main_offset</span> <span class="o">+</span> <span class="n">part_duration</span><span class="p">),</span>
+            <span class="p">(</span><span class="n">main_pitch</span><span class="p">,</span> <span class="n">part_duration</span><span class="p">,</span> <span class="n">main_offset</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">part_duration</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="n">new_notes</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[:</span><span class="n">note_index</span><span class="p">]</span> <span class="o">+</span> <span class="n">mordent_notes</span> <span class="o">+</span> <span class="n">notes</span><span class="p">[</span><span class="n">note_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="n">new_notes</span></div>
+
+
+<div class="viewcode-block" id="Ornament.add_arpeggiation">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Ornament.add_arpeggiation">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_arpeggiation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="p">,</span> <span class="n">voice</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Applies arpeggiation to a chord at a specified index in the list of notes using the degrees from a Voice instance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            notes (list): The list of notes to be processed.</span>
+<span class="sd">            note_index (int): The index of the note to which the arpeggiation will be added.</span>
+<span class="sd">            voice (Voice): An instance of the Voice class.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: The list of notes with the specified arpeggiation applied to the specified chord.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">root_note</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[</span><span class="n">note_index</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">main_duration</span><span class="p">,</span> <span class="n">main_offset</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[</span><span class="n">note_index</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">notes</span><span class="p">[</span><span class="n">note_index</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+        
+        <span class="c1"># Generate the arpeggio notes based on the Voice&#39;s degrees</span>
+        <span class="n">arpeggio_notes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">degree</span> <span class="ow">in</span> <span class="n">voice</span><span class="o">.</span><span class="n">degrees</span><span class="p">:</span>
+            <span class="c1"># Calculate pitch from the scale degree</span>
+            <span class="n">scale_degree_index</span> <span class="o">=</span> <span class="p">(</span><span class="n">voice</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">root_note</span><span class="p">)</span> <span class="o">+</span> <span class="n">degree</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">voice</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span>
+            <span class="n">arpeggio_pitch</span> <span class="o">=</span> <span class="n">voice</span><span class="o">.</span><span class="n">scale</span><span class="p">[</span><span class="n">scale_degree_index</span><span class="p">]</span>
+
+            <span class="c1"># Add an arpeggio note for each degree</span>
+            <span class="n">note_duration</span> <span class="o">=</span> <span class="n">main_duration</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">voice</span><span class="o">.</span><span class="n">degrees</span><span class="p">)</span>
+            <span class="n">note_offset</span> <span class="o">=</span> <span class="n">main_offset</span> <span class="o">+</span> <span class="n">voice</span><span class="o">.</span><span class="n">degrees</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">degree</span><span class="p">)</span> <span class="o">*</span> <span class="n">note_duration</span>
+            <span class="n">arpeggio_notes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">arpeggio_pitch</span><span class="p">,</span> <span class="n">note_duration</span><span class="p">,</span> <span class="n">note_offset</span><span class="p">))</span>
+
+        <span class="c1"># Replace the original note with the arpeggio notes</span>
+        <span class="n">new_notes</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[:</span><span class="n">note_index</span><span class="p">]</span> <span class="o">+</span> <span class="n">arpeggio_notes</span> <span class="o">+</span> <span class="n">notes</span><span class="p">[</span><span class="n">note_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="n">new_notes</span></div>
+
+    
+<div class="viewcode-block" id="Ornament.add_turn">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Ornament.add_turn">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_turn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simulates a turn ornament by playing the note above, the note itself, the note below, and returning to the note.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            notes (list): The list of notes to be processed.</span>
+<span class="sd">            note_index (int): The index of the note to which the turn will be added.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: The list of notes with the specified turn applied to the specified note.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">main_pitch</span><span class="p">,</span> <span class="n">main_duration</span><span class="p">,</span> <span class="n">main_offset</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[</span><span class="n">note_index</span><span class="p">]</span>
+        <span class="n">part_duration</span> <span class="o">=</span> <span class="n">main_duration</span> <span class="o">/</span> <span class="mi">4</span>  <span class="c1"># Splitting the total duration among the four notes of the turn</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="ow">and</span> <span class="n">main_pitch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">:</span>
+            <span class="n">pitch_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">main_pitch</span><span class="p">)</span>
+            <span class="n">upper_pitch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">[(</span><span class="n">pitch_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)]</span>
+            <span class="n">lower_pitch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">[(</span><span class="n">pitch_index</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">))</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">upper_pitch</span> <span class="o">=</span> <span class="n">main_pitch</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">by</span>  <span class="c1"># Assuming &#39;by&#39; is the interval step</span>
+            <span class="n">lower_pitch</span> <span class="o">=</span> <span class="n">main_pitch</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">by</span>
+
+        <span class="n">turn_notes</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="n">upper_pitch</span><span class="p">,</span> <span class="n">part_duration</span><span class="p">,</span> <span class="n">main_offset</span><span class="p">),</span>
+            <span class="p">(</span><span class="n">main_pitch</span><span class="p">,</span> <span class="n">part_duration</span><span class="p">,</span> <span class="n">main_offset</span> <span class="o">+</span> <span class="n">part_duration</span><span class="p">),</span>
+            <span class="p">(</span><span class="n">lower_pitch</span><span class="p">,</span> <span class="n">part_duration</span><span class="p">,</span> <span class="n">main_offset</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">part_duration</span><span class="p">),</span>
+            <span class="p">(</span><span class="n">main_pitch</span><span class="p">,</span> <span class="n">part_duration</span><span class="p">,</span> <span class="n">main_offset</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">part_duration</span><span class="p">)</span>
+        <span class="p">]</span>
+        
+        <span class="n">new_notes</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[:</span><span class="n">note_index</span><span class="p">]</span> <span class="o">+</span> <span class="n">turn_notes</span> <span class="o">+</span> <span class="n">notes</span><span class="p">[</span><span class="n">note_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="n">new_notes</span></div>
+
+
+<div class="viewcode-block" id="Ornament.add_slide">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Ornament.add_slide">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_slide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="p">,</span> <span class="n">slide_length</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simulates a slide from the current note to the next by incrementally changing the pitch.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            notes (list): The list of notes to be processed.</span>
+<span class="sd">            note_index (int): The index of the note from which the slide will start.</span>
+<span class="sd">            slide_length (int): The number of steps in the slide.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: The list of notes with the specified slide applied.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">note_index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># Ensure there is a following note to slide into</span>
+            <span class="n">start_pitch</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">start_offset</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[</span><span class="n">note_index</span><span class="p">]</span>
+            <span class="n">end_pitch</span><span class="p">,</span> <span class="n">end_duration</span><span class="p">,</span> <span class="n">end_offset</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[</span><span class="n">note_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1"># Calculate pitch steps for the slide, assuming a linear slide for simplicity</span>
+            <span class="n">pitch_step</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_pitch</span> <span class="o">-</span> <span class="n">start_pitch</span><span class="p">)</span> <span class="o">/</span> <span class="n">slide_length</span>
+            <span class="n">slide_duration</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_offset</span> <span class="o">-</span> <span class="n">start_offset</span><span class="p">)</span> <span class="o">/</span> <span class="n">slide_length</span>
+            
+            <span class="n">slide_notes</span> <span class="o">=</span> <span class="p">[(</span><span class="nb">int</span><span class="p">(</span><span class="n">start_pitch</span> <span class="o">+</span> <span class="n">pitch_step</span> <span class="o">*</span> <span class="n">i</span><span class="p">),</span> <span class="n">slide_duration</span><span class="p">,</span> <span class="n">start_offset</span> <span class="o">+</span> <span class="n">slide_duration</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">slide_length</span><span class="p">)]</span>
+            
+            <span class="c1"># Insert the slide notes, remove the original note and the next one since they are now part of the slide</span>
+            <span class="n">new_notes</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[:</span><span class="n">note_index</span><span class="p">]</span> <span class="o">+</span> <span class="n">slide_notes</span> <span class="o">+</span> <span class="n">notes</span><span class="p">[</span><span class="n">note_index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># No following note to slide into, so return the original notes unchanged</span>
+            <span class="n">new_notes</span> <span class="o">=</span> <span class="n">notes</span>
+
+        <span class="k">return</span> <span class="n">new_notes</span></div>
+
+
+
+<div class="viewcode-block" id="Ornament.generate">
+<a class="viewcode-back" href="../../index.html#djalgo.harmony.Ornament.generate">[docs]</a>
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Applies the specified ornamentation action and type to the list of notes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            notes (list): The list of notes to be processed.</span>
+<span class="sd">            note_index (int): The index of the note to ornament. If None, a note will be chosen randomly.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: The list of notes with the specified ornamentation applied.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">note_index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">note_index</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;grace_note&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_grace_note</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;trill&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_trill</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;mordent&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_mordent</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;arpeggio&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_arpeggiation</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arpeggio_voice</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;turn&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_turn</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;slide&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_slide</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">slide_length</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">notes</span>  <span class="c1"># Return original if ornament type is not recognized or required data is missing</span></div>
+</div>
+
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">djalgo</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../01_usage.html">Usage</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Essi Parent.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -11,14 +11,6 @@ class Analysis:
 
     Attributes:
         values (list): The list of values provided during initialization.
-
-    Methods:
-        gini(): Calculate the Gini index, a measure of inequality.
-        balance(): Compute the balance based on the values.
-        autocorrelation(): Calculate the autocorrelation of the values using the Fast Fourier Transform (FFT).
-        motif(): Identify and score repeating motifs in the values.
-        dissonance(scale): Calculate the dissonance, which measures the proportion of values not aligning with a given pitch scale.
-        rhythmic(measure_length): Calculate how well the durations fit into bars of a given length, measure by measure.
     """
     def __init__(self, values):
         self.values = [v for v in values if v is not None] # Remove None values

@@ -37,12 +37,6 @@ class PositionalEncoding(tf.keras.layers.Layer):
 
     Attributes:
         pos_encoding (tf.Tensor): The positional encoding tensor.
-
-    Methods:
-        get_angles(position, i, d_model): Calculates the angles for the positional encoding.
-        positional_encoding(position, d_model): Generates the positional encoding tensor.
-        call(inputs): Adds the positional encoding to the inputs.
-
     """
 
     def __init__(self, position, d_model):
