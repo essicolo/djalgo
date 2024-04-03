@@ -32,7 +32,7 @@
             
   <h1>Source code for djalgo.utils</h1><div class="highlight"><pre>
 <div class="viewcode-block" id="round_to_list">
-<a class="viewcode-back" href="../../index.html#djalgo.utils.round_to_list">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.utils.round_to_list">[docs]</a>
 <span></span><span class="k">def</span> <span class="nf">round_to_list</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">scale</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Rounds the given value to the nearest value in the scale list.</span>
@@ -48,13 +48,13 @@
 
 
 <div class="viewcode-block" id="get_octave">
-<a class="viewcode-back" href="../../index.html#djalgo.utils.get_octave">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.utils.get_octave">[docs]</a>
 <span class="k">def</span> <span class="nf">get_octave</span><span class="p">(</span><span class="n">midi_note</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">midi_note</span> <span class="o">//</span> <span class="mi">12</span> <span class="o">-</span> <span class="mi">1</span></div>
 
 
 <div class="viewcode-block" id="get_sharp">
-<a class="viewcode-back" href="../../index.html#djalgo.utils.get_sharp">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.utils.get_sharp">[docs]</a>
 <span class="k">def</span> <span class="nf">get_sharp</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
     <span class="n">dict_flat</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;D-&#39;</span><span class="p">:</span> <span class="s1">&#39;C#&#39;</span><span class="p">,</span> <span class="s1">&#39;E-&#39;</span><span class="p">:</span> <span class="s1">&#39;D#&#39;</span><span class="p">,</span> <span class="s1">&#39;G-&#39;</span><span class="p">:</span> <span class="s1">&#39;F#&#39;</span><span class="p">,</span> <span class="s1">&#39;A-&#39;</span><span class="p">:</span> <span class="s1">&#39;G#&#39;</span><span class="p">,</span> <span class="s1">&#39;B-&#39;</span><span class="p">:</span> <span class="s1">&#39;A#&#39;</span><span class="p">}</span>
     <span class="k">if</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">dict_flat</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -63,7 +63,7 @@
 
 
 <div class="viewcode-block" id="get_degree_from_note">
-<a class="viewcode-back" href="../../index.html#djalgo.utils.get_degree_from_note">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.utils.get_degree_from_note">[docs]</a>
 <span class="k">def</span> <span class="nf">get_degree_from_note</span><span class="p">(</span><span class="n">note</span><span class="p">,</span> <span class="n">scale_list</span><span class="p">,</span> <span class="n">tonic_midi</span><span class="p">):</span>
     <span class="n">ref_index</span> <span class="o">=</span> <span class="n">scale_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">tonic_midi</span><span class="p">)</span>
 
@@ -92,7 +92,7 @@
 
 
 <div class="viewcode-block" id="get_note_from_degree">
-<a class="viewcode-back" href="../../index.html#djalgo.utils.get_note_from_degree">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.utils.get_note_from_degree">[docs]</a>
 <span class="k">def</span> <span class="nf">get_note_from_degree</span><span class="p">(</span><span class="n">degree</span><span class="p">,</span> <span class="n">scale_list</span><span class="p">,</span> <span class="n">tonic_midi</span><span class="p">):</span>
     <span class="n">ref_index</span> <span class="o">=</span> <span class="n">scale_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">tonic_midi</span><span class="p">)</span>
     <span class="n">note_index</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">ref_index</span> <span class="o">+</span> <span class="n">degree</span><span class="p">)</span>  <span class="c1"># round to nearest integer</span>
@@ -118,7 +118,7 @@
 
 
 <div class="viewcode-block" id="fill_gaps_with_rests">
-<a class="viewcode-back" href="../../index.html#djalgo.utils.fill_gaps_with_rests">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.utils.fill_gaps_with_rests">[docs]</a>
 <span class="k">def</span> <span class="nf">fill_gaps_with_rests</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">parent_offset</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Analyze a list of notes (each note is a (pitch, duration, offset) tuple)</span>
@@ -150,7 +150,7 @@
 
 
 <div class="viewcode-block" id="adjust_note_durations_to_prevent_overlaps">
-<a class="viewcode-back" href="../../index.html#djalgo.utils.adjust_note_durations_to_prevent_overlaps">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.utils.adjust_note_durations_to_prevent_overlaps">[docs]</a>
 <span class="k">def</span> <span class="nf">adjust_note_durations_to_prevent_overlaps</span><span class="p">(</span><span class="n">notes</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Adjust the durations of notes in a list (each note is a (pitch, duration, offset) tuple)</span>
@@ -181,7 +181,7 @@
 
 
 <div class="viewcode-block" id="insert_rests">
-<a class="viewcode-back" href="../../index.html#djalgo.utils.insert_rests">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.utils.insert_rests">[docs]</a>
 <span class="k">def</span> <span class="nf">insert_rests</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">measure_length</span><span class="o">=</span><span class="mf">4.0</span><span class="p">):</span>
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">current_offset</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -209,7 +209,7 @@
 
 
 <div class="viewcode-block" id="repair_notes">
-<a class="viewcode-back" href="../../index.html#djalgo.utils.repair_notes">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.utils.repair_notes">[docs]</a>
 <span class="k">def</span> <span class="nf">repair_notes</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Apply the fill_gaps_with_rests and adjust_note_durations_to_prevent_overlaps functions to a stream.</span>
@@ -224,7 +224,7 @@
 
 
 <div class="viewcode-block" id="abc_to_midi">
-<a class="viewcode-back" href="../../index.html#djalgo.utils.abc_to_midi">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.utils.abc_to_midi">[docs]</a>
 <span class="k">def</span> <span class="nf">abc_to_midi</span><span class="p">(</span><span class="n">note</span><span class="p">):</span>
     <span class="c1"># Mapping of note names to MIDI numbers</span>
     <span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;C#&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;D#&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;F#&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;G#&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;A#&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]</span>
@@ -235,7 +235,7 @@
 
 
 <div class="viewcode-block" id="midi_to_abc">
-<a class="viewcode-back" href="../../index.html#djalgo.utils.midi_to_abc">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.utils.midi_to_abc">[docs]</a>
 <span class="k">def</span> <span class="nf">midi_to_abc</span><span class="p">(</span><span class="n">midi</span><span class="p">):</span>
     <span class="c1"># Mapping of MIDI numbers to note names</span>
     <span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;C#&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;D#&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;F#&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;G#&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;A#&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]</span>
@@ -246,7 +246,7 @@
 
 
 <div class="viewcode-block" id="no_overlap">
-<a class="viewcode-back" href="../../index.html#djalgo.utils.no_overlap">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.utils.no_overlap">[docs]</a>
 <span class="k">def</span> <span class="nf">no_overlap</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">adjust</span><span class="o">=</span><span class="s1">&#39;offsets&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Adjusts the offsets of the notes to prevent overlap.</span>
@@ -269,7 +269,7 @@
 
 
 <div class="viewcode-block" id="check_input">
-<a class="viewcode-back" href="../../index.html#djalgo.utils.check_input">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.utils.check_input">[docs]</a>
 <span class="k">def</span> <span class="nf">check_input</span><span class="p">(</span><span class="n">input_list</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Checks if the input is a list of simple elements or a list of tuples.</span>
@@ -291,7 +291,7 @@
 
 
 <div class="viewcode-block" id="scale_list">
-<a class="viewcode-back" href="../../index.html#djalgo.utils.scale_list">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.utils.scale_list">[docs]</a>
 <span class="k">def</span> <span class="nf">scale_list</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="n">to_min</span><span class="p">,</span> <span class="n">to_max</span><span class="p">,</span> <span class="n">min_numbers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_numbers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Scale a list of numbers so that its range is between min_value and max_value.</span>
@@ -313,7 +313,7 @@
 
 
 <div class="viewcode-block" id="offset_list_of_notes">
-<a class="viewcode-back" href="../../index.html#djalgo.utils.offset_list_of_notes">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.utils.offset_list_of_notes">[docs]</a>
 <span class="k">def</span> <span class="nf">offset_list_of_notes</span><span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">by</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Offset the notes in a list by a given amount.</span>
@@ -330,7 +330,7 @@
 
 
 <div class="viewcode-block" id="quantize_notes">
-<a class="viewcode-back" href="../../index.html#djalgo.utils.quantize_notes">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.utils.quantize_notes">[docs]</a>
 <span class="k">def</span> <span class="nf">quantize_notes</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">measure_length</span><span class="p">,</span> <span class="n">time_resolution</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Quantize the durations and offsets of notes in musical phrases.</span>
@@ -360,6 +360,9 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/logo.png" alt="Logo"/>
+            </a></p>
 <h1 class="logo"><a href="../../index.html">djalgo</a></h1>
 
 
@@ -371,6 +374,7 @@
 
 <h3>Navigation</h3>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../00_getting-started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../01_usage.html">Usage</a></li>
 </ul>
 

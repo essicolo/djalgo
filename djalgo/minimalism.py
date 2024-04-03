@@ -40,14 +40,14 @@ class Minimalism:
             Applies the additive forward operation to the sequence with repetition, as::
 
                 [
-                    C4,
-                    C4, D4,
-                    C4, D4, E4,
-                    C4, D4, E4, F4,
-                    C4, D4, E4, F4, G4,
-                    C4, D4, E4, F4, G4, A4, 
-                    C4, D4, E4, F4, G4, A4, B4, 
-                    C4, D4, E4, F4, G4, A4, B4, C5
+                    'C4',
+                    'C4', 'D4',
+                    'C4', 'D4', 'E4',
+                    'C4', 'D4', 'E4', 'F4',
+                    'C4', 'D4', 'E4', 'F4', 'G4',
+                    'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 
+                    'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 
+                    'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'
                 ]
 
             Returns:
@@ -65,14 +65,14 @@ class Minimalism:
             Applies the additive backward operation to the sequence with repetition, as::
 
                 [
-                    C5,
-                    B4, C5,
-                    A4, B4, C5,
-                    G4, A4, B4, C5,
-                    F4, G4, A4, B4, C5,
-                    E4, F4, G4, A4, B4, C5,
-                    D4, E4, F4, G4, A4, B4, C5,
-                    C4, D4, E4, F4, G4, A4, B4, C5,
+                    'C5',
+                    'B4', 'C5',
+                    'A4', 'B4', 'C5',
+                    'G4', 'A4', 'B4', 'C5',
+                    'F4', 'G4', 'A4', 'B4', 'C5',
+                    'E4', 'F4', 'G4', 'A4', 'B4', 'C5',
+                    'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5',
+                    'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5',
                 ]
 
             Returns:
@@ -158,14 +158,14 @@ class Minimalism:
             Applies the subtractive forward operation to the sequence, as::
 
                 [
-                    C4, D4, E4, F4, G4, A4, B4, C5,
-                    D4, E4, F4, G4, A4, B4, C5,
-                    E4, F4, G4, A4, B4, C5,
-                    F4, G4, A4, B4, C5,
-                    G4, A4, B4, C5,
-                    A4, B4, C5,
-                    B4, C5,
-                    C5
+                    'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5',
+                    'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5',
+                    'E4', 'F4', 'G4', 'A4', 'B4', 'C5',
+                    'F4', 'G4', 'A4', 'B4', 'C5',
+                    'G4', 'A4', 'B4', 'C5',
+                    'A4', 'B4', 'C5',
+                    'B4', 'C5',
+                    'C5'
                 ]
 
             Returns:
@@ -185,14 +185,14 @@ class Minimalism:
             Applies the subtractive backward operation to the sequence, as::
 
                 [
-                    C4, D4, E4, F4, G4, A4, B4, C5,
-                    C4, D4, E4, F4, G4, A4, B4,
-                    C4, D4, E4, F4, G4, A4,
-                    C4, D4, E4, F4, G4,
-                    C4, D4, E4, F4,
-                    C4, D4, E4,
-                    C4, D4,
-                    C4
+                    'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5',
+                    'C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4',
+                    'C4', 'D4', 'E4', 'F4', 'G4', 'A4',
+                    'C4', 'D4', 'E4', 'F4', 'G4',
+                    'C4', 'D4', 'E4', 'F4',
+                    'C4', 'D4', 'E4',
+                    'C4', 'D4',
+                    'C4'
                 ]
 
             Returns:

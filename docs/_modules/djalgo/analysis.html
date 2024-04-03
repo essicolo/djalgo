@@ -36,7 +36,7 @@
 
 
 <div class="viewcode-block" id="Analysis">
-<a class="viewcode-back" href="../../index.html#djalgo.analysis.Analysis">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.analysis.Analysis">[docs]</a>
 <span class="k">class</span> <span class="nc">Analysis</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class provides methods for analyzing a list of values, whether they are pitches, durations or offsets.</span>
@@ -51,7 +51,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span> <span class="c1"># Remove None values</span>
 
 <div class="viewcode-block" id="Analysis.gini">
-<a class="viewcode-back" href="../../index.html#djalgo.analysis.Analysis.gini">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.analysis.Analysis.gini">[docs]</a>
     <span class="k">def</span> <span class="nf">gini</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the Gini index, a measure of inequality.</span>
@@ -70,7 +70,7 @@
 
 
 <div class="viewcode-block" id="Analysis.balance">
-<a class="viewcode-back" href="../../index.html#djalgo.analysis.Analysis.balance">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.analysis.Analysis.balance">[docs]</a>
     <span class="k">def</span> <span class="nf">balance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute the balance based on the values.</span>
@@ -88,7 +88,7 @@
 
     
 <div class="viewcode-block" id="Analysis.autocorrelation">
-<a class="viewcode-back" href="../../index.html#djalgo.analysis.Analysis.autocorrelation">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.analysis.Analysis.autocorrelation">[docs]</a>
     <span class="k">def</span> <span class="nf">autocorrelation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the autocorrelation of the values using the Fast Fourier Transform (FFT).</span>
@@ -103,7 +103,7 @@
 
     
 <div class="viewcode-block" id="Analysis.motif">
-<a class="viewcode-back" href="../../index.html#djalgo.analysis.Analysis.motif">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.analysis.Analysis.motif">[docs]</a>
     <span class="k">def</span> <span class="nf">motif</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Identify and score repeating motifs in the values.</span>
@@ -131,7 +131,7 @@
 
     
 <div class="viewcode-block" id="Analysis.dissonance">
-<a class="viewcode-back" href="../../index.html#djalgo.analysis.Analysis.dissonance">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.analysis.Analysis.dissonance">[docs]</a>
     <span class="k">def</span> <span class="nf">dissonance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the dissonance, which measures the proportion of values not aligning with a given scale.</span>
@@ -152,7 +152,7 @@
 
     
 <div class="viewcode-block" id="Analysis.rhythmic">
-<a class="viewcode-back" href="../../index.html#djalgo.analysis.Analysis.rhythmic">[docs]</a>
+<a class="viewcode-back" href="../../02_api.html#djalgo.analysis.Analysis.rhythmic">[docs]</a>
     <span class="k">def</span> <span class="nf">rhythmic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">measure_length</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate how well the durations fit into bars of a given length, measure by measure.</span>
@@ -193,6 +193,9 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/logo.png" alt="Logo"/>
+            </a></p>
 <h1 class="logo"><a href="../../index.html">djalgo</a></h1>
 
 
@@ -204,6 +207,7 @@
 
 <h3>Navigation</h3>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../00_getting-started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../01_usage.html">Usage</a></li>
 </ul>
 

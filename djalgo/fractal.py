@@ -4,7 +4,6 @@ import json
 import numpy as np
 from . import utils
 
-
 class Fibonacci:
     """
     A class that generates a Fibonacci sequence.
