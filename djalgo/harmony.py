@@ -99,7 +99,7 @@ class Progression(MusicTheoryConstants):
             ValueError: If the circle_of value is not among the available intervals.
             ValueError: If the type value is not 'chords' or 'pitches'.
         """
-        self.tonic_midi = utils.pitch_to_midi(tonic_pitch)
+        self.tonic_midi = utils.abc_to_midi(tonic_pitch)
         self.circle_of = circle_of
         self.type = type
         self.radius = radius

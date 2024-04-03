@@ -1,3 +1,24 @@
+try:
+    import music21 as m21
+except ImportError:
+    m21 = None
+
+try:
+    import pretty_midi as pm
+except ImportError:
+    pm = None
+
+try:
+    import mido
+except ImportError:
+    mido = None
+
+# To do...
+#try:
+#    import scamp
+#except ImportError:
+#    scamp = None
+
 def convert(notes, to, time_signature=None, key_signature=None):
     """
     Convert a list of musical notes to the specified format.
@@ -13,10 +34,16 @@ def convert(notes, to, time_signature=None, key_signature=None):
         ValueError: If the specified format is not supported.
     """
     if to == 'music21':
+        if m21 is None:
+            raise ImportError("The music21 library is not installed. Please install it to use this function.")
         return to_music21(notes, time_signature, key_signature)
     elif to == 'mido':
+        if mido is None:
+            raise ImportError("The mido library is not installed. Please install it to use this function.")
         return to_mido(notes)
     elif to == 'pretty_midi':
+        if pm is None:
+            raise ImportError("The pretty_midi library is not installed. Please install it to use this function.")
         return to_prettymidi(notes)
     else:
         raise ValueError('Format not supported. Please use "music21", "mido" or "pretty_midi".')
@@ -26,10 +53,6 @@ def convert(notes, to, time_signature=None, key_signature=None):
 # ------------------
 def to_music21(notes, time_signature=None, key_signature=None):
     """Convert notes to music21 format based on their structure."""
-    try:
-        import music21 as m21
-    except ImportError:
-        raise ImportError("The music21 library is not installed. Please install it to use this function.")
     if isinstance(notes, tuple):  # Single note, rest, or chord
         return tuple_to_music21_element(notes)
     elif isinstance(notes[0], list):  # List of lists
@@ -91,10 +114,6 @@ def sequences_to_music21_score(parts, time_signature=None, key_signature=None):
 # ----------------------
 def to_prettymidi(notes):
     """Convert notes to PrettyMIDI format based on their structure."""
-    try:
-        import pretty_midi as pm
-    except ImportError:
-        raise ImportError("The pretty_midi library is not installed. Please install it to use this function.")
     
     if isinstance(notes, tuple):  # Single note, rest, or chord
         return sequence_to_prettymidi_instrument([notes])  # Wrap it in a list as a single part
@@ -138,10 +157,6 @@ def sequences_to_prettymidi(parts):
 # ---------------
 def to_mido(notes, channel=0, velocity=64):
     """Convert notes to Mido format based on their structure."""
-    try:
-        import mido
-    except ImportError:
-        raise ImportError("The mido library is not installed. Please install it to use this function.")
     if isinstance(notes, tuple):  # Single note, rest, or chord
         return sequence_to_mido_track([notes], channel, velocity)  # Wrap it in a list as a single part
     elif isinstance(notes[0], list):  # List of lists
@@ -184,6 +199,6 @@ def sequences_to_mido_midi(parts, channel=0, velocity=64):
 # SCAMP conversion
 # ---------------
 # To do...
-def to_scamp(notes, tempo=120, time_signature=(4, 4), key_signature=None):
-    """Convert notes to SCAMP format based on their structure."""
-    pass
+#def to_scamp(notes, tempo=120, time_signature=(4, 4), key_signature=None):
+#    """Convert notes to SCAMP format based on their structure."""
+#    pass
