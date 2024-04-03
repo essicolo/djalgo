@@ -36,7 +36,7 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">utils</span>
 
 <div class="viewcode-block" id="Rhythm">
-<a class="viewcode-back" href="../../02_api.html#djalgo.rhythm.Rhythm">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.rhythm.Rhythm">[docs]</a>
 <span class="k">class</span> <span class="nc">Rhythm</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class used to represent a Rhythm.</span>
@@ -75,7 +75,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">durations</span> <span class="o">=</span> <span class="n">durations</span>
 
 <div class="viewcode-block" id="Rhythm.random">
-<a class="viewcode-back" href="../../02_api.html#djalgo.rhythm.Rhythm.random">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.rhythm.Rhythm.random">[docs]</a>
     <span class="k">def</span> <span class="nf">random</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rest_probability</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate a random rhythm as a list of (duration, offset) tuples.</span>
@@ -109,7 +109,7 @@
 
     
 <div class="viewcode-block" id="Rhythm.darwin">
-<a class="viewcode-back" href="../../02_api.html#djalgo.rhythm.Rhythm.darwin">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.rhythm.Rhythm.darwin">[docs]</a>
     <span class="k">def</span> <span class="nf">darwin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">population_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_generations</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
         <span class="n">ga</span> <span class="o">=</span> <span class="n">GeneticRhythm</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">population_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_length</span><span class="p">,</span> <span class="n">max_generations</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">durations</span><span class="p">)</span>
         <span class="n">best_rhythm</span> <span class="o">=</span> <span class="n">ga</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
@@ -117,14 +117,14 @@
 
 
 <div class="viewcode-block" id="Rhythm.fibonacci">
-<a class="viewcode-back" href="../../02_api.html#djalgo.rhythm.Rhythm.fibonacci">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.rhythm.Rhythm.fibonacci">[docs]</a>
     <span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">fib</span> <span class="o">=</span> <span class="n">Fibonacci</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">durations</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">fib</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="Rhythm.isorhythm">
-<a class="viewcode-back" href="../../02_api.html#djalgo.rhythm.Rhythm.isorhythm">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.rhythm.Rhythm.isorhythm">[docs]</a>
     <span class="nd">@staticmethod</span>    
     <span class="k">def</span> <span class="nf">isorhythm</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">durations</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -151,7 +151,7 @@
     
 
 <div class="viewcode-block" id="GeneticRhythm">
-<a class="viewcode-back" href="../../02_api.html#djalgo.rhythm.GeneticRhythm">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.rhythm.GeneticRhythm">[docs]</a>
 <span class="k">class</span> <span class="nc">GeneticRhythm</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">population_size</span><span class="p">,</span> <span class="n">measure_length</span><span class="p">,</span> <span class="n">max_generations</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="p">,</span> <span class="n">durations</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -173,7 +173,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialize_population</span><span class="p">()</span>
 
 <div class="viewcode-block" id="GeneticRhythm.initialize_population">
-<a class="viewcode-back" href="../../02_api.html#djalgo.rhythm.GeneticRhythm.initialize_population">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.rhythm.GeneticRhythm.initialize_population">[docs]</a>
     <span class="k">def</span> <span class="nf">initialize_population</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes a population of random rhythms.&quot;&quot;&quot;</span>
         <span class="n">population</span> <span class="o">=</span> <span class="p">[]</span>
@@ -184,7 +184,7 @@
 
 
 <div class="viewcode-block" id="GeneticRhythm.create_random_rhythm">
-<a class="viewcode-back" href="../../02_api.html#djalgo.rhythm.GeneticRhythm.create_random_rhythm">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.rhythm.GeneticRhythm.create_random_rhythm">[docs]</a>
     <span class="k">def</span> <span class="nf">create_random_rhythm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Creates a random rhythm ensuring it respects the measure length and has no overlapping notes.</span>
@@ -204,7 +204,7 @@
 
 
 <div class="viewcode-block" id="GeneticRhythm.evaluate_fitness">
-<a class="viewcode-back" href="../../02_api.html#djalgo.rhythm.GeneticRhythm.evaluate_fitness">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.rhythm.GeneticRhythm.evaluate_fitness">[docs]</a>
     <span class="k">def</span> <span class="nf">evaluate_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rhythm</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Evaluates the fitness of a rhythm based on how close it is to the total measure length.</span>
@@ -220,7 +220,7 @@
 
 
 <div class="viewcode-block" id="GeneticRhythm.select_parents">
-<a class="viewcode-back" href="../../02_api.html#djalgo.rhythm.GeneticRhythm.select_parents">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.rhythm.GeneticRhythm.select_parents">[docs]</a>
     <span class="k">def</span> <span class="nf">select_parents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Selects two parents for reproduction using a simple random selection approach.</span>
@@ -234,7 +234,7 @@
 
 
 <div class="viewcode-block" id="GeneticRhythm.crossover">
-<a class="viewcode-back" href="../../02_api.html#djalgo.rhythm.GeneticRhythm.crossover">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.rhythm.GeneticRhythm.crossover">[docs]</a>
     <span class="k">def</span> <span class="nf">crossover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent1</span><span class="p">,</span> <span class="n">parent2</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Performs crossover between two parent rhythms to produce a new child rhythm.</span>
@@ -252,7 +252,7 @@
 
 
 <div class="viewcode-block" id="GeneticRhythm.ensure_measure_length">
-<a class="viewcode-back" href="../../02_api.html#djalgo.rhythm.GeneticRhythm.ensure_measure_length">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.rhythm.GeneticRhythm.ensure_measure_length">[docs]</a>
     <span class="k">def</span> <span class="nf">ensure_measure_length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rhythm</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Ensures that the rhythm respects the measure length, adjusting if necessary.</span>
@@ -270,7 +270,7 @@
 
 
 <div class="viewcode-block" id="GeneticRhythm.mutate">
-<a class="viewcode-back" href="../../02_api.html#djalgo.rhythm.GeneticRhythm.mutate">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.rhythm.GeneticRhythm.mutate">[docs]</a>
     <span class="k">def</span> <span class="nf">mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rhythm</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Performs a mutation on a rhythm with a certain probability, ensuring no note overlap.</span>
@@ -294,7 +294,7 @@
 
 
 <div class="viewcode-block" id="GeneticRhythm.generate">
-<a class="viewcode-back" href="../../02_api.html#djalgo.rhythm.GeneticRhythm.generate">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.rhythm.GeneticRhythm.generate">[docs]</a>
     <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Executes the genetic algorithm, evolving the rhythms over generations.</span>
@@ -321,7 +321,7 @@
 
 
 <div class="viewcode-block" id="Fibonacci">
-<a class="viewcode-back" href="../../02_api.html#djalgo.rhythm.Fibonacci">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.rhythm.Fibonacci">[docs]</a>
 <span class="k">class</span> <span class="nc">Fibonacci</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">measure_length</span><span class="p">,</span> <span class="n">possible_durations</span><span class="p">,</span> <span class="n">max_fibonacci</span><span class="o">=</span><span class="mi">21</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -340,7 +340,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">fib_sequence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_fibonacci_sequence</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Fibonacci.generate_fibonacci_sequence">
-<a class="viewcode-back" href="../../02_api.html#djalgo.rhythm.Fibonacci.generate_fibonacci_sequence">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.rhythm.Fibonacci.generate_fibonacci_sequence">[docs]</a>
     <span class="k">def</span> <span class="nf">generate_fibonacci_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates a Fibonacci sequence up to the maximum Fibonacci number.&quot;&quot;&quot;</span>
         <span class="n">fib_sequence</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
@@ -350,7 +350,7 @@
 
 
 <div class="viewcode-block" id="Fibonacci.map_fibonacci_to_durations">
-<a class="viewcode-back" href="../../02_api.html#djalgo.rhythm.Fibonacci.map_fibonacci_to_durations">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.rhythm.Fibonacci.map_fibonacci_to_durations">[docs]</a>
     <span class="k">def</span> <span class="nf">map_fibonacci_to_durations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Maps Fibonacci numbers to musical durations based on the list of possible durations.&quot;&quot;&quot;</span>
         <span class="n">duration_sequence</span> <span class="o">=</span> <span class="p">[]</span>
@@ -362,7 +362,7 @@
 
 
 <div class="viewcode-block" id="Fibonacci.generate">
-<a class="viewcode-back" href="../../02_api.html#djalgo.rhythm.Fibonacci.generate">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.rhythm.Fibonacci.generate">[docs]</a>
     <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates a rhythm based on the Fibonacci sequence and fits it into the measure.&quot;&quot;&quot;</span>
         <span class="n">duration_sequence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_fibonacci_to_durations</span><span class="p">()</span>
@@ -402,7 +402,8 @@
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../00_getting-started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../01_usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_musical.html">Pythonic Harmonies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../99_api.html">API</a></li>
 </ul>
 
 <div class="relations">

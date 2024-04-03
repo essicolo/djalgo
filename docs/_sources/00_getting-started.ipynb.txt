@@ -19,7 +19,50 @@
     "- `pip install pretty-midi` to fine-tune and export your music to midi objects\n",
     "- `pip install tensorflow` to train an AI on your music\n",
     "\n",
-    "More to come..."
+    "Djalgo is designed to generate musical pieces as generic Python objects.\n",
+    "\n",
+    "- A note is defined as a tuple of (midi pitch, duration time, time offset from the start). A rest is a note with a pitch defined as `None`. A rhythm is the same thing of a note, but without pitch, i.e. a (duration, offset) tuple.\n",
+    "- A track is a list of notes.\n",
+    "- A piece is a list of tracks.\n",
+    "\n",
+    "Such objects can be converted to several music packages in Python, like Music21, Pretty-Midi, Mido and SCAMP.\n",
+    "\n",
+    "To start with djalgo, install it then lauch your session by importing the package. The alias `dj` will be used through the documentation."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import djalgo as dj"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Djalgo offera a range of functionalities designed for music composers and enthusiasts. Here’s a snapshot of what Djalgo brings to the table:\n",
+    "\n",
+    "- **Analysis**: Located in `analysis.py`, discover a suite of indices for dissecting tracks—whether it’s pitches, durations, or offsets. These metrics serve not just for analysis but also as benchmarks for the evolutionary algorithms found in `genetic.py`.\n",
+    "- **Conversion**: `conversion.py` is your gateway to integrating Djalgo with popular music packages. Transform notes and compositions into formats compatible with Music21 for notation, Pretty-Midi for MIDI refinements, and SCAMP for sound production. Installing these packages is a prerequisite for conversion.\n",
+    "- **Machine learning**: `djai.py` unleashes the power of machine learning to generate new music pieces, all powered by TensorFlow. You can use it to learn from any MIDI file, but if art your aim, you'd better create a machine that learns from your own.\n",
+    "- **Fractals**: `fractal.py` delves into the beauty of mathematics, extracting music from the intricate patterns of cellular automata and Mandelbrot fractals.\n",
+    "- **Genetic Algorithms**: Use `genetic.py` to evolve your music, steering it towards specific analytical targets defined in `analysis.py`.\n",
+    "- **Harmony**: `harmony.py` equips you with tools to enrich compositions with scales, voicings, and ornamental touches.\n",
+    "- **Loop Visualization**: `loop.py` helps visualize musical loops with radar plots, offering a new dimension to beat creation.\n",
+    "- **Minimalism**: Explore minimalist techniques in `minimalism.py`, from additive and subtractive processes to Arvo Pärt’s tintinnabuli, and craft music with a minimalist ethos.\n",
+    "- **Rhythm**: The `Rhythm` class in `rhythm.py` is designed for crafting and experimenting with complex rhythmic structures.\n",
+    "- **Utilities**: `utils.py` provides essential tools for fine-tuning: repair, tune, and quantize your compositions to perfection.\n",
+    "- **Random and Kernel Walks**: In `walk.py`, let music wander through algorithmic paths, guided by random and kernel-induced walks."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "↳ Jump in with [Mysical Python](01_musical.html)!"
    ]
   },
   {
@@ -44,7 +87,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.11.7"
+   "version": "3.11.8"
   }
  },
  "nbformat": 4,

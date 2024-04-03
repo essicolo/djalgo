@@ -36,7 +36,7 @@
 <span class="kn">from</span> <span class="nn">.analysis</span> <span class="kn">import</span> <span class="n">Analysis</span>
 
 <div class="viewcode-block" id="Darwin">
-<a class="viewcode-back" href="../../02_api.html#djalgo.genetic.Darwin">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.genetic.Darwin">[docs]</a>
 <span class="k">class</span> <span class="nc">Darwin</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">initial_phrases</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">population_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
@@ -107,7 +107,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">best_scores</span> <span class="o">=</span> <span class="p">[]</span>
     
 <div class="viewcode-block" id="Darwin.calculate_fitness_components">
-<a class="viewcode-back" href="../../02_api.html#djalgo.genetic.Darwin.calculate_fitness_components">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.genetic.Darwin.calculate_fitness_components">[docs]</a>
     <span class="k">def</span> <span class="nf">calculate_fitness_components</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the fitness components based on the Analysis class for a given phrase.</span>
@@ -157,7 +157,7 @@
 
 
 <div class="viewcode-block" id="Darwin.fitness">
-<a class="viewcode-back" href="../../02_api.html#djalgo.genetic.Darwin.fitness">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.genetic.Darwin.fitness">[docs]</a>
     <span class="k">def</span> <span class="nf">fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculate the fitness of a phrase based on how closely it meets the desired musical metrics targets.</span>
@@ -187,7 +187,7 @@
 
 
 <div class="viewcode-block" id="Darwin.mutate">
-<a class="viewcode-back" href="../../02_api.html#djalgo.genetic.Darwin.mutate">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.genetic.Darwin.mutate">[docs]</a>
     <span class="k">def</span> <span class="nf">mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rest_rate</span><span class="o">=</span><span class="mf">0.02</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Mutate a musical phrase while respecting musical structures and boundaries.</span>
@@ -218,7 +218,7 @@
 
 
 <div class="viewcode-block" id="Darwin.select">
-<a class="viewcode-back" href="../../02_api.html#djalgo.genetic.Darwin.select">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.genetic.Darwin.select">[docs]</a>
     <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">25</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Select top-k phrases based on fitness.</span>
@@ -239,7 +239,7 @@
 
 
 <div class="viewcode-block" id="Darwin.crossover">
-<a class="viewcode-back" href="../../02_api.html#djalgo.genetic.Darwin.crossover">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.genetic.Darwin.crossover">[docs]</a>
     <span class="k">def</span> <span class="nf">crossover</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent1</span><span class="p">,</span> <span class="n">parent2</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Combine two phrases to create a new phrase.</span>
@@ -258,7 +258,7 @@
 
 
 <div class="viewcode-block" id="Darwin.evolve">
-<a class="viewcode-back" href="../../02_api.html#djalgo.genetic.Darwin.evolve">[docs]</a>
+<a class="viewcode-back" href="../../99_api.html#djalgo.genetic.Darwin.evolve">[docs]</a>
     <span class="k">def</span> <span class="nf">evolve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">rest_rate</span><span class="o">=</span><span class="mf">0.02</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Evolve the population of phrases through selection, crossover, and mutation.</span>
@@ -309,7 +309,8 @@
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../00_getting-started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../01_usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_musical.html">Pythonic Harmonies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../99_api.html">API</a></li>
 </ul>
 
 <div class="relations">

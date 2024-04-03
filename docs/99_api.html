@@ -1,0 +1,2042 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>API &#8212; djalgo 0.1-alpha documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=737112c1"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Pythonic Harmonies" href="01_musical.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-djalgo.analysis">
+<span id="api"></span><h1>API<a class="headerlink" href="#module-djalgo.analysis" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="djalgo.analysis.Analysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.analysis.</span></span><span class="sig-name descname"><span class="pre">Analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Analysis" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This class provides methods for analyzing a list of values, whether they are pitches, durations or offsets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>values</strong> (<em>list</em>) – A list of numerical values.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.analysis.Analysis.values">
+<span class="sig-name descname"><span class="pre">values</span></span><a class="headerlink" href="#djalgo.analysis.Analysis.values" title="Link to this definition">¶</a></dt>
+<dd><p>The list of values provided during initialization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.analysis.Analysis.autocorrelation">
+<span class="sig-name descname"><span class="pre">autocorrelation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Analysis.autocorrelation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Analysis.autocorrelation" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the autocorrelation of the values using the Fast Fourier Transform (FFT).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list containing the autocorrelation coefficients.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.analysis.Analysis.balance">
+<span class="sig-name descname"><span class="pre">balance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Analysis.balance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Analysis.balance" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the balance based on the values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The balance index of the values if more than one value is present; otherwise, None.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.analysis.Analysis.dissonance">
+<span class="sig-name descname"><span class="pre">dissonance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Analysis.dissonance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Analysis.dissonance" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the dissonance, which measures the proportion of values not aligning with a given scale.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>scale</strong> (<em>list</em>) – A list of values representing the desired scale.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The dissonance score, representing the fraction of values not in the scale.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.analysis.Analysis.gini">
+<span class="sig-name descname"><span class="pre">gini</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Analysis.gini"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Analysis.gini" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the Gini index, a measure of inequality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The Gini index of the values if more than one value is present; otherwise, None.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.analysis.Analysis.motif">
+<span class="sig-name descname"><span class="pre">motif</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Analysis.motif"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Analysis.motif" title="Link to this definition">¶</a></dt>
+<dd><p>Identify and score repeating motifs in the values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The score based on the frequency of repeated motifs. Zero if no motifs are found.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.analysis.Analysis.rhythmic">
+<span class="sig-name descname"><span class="pre">rhythmic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measure_length</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Analysis.rhythmic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Analysis.rhythmic" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate how well the durations fit into bars of a given length, measure by measure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>measure_length</strong> (<em>float</em>) – Length of a bar in the same units as the durations.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An average score representing the rhythmic fit for each measure (closer to 1 is better).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function" id="module-djalgo.conversion">
+<dt class="sig sig-object py" id="djalgo.conversion.convert">
+<span class="sig-prename descclassname"><span class="pre">djalgo.conversion.</span></span><span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_signature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_signature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/conversion.html#convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.conversion.convert" title="Link to this definition">¶</a></dt>
+<dd><p>Convert a list of musical notes to the specified format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>notes</strong> (<em>list</em>) – List of musical notes.</p></li>
+<li><p><strong>to</strong> (<em>str</em>) – Format to convert the notes to. Options are “music21”, “mido”, or “pretty_midi”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Converted musical notes in the specified format.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>object</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the specified format is not supported.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.conversion.sequence_to_mido_track">
+<span class="sig-prename descclassname"><span class="pre">djalgo.conversion.</span></span><span class="sig-name descname"><span class="pre">sequence_to_mido_track</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/conversion.html#sequence_to_mido_track"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.conversion.sequence_to_mido_track" title="Link to this definition">¶</a></dt>
+<dd><p>Convert a sequence of musical notes to a Mido track.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.conversion.sequence_to_music21_part">
+<span class="sig-prename descclassname"><span class="pre">djalgo.conversion.</span></span><span class="sig-name descname"><span class="pre">sequence_to_music21_part</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_signature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_signature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/conversion.html#sequence_to_music21_part"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.conversion.sequence_to_music21_part" title="Link to this definition">¶</a></dt>
+<dd><p>Convert a sequence of musical notes to a music21 Part, ensuring no trailing measures.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.conversion.sequence_to_prettymidi_instrument">
+<span class="sig-prename descclassname"><span class="pre">djalgo.conversion.</span></span><span class="sig-name descname"><span class="pre">sequence_to_prettymidi_instrument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/conversion.html#sequence_to_prettymidi_instrument"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.conversion.sequence_to_prettymidi_instrument" title="Link to this definition">¶</a></dt>
+<dd><p>Convert a sequence of musical notes to a PrettyMIDI instrument.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.conversion.sequences_to_mido_midi">
+<span class="sig-prename descclassname"><span class="pre">djalgo.conversion.</span></span><span class="sig-name descname"><span class="pre">sequences_to_mido_midi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/conversion.html#sequences_to_mido_midi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.conversion.sequences_to_mido_midi" title="Link to this definition">¶</a></dt>
+<dd><p>Convert multiple sequences of musical notes to a Mido MidiFile object.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.conversion.sequences_to_music21_score">
+<span class="sig-prename descclassname"><span class="pre">djalgo.conversion.</span></span><span class="sig-name descname"><span class="pre">sequences_to_music21_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_signature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_signature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/conversion.html#sequences_to_music21_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.conversion.sequences_to_music21_score" title="Link to this definition">¶</a></dt>
+<dd><p>Convert multiple sequences of musical notes to a music21 Score.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.conversion.sequences_to_prettymidi">
+<span class="sig-prename descclassname"><span class="pre">djalgo.conversion.</span></span><span class="sig-name descname"><span class="pre">sequences_to_prettymidi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parts</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/conversion.html#sequences_to_prettymidi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.conversion.sequences_to_prettymidi" title="Link to this definition">¶</a></dt>
+<dd><p>Convert multiple sequences of musical notes to a PrettyMIDI object.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.conversion.to_mido">
+<span class="sig-prename descclassname"><span class="pre">djalgo.conversion.</span></span><span class="sig-name descname"><span class="pre">to_mido</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/conversion.html#to_mido"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.conversion.to_mido" title="Link to this definition">¶</a></dt>
+<dd><p>Convert notes to Mido format based on their structure.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.conversion.to_music21">
+<span class="sig-prename descclassname"><span class="pre">djalgo.conversion.</span></span><span class="sig-name descname"><span class="pre">to_music21</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_signature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_signature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/conversion.html#to_music21"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.conversion.to_music21" title="Link to this definition">¶</a></dt>
+<dd><p>Convert notes to music21 format based on their structure.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.conversion.to_prettymidi">
+<span class="sig-prename descclassname"><span class="pre">djalgo.conversion.</span></span><span class="sig-name descname"><span class="pre">to_prettymidi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/conversion.html#to_prettymidi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.conversion.to_prettymidi" title="Link to this definition">¶</a></dt>
+<dd><p>Convert notes to PrettyMIDI format based on their structure.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.conversion.tuple_to_mido_messages">
+<span class="sig-prename descclassname"><span class="pre">djalgo.conversion.</span></span><span class="sig-name descname"><span class="pre">tuple_to_mido_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note_tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">64</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/conversion.html#tuple_to_mido_messages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.conversion.tuple_to_mido_messages" title="Link to this definition">¶</a></dt>
+<dd><p>Convert a single note tuple to Mido messages.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.conversion.tuple_to_music21_element">
+<span class="sig-prename descclassname"><span class="pre">djalgo.conversion.</span></span><span class="sig-name descname"><span class="pre">tuple_to_music21_element</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note_tuple</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/conversion.html#tuple_to_music21_element"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.conversion.tuple_to_music21_element" title="Link to this definition">¶</a></dt>
+<dd><p>Convert a single note tuple to a music21 element (Note, Rest, or Chord).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.conversion.tuple_to_prettymidi_element">
+<span class="sig-prename descclassname"><span class="pre">djalgo.conversion.</span></span><span class="sig-name descname"><span class="pre">tuple_to_prettymidi_element</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note_tuple</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/conversion.html#tuple_to_prettymidi_element"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.conversion.tuple_to_prettymidi_element" title="Link to this definition">¶</a></dt>
+<dd><p>Convert a single note tuple to a list of PrettyMIDI Note objects.</p>
+</dd></dl>
+
+<dl class="py class" id="module-djalgo.djai">
+<dt class="sig sig-object py" id="djalgo.djai.DjFlow">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.djai.</span></span><span class="sig-name descname"><span class="pre">DjFlow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence_length_i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequence_length_o</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_instruments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lstm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.005</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_heads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DjFlow"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DjFlow" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.djai.DjFlow.compute_scaling_parameters">
+<span class="sig-name descname"><span class="pre">compute_scaling_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DjFlow.compute_scaling_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DjFlow.compute_scaling_parameters" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.djai.DjFlow.extract_features">
+<span class="sig-name descname"><span class="pre">extract_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument_index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DjFlow.extract_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DjFlow.extract_features" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.djai.DjFlow.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi_files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DjFlow.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DjFlow.fit" title="Link to this definition">¶</a></dt>
+<dd><p>Train the model with the given data.</p>
+<p>Parameters:
+epochs (int): The number of epochs to train for.</p>
+<p>Returns:
+History: The history object generated by the training process. This contains information about the training process, such as the loss and accuracy at each epoch.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.djai.DjFlow.load">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DjFlow.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DjFlow.load" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.djai.DjFlow.midi_files_to_sequences">
+<span class="sig-name descname"><span class="pre">midi_files_to_sequences</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi_files</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DjFlow.midi_files_to_sequences"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DjFlow.midi_files_to_sequences" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.djai.DjFlow.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">initial_midi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_predictions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DjFlow.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DjFlow.predict" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.djai.DjFlow.prepare_data">
+<span class="sig-name descname"><span class="pre">prepare_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi_files</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DjFlow.prepare_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DjFlow.prepare_data" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.djai.DjFlow.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DjFlow.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DjFlow.save" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.djai.DjFlow.scale_back_features">
+<span class="sig-name descname"><span class="pre">scale_back_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences_scaled</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DjFlow.scale_back_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DjFlow.scale_back_features" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.djai.DjFlow.scale_features">
+<span class="sig-name descname"><span class="pre">scale_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DjFlow.scale_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DjFlow.scale_features" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="djalgo.djai.PositionalEncoding">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.djai.</span></span><span class="sig-name descname"><span class="pre">PositionalEncoding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#PositionalEncoding"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.PositionalEncoding" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Layer</span></code></p>
+<p>Positional encoding layer for Transformer models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position</strong> (<em>int</em>) – The maximum sequence length.</p></li>
+<li><p><strong>d_model</strong> (<em>int</em>) – The dimensionality of the model.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.PositionalEncoding.pos_encoding">
+<span class="sig-name descname"><span class="pre">pos_encoding</span></span><a class="headerlink" href="#djalgo.djai.PositionalEncoding.pos_encoding" title="Link to this definition">¶</a></dt>
+<dd><p>The positional encoding tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tf.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.djai.PositionalEncoding.call">
+<span class="sig-name descname"><span class="pre">call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#PositionalEncoding.call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.PositionalEncoding.call" title="Link to this definition">¶</a></dt>
+<dd><p>Adds the positional encoding to the inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>inputs</strong> (<em>tf.Tensor</em>) – The input tensor.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The output tensor.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tf.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.djai.PositionalEncoding.get_angles">
+<span class="sig-name descname"><span class="pre">get_angles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#PositionalEncoding.get_angles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.PositionalEncoding.get_angles" title="Link to this definition">¶</a></dt>
+<dd><p>Calculates the angles for the positional encoding.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position</strong> (<em>tf.Tensor</em>) – The position tensor.</p></li>
+<li><p><strong>i</strong> (<em>tf.Tensor</em>) – The index tensor.</p></li>
+<li><p><strong>d_model</strong> (<em>int</em>) – The dimensionality of the model.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The angles tensor.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tf.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.djai.PositionalEncoding.positional_encoding">
+<span class="sig-name descname"><span class="pre">positional_encoding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#PositionalEncoding.positional_encoding"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.PositionalEncoding.positional_encoding" title="Link to this definition">¶</a></dt>
+<dd><p>Generates the positional encoding tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position</strong> (<em>int</em>) – The maximum sequence length.</p></li>
+<li><p><strong>d_model</strong> (<em>int</em>) – The dimensionality of the model.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The positional encoding tensor.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tf.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.djai.scan_midi_files">
+<span class="sig-prename descclassname"><span class="pre">djalgo.djai.</span></span><span class="sig-name descname"><span class="pre">scan_midi_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_files</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#scan_midi_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.scan_midi_files" title="Link to this definition">¶</a></dt>
+<dd><p>Scans the specified directory for MIDI files using glob with a while loop.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>directory</strong> (<em>str</em>) – The directory to scan for MIDI files.</p></li>
+<li><p><strong>max_files</strong> (<em>int</em><em>, </em><em>optional</em>) – The maximum number of files to scan. If None, all files are scanned.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list of MIDI files found.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class" id="module-djalgo.fractal">
+<dt class="sig sig-object py" id="djalgo.fractal.CellularAutomata">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.fractal.</span></span><span class="sig-name descname"><span class="pre">CellularAutomata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rules</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default_rule'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/fractal.html#CellularAutomata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.fractal.CellularAutomata" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a cellular automaton.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scale</strong> (<em>list</em>) – A list of values representing the possible states of each cell.</p></li>
+<li><p><strong>length</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of generations to generate. Defaults to 10.</p></li>
+<li><p><strong>init</strong> (<em>list</em><em>, </em><em>optional</em>) – The initial state of the automaton. Defaults to None.</p></li>
+<li><p><strong>rules</strong> (<em>str</em><em> or </em><em>list</em><em>, </em><em>optional</em>) – The rules to apply for the automaton. Defaults to ‘default_rule’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the specified rule is not found in the JSON file.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.fractal.CellularAutomata.scale">
+<span class="sig-name descname"><span class="pre">scale</span></span><a class="headerlink" href="#djalgo.fractal.CellularAutomata.scale" title="Link to this definition">¶</a></dt>
+<dd><p>A list of values representing the possible states of each cell.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.fractal.CellularAutomata.length">
+<span class="sig-name descname"><span class="pre">length</span></span><a class="headerlink" href="#djalgo.fractal.CellularAutomata.length" title="Link to this definition">¶</a></dt>
+<dd><p>The number of generations to generate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.fractal.CellularAutomata.init">
+<span class="sig-name descname"><span class="pre">init</span></span><a class="headerlink" href="#djalgo.fractal.CellularAutomata.init" title="Link to this definition">¶</a></dt>
+<dd><p>The initial state of the automaton.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.fractal.CellularAutomata.rules">
+<span class="sig-name descname"><span class="pre">rules</span></span><a class="headerlink" href="#djalgo.fractal.CellularAutomata.rules" title="Link to this definition">¶</a></dt>
+<dd><p>The rules to apply for the automaton.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.fractal.CellularAutomata.array">
+<span class="sig-name descname"><span class="pre">array</span></span><a class="headerlink" href="#djalgo.fractal.CellularAutomata.array" title="Link to this definition">¶</a></dt>
+<dd><p>The generated cellular automaton.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.fractal.CellularAutomata.create_ca1D">
+<span class="sig-name descname"><span class="pre">create_ca1D</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/fractal.html#CellularAutomata.create_ca1D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.fractal.CellularAutomata.create_ca1D" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a 1D cellular automaton.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The generated cellular automaton.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.fractal.CellularAutomata.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/fractal.html#CellularAutomata.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.fractal.CellularAutomata.generate" title="Link to this definition">¶</a></dt>
+<dd><p>Generates a signal based on the cellular automaton.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The generated signal.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="djalgo.fractal.Fibonacci">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.fractal.</span></span><span class="sig-name descname"><span class="pre">Fibonacci</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/fractal.html#Fibonacci"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.fractal.Fibonacci" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class that generates a Fibonacci sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scale</strong> (<em>list</em><em> or </em><em>None</em>) – A list of values to scale the generated sequence to. If None, the sequence is not scaled.</p></li>
+<li><p><strong>length</strong> (<em>int</em>) – The length of the generated sequence.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.fractal.Fibonacci.scale">
+<span class="sig-name descname"><span class="pre">scale</span></span><a class="headerlink" href="#djalgo.fractal.Fibonacci.scale" title="Link to this definition">¶</a></dt>
+<dd><p>A list of values to scale the generated sequence to. If None, the sequence is not scaled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.fractal.Fibonacci.length">
+<span class="sig-name descname"><span class="pre">length</span></span><a class="headerlink" href="#djalgo.fractal.Fibonacci.length" title="Link to this definition">¶</a></dt>
+<dd><p>The length of the generated sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>UserWarning</strong> – If the length is greater than 10 and the scale is not provided, a warning is raised.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.fractal.Fibonacci.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/fractal.html#Fibonacci.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.fractal.Fibonacci.generate" title="Link to this definition">¶</a></dt>
+<dd><p>Generates a Fibonacci sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The generated Fibonacci sequence.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="djalgo.fractal.Mandelbrot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.fractal.</span></span><span class="sig-name descname"><span class="pre">Mandelbrot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_note_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/fractal.html#Mandelbrot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.fractal.Mandelbrot" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a Mandelbrot fractal generator.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.fractal.Mandelbrot.scale">
+<span class="sig-name descname"><span class="pre">scale</span></span><a class="headerlink" href="#djalgo.fractal.Mandelbrot.scale" title="Link to this definition">¶</a></dt>
+<dd><p>A list of values to map the generated fractal values to. If None, the raw values will be used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.fractal.Mandelbrot.start_note_index">
+<span class="sig-name descname"><span class="pre">start_note_index</span></span><a class="headerlink" href="#djalgo.fractal.Mandelbrot.start_note_index" title="Link to this definition">¶</a></dt>
+<dd><p>The starting index in the scale list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.fractal.Mandelbrot.length">
+<span class="sig-name descname"><span class="pre">length</span></span><a class="headerlink" href="#djalgo.fractal.Mandelbrot.length" title="Link to this definition">¶</a></dt>
+<dd><p>The length of the generated fractal signal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.fractal.Mandelbrot.max_iter">
+<span class="sig-name descname"><span class="pre">max_iter</span></span><a class="headerlink" href="#djalgo.fractal.Mandelbrot.max_iter" title="Link to this definition">¶</a></dt>
+<dd><p>The maximum number of iterations to perform for each point in the fractal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.fractal.Mandelbrot.x_min">
+<span class="sig-name descname"><span class="pre">x_min</span></span><a class="headerlink" href="#djalgo.fractal.Mandelbrot.x_min" title="Link to this definition">¶</a></dt>
+<dd><p>The minimum x-coordinate value of the fractal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.fractal.Mandelbrot.x_max">
+<span class="sig-name descname"><span class="pre">x_max</span></span><a class="headerlink" href="#djalgo.fractal.Mandelbrot.x_max" title="Link to this definition">¶</a></dt>
+<dd><p>The maximum x-coordinate value of the fractal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.fractal.Mandelbrot.y_min">
+<span class="sig-name descname"><span class="pre">y_min</span></span><a class="headerlink" href="#djalgo.fractal.Mandelbrot.y_min" title="Link to this definition">¶</a></dt>
+<dd><p>The minimum y-coordinate value of the fractal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.fractal.Mandelbrot.y_max">
+<span class="sig-name descname"><span class="pre">y_max</span></span><a class="headerlink" href="#djalgo.fractal.Mandelbrot.y_max" title="Link to this definition">¶</a></dt>
+<dd><p>The maximum y-coordinate value of the fractal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.fractal.Mandelbrot.center_offset">
+<span class="sig-name descname"><span class="pre">center_offset</span></span><a class="headerlink" href="#djalgo.fractal.Mandelbrot.center_offset" title="Link to this definition">¶</a></dt>
+<dd><p>Whether to offset the generated values by the center of the scale list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.fractal.Mandelbrot.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/fractal.html#Mandelbrot.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.fractal.Mandelbrot.generate" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-djalgo.genetic">
+<dt class="sig sig-object py" id="djalgo.genetic.Darwin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.genetic.</span></span><span class="sig-name descname"><span class="pre">Darwin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">initial_phrases</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">population_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_probabilities</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measure_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0.125,</span> <span class="pre">4]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/genetic.html#Darwin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.genetic.Darwin" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.genetic.Darwin.calculate_fitness_components">
+<span class="sig-name descname"><span class="pre">calculate_fitness_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phrase</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/genetic.html#Darwin.calculate_fitness_components"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.genetic.Darwin.calculate_fitness_components" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the fitness components based on the Analysis class for a given phrase.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>phrase</strong> (<em>list</em>) – The musical phrase.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary containing the fitness components (‘gini’, ‘balance’, ‘motif’, ‘dissonance’, ‘rhythmic’).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.genetic.Darwin.crossover">
+<span class="sig-name descname"><span class="pre">crossover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/genetic.html#Darwin.crossover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.genetic.Darwin.crossover" title="Link to this definition">¶</a></dt>
+<dd><p>Combine two phrases to create a new phrase.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent1</strong> (<em>list</em>) – Parent phrases.</p></li>
+<li><p><strong>parent2</strong> (<em>list</em>) – Parent phrases.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New musical phrase generated from parents.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.genetic.Darwin.evolve">
+<span class="sig-name descname"><span class="pre">evolve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rest_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.02</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/genetic.html#Darwin.evolve"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.genetic.Darwin.evolve" title="Link to this definition">¶</a></dt>
+<dd><p>Evolve the population of phrases through selection, crossover, and mutation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>k</strong> (<em>int</em>) – Number of phrases to select for the next generation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.genetic.Darwin.fitness">
+<span class="sig-name descname"><span class="pre">fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phrase</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/genetic.html#Darwin.fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.genetic.Darwin.fitness" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the fitness of a phrase based on how closely it meets the desired musical metrics targets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>phrase</strong> (<em>list</em>) – Musical phrase.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Fitness score of the phrase.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.genetic.Darwin.mutate">
+<span class="sig-name descname"><span class="pre">mutate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phrase</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rest_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.02</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/genetic.html#Darwin.mutate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.genetic.Darwin.mutate" title="Link to this definition">¶</a></dt>
+<dd><p>Mutate a musical phrase while respecting musical structures and boundaries.
+USE SCIPY PROBABILITY DISTRIBUTIONS FOR MUTATION</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.genetic.Darwin.select">
+<span class="sig-name descname"><span class="pre">select</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">25</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/genetic.html#Darwin.select"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.genetic.Darwin.select" title="Link to this definition">¶</a></dt>
+<dd><p>Select top-k phrases based on fitness.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>k</strong> (<em>int</em>) – Number of top phrases to select.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Top k musical phrases.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-djalgo.harmony">
+<dt class="sig sig-object py" id="djalgo.harmony.MusicTheoryConstants">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.harmony.</span></span><span class="sig-name descname"><span class="pre">MusicTheoryConstants</span></span><a class="reference internal" href="_modules/djalgo/harmony.html#MusicTheoryConstants"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.MusicTheoryConstants" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The Base class defines a set of musical scales, intervals, and notes.
+- scale_to_triad method returns the intervals for a triad based on the given scale intervals.
+- note_to_triad method converts a note to a triad based on the given scale intervals.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.harmony.MusicTheoryConstants.chromatic_scale">
+<span class="sig-name descname"><span class="pre">chromatic_scale</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['C',</span> <span class="pre">'C#',</span> <span class="pre">'D',</span> <span class="pre">'D#',</span> <span class="pre">'E',</span> <span class="pre">'F',</span> <span class="pre">'F#',</span> <span class="pre">'G',</span> <span class="pre">'G#',</span> <span class="pre">'A',</span> <span class="pre">'A#',</span> <span class="pre">'B']</span></em><a class="headerlink" href="#djalgo.harmony.MusicTheoryConstants.chromatic_scale" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.harmony.MusicTheoryConstants.intervals">
+<span class="sig-name descname"><span class="pre">intervals</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'M2':</span> <span class="pre">2,</span> <span class="pre">'M3':</span> <span class="pre">4,</span> <span class="pre">'M6':</span> <span class="pre">9,</span> <span class="pre">'M7':</span> <span class="pre">11,</span> <span class="pre">'P1':</span> <span class="pre">0,</span> <span class="pre">'P4':</span> <span class="pre">5,</span> <span class="pre">'P5':</span> <span class="pre">7,</span> <span class="pre">'P8':</span> <span class="pre">12,</span> <span class="pre">'m2':</span> <span class="pre">1,</span> <span class="pre">'m3':</span> <span class="pre">3,</span> <span class="pre">'m6':</span> <span class="pre">8,</span> <span class="pre">'m7':</span> <span class="pre">10}</span></em><a class="headerlink" href="#djalgo.harmony.MusicTheoryConstants.intervals" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.harmony.MusicTheoryConstants.scale_intervals">
+<span class="sig-name descname"><span class="pre">scale_intervals</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'chromatic':</span> <span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">10,</span> <span class="pre">11],</span> <span class="pre">'diminished':</span> <span class="pre">[0,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">11],</span> <span class="pre">'dorian':</span> <span class="pre">[0,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">7,</span> <span class="pre">9,</span> <span class="pre">10],</span> <span class="pre">'harmonic</span> <span class="pre">minor':</span> <span class="pre">[0,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">11],</span> <span class="pre">'locrian':</span> <span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">8,</span> <span class="pre">10],</span> <span class="pre">'lydian':</span> <span class="pre">[0,</span> <span class="pre">2,</span> <span class="pre">4,</span> <span class="pre">6,</span> <span class="pre">7,</span> <span class="pre">9,</span> <span class="pre">11],</span> <span class="pre">'major':</span> <span class="pre">[0,</span> <span class="pre">2,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">7,</span> <span class="pre">9,</span> <span class="pre">11],</span> <span class="pre">'major</span> <span class="pre">pentatonic':</span> <span class="pre">[0,</span> <span class="pre">2,</span> <span class="pre">4,</span> <span class="pre">7,</span> <span class="pre">9],</span> <span class="pre">'melodic</span> <span class="pre">minor</span> <span class="pre">ascending':</span> <span class="pre">[0,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">7,</span> <span class="pre">9,</span> <span class="pre">11],</span> <span class="pre">'melodic</span> <span class="pre">minor</span> <span class="pre">descending':</span> <span class="pre">[0,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">10],</span> <span class="pre">'minor':</span> <span class="pre">[0,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">10],</span> <span class="pre">'minor</span> <span class="pre">pentatonic':</span> <span class="pre">[0,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">7,</span> <span class="pre">10],</span> <span class="pre">'mixolydian':</span> <span class="pre">[0,</span> <span class="pre">2,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">7,</span> <span class="pre">9,</span> <span class="pre">10],</span> <span class="pre">'phrygian':</span> <span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">3,</span> <span class="pre">5,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">10]}</span></em><a class="headerlink" href="#djalgo.harmony.MusicTheoryConstants.scale_intervals" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.harmony.MusicTheoryConstants.scale_to_triad">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scale_to_triad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#MusicTheoryConstants.scale_to_triad"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.MusicTheoryConstants.scale_to_triad" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the intervals for a triad based on the given scale intervals.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="djalgo.harmony.Ornament">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.harmony.</span></span><span class="sig-name descname"><span class="pre">Ornament</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'grace_note'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tonic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grace_note_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'acciaccatura'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grace_pitches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trill_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.125</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arpeggio_degrees</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slide_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Ornament"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Ornament" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#djalgo.harmony.MusicTheoryConstants" title="djalgo.harmony.MusicTheoryConstants"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicTheoryConstants</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.harmony.Ornament.add_arpeggiation">
+<span class="sig-name descname"><span class="pre">add_arpeggiation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">note_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">voice</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Ornament.add_arpeggiation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Ornament.add_arpeggiation" title="Link to this definition">¶</a></dt>
+<dd><p>Applies arpeggiation to a chord at a specified index in the list of notes using the degrees from a Voice instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>notes</strong> (<em>list</em>) – The list of notes to be processed.</p></li>
+<li><p><strong>note_index</strong> (<em>int</em>) – The index of the note to which the arpeggiation will be added.</p></li>
+<li><p><strong>voice</strong> (<a class="reference internal" href="#djalgo.harmony.Voice" title="djalgo.harmony.Voice"><em>Voice</em></a>) – An instance of the Voice class.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list of notes with the specified arpeggiation applied to the specified chord.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.harmony.Ornament.add_grace_note">
+<span class="sig-name descname"><span class="pre">add_grace_note</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">note_index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Ornament.add_grace_note"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Ornament.add_grace_note" title="Link to this definition">¶</a></dt>
+<dd><p>Adds a grace note (either acciaccatura or appoggiatura) to a specified note in the list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>notes</strong> (<em>list</em>) – The list of notes to be processed.</p></li>
+<li><p><strong>note_index</strong> (<em>int</em>) – The index of the note to which the trill will be added.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list of notes with the specified grace note added.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.harmony.Ornament.add_mordent">
+<span class="sig-name descname"><span class="pre">add_mordent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">note_index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Ornament.add_mordent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Ornament.add_mordent" title="Link to this definition">¶</a></dt>
+<dd><p>Simulates a mordent ornament by rapidly alternating between the original pitch and one step defined in <cite>self.by</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>notes</strong> (<em>list</em>) – The list of notes to be processed.</p></li>
+<li><p><strong>note_index</strong> (<em>int</em>) – The index of the note to which the trill will be added.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing the notes that make up the mordent.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.harmony.Ornament.add_slide">
+<span class="sig-name descname"><span class="pre">add_slide</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">note_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slide_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Ornament.add_slide"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Ornament.add_slide" title="Link to this definition">¶</a></dt>
+<dd><p>Simulates a slide from the current note to the next by incrementally changing the pitch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>notes</strong> (<em>list</em>) – The list of notes to be processed.</p></li>
+<li><p><strong>note_index</strong> (<em>int</em>) – The index of the note from which the slide will start.</p></li>
+<li><p><strong>slide_length</strong> (<em>int</em>) – The number of steps in the slide.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list of notes with the specified slide applied.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.harmony.Ornament.add_trill">
+<span class="sig-name descname"><span class="pre">add_trill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">note_index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Ornament.add_trill"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Ornament.add_trill" title="Link to this definition">¶</a></dt>
+<dd><p>Simulates a trill ornament by alternating between the original pitch and one step above.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>notes</strong> (<em>list</em>) – The list of notes to be processed.</p></li>
+<li><p><strong>note_index</strong> (<em>int</em>) – The index of the note to which the trill will be added.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list of notes with the specified trill applied to the specified note.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.harmony.Ornament.add_turn">
+<span class="sig-name descname"><span class="pre">add_turn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">note_index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Ornament.add_turn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Ornament.add_turn" title="Link to this definition">¶</a></dt>
+<dd><p>Simulates a turn ornament by playing the note above, the note itself, the note below, and returning to the note.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>notes</strong> (<em>list</em>) – The list of notes to be processed.</p></li>
+<li><p><strong>note_index</strong> (<em>int</em>) – The index of the note to which the turn will be added.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list of notes with the specified turn applied to the specified note.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.harmony.Ornament.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">note_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Ornament.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Ornament.generate" title="Link to this definition">¶</a></dt>
+<dd><p>Applies the specified ornamentation action and type to the list of notes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>notes</strong> (<em>list</em>) – The list of notes to be processed.</p></li>
+<li><p><strong>note_index</strong> (<em>int</em>) – The index of the note to ornament. If None, a note will be chosen randomly.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list of notes with the specified ornamentation applied.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.harmony.Ornament.generate_scale">
+<span class="sig-name descname"><span class="pre">generate_scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tonic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Ornament.generate_scale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Ornament.generate_scale" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a complete scale based on the tonic and scale type. This function is the same as the one in the Voice class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tonic</strong> (<em>str</em>) – The tonic note for the scale.</p></li>
+<li><p><strong>scale_type</strong> (<em>str</em>) – The type of scale to generate.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of MIDI notes for the complete scale.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="djalgo.harmony.Progression">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.harmony.</span></span><span class="sig-name descname"><span class="pre">Progression</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tonic_pitch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'C4'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">circle_of</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'P5'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'chords'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[3,</span> <span class="pre">3,</span> <span class="pre">1]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Progression"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Progression" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#djalgo.harmony.MusicTheoryConstants" title="djalgo.harmony.MusicTheoryConstants"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicTheoryConstants</span></code></a></p>
+<p>A class representing a musical progression generator based on the circle of fifths (or any other interval).</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.harmony.Progression.compute_circle">
+<span class="sig-name descname"><span class="pre">compute_circle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Progression.compute_circle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Progression.compute_circle" title="Link to this definition">¶</a></dt>
+<dd><p>Compute chords based on the circle of fifths, thirds, etc., within the specified radius.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tuple containing lists of root MIDI notes for major, minor, and diminished chords.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.harmony.Progression.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Progression.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Progression.generate" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a musical progression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>length</strong> (<em>int</em>) – The length of the progression in number of chords. Defaults to 4.</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – The seed value for the random number generator. Defaults to None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of lists, where each inner list represents a chord in the progression.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.harmony.Progression.generate_chord">
+<span class="sig-name descname"><span class="pre">generate_chord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_note_midi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chord_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Progression.generate_chord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Progression.generate_chord" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a chord based on root MIDI note and chord type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_note_midi</strong> (<em>int</em>) – The root MIDI note of the chord.</p></li>
+<li><p><strong>chord_type</strong> (<em>str</em>) – The type of chord to generate. Can be ‘major’, ‘minor’, or ‘diminished’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of MIDI notes representing the generated chord.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="djalgo.harmony.Scale">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.harmony.</span></span><span class="sig-name descname"><span class="pre">Scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tonic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'major'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Scale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Scale" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#djalgo.harmony.MusicTheoryConstants" title="djalgo.harmony.MusicTheoryConstants"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicTheoryConstants</span></code></a></p>
+<p>Represents a musical scale.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tonic</strong> (<em>str</em>) – The tonic note of the scale.</p></li>
+<li><p><strong>scale_type</strong> (<em>str</em><em> or </em><em>list</em>) – The type of scale. Defaults to ‘major’. If a list is provided, it represents a custom scale.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the tonic note is not a valid note or if the scale type is not a valid scale.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.harmony.Scale.tonic">
+<span class="sig-name descname"><span class="pre">tonic</span></span><a class="headerlink" href="#djalgo.harmony.Scale.tonic" title="Link to this definition">¶</a></dt>
+<dd><p>The tonic note of the scale.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.harmony.Scale.scale_type">
+<span class="sig-name descname"><span class="pre">scale_type</span></span><a class="headerlink" href="#djalgo.harmony.Scale.scale_type" title="Link to this definition">¶</a></dt>
+<dd><p>The type of scale.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.harmony.Scale.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Scale.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Scale.generate" title="Link to this definition">¶</a></dt>
+<dd><p>Generates the full range of the scale.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of MIDI note numbers representing the full range of the scale.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="djalgo.harmony.Voice">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.harmony.</span></span><span class="sig-name descname"><span class="pre">Voice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'major'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tonic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'C'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degrees</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0,</span> <span class="pre">2,</span> <span class="pre">4]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Voice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Voice" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#djalgo.harmony.MusicTheoryConstants" title="djalgo.harmony.MusicTheoryConstants"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicTheoryConstants</span></code></a></p>
+<p>Represents a musical voice that generates chords and arpeggios based on a given scale and degrees.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scale_type</strong> (<em>str</em><em>, </em><em>optional</em>) – The type of scale to generate. Defaults to ‘major’.</p></li>
+<li><p><strong>tonic</strong> (<em>str</em><em>, </em><em>optional</em>) – The tonic note for the scale. Defaults to ‘C’.</p></li>
+<li><p><strong>degrees</strong> (<em>list</em><em>, </em><em>optional</em>) – The degrees for chord formation. Defaults to [0, 2, 4].</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.harmony.Voice.scale_type">
+<span class="sig-name descname"><span class="pre">scale_type</span></span><a class="headerlink" href="#djalgo.harmony.Voice.scale_type" title="Link to this definition">¶</a></dt>
+<dd><p>The type of scale to generate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.harmony.Voice.tonic">
+<span class="sig-name descname"><span class="pre">tonic</span></span><a class="headerlink" href="#djalgo.harmony.Voice.tonic" title="Link to this definition">¶</a></dt>
+<dd><p>The tonic note for the scale.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.harmony.Voice.tonic_index">
+<span class="sig-name descname"><span class="pre">tonic_index</span></span><a class="headerlink" href="#djalgo.harmony.Voice.tonic_index" title="Link to this definition">¶</a></dt>
+<dd><p>The index of the tonic note in the chromatic scale.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.harmony.Voice.tonic_midi">
+<span class="sig-name descname"><span class="pre">tonic_midi</span></span><a class="headerlink" href="#djalgo.harmony.Voice.tonic_midi" title="Link to this definition">¶</a></dt>
+<dd><p>The MIDI number of the tonic note.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.harmony.Voice.scale">
+<span class="sig-name descname"><span class="pre">scale</span></span><a class="headerlink" href="#djalgo.harmony.Voice.scale" title="Link to this definition">¶</a></dt>
+<dd><p>A list of MIDI notes for the complete scale.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.harmony.Voice.degrees">
+<span class="sig-name descname"><span class="pre">degrees</span></span><a class="headerlink" href="#djalgo.harmony.Voice.degrees" title="Link to this definition">¶</a></dt>
+<dd><p>The degrees for chord formation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.harmony.Voice.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pitches</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Voice.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Voice.generate" title="Link to this definition">¶</a></dt>
+<dd><p>Convert the pitches to a list of chords based on the pitches.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.harmony.Voice.generate_arpeggio">
+<span class="sig-name descname"><span class="pre">generate_arpeggio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_note</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Voice.generate_arpeggio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Voice.generate_arpeggio" title="Link to this definition">¶</a></dt>
+<dd><p>Generate an arpeggio based on the voice’s scale and degrees.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.harmony.Voice.generate_scale">
+<span class="sig-name descname"><span class="pre">generate_scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tonic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Voice.generate_scale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Voice.generate_scale" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a complete scale based on the tonic and scale type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tonic</strong> (<em>str</em>) – The tonic note for the scale.</p></li>
+<li><p><strong>scale_type</strong> (<em>str</em>) – The type of scale to generate.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of MIDI notes for the complete scale.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.harmony.Voice.midi_to_scale_degree">
+<span class="sig-name descname"><span class="pre">midi_to_scale_degree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi_note</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Voice.midi_to_scale_degree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Voice.midi_to_scale_degree" title="Link to this definition">¶</a></dt>
+<dd><p>Convert a MIDI note number to its corresponding scale degree index.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.harmony.Voice.pitch_to_chord">
+<span class="sig-name descname"><span class="pre">pitch_to_chord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi_note</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Voice.pitch_to_chord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Voice.pitch_to_chord" title="Link to this definition">¶</a></dt>
+<dd><p>Convert a MIDI note to a chord based on the scale using the specified degrees.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-djalgo.loop">
+<dt class="sig sig-object py" id="djalgo.loop.Polyloop">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.loop.</span></span><span class="sig-name descname"><span class="pre">Polyloop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">polyloops</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measure_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">insert_rests</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/loop.html#Polyloop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.loop.Polyloop" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a collection of polyloops, which are sequences of musical notes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.loop.Polyloop.plot_polyloops">
+<span class="sig-name descname"><span class="pre">plot_polyloops</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pulse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/loop.html#Polyloop.plot_polyloops"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.loop.Polyloop.plot_polyloops" title="Link to this definition">¶</a></dt>
+<dd><p>Plots the given polyloops as a radar chart, including arcs to represent the duration of each note.</p>
+<p>Parameters:
+- pulse (float): The duration of each pulse in beats. Defaults to 1/4.
+- colors (list): A list of colors to use for the plot. If not provided, a default color scheme will be used.</p>
+<p>Returns:
+- fig (plotly.graph_objects.Figure): The generated radar chart figure.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-djalgo.minimalism">
+<dt class="sig sig-object py" id="djalgo.minimalism.Minimalism">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.minimalism.</span></span><span class="sig-name descname"><span class="pre">Minimalism</span></span><a class="reference internal" href="_modules/djalgo/minimalism.html#Minimalism"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.minimalism.Minimalism" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Main class for musical minimalism.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="djalgo.minimalism.Minimalism.Process">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'additive'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'forward'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repetition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/minimalism.html#Minimalism.Process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.minimalism.Minimalism.Process" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for the process of musical minimalism.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.minimalism.Minimalism.Process.additive_backward">
+<span class="sig-name descname"><span class="pre">additive_backward</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/minimalism.html#Minimalism.Process.additive_backward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.minimalism.Minimalism.Process.additive_backward" title="Link to this definition">¶</a></dt>
+<dd><p>Applies the additive backward operation to the sequence with repetition, as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The processed sequence.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.minimalism.Minimalism.Process.additive_forward">
+<span class="sig-name descname"><span class="pre">additive_forward</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/minimalism.html#Minimalism.Process.additive_forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.minimalism.Minimalism.Process.additive_forward" title="Link to this definition">¶</a></dt>
+<dd><p>Applies the additive forward operation to the sequence with repetition, as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The processed sequence.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.minimalism.Minimalism.Process.additive_inward">
+<span class="sig-name descname"><span class="pre">additive_inward</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/minimalism.html#Minimalism.Process.additive_inward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.minimalism.Minimalism.Process.additive_inward" title="Link to this definition">¶</a></dt>
+<dd><p>Applies the additive inward operation to the sequence, as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span>                                     <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span>                         <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span>             <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The processed sequence.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.minimalism.Minimalism.Process.additive_outward">
+<span class="sig-name descname"><span class="pre">additive_outward</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/minimalism.html#Minimalism.Process.additive_outward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.minimalism.Minimalism.Process.additive_outward" title="Link to this definition">¶</a></dt>
+<dd><p>Applies the additive outward operation to the sequence with repetition, as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+                    <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The processed sequence.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.minimalism.Minimalism.Process.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/minimalism.html#Minimalism.Process.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.minimalism.Minimalism.Process.generate" title="Link to this definition">¶</a></dt>
+<dd><p>Generates the processed sequence based on the operation and direction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sequence</strong> (<em>list</em>) – The sequence to be processed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The processed sequence.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.minimalism.Minimalism.Process.subtractive_backward">
+<span class="sig-name descname"><span class="pre">subtractive_backward</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/minimalism.html#Minimalism.Process.subtractive_backward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.minimalism.Minimalism.Process.subtractive_backward" title="Link to this definition">¶</a></dt>
+<dd><p>Applies the subtractive backward operation to the sequence, as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The processed sequence.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.minimalism.Minimalism.Process.subtractive_forward">
+<span class="sig-name descname"><span class="pre">subtractive_forward</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/minimalism.html#Minimalism.Process.subtractive_forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.minimalism.Minimalism.Process.subtractive_forward" title="Link to this definition">¶</a></dt>
+<dd><p>Applies the subtractive forward operation to the sequence, as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C5&#39;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The processed sequence.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.minimalism.Minimalism.Process.subtractive_inward">
+<span class="sig-name descname"><span class="pre">subtractive_inward</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/minimalism.html#Minimalism.Process.subtractive_inward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.minimalism.Minimalism.Process.subtractive_inward" title="Link to this definition">¶</a></dt>
+<dd><p>Applies the subtractive inward operation to the sequence, as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The processed sequence.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.minimalism.Minimalism.Process.subtractive_outward">
+<span class="sig-name descname"><span class="pre">subtractive_outward</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/minimalism.html#Minimalism.Process.subtractive_outward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.minimalism.Minimalism.Process.subtractive_outward" title="Link to this definition">¶</a></dt>
+<dd><p>Applies the subtractive outward operation to the sequence, as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span> <span class="s1">&#39;F4&#39;</span><span class="p">,</span> <span class="s1">&#39;G4&#39;</span><span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;E4&#39;</span><span class="p">,</span>           <span class="p">,</span> <span class="s1">&#39;A4&#39;</span><span class="p">,</span> <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">,</span>                         <span class="s1">&#39;B4&#39;</span><span class="p">,</span> <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;C4&#39;</span><span class="p">,</span>                                     <span class="s1">&#39;C5&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The processed sequence.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="djalgo.minimalism.Minimalism.Tintinnabuli">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Tintinnabuli</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_chord</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'down'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/minimalism.html#Minimalism.Tintinnabuli"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.minimalism.Minimalism.Tintinnabuli" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for the Tintinnabuli style of musical minimalism.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.minimalism.Minimalism.Tintinnabuli.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/minimalism.html#Minimalism.Tintinnabuli.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.minimalism.Minimalism.Tintinnabuli.generate" title="Link to this definition">¶</a></dt>
+<dd><p>Generates the t-voice based on the t-chord, direction, and rank.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sequence</strong> (<em>list</em>) – The m-voice sequence.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The t-voice sequence.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-djalgo.rhythm">
+<dt class="sig sig-object py" id="djalgo.rhythm.Fibonacci">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.rhythm.</span></span><span class="sig-name descname"><span class="pre">Fibonacci</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measure_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">possible_durations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_fibonacci</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">21</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#Fibonacci"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.Fibonacci" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.rhythm.Fibonacci.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#Fibonacci.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.Fibonacci.generate" title="Link to this definition">¶</a></dt>
+<dd><p>Generates a rhythm based on the Fibonacci sequence and fits it into the measure.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.rhythm.Fibonacci.generate_fibonacci_sequence">
+<span class="sig-name descname"><span class="pre">generate_fibonacci_sequence</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#Fibonacci.generate_fibonacci_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.Fibonacci.generate_fibonacci_sequence" title="Link to this definition">¶</a></dt>
+<dd><p>Generates a Fibonacci sequence up to the maximum Fibonacci number.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.rhythm.Fibonacci.map_fibonacci_to_durations">
+<span class="sig-name descname"><span class="pre">map_fibonacci_to_durations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#Fibonacci.map_fibonacci_to_durations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.Fibonacci.map_fibonacci_to_durations" title="Link to this definition">¶</a></dt>
+<dd><p>Maps Fibonacci numbers to musical durations based on the list of possible durations.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="djalgo.rhythm.GeneticRhythm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.rhythm.</span></span><span class="sig-name descname"><span class="pre">GeneticRhythm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">population_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measure_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_generations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">durations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#GeneticRhythm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.GeneticRhythm" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.rhythm.GeneticRhythm.create_random_rhythm">
+<span class="sig-name descname"><span class="pre">create_random_rhythm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#GeneticRhythm.create_random_rhythm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.GeneticRhythm.create_random_rhythm" title="Link to this definition">¶</a></dt>
+<dd><p>Creates a random rhythm ensuring it respects the measure length and has no overlapping notes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A list of (duration, offset) tuples representing the rhythm.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.rhythm.GeneticRhythm.crossover">
+<span class="sig-name descname"><span class="pre">crossover</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#GeneticRhythm.crossover"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.GeneticRhythm.crossover" title="Link to this definition">¶</a></dt>
+<dd><p>Performs crossover between two parent rhythms to produce a new child rhythm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parent1</strong> (<em>list</em>) – The first parent rhythm.</p></li>
+<li><p><strong>parent2</strong> (<em>list</em>) – The second parent rhythm.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The new child rhythm generated from the parents.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.rhythm.GeneticRhythm.ensure_measure_length">
+<span class="sig-name descname"><span class="pre">ensure_measure_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rhythm</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#GeneticRhythm.ensure_measure_length"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.GeneticRhythm.ensure_measure_length" title="Link to this definition">¶</a></dt>
+<dd><p>Ensures that the rhythm respects the measure length, adjusting if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rhythm</strong> (<em>list</em>) – The rhythm to check and adjust.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The adjusted rhythm.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.rhythm.GeneticRhythm.evaluate_fitness">
+<span class="sig-name descname"><span class="pre">evaluate_fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rhythm</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#GeneticRhythm.evaluate_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.GeneticRhythm.evaluate_fitness" title="Link to this definition">¶</a></dt>
+<dd><p>Evaluates the fitness of a rhythm based on how close it is to the total measure length.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rhythm</strong> (<em>list</em>) – The rhythm to evaluate, represented as a list of (duration, offset) tuples.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The fitness score of the rhythm.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.rhythm.GeneticRhythm.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#GeneticRhythm.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.GeneticRhythm.generate" title="Link to this definition">¶</a></dt>
+<dd><p>Executes the genetic algorithm, evolving the rhythms over generations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The best rhythm found after the last generation, sorted by ascending offset.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.rhythm.GeneticRhythm.initialize_population">
+<span class="sig-name descname"><span class="pre">initialize_population</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#GeneticRhythm.initialize_population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.GeneticRhythm.initialize_population" title="Link to this definition">¶</a></dt>
+<dd><p>Initializes a population of random rhythms.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.rhythm.GeneticRhythm.mutate">
+<span class="sig-name descname"><span class="pre">mutate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rhythm</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#GeneticRhythm.mutate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.GeneticRhythm.mutate" title="Link to this definition">¶</a></dt>
+<dd><p>Performs a mutation on a rhythm with a certain probability, ensuring no note overlap.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rhythm</strong> (<em>list</em>) – The rhythm to mutate.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The mutated rhythm.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.rhythm.GeneticRhythm.select_parents">
+<span class="sig-name descname"><span class="pre">select_parents</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#GeneticRhythm.select_parents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.GeneticRhythm.select_parents" title="Link to this definition">¶</a></dt>
+<dd><p>Selects two parents for reproduction using a simple random selection approach.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Two selected parent rhythms for crossover.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="djalgo.rhythm.Rhythm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.rhythm.</span></span><span class="sig-name descname"><span class="pre">Rhythm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measure_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">durations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#Rhythm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.Rhythm" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class used to represent a Rhythm.</p>
+<p>…</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.rhythm.Rhythm.measure_length">
+<span class="sig-name descname"><span class="pre">measure_length</span></span><a class="headerlink" href="#djalgo.rhythm.Rhythm.measure_length" title="Link to this definition">¶</a></dt>
+<dd><p>the length of the measure</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.rhythm.Rhythm.output">
+<span class="sig-name descname"><span class="pre">output</span></span><a class="headerlink" href="#djalgo.rhythm.Rhythm.output" title="Link to this definition">¶</a></dt>
+<dd><p>the output type, either ‘duration’ or ‘time’ (default ‘duration’)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">_convert_to_output(durations):</span></span></dt>
+<dd><p>Converts the durations to the specified output type.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">random(durations,</span> <span class="pre">max_iter=100,</span> <span class="pre">seed=None):</span></span></dt>
+<dd><p>Generates a random rhythm that fits within the measure length.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">fibonacci(base=1):</span></span></dt>
+<dd><p>Generates a rhythm based on the Fibonacci sequence.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.rhythm.Rhythm.darwin">
+<span class="sig-name descname"><span class="pre">darwin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">population_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_generations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#Rhythm.darwin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.Rhythm.darwin" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.rhythm.Rhythm.fibonacci">
+<span class="sig-name descname"><span class="pre">fibonacci</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#Rhythm.fibonacci"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.Rhythm.fibonacci" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.rhythm.Rhythm.isorhythm">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">isorhythm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pitches</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">durations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#Rhythm.isorhythm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.Rhythm.isorhythm" title="Link to this definition">¶</a></dt>
+<dd><p>Zips two lists together until both ends coincide.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>list</em>) – The first list.</p></li>
+<li><p><strong>b</strong> (<em>list</em>) – The second list.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The zipped list.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.rhythm.Rhythm.random">
+<span class="sig-name descname"><span class="pre">random</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rest_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#Rhythm.random"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.Rhythm.random" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a random rhythm as a list of (duration, offset) tuples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> (<em>list</em>) – List of possible durations.</p></li>
+<li><p><strong>measure_length</strong> (<em>float</em>) – Total length of the measure.</p></li>
+<li><p><strong>rest_probability</strong> (<em>float</em>) – Probability of a rest (i.e., removing a tuple).</p></li>
+<li><p><strong>max_iter</strong> (<em>int</em>) – Maximum number of iterations to generate the rhythm.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of (duration, offset) tuples representing the rhythm.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function" id="module-djalgo.utils">
+<dt class="sig sig-object py" id="djalgo.utils.abc_to_midi">
+<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">abc_to_midi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#abc_to_midi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.abc_to_midi" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.utils.adjust_note_durations_to_prevent_overlaps">
+<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">adjust_note_durations_to_prevent_overlaps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#adjust_note_durations_to_prevent_overlaps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.adjust_note_durations_to_prevent_overlaps" title="Link to this definition">¶</a></dt>
+<dd><p>Adjust the durations of notes in a list (each note is a (pitch, duration, offset) tuple)
+to prevent overlaps, while keeping their offsets intact.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>notes</strong> (<em>list</em>) – The list of notes to be adjusted.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The modified list with adjusted note durations.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.utils.check_input">
+<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">check_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#check_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.check_input" title="Link to this definition">¶</a></dt>
+<dd><p>Checks if the input is a list of simple elements or a list of tuples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_list</strong> (<em>list</em>) – The input to check.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>‘list’ if the input is a list of simple elements,</dt><dd><p>’list of tuples’ if the input is a list of tuples,
+‘unknown’ otherwise.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.utils.fill_gaps_with_rests">
+<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">fill_gaps_with_rests</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#fill_gaps_with_rests"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.fill_gaps_with_rests" title="Link to this definition">¶</a></dt>
+<dd><p>Analyze a list of notes (each note is a (pitch, duration, offset) tuple)
+and insert rests (None, duration, offset) to fill gaps between notes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>notes</strong> (<em>list</em>) – The list of notes to be processed.</p></li>
+<li><p><strong>parent_offset</strong> (<em>float</em>) – The offset to consider from the parent list, used in recursion.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The modified list with gaps filled with rests.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.utils.get_degree_from_note">
+<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">get_degree_from_note</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tonic_midi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#get_degree_from_note"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.get_degree_from_note" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.utils.get_note_from_degree">
+<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">get_note_from_degree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">degree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tonic_midi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#get_note_from_degree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.get_note_from_degree" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.utils.get_octave">
+<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">get_octave</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi_note</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#get_octave"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.get_octave" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.utils.get_sharp">
+<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">get_sharp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#get_sharp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.get_sharp" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.utils.insert_rests">
+<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">insert_rests</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measure_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#insert_rests"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.insert_rests" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.utils.midi_to_abc">
+<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">midi_to_abc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#midi_to_abc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.midi_to_abc" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.utils.no_overlap">
+<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">no_overlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adjust</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'offsets'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#no_overlap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.no_overlap" title="Link to this definition">¶</a></dt>
+<dd><p>Adjusts the offsets of the notes to prevent overlap.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>notes</strong> (<em>list</em>) – A list of tuples, where each tuple contains a note (pitch),
+a duration (quarterLength), and an offset.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list of notes with adjusted offsets or durations.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.utils.offset_list_of_notes">
+<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">offset_list_of_notes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">by</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#offset_list_of_notes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.offset_list_of_notes" title="Link to this definition">¶</a></dt>
+<dd><p>Offset the notes in a list by a given amount.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>list</strong> (<em>list</em>) – List of notes to offset.</p></li>
+<li><p><strong>by</strong> (<em>float</em>) – Amount to offset the notes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of notes with adjusted offsets.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.utils.quantize_notes">
+<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">quantize_notes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measure_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_resolution</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#quantize_notes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.quantize_notes" title="Link to this definition">¶</a></dt>
+<dd><p>Quantize the durations and offsets of notes in musical phrases.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>notes</strong> (<em>list</em>) – List of musical phrases, where each phrase is a list of tuples (pitch, duration, offset).</p></li>
+<li><p><strong>measure_length</strong> (<em>float</em>) – The total duration of a measure, typically in quarter notes.</p></li>
+<li><p><strong>time_resolution</strong> (<em>float</em>) – The smallest time unit for quantization, typically in quarter notes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The quantized musical phrases.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.utils.repair_notes">
+<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">repair_notes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="_modules/djalgo/utils.html#repair_notes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.repair_notes" title="Link to this definition">¶</a></dt>
+<dd><p>Apply the fill_gaps_with_rests and adjust_note_durations_to_prevent_overlaps functions to a stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>s</strong> (<em>stream.Stream</em>) – The music21 stream to be processed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The modified stream with gaps filled and note durations adjusted.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>stream.Stream</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.utils.round_to_list">
+<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">round_to_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#round_to_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.round_to_list" title="Link to this definition">¶</a></dt>
+<dd><p>Rounds the given value to the nearest value in the scale list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<em>float</em>) – The value to be rounded.</p></li>
+<li><p><strong>scale</strong> (<em>list</em>) – A list of values to round to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The value from the scale list that is closest to the given value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.utils.scale_list">
+<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">scale_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numbers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_numbers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_numbers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#scale_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.scale_list" title="Link to this definition">¶</a></dt>
+<dd><p>Scale a list of numbers so that its range is between min_value and max_value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>numbers</strong> (<em>list</em>) – List of numbers to scale.</p></li>
+<li><p><strong>min_value</strong> (<em>float</em>) – Minimum value of the scaled list.</p></li>
+<li><p><strong>max_value</strong> (<em>float</em>) – Maximum value of the scaled list.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Scaled list of numbers.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class" id="module-djalgo.walk">
+<dt class="sig sig-object py" id="djalgo.walk.Chain">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.walk.</span></span><span class="sig-name descname"><span class="pre">Chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">walk_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branching_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merging_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Chain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Chain" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.walk.Chain.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Chain.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Chain.generate" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="djalgo.walk.Kernel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.walk.</span></span><span class="sig-name descname"><span class="pre">Kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">walk_around</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Kernel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Kernel" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.walk.Kernel.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsamples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Kernel.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Kernel.generate" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.walk.Kernel.rbf_kernel">
+<span class="sig-name descname"><span class="pre">rbf_kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dimension</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_scale</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Kernel.rbf_kernel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Kernel.rbf_kernel" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="index.html">djalgo</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="00_getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_musical.html">Pythonic Harmonies</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="01_musical.html" title="previous chapter">Pythonic Harmonies</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Essi Parent.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/99_api.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
