@@ -11,6 +11,7 @@
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -37,7 +38,7 @@
 <span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
 
 <div class="viewcode-block" id="Polyloop">
-<a class="viewcode-back" href="../../99_api.html#djalgo.loop.Polyloop">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.loop.Polyloop">[docs]</a>
 <span class="k">class</span> <span class="nc">Polyloop</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a collection of polyloops, which are sequences of musical notes.</span>
@@ -56,7 +57,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">polyloops</span> <span class="o">=</span> <span class="p">[</span><span class="n">utils</span><span class="o">.</span><span class="n">insert_rests</span><span class="p">(</span><span class="n">polyloop</span><span class="p">)</span> <span class="k">for</span> <span class="n">polyloop</span> <span class="ow">in</span> <span class="n">polyloops</span><span class="p">]</span> <span class="k">if</span> <span class="n">insert_rests</span> <span class="k">else</span> <span class="n">polyloops</span>
 
 <div class="viewcode-block" id="Polyloop.plot_polyloops">
-<a class="viewcode-back" href="../../99_api.html#djalgo.loop.Polyloop.plot_polyloops">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.loop.Polyloop.plot_polyloops">[docs]</a>
     <span class="k">def</span> <span class="nf">plot_polyloops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pulse</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Plots the given polyloops as a radar chart, including arcs to represent the duration of each note.</span>
@@ -171,7 +172,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../00_getting-started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../01_musical.html">Pythonic Harmonies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../99_api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>
 
 <div class="relations">

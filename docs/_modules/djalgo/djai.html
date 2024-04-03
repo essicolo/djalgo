@@ -11,6 +11,7 @@
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -39,7 +40,7 @@
 <span class="kn">import</span> <span class="nn">glob</span>
 
 <div class="viewcode-block" id="scan_midi_files">
-<a class="viewcode-back" href="../../99_api.html#djalgo.djai.scan_midi_files">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.djai.scan_midi_files">[docs]</a>
 <span class="k">def</span> <span class="nf">scan_midi_files</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">max_files</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Scans the specified directory for MIDI files using glob with a while loop.</span>
@@ -64,7 +65,7 @@
 
 
 <div class="viewcode-block" id="PositionalEncoding">
-<a class="viewcode-back" href="../../99_api.html#djalgo.djai.PositionalEncoding">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.djai.PositionalEncoding">[docs]</a>
 <span class="k">class</span> <span class="nc">PositionalEncoding</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Layer</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Positional encoding layer for Transformer models.</span>
@@ -82,7 +83,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">pos_encoding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">positional_encoding</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">d_model</span><span class="p">)</span>
 
 <div class="viewcode-block" id="PositionalEncoding.get_angles">
-<a class="viewcode-back" href="../../99_api.html#djalgo.djai.PositionalEncoding.get_angles">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.djai.PositionalEncoding.get_angles">[docs]</a>
     <span class="k">def</span> <span class="nf">get_angles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">d_model</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calculates the angles for the positional encoding.</span>
@@ -101,7 +102,7 @@
 
 
 <div class="viewcode-block" id="PositionalEncoding.positional_encoding">
-<a class="viewcode-back" href="../../99_api.html#djalgo.djai.PositionalEncoding.positional_encoding">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.djai.PositionalEncoding.positional_encoding">[docs]</a>
     <span class="k">def</span> <span class="nf">positional_encoding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">d_model</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates the positional encoding tensor.</span>
@@ -124,7 +125,7 @@
 
 
 <div class="viewcode-block" id="PositionalEncoding.call">
-<a class="viewcode-back" href="../../99_api.html#djalgo.djai.PositionalEncoding.call">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.djai.PositionalEncoding.call">[docs]</a>
     <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds the positional encoding to the inputs.</span>
@@ -202,7 +203,7 @@
 
     <span class="c1"># Rest of the code...</span>
 <div class="viewcode-block" id="DjFlow">
-<a class="viewcode-back" href="../../99_api.html#djalgo.djai.DjFlow">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.djai.DjFlow">[docs]</a>
 <span class="k">class</span> <span class="nc">DjFlow</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    </span>
@@ -223,7 +224,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_default_model</span><span class="p">()</span>
 
 <div class="viewcode-block" id="DjFlow.midi_files_to_sequences">
-<a class="viewcode-back" href="../../99_api.html#djalgo.djai.DjFlow.midi_files_to_sequences">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.djai.DjFlow.midi_files_to_sequences">[docs]</a>
     <span class="k">def</span> <span class="nf">midi_files_to_sequences</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">midi_files</span><span class="p">):</span>
         <span class="n">all_sequences</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">midi_file</span> <span class="ow">in</span> <span class="n">midi_files</span><span class="p">:</span>
@@ -240,7 +241,7 @@
 
 
 <div class="viewcode-block" id="DjFlow.extract_features">
-<a class="viewcode-back" href="../../99_api.html#djalgo.djai.DjFlow.extract_features">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.djai.DjFlow.extract_features">[docs]</a>
     <span class="k">def</span> <span class="nf">extract_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes</span><span class="p">,</span> <span class="n">instrument_index</span><span class="p">):</span>
         <span class="n">pitches</span> <span class="o">=</span> <span class="p">[</span><span class="n">note</span><span class="o">.</span><span class="n">pitch</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">notes</span><span class="p">]</span>
         <span class="n">durations</span> <span class="o">=</span> <span class="p">[</span><span class="n">note</span><span class="o">.</span><span class="n">end</span> <span class="o">-</span> <span class="n">note</span><span class="o">.</span><span class="n">start</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">notes</span><span class="p">]</span>
@@ -251,7 +252,7 @@
 
 
 <div class="viewcode-block" id="DjFlow.compute_scaling_parameters">
-<a class="viewcode-back" href="../../99_api.html#djalgo.djai.DjFlow.compute_scaling_parameters">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.djai.DjFlow.compute_scaling_parameters">[docs]</a>
     <span class="k">def</span> <span class="nf">compute_scaling_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sequences</span><span class="p">):</span>
         <span class="c1"># Excluding instrument index from scaling</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">sequences</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
@@ -259,7 +260,7 @@
 
 
 <div class="viewcode-block" id="DjFlow.scale_features">
-<a class="viewcode-back" href="../../99_api.html#djalgo.djai.DjFlow.scale_features">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.djai.DjFlow.scale_features">[docs]</a>
     <span class="k">def</span> <span class="nf">scale_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sequences</span><span class="p">):</span>
         <span class="n">sequences_scaled</span> <span class="o">=</span> <span class="n">sequences</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">sequences_scaled</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">sequences</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">means</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">stds</span>
@@ -268,7 +269,7 @@
 
 
 <div class="viewcode-block" id="DjFlow.scale_back_features">
-<a class="viewcode-back" href="../../99_api.html#djalgo.djai.DjFlow.scale_back_features">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.djai.DjFlow.scale_back_features">[docs]</a>
     <span class="k">def</span> <span class="nf">scale_back_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sequences_scaled</span><span class="p">):</span>
         <span class="n">sequences</span> <span class="o">=</span> <span class="n">sequences_scaled</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">sequences</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">sequences</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">stds</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">means</span>
@@ -277,7 +278,7 @@
 
 
 <div class="viewcode-block" id="DjFlow.prepare_data">
-<a class="viewcode-back" href="../../99_api.html#djalgo.djai.DjFlow.prepare_data">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.djai.DjFlow.prepare_data">[docs]</a>
     <span class="k">def</span> <span class="nf">prepare_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">midi_files</span><span class="p">):</span>
         <span class="n">sequences</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">midi_files_to_sequences</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span> 
         <span class="bp">self</span><span class="o">.</span><span class="n">compute_scaling_parameters</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
@@ -364,7 +365,7 @@
 
 
 <div class="viewcode-block" id="DjFlow.fit">
-<a class="viewcode-back" href="../../99_api.html#djalgo.djai.DjFlow.fit">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.djai.DjFlow.fit">[docs]</a>
     <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">midi_files</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Train the model with the given data.</span>
@@ -381,7 +382,7 @@
 
 
 <div class="viewcode-block" id="DjFlow.predict">
-<a class="viewcode-back" href="../../99_api.html#djalgo.djai.DjFlow.predict">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.djai.DjFlow.predict">[docs]</a>
     <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">initial_midi</span><span class="p">,</span> <span class="n">num_predictions</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The model has not been trained yet. Please call `fit` before calling `predict`.&quot;</span><span class="p">)</span>
@@ -426,7 +427,7 @@
         <span class="k">return</span> <span class="n">predicted_ds</span></div>
 
 <div class="viewcode-block" id="DjFlow.save">
-<a class="viewcode-back" href="../../99_api.html#djalgo.djai.DjFlow.save">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.djai.DjFlow.save">[docs]</a>
     <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_dir</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">model_dir</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">model_dir</span><span class="p">)</span>
@@ -495,7 +496,7 @@
 
 
 <div class="viewcode-block" id="DjFlow.load">
-<a class="viewcode-back" href="../../99_api.html#djalgo.djai.DjFlow.load">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.djai.DjFlow.load">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">model_dir</span><span class="p">):</span>
         <span class="c1"># Load model parameters</span>
@@ -557,7 +558,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../00_getting-started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../01_musical.html">Pythonic Harmonies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../99_api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>
 
 <div class="relations">

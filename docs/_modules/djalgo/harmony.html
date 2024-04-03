@@ -11,6 +11,7 @@
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -35,7 +36,7 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">utils</span>
 
 <div class="viewcode-block" id="MusicTheoryConstants">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.MusicTheoryConstants">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.MusicTheoryConstants">[docs]</a>
 <span class="k">class</span> <span class="nc">MusicTheoryConstants</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Base class defines a set of musical scales, intervals, and notes.</span>
@@ -62,7 +63,7 @@
     <span class="n">intervals</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;P1&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;m2&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;M2&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;m3&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;M3&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;P4&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;P5&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;m6&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;M6&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s1">&#39;m7&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;M7&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span> <span class="s1">&#39;P8&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">}</span>
 
 <div class="viewcode-block" id="MusicTheoryConstants.scale_to_triad">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.MusicTheoryConstants.scale_to_triad">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.MusicTheoryConstants.scale_to_triad">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">scale_to_triad</span><span class="p">(</span><span class="n">scale</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the intervals for a triad based on the given scale intervals.&quot;&quot;&quot;</span>
@@ -72,7 +73,7 @@
 
     
 <div class="viewcode-block" id="Scale">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Scale">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Scale">[docs]</a>
 <span class="k">class</span> <span class="nc">Scale</span><span class="p">(</span><span class="n">MusicTheoryConstants</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a musical scale.</span>
@@ -103,7 +104,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">scale_type</span> <span class="o">=</span> <span class="n">scale_type</span>
 
 <div class="viewcode-block" id="Scale.generate">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Scale.generate">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Scale.generate">[docs]</a>
     <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates the full range of the scale.</span>
@@ -127,7 +128,7 @@
 
 
 <div class="viewcode-block" id="Progression">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Progression">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Progression">[docs]</a>
 <span class="k">class</span> <span class="nc">Progression</span><span class="p">(</span><span class="n">MusicTheoryConstants</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A class representing a musical progression generator based on the circle of fifths (or any other interval).&quot;&quot;&quot;</span>
 
@@ -158,7 +159,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Type must either be &#39;pitches&#39; or &#39;chords&#39;.&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Progression.compute_circle">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Progression.compute_circle">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Progression.compute_circle">[docs]</a>
     <span class="k">def</span> <span class="nf">compute_circle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute chords based on the circle of fifths, thirds, etc., within the specified radius.</span>
@@ -180,7 +181,7 @@
 
 
 <div class="viewcode-block" id="Progression.generate_chord">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Progression.generate_chord">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Progression.generate_chord">[docs]</a>
     <span class="k">def</span> <span class="nf">generate_chord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root_note_midi</span><span class="p">,</span> <span class="n">chord_type</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate a chord based on root MIDI note and chord type.</span>
@@ -207,7 +208,7 @@
 
 
 <div class="viewcode-block" id="Progression.generate">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Progression.generate">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Progression.generate">[docs]</a>
     <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate a musical progression.</span>
@@ -243,7 +244,7 @@
 
 
 <div class="viewcode-block" id="Voice">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Voice">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Voice">[docs]</a>
 <span class="k">class</span> <span class="nc">Voice</span><span class="p">(</span><span class="n">MusicTheoryConstants</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Represents a musical voice that generates chords and arpeggios based on a given scale and degrees.</span>
@@ -271,7 +272,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">degrees</span> <span class="o">=</span> <span class="n">degrees</span>  <span class="c1"># Degrees for chord formation</span>
 
 <div class="viewcode-block" id="Voice.generate_scale">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Voice.generate_scale">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Voice.generate_scale">[docs]</a>
     <span class="k">def</span> <span class="nf">generate_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tonic</span><span class="p">,</span> <span class="n">scale_type</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate a complete scale based on the tonic and scale type.</span>
@@ -295,7 +296,7 @@
 
 
 <div class="viewcode-block" id="Voice.midi_to_scale_degree">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Voice.midi_to_scale_degree">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Voice.midi_to_scale_degree">[docs]</a>
     <span class="k">def</span> <span class="nf">midi_to_scale_degree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">midi_note</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert a MIDI note number to its corresponding scale degree index.&quot;&quot;&quot;</span>
         <span class="n">note_in_scale</span> <span class="o">=</span> <span class="p">(</span><span class="n">midi_note</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonic_midi</span><span class="p">)</span> <span class="o">%</span> <span class="mi">12</span>
@@ -307,7 +308,7 @@
 
 
 <div class="viewcode-block" id="Voice.pitch_to_chord">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Voice.pitch_to_chord">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Voice.pitch_to_chord">[docs]</a>
     <span class="k">def</span> <span class="nf">pitch_to_chord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">midi_note</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert a MIDI note to a chord based on the scale using the specified degrees.&quot;&quot;&quot;</span>
         <span class="n">scale_degree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">midi_to_scale_degree</span><span class="p">(</span><span class="n">midi_note</span><span class="p">)</span>
@@ -319,14 +320,14 @@
 
 
 <div class="viewcode-block" id="Voice.generate">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Voice.generate">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Voice.generate">[docs]</a>
     <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pitches</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert the pitches to a list of chords based on the pitches.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pitch_to_chord</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span> <span class="k">for</span> <span class="n">pitch</span> <span class="ow">in</span> <span class="n">pitches</span><span class="p">]</span></div>
 
     
 <div class="viewcode-block" id="Voice.generate_arpeggio">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Voice.generate_arpeggio">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Voice.generate_arpeggio">[docs]</a>
     <span class="k">def</span> <span class="nf">generate_arpeggio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root_note</span><span class="p">,</span> <span class="n">pattern_length</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate an arpeggio based on the voice&#39;s scale and degrees.&quot;&quot;&quot;</span>
         <span class="n">scale_degree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">midi_to_scale_degree</span><span class="p">(</span><span class="n">root_note</span><span class="p">)</span>
@@ -342,7 +343,7 @@
 
 
 <div class="viewcode-block" id="Ornament">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Ornament">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Ornament">[docs]</a>
 <span class="k">class</span> <span class="nc">Ornament</span><span class="p">(</span><span class="n">MusicTheoryConstants</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
@@ -382,7 +383,7 @@
         
 
 <div class="viewcode-block" id="Ornament.generate_scale">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Ornament.generate_scale">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Ornament.generate_scale">[docs]</a>
     <span class="k">def</span> <span class="nf">generate_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tonic</span><span class="p">,</span> <span class="n">scale_type</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate a complete scale based on the tonic and scale type. This function is the same as the one in the Voice class.</span>
@@ -406,7 +407,7 @@
 
 
 <div class="viewcode-block" id="Ornament.add_grace_note">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Ornament.add_grace_note">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Ornament.add_grace_note">[docs]</a>
     <span class="k">def</span> <span class="nf">add_grace_note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a grace note (either acciaccatura or appoggiatura) to a specified note in the list.</span>
@@ -437,7 +438,7 @@
 
 
 <div class="viewcode-block" id="Ornament.add_trill">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Ornament.add_trill">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Ornament.add_trill">[docs]</a>
     <span class="k">def</span> <span class="nf">add_trill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Simulates a trill ornament by alternating between the original pitch and one step above.</span>
@@ -473,7 +474,7 @@
 
 
 <div class="viewcode-block" id="Ornament.add_mordent">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Ornament.add_mordent">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Ornament.add_mordent">[docs]</a>
     <span class="k">def</span> <span class="nf">add_mordent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Simulates a mordent ornament by rapidly alternating between the original pitch and one step defined in `self.by`.</span>
@@ -506,7 +507,7 @@
 
 
 <div class="viewcode-block" id="Ornament.add_arpeggiation">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Ornament.add_arpeggiation">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Ornament.add_arpeggiation">[docs]</a>
     <span class="k">def</span> <span class="nf">add_arpeggiation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="p">,</span> <span class="n">voice</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Applies arpeggiation to a chord at a specified index in the list of notes using the degrees from a Voice instance.</span>
@@ -540,7 +541,7 @@
 
     
 <div class="viewcode-block" id="Ornament.add_turn">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Ornament.add_turn">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Ornament.add_turn">[docs]</a>
     <span class="k">def</span> <span class="nf">add_turn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Simulates a turn ornament by playing the note above, the note itself, the note below, and returning to the note.</span>
@@ -575,7 +576,7 @@
 
 
 <div class="viewcode-block" id="Ornament.add_slide">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Ornament.add_slide">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Ornament.add_slide">[docs]</a>
     <span class="k">def</span> <span class="nf">add_slide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="p">,</span> <span class="n">slide_length</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Simulates a slide from the current note to the next by incrementally changing the pitch.</span>
@@ -609,7 +610,7 @@
 
 
 <div class="viewcode-block" id="Ornament.generate">
-<a class="viewcode-back" href="../../99_api.html#djalgo.harmony.Ornament.generate">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.Ornament.generate">[docs]</a>
     <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes</span><span class="p">,</span> <span class="n">note_index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Applies the specified ornamentation action and type to the list of notes.</span>
@@ -665,7 +666,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../00_getting-started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../01_musical.html">Pythonic Harmonies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../99_api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>
 
 <div class="relations">

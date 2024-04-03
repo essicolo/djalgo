@@ -11,6 +11,7 @@
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -53,7 +54,7 @@
 <span class="c1">#    scamp = None</span>
 
 <div class="viewcode-block" id="convert">
-<a class="viewcode-back" href="../../99_api.html#djalgo.conversion.convert">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.conversion.convert">[docs]</a>
 <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">time_signature</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">key_signature</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Convert a list of musical notes to the specified format.</span>
@@ -88,7 +89,7 @@
 <span class="c1"># Music21 conversion</span>
 <span class="c1"># ------------------</span>
 <div class="viewcode-block" id="to_music21">
-<a class="viewcode-back" href="../../99_api.html#djalgo.conversion.to_music21">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.conversion.to_music21">[docs]</a>
 <span class="k">def</span> <span class="nf">to_music21</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">time_signature</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">key_signature</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert notes to music21 format based on their structure.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>  <span class="c1"># Single note, rest, or chord</span>
@@ -100,7 +101,7 @@
 
 
 <div class="viewcode-block" id="tuple_to_music21_element">
-<a class="viewcode-back" href="../../99_api.html#djalgo.conversion.tuple_to_music21_element">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.conversion.tuple_to_music21_element">[docs]</a>
 <span class="k">def</span> <span class="nf">tuple_to_music21_element</span><span class="p">(</span><span class="n">note_tuple</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a single note tuple to a music21 element (Note, Rest, or Chord).&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">note_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># it&#39;s a rest</span>
@@ -118,7 +119,7 @@
 
 
 <div class="viewcode-block" id="sequence_to_music21_part">
-<a class="viewcode-back" href="../../99_api.html#djalgo.conversion.sequence_to_music21_part">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.conversion.sequence_to_music21_part">[docs]</a>
 <span class="k">def</span> <span class="nf">sequence_to_music21_part</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">time_signature</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">key_signature</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a sequence of musical notes to a music21 Part, ensuring no trailing measures.&quot;&quot;&quot;</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">m21</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">Part</span><span class="p">()</span>
@@ -147,7 +148,7 @@
 
 
 <div class="viewcode-block" id="sequences_to_music21_score">
-<a class="viewcode-back" href="../../99_api.html#djalgo.conversion.sequences_to_music21_score">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.conversion.sequences_to_music21_score">[docs]</a>
 <span class="k">def</span> <span class="nf">sequences_to_music21_score</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">time_signature</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">key_signature</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert multiple sequences of musical notes to a music21 Score.&quot;&quot;&quot;</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">m21</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">Score</span><span class="p">()</span>
@@ -161,7 +162,7 @@
 <span class="c1"># Pretty-midi conversion</span>
 <span class="c1"># ----------------------</span>
 <div class="viewcode-block" id="to_prettymidi">
-<a class="viewcode-back" href="../../99_api.html#djalgo.conversion.to_prettymidi">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.conversion.to_prettymidi">[docs]</a>
 <span class="k">def</span> <span class="nf">to_prettymidi</span><span class="p">(</span><span class="n">notes</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert notes to PrettyMIDI format based on their structure.&quot;&quot;&quot;</span>
     
@@ -174,7 +175,7 @@
 
 
 <div class="viewcode-block" id="tuple_to_prettymidi_element">
-<a class="viewcode-back" href="../../99_api.html#djalgo.conversion.tuple_to_prettymidi_element">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.conversion.tuple_to_prettymidi_element">[docs]</a>
 <span class="k">def</span> <span class="nf">tuple_to_prettymidi_element</span><span class="p">(</span><span class="n">note_tuple</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a single note tuple to a list of PrettyMIDI Note objects.&quot;&quot;&quot;</span>
     <span class="n">elements</span> <span class="o">=</span> <span class="p">[]</span>
@@ -192,7 +193,7 @@
 
 
 <div class="viewcode-block" id="sequence_to_prettymidi_instrument">
-<a class="viewcode-back" href="../../99_api.html#djalgo.conversion.sequence_to_prettymidi_instrument">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.conversion.sequence_to_prettymidi_instrument">[docs]</a>
 <span class="k">def</span> <span class="nf">sequence_to_prettymidi_instrument</span><span class="p">(</span><span class="n">notes</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a sequence of musical notes to a PrettyMIDI instrument.&quot;&quot;&quot;</span>
     <span class="n">instrument</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Instrument</span><span class="p">(</span><span class="n">program</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Default to piano; modify as needed</span>
@@ -203,7 +204,7 @@
 
 
 <div class="viewcode-block" id="sequences_to_prettymidi">
-<a class="viewcode-back" href="../../99_api.html#djalgo.conversion.sequences_to_prettymidi">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.conversion.sequences_to_prettymidi">[docs]</a>
 <span class="k">def</span> <span class="nf">sequences_to_prettymidi</span><span class="p">(</span><span class="n">parts</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert multiple sequences of musical notes to a PrettyMIDI object.&quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">part_notes</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
@@ -216,7 +217,7 @@
 <span class="c1"># Mido conversion</span>
 <span class="c1"># ---------------</span>
 <div class="viewcode-block" id="to_mido">
-<a class="viewcode-back" href="../../99_api.html#djalgo.conversion.to_mido">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.conversion.to_mido">[docs]</a>
 <span class="k">def</span> <span class="nf">to_mido</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">64</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert notes to Mido format based on their structure.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>  <span class="c1"># Single note, rest, or chord</span>
@@ -228,7 +229,7 @@
 
 
 <div class="viewcode-block" id="tuple_to_mido_messages">
-<a class="viewcode-back" href="../../99_api.html#djalgo.conversion.tuple_to_mido_messages">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.conversion.tuple_to_mido_messages">[docs]</a>
 <span class="k">def</span> <span class="nf">tuple_to_mido_messages</span><span class="p">(</span><span class="n">note_tuple</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">64</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a single note tuple to Mido messages.&quot;&quot;&quot;</span>
     <span class="n">messages</span> <span class="o">=</span> <span class="p">[]</span>
@@ -247,7 +248,7 @@
 
 
 <div class="viewcode-block" id="sequence_to_mido_track">
-<a class="viewcode-back" href="../../99_api.html#djalgo.conversion.sequence_to_mido_track">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.conversion.sequence_to_mido_track">[docs]</a>
 <span class="k">def</span> <span class="nf">sequence_to_mido_track</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">64</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert a sequence of musical notes to a Mido track.&quot;&quot;&quot;</span>
     <span class="n">track</span> <span class="o">=</span> <span class="n">mido</span><span class="o">.</span><span class="n">MidiTrack</span><span class="p">()</span>
@@ -258,7 +259,7 @@
 
 
 <div class="viewcode-block" id="sequences_to_mido_midi">
-<a class="viewcode-back" href="../../99_api.html#djalgo.conversion.sequences_to_mido_midi">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.conversion.sequences_to_mido_midi">[docs]</a>
 <span class="k">def</span> <span class="nf">sequences_to_mido_midi</span><span class="p">(</span><span class="n">parts</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">velocity</span><span class="o">=</span><span class="mi">64</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert multiple sequences of musical notes to a Mido MidiFile object.&quot;&quot;&quot;</span>
     <span class="n">mid</span> <span class="o">=</span> <span class="n">mido</span><span class="o">.</span><span class="n">MidiFile</span><span class="p">()</span>
@@ -298,7 +299,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../00_getting-started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../01_musical.html">Pythonic Harmonies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../99_api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>
 
 <div class="relations">

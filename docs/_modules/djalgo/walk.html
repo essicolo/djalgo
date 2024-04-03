@@ -11,6 +11,7 @@
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -36,7 +37,7 @@
 
 
 <div class="viewcode-block" id="Chain">
-<a class="viewcode-back" href="../../99_api.html#djalgo.walk.Chain">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.walk.Chain">[docs]</a>
 <span class="k">class</span> <span class="nc">Chain</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">walk_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">walk_start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">walk_probability</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">branching_probability</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">merging_probability</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">walk_range</span> <span class="o">=</span> <span class="n">walk_range</span> <span class="ow">or</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># Default step choices</span>
@@ -47,7 +48,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">merging_probability</span> <span class="o">=</span> <span class="n">merging_probability</span>
 
 <div class="viewcode-block" id="Chain.generate">
-<a class="viewcode-back" href="../../99_api.html#djalgo.walk.Chain.generate">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.walk.Chain.generate">[docs]</a>
     <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
         <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
@@ -106,7 +107,7 @@
     
 
 <div class="viewcode-block" id="Kernel">
-<a class="viewcode-back" href="../../99_api.html#djalgo.walk.Kernel">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.walk.Kernel">[docs]</a>
 <span class="k">class</span> <span class="nc">Kernel</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">walk_around</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length_scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">walk_around</span> <span class="o">=</span> <span class="n">walk_around</span>
@@ -116,7 +117,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">amplitude</span>
 
 <div class="viewcode-block" id="Kernel.rbf_kernel">
-<a class="viewcode-back" href="../../99_api.html#djalgo.walk.Kernel.rbf_kernel">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.walk.Kernel.rbf_kernel">[docs]</a>
     <span class="k">def</span> <span class="nf">rbf_kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimension</span><span class="p">,</span> <span class="n">length_scale</span><span class="p">):</span>
         <span class="n">covariance_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">dimension</span><span class="p">,</span> <span class="n">dimension</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimension</span><span class="p">):</span>
@@ -128,7 +129,7 @@
 
 
 <div class="viewcode-block" id="Kernel.generate">
-<a class="viewcode-back" href="../../99_api.html#djalgo.walk.Kernel.generate">[docs]</a>
+<a class="viewcode-back" href="../../api.html#djalgo.walk.Kernel.generate">[docs]</a>
     <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nsamples</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">or</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
@@ -195,7 +196,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../00_getting-started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../01_musical.html">Pythonic Harmonies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../99_api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>
 
 <div class="relations">
