@@ -7,10 +7,9 @@ With a foundation in **ecological engineering, agriculture, data science, and hu
 
 These endeavors in music are not merely artistic pursuits but a profound exploration of how algorithms can capture and convey the essence of human emotion and experience. My journey is one of perpetual learning and discovery, a testament to the power of bridging disparate domains to forge new paths and understandings.
 
-Djalgo is more than a project; it's a reflection of a lifelong commitment to blending science with art, showcasing the beauty and complexity of the world through the universal language of music.
+Djalgo is more than a project; it's a reflection of a lifelong commitment to blending science with art, showcasing the beauty and complexity of the world through the language of music.
 
-Mastodon: @essi@mozilla.social
-ORDID: https://orcid.org/0000-0003-1679-2287
+Mastodon: @essi@mozilla.social ; ORDID: https://orcid.org/0000-0003-1679-2287
 
 .. image:: /images/portrait.png
    :height: 250px
