@@ -8,7 +8,7 @@
     <title>Loops &#8212; Djalgo 0.1-alpha documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
-    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script src="_static/documentation_options.js?v=737112c1"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -41,7 +41,7 @@
 <h1>Loops<a class="headerlink" href="#Loops" title="Link to this heading">¶</a></h1>
 <p>Let’s delve into a technique centered around numbers, but essentially visual, steering clear of mathematical functions. Multilevel rhythms in music and mathematics are about orchestrating beats, durations, and accents across various tiers or facets of a composition or sequence. These rhythmic patterns often manifest as polygons nestled within a circle, symbolizing the loop’s periodic nature. I’ve coined the term polyloops for these looping polygons (poly) to capture the essence of looping
 multiple shapes. Imagine a radar plot, as depicted in Figure ???, that emits a beep each time a rotating line intersects a point on the circle’s perimeter. This setup allows us to: (1) introduce any number of points, (2) layer multiple polygons, each associated with a distinct instrument, (3) create triggered notes with tailored pitches and durations, and (4) adjust the rotation’s velocity to our liking.</p>
-<p><img alt="image1" src="_images/balance.png" /> <img alt="14634e50655147678b00c7e4475283d6" src="_images/polyloops.svg" /></p>
+<p><img alt="86748ff240234e2e9015cc09fd0fcc1a" src="_images/polyloops.svg" /></p>
 <p>In Djalgo, we represent each polyloop as a track, i.e. a list of note tuples, each tuple being a note defined as (pitch, duration, offset). A first polyloop might cover the basic rhythmic pattern of a loop. A second, as another layer of rhythms, and a third that leans towards the melodic side. The latter polyloop could incorporate varying pitches, adding a melodic layer to our rhythmic foundation. By carefully selecting the the timing, we can craft a composition that not only has rhythmic
 interest but also melodic movement.</p>
 <div class="nbinput nblast docutils container">
@@ -99,11 +99,11 @@ interest but also melodic movement.</p>
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pl1</span><span class="o">.</span><span class="n">plot_polyloops</span><span class="p">(</span><span class="n">pulse</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s2">&quot;images/pl1.png&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pl1</span><span class="o">.</span><span class="n">plot_polyloops</span><span class="p">(</span><span class="n">pulse</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s2">&quot;_images/pl1.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<p><img alt="image1" src="_images/balance.png" /></p>
+<p><img alt="a3f7445202f54255b177d08b577aef19" src="_images/pl1.png" /></p>
 <p>The plot show the structure of the loop in terms of durations and offsets. The pitch information is purposely excluded to simplify the visualization and prevent the plot from becoming too cluttered. The polyloops are displayed starting from the innermost loop, featuring the shortest radius, progressing outward to the final loop according to the order of the list in the <code class="docutils literal notranslate"><span class="pre">polyloops</span></code> argument. Each loop’s shape is delineated by a polygon to represent its structure. For instance, polyloop 0, which
 initiates four notes, forms a polygon that appears as a square. Since the four segments are equal, this loop is said to be <em>Euclidean</em>. The durations are depicted by arcs, with tiny radial marks denoting the start of the arc and its conclusion. Upon closer inspection, you might notice that some arcs appear darker than others. This indicates moments where one note sustains as the next begins. While this overlap is intentional, it’s worth noting that traditional western music notation sometimes
 struggles to accurately represent such overlapping notes. We might correct that manually. I’d also like to make polyloop0 to be less Euclidean.</p>
@@ -226,11 +226,11 @@ struggles to accurately represent such overlapping notes. We might correct that 
     <span class="n">measure_length</span><span class="o">=</span><span class="n">measure_length</span>
 <span class="p">)</span>
 
-<span class="n">pl2</span><span class="o">.</span><span class="n">plot_polyloops</span><span class="p">(</span><span class="n">pulse</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s2">&quot;images/pl2.png&quot;</span><span class="p">)</span>
+<span class="n">pl2</span><span class="o">.</span><span class="n">plot_polyloops</span><span class="p">(</span><span class="n">pulse</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s2">&quot;_images/pl2.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<p><img alt="image1" src="_images/balance.png" /></p>
+<p><img alt="56dbb4256fe64825852778815203d4b2" src="_images/pl2.png" /></p>
 <p>The following code block uses another approach for stacking loops. Instead of appending new notes to the Polyloop object as we did earlier, the stacking is done with Music21. Notice how the key signature and tempo are stacked horizontally in parts before measures are themselves stacking horizontally, and how parts are stacking vertically in a score. The first polyloop had a measure length of 4, and was repeated 6 times. The second has a measure length of 6, so it must be repeated 4 times to have
 de same length.</p>
 <div class="nbinput docutils container">
@@ -400,11 +400,11 @@ Equal:    0.0
     <span class="n">yaxis_title</span><span class="o">=</span><span class="s1">&#39;Note Attribute&#39;</span><span class="p">,</span>
     <span class="n">barmode</span><span class="o">=</span><span class="s1">&#39;group&#39;</span>
 <span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s2">&quot;images/gini.png&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s2">&quot;_images/gini.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<p><img alt="image1" src="_images/balance.png" /></p>
+<p><img alt="b26a9f5f8a324a7982fec7344d981395" src="_images/gini.png" /></p>
 </section>
 <section id="Balance">
 <h2>Balance<a class="headerlink" href="#Balance" title="Link to this heading">¶</a></h2>
@@ -451,11 +451,11 @@ rhythm being centrally located. The mathematical condition for perfect balance i
     <span class="n">yaxis_title</span><span class="o">=</span><span class="s1">&#39;Note Attribute&#39;</span><span class="p">,</span>
     <span class="n">barmode</span><span class="o">=</span><span class="s1">&#39;group&#39;</span>
 <span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s2">&quot;images/balance.png&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s2">&quot;_images/balance.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<p><img alt="image1" src="_images/balance.png" /></p>
+<p><img alt="9f0ac6dc55774b4cbea7a35d57d9ac3f" src="_images/balance.png" /></p>
 <p>When designing polyloops, lower levels (the first ones) are characterized by lower pitches, with darker (warmer) timbres (which are richer in low pitches) and more regular. Going higher is level (last polyloops), pitches become higher, timbres become brighter, and beats become less well-formed.</p>
 <p>The design helpers are not made to reach equality and balance. They are made to reach a desired approximation for indices. As a composer, you may desire to have imbalance and inequality, for wilder music, but balance and equality for more predictable parts.</p>
 </section>

@@ -18,7 +18,7 @@ Mastodon: @essi@mozilla.social ; ORDID: https://orcid.org/0000-0003-1679-2287
     </div>
 
 
-.. image:: /images/portrait.png
+.. image:: /_images/portrait.png
    :height: 250px
    :width: 250px
    :align: center
