@@ -4,27 +4,36 @@ from scipy.signal import correlate, find_peaks
 
 class Analysis:
     """
-    This class provides methods for analyzing a list of values, whether they are pitches, durations or offsets.
+    A class that performs various analysis on a list of values.
 
     Args:
         values (list): A list of numerical values.
+        weights (list, optional): A list of weights corresponding to the values. Defaults to None.
 
     Attributes:
-        values (list): The list of values provided during initialization.
+        values (list): A list of numerical values.
+        weights (list): A list of weights corresponding to the values.
+
     """
-    def __init__(self, values):
-        self.values = [v for v in values if v is not None] # Remove None values
+
+    def __init__(self, values, weights=None):
+        self.values = values
+        if weights is None:
+            self.weights = [1] * len(values)
+        else:
+            self.weights = weights
 
     def gini(self):
         """
-        Calculate the Gini index, a measure of inequality.
-        
+        Calculates the Gini index of the values.
+
         Returns:
-            float or None: The Gini index of the values if more than one value is present; otherwise, None.
+            float: The Gini index.
         """
         if not self.values or len(self.values) <= 1:
             return None
-        sorted_values = sorted(self.values)
+        values = [v * w for v, w in zip(self.values, self.weights)]
+        sorted_values = sorted(values)
         n = len(sorted_values)
         cumulative_sum = sum((i+1) * val for i, val in enumerate(sorted_values))
         total_sum = sum(sorted_values)
@@ -33,37 +42,42 @@ class Analysis:
 
     def balance(self):
         """
-        Compute the balance based on the values.
+        Calculates the balance index of the values.
 
         Returns:
-            float or None: The balance index of the values if more than one value is present; otherwise, None.
+            float: The balance index.
+
         """
         if not self.values or len(self.values) <= 1:
             return None
-        sum_values = sum(self.values)
-        center_of_mass = sum(i * v for i, v in enumerate(self.values)) / sum_values
-        ideal_center = (len(self.values) - 1) / 2
-        balance = abs(center_of_mass - ideal_center) / ideal_center
-        return balance
-    
+        weighted_positions = sum(pos * weight for pos, weight in zip(self.positions, self.weights))
+        total_weight = sum(self.weights)
+        center_of_mass = weighted_positions / total_weight
+        total_length_of_cycle = max(self.positions) + (self.weights[self.positions.index(max(self.positions))])
+        ideal_center = total_length_of_cycle / 2
+        balance_index = abs(center_of_mass - ideal_center) / ideal_center
+        return balance_index
+
     def autocorrelation(self):
         """
-        Calculate the autocorrelation of the values using the Fast Fourier Transform (FFT).
+        Calculates the autocorrelation of the values.
 
         Returns:
-            list: A list containing the autocorrelation coefficients.
+            list: The autocorrelation values.
+
         """
         n = len(self.values)
         result = correlate(self.values, self.values, mode='full', method='fft')
         result = result[n-1:] / np.array([n - abs(i) for i in range(n)])
         return result.tolist()
-    
+
     def motif(self):
         """
-        Identify and score repeating motifs in the values.
+        Calculates the motif score of the values.
 
         Returns:
-            float: The score based on the frequency of repeated motifs. Zero if no motifs are found.
+            float: The motif score.
+
         """
         if not self.values:  # Check if the list is empty
             return 0  # Or return another appropriate default value
@@ -82,16 +96,17 @@ class Analysis:
         # Score based on the frequency of repeated motifs
         motif_score = sum(count for count in motif_counts.values() if count > 1) / len(self.values)
         return motif_score
-    
+
     def dissonance(self, scale):
         """
-        Calculate the dissonance, which measures the proportion of values not aligning with a given scale.
+        Calculates the dissonance of the values with respect to a scale.
 
         Args:
-            scale (list): A list of values representing the desired scale.
+            scale (list): A list of values representing a musical scale.
 
         Returns:
-            float: The dissonance score, representing the fraction of values not in the scale.
+            float: The dissonance.
+
         """
         if not self.values:  # Check if the list is empty
             return 0  # Or return another appropriate default value
@@ -100,16 +115,17 @@ class Analysis:
             if v not in scale:
                 n += 1
         return n/len(self.values)
-    
+
     def rhythmic(self, measure_length):
         """
-        Calculate how well the durations fit into bars of a given length, measure by measure.
+        Calculates the rhythmic score of the values.
 
         Args:
-            measure_length (float): Length of a bar in the same units as the durations.
+            measure_length (float): The length of a measure.
 
         Returns:
-            float: An average score representing the rhythmic fit for each measure (closer to 1 is better).
+            float: The rhythmic score.
+
         """
         scores = []
         current_measure_duration = 0.0
@@ -130,4 +146,3 @@ class Analysis:
 
         # Return the average score if there are scores, else return 0 (indicating no fit)
         return np.mean(scores) if scores else 0
-

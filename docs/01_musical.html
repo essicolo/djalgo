@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Pythonic Harmonies &#8212; djalgo 0.1-alpha documentation</title>
+    <title>Pythonic Harmonies &#8212; Djalgo 0.1-alpha documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
     <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
@@ -18,7 +18,7 @@
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API" href="api.html" />
+    <link rel="next" title="Loops" href="02_loops.html" />
     <link rel="prev" title="Getting started" href="00_getting-started.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -49,11 +49,17 @@ composition methods, more advanced techniques like machine learning-based ones c
 <p>Despite these limitations, Deepnote’s default computing environments, and to a lesser extent Colab’s, both come with a range of handy data science tools, although you will need to install a specific application and a few Python packages at the beginning of each session.</p>
 <p>Deepnote and Colab both work on the background with Debian Linux containers. To access to the system, you just add a <code class="docutils literal notranslate"><span class="pre">!</span></code> before the command. For instance, you’ll have to access to the system to install MuseScore, an application supported in this book for visualizing musical scores created with the Music21 Python package. The first line of code in each session should thus be <code class="docutils literal notranslate"><span class="pre">!apt</span> <span class="pre">update</span></code>, a command instructing Debian to fetch the list of packages installed in the Linux environment and those
 available for installation. Subsequently, <code class="docutils literal notranslate"><span class="pre">!apt</span> <span class="pre">install</span> <span class="pre">musescore</span> <span class="pre">-y</span></code> proceeds with the installation of Musescore, with the <code class="docutils literal notranslate"><span class="pre">-y</span></code> argument acting as a confirmation for the installation.</p>
-!apt update
-!apt install musescore -y<p>Utilizing the command <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span> <span class="pre">&lt;package&gt;</span></code>, you can install any Python package of your choice, no separate installation confirmation needed with <code class="docutils literal notranslate"><span class="pre">pip</span></code>. For instance, if you’re keen on incorporating the Music21 package, as well as Djalgo, execute the following command.</p>
-!pip install music21 git+https://github.com/essicolo/djalgo.git
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>!apt update
+!apt install musescore -y
+</pre></div>
+</div>
+<p>Utilizing the command <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span> <span class="pre">&lt;package&gt;</span></code>, you can install any Python package of your choice, no separate installation confirmation needed with <code class="docutils literal notranslate"><span class="pre">pip</span></code>. For instance, if you’re keen on incorporating the Music21 package, as well as Djalgo, execute the following command.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>!pip install music21 git+https://github.com/essicolo/djalgo.git
 from music21 import environment
-environment.set("musescoreDirectPNGPath", "/usr/bin/musescore")<p>Then you can start harmonizing with Python. Or maybe you’ll prefer installing everything on your machine?</p>
+environment.set(&quot;musescoreDirectPNGPath&quot;, &quot;/usr/bin/musescore&quot;)
+</pre></div>
+</div>
+<p>Then you can start harmonizing with Python. Or maybe you’ll prefer installing everything on your machine?</p>
 </section>
 <section id="Machine-Setup-Instructions">
 <h3>Machine Setup Instructions<a class="headerlink" href="#Machine-Setup-Instructions" title="Link to this heading">¶</a></h3>
@@ -211,18 +217,21 @@ quarter lengths to be placed in time.</p>
 <h2>Leverage Djalgo for music composition<a class="headerlink" href="#Leverage-Djalgo-for-music-composition" title="Link to this heading">¶</a></h2>
 <section id="Scales">
 <h3>Scales<a class="headerlink" href="#Scales" title="Link to this heading">¶</a></h3>
-<p>We haven’t used Djalgo yet. We just played with basic Python where I wrote the song <em>Twinkle, Twinkle Little Star</em> in C-major. C-major is a scale, i.e. a subset of the chromatic scale (all pitches) designed to fit together. Djalgo can generate pitch lists allowed for a given scale. We’ll need to load Djalgo in our session to access to its functionnalities. I use the alias <code class="docutils literal notranslate"><span class="pre">dj</span></code> to make the code shorter. Same thing with Music21, that we’ll need to display scores and music players along with the
-code.</p>
+<p>We haven’t used Djalgo yet. We just played with basic Python where I wrote the song <em>Twinkle, Twinkle Little Star</em> in C-major. C-major is a scale, i.e. a subset of the chromatic scale (all pitches) designed to fit together. Djalgo can generate pitch lists allowed for a given scale. We’ll need to load Djalgo in our session to access to its functionnalities. I use the alias <code class="docutils literal notranslate"><span class="pre">dj</span></code> to make the code shorter.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">djalgo</span> <span class="k">as</span> <span class="nn">dj</span>
-<span class="kn">import</span> <span class="nn">music21</span> <span class="k">as</span> <span class="nn">m21</span>
 </pre></div>
 </div>
 </div>
-<p>Scales are accessible from the <em>harmony</em> module. You have to define the tonic and the type, then <code class="docutils literal notranslate"><span class="pre">generate()</span></code> will process the scale, returning all available MIDI pitches in the scale.</p>
+<p>Scales are accessible from the <em>harmony</em> module. You have to define the tonic and the type, then <code class="docutils literal notranslate"><span class="pre">.generate()</span></code> will process the scale, returning all available MIDI pitches in the scale. The <code class="docutils literal notranslate"><span class="pre">object.method()</span></code> way of programming (object-oriented programming) is just like defining a frog and make it jump, as</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>frog = animal(order=&#39;anura&#39;)
+frog.jump()
+</pre></div>
+</div>
+<p>In the f</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
@@ -240,7 +249,6 @@ code.</p>
 [0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17, 19, 21, 23, 24, 26, 28, 29, 31, 33, 35, 36, 38, 40, 41, 43, 45, 47, 48, 50, 52, 53, 55, 57, 59, 60, 62, 64, 65, 67, 69, 71, 72, 74, 76, 77, 79, 81, 83, 84, 86, 88, 89, 91, 93, 95, 96, 98, 100, 101, 103, 105, 107, 108, 110, 112, 113, 115, 117, 119, 120, 122, 124, 125, 127]
 </pre></div></div>
 </div>
-<p>The Djalgo package has a scale generator that creates a list of allowed MIDI pitches given the tonic and allowed intervals in a scale. Some lists of intervals are already wrote down in <code class="docutils literal notranslate"><span class="pre">dj.signal.Base.scale_intervals</span></code>, but you really can write your own list of interval.</p>
 <p>Scales are defined as intervals from the chromatic scale. You might have heard that a major scale is <em>whole-step, whole-step, half-step, whole-step, whole-step, whole-step, half-step</em>. In Python, from a list of 12 pitches in the chromatic scale, you would take the first pitch (index 0), the third (index 2), and so on. Djalgo predefines the major scale, the minor, diminished, pentatonic and so on.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
@@ -320,7 +328,7 @@ code.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/01_musical_28_0.png" class="no-scaled-link" src="_images/01_musical_28_0.png" style="width: 697px; height: 49px;" />
+<img alt="_images/01_musical_23_0.png" class="no-scaled-link" src="_images/01_musical_23_0.png" style="width: 697px; height: 49px;" />
 </div>
 </div>
 </section>
@@ -340,7 +348,7 @@ code.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/01_musical_30_0.png" class="no-scaled-link" src="_images/01_musical_30_0.png" style="width: 119px; height: 49px;" />
+<img alt="_images/01_musical_25_0.png" class="no-scaled-link" src="_images/01_musical_25_0.png" style="width: 119px; height: 49px;" />
 </div>
 </div>
 <div class="tip docutils container">
@@ -371,7 +379,7 @@ code.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/01_musical_34_0.png" class="no-scaled-link" src="_images/01_musical_34_0.png" style="width: 697px; height: 49px;" />
+<img alt="_images/01_musical_29_0.png" class="no-scaled-link" src="_images/01_musical_29_0.png" style="width: 697px; height: 49px;" />
 </div>
 </div>
 <p><strong>Trill</strong> gets the degree given by <code class="docutils literal notranslate"><span class="pre">by</span></code> from the note at <code class="docutils literal notranslate"><span class="pre">note_index</span></code> and oscillates at rate of <code class="docutils literal notranslate"><span class="pre">trill_rate</span></code> between the note and its degree.</p>
@@ -397,7 +405,7 @@ code.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/01_musical_36_0.png" class="no-scaled-link" src="_images/01_musical_36_0.png" style="width: 697px; height: 49px;" />
+<img alt="_images/01_musical_31_0.png" class="no-scaled-link" src="_images/01_musical_31_0.png" style="width: 697px; height: 49px;" />
 </div>
 </div>
 <p><strong>Mordent</strong> rapidly alternates between the original pitch and one step defined <code class="docutils literal notranslate"><span class="pre">by</span></code>.</p>
@@ -422,7 +430,7 @@ code.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/01_musical_38_0.png" class="no-scaled-link" src="_images/01_musical_38_0.png" style="width: 697px; height: 54px;" />
+<img alt="_images/01_musical_33_0.png" class="no-scaled-link" src="_images/01_musical_33_0.png" style="width: 697px; height: 54px;" />
 </div>
 </div>
 <p><strong>Arpeggio</strong> transforms a note to an arpeggio given by a list of degrees.</p>
@@ -447,7 +455,7 @@ code.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/01_musical_40_0.png" class="no-scaled-link" src="_images/01_musical_40_0.png" style="width: 697px; height: 53px;" />
+<img alt="_images/01_musical_35_0.png" class="no-scaled-link" src="_images/01_musical_35_0.png" style="width: 697px; height: 53px;" />
 </div>
 </div>
 <p><strong>Turn</strong> is a transition of four notes betweem <code class="docutils literal notranslate"><span class="pre">note_index</span></code> and the next note.</p>
@@ -471,7 +479,7 @@ code.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/01_musical_42_0.png" class="no-scaled-link" src="_images/01_musical_42_0.png" style="width: 697px; height: 49px;" />
+<img alt="_images/01_musical_37_0.png" class="no-scaled-link" src="_images/01_musical_37_0.png" style="width: 697px; height: 49px;" />
 </div>
 </div>
 <p><strong>Silde</strong> is a glissando. However, in Djalgo, glissandos should be defined at the instrument level with your prefered package (<code class="docutils literal notranslate"><span class="pre">Instrument</span></code> in Pretty-midi and <code class="docutils literal notranslate"><span class="pre">Stream</span></code> in Music21). Instead of sliding, slide in djalgo transits on the chromatic scale from a note to the next.</p>
@@ -494,7 +502,7 @@ code.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/01_musical_44_0.png" class="no-scaled-link" src="_images/01_musical_44_0.png" style="width: 172px; height: 55px;" />
+<img alt="_images/01_musical_39_0.png" class="no-scaled-link" src="_images/01_musical_39_0.png" style="width: 172px; height: 55px;" />
 </div>
 </div>
 </section>
@@ -540,7 +548,7 @@ code.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/01_musical_48_0.png" class="no-scaled-link" src="_images/01_musical_48_0.png" style="width: 697px; height: 49px;" />
+<img alt="_images/01_musical_43_0.png" class="no-scaled-link" src="_images/01_musical_43_0.png" style="width: 697px; height: 49px;" />
 </div>
 </div>
 </section>
@@ -569,7 +577,7 @@ code.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/01_musical_50_0.png" class="no-scaled-link" src="_images/01_musical_50_0.png" style="width: 697px; height: 57px;" />
+<img alt="_images/01_musical_45_0.png" class="no-scaled-link" src="_images/01_musical_45_0.png" style="width: 697px; height: 57px;" />
 </div>
 </div>
 </section>
@@ -652,7 +660,7 @@ code.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/01_musical_56_0.png" class="no-scaled-link" src="_images/01_musical_56_0.png" style="width: 697px; height: 59px;" />
+<img alt="_images/01_musical_51_0.png" class="no-scaled-link" src="_images/01_musical_51_0.png" style="width: 697px; height: 59px;" />
 </div>
 </div>
 </section>
@@ -673,7 +681,7 @@ code.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/01_musical_58_0.png" class="no-scaled-link" src="_images/01_musical_58_0.png" style="width: 697px; height: 49px;" />
+<img alt="_images/01_musical_53_0.png" class="no-scaled-link" src="_images/01_musical_53_0.png" style="width: 697px; height: 49px;" />
 </div>
 </div>
 <p>We will add a voice to index 0 and index 7.</p>
@@ -697,7 +705,7 @@ code.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/01_musical_60_0.png" class="no-scaled-link" src="_images/01_musical_60_0.png" style="width: 697px; height: 49px;" />
+<img alt="_images/01_musical_55_0.png" class="no-scaled-link" src="_images/01_musical_55_0.png" style="width: 697px; height: 49px;" />
 </div>
 </div>
 <p>Some ornaments…</p>
@@ -732,7 +740,7 @@ code.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/01_musical_62_0.png" class="no-scaled-link" src="_images/01_musical_62_0.png" style="width: 697px; height: 58px;" />
+<img alt="_images/01_musical_57_0.png" class="no-scaled-link" src="_images/01_musical_57_0.png" style="width: 697px; height: 58px;" />
 </div>
 </div>
 <p>And let’s hear our masterpiece!</p>
@@ -775,6 +783,7 @@ if (typeof require === 'undefined') {
 }
 </script></div>
 </div>
+<p>↳ To <a class="reference external" href="02_loops.html">Loops</a></p>
 </section>
 </section>
 
@@ -788,32 +797,15 @@ if (typeof require === 'undefined') {
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/logo.png" alt="Logo"/>
             </a></p>
-<h1 class="logo"><a href="index.html">djalgo</a></h1>
-
-
-
-
-
-
-
-
-<h3>Navigation</h3>
+<h3><a href="index.html">Table of Contents</a></h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="00_getting-started.html">Getting started</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Pythonic Harmonies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_loops.html">Loops</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 </ul>
 
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="00_getting-started.html" title="previous chapter">Getting started</a></li>
-      <li>Next: <a href="api.html" title="next chapter">API</a></li>
-  </ul></li>
-</ul>
-</div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -823,15 +815,10 @@ if (typeof require === 'undefined') {
     </form>
     </div>
 </div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
-
-
-
-
-
-
-
-
+<script>document.getElementById('searchbox').style.display = "block"</script><div>
+<br/>
+<a href="https://www.buymeacoffee.com/essicolo">☕ Buy me a coffee</a>
+</div>
         </div>
       </div>
       <div class="clearer"></div>

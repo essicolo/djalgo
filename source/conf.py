@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'djalgo'
+project = 'Djalgo'
 copyright = '2024, Essi Parent'
 author = 'Essi Parent'
 release = '0.1-alpha'
@@ -31,4 +31,13 @@ exclude_patterns = []
 
 html_theme = 'alabaster'
 html_static_path = ['_static']
+# html_css_files = ['custom.css']
 html_logo = 'images/logo.png'
+html_sidebars = {
+   '**': [
+       'globaltoc.html',  # Includes the global TOC; adapt as necessary
+       # 'relations.html',  # Provides the Previous / Next links
+       'searchbox.html',  # Includes the search box
+       'custom_sidebar.html'
+   ]
+}

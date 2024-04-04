@@ -11,6 +11,13 @@ Djalgo is more than a project; it's a reflection of a lifelong commitment to ble
 
 Mastodon: @essi@mozilla.social ; ORDID: https://orcid.org/0000-0003-1679-2287
 
+.. raw:: html
+   
+    <div style="text-align: center;">
+    <a href="https://www.buymeacoffee.com/app/essicolo"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=essicolo&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
+    </div>
+
+
 .. image:: /images/portrait.png
    :height: 250px
    :width: 250px

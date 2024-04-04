@@ -2,6 +2,7 @@ import numpy as np
 from . import utils
 
 import plotly.graph_objects as go
+import colorsys
 
 class Polyloop:
     """
@@ -35,7 +36,13 @@ class Polyloop:
         polyloops_without_rests = [[note for note in polyloop if note[0] is not None] for polyloop in self.polyloops]
 
         n_polyloops = len(self.polyloops)
-        colors = go.Figure().layout.template.layout.colorway if colors is None else colors
+        traces = []
+        #colors = go.Figure().layout.template.layout.colorway if colors is None else colors
+        if colors is None:
+            colors = [colorsys.hsv_to_rgb(i/n_polyloops, 1, 1) for i in range(n_polyloops)]
+            #colors = [colorsys.hls_to_rgb(0, i/n_polyloops, 0) for i in range(n_polyloops)]
+            colors = ['rgba(%d, %d, %d, 0.5)' % (int(r*255), int(g*255), int(b*255)) for r, g, b in colors]
+
         fig = go.Figure()
 
         for i, polyloop in enumerate(polyloops_without_rests):
@@ -69,16 +76,20 @@ class Polyloop:
                 start_thetas = [offset * 360 / self.measure_length for _, _, offset in polyloop]
                 start_thetas.append(start_thetas[0])
 
-            fig.add_trace(go.Scatterpolar(
+            traces.append(go.Scatterpolar(
                 r=[n_polyloops-i-1]*(len(polyloop)+1),  # Account for the loop closure
                 theta=start_thetas,
                 mode='lines',
-                line=dict(color='rgba(160, 160, 160, 0.95)', width=2),
+                line=dict(color='rgba(0, 0, 0, 0.65)', width=1),
                 fill='toself',
+                fillcolor=colors[i],
                 name=f'Polyloop {i}',
                 showlegend=False
             ))
 
+        for trace in reversed(traces):
+            fig.add_trace(trace)
+        
         tickvals = np.linspace(0, 360, int(self.measure_length/pulse), endpoint=False)
         ticktext = [str(i % self.measure_length) for i in np.arange(0, self.measure_length, pulse)]
         radial_tickvals = np.arange(0, n_polyloops, 1)

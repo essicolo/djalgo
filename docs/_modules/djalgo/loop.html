@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>djalgo.loop &#8212; djalgo 0.1-alpha documentation</title>
+    <title>djalgo.loop &#8212; Djalgo 0.1-alpha documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=12dfc556" />
     <script src="../../_static/documentation_options.js?v=737112c1"></script>
@@ -36,6 +36,7 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">utils</span>
 
 <span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+<span class="kn">import</span> <span class="nn">colorsys</span>
 
 <div class="viewcode-block" id="Polyloop">
 <a class="viewcode-back" href="../../api.html#djalgo.loop.Polyloop">[docs]</a>
@@ -73,7 +74,13 @@
         <span class="n">polyloops_without_rests</span> <span class="o">=</span> <span class="p">[[</span><span class="n">note</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">polyloop</span> <span class="k">if</span> <span class="n">note</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span> <span class="k">for</span> <span class="n">polyloop</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">polyloops</span><span class="p">]</span>
 
         <span class="n">n_polyloops</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">polyloops</span><span class="p">)</span>
-        <span class="n">colors</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">colorway</span> <span class="k">if</span> <span class="n">colors</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">colors</span>
+        <span class="n">traces</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1">#colors = go.Figure().layout.template.layout.colorway if colors is None else colors</span>
+        <span class="k">if</span> <span class="n">colors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">colorsys</span><span class="o">.</span><span class="n">hsv_to_rgb</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="n">n_polyloops</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_polyloops</span><span class="p">)]</span>
+            <span class="c1">#colors = [colorsys.hls_to_rgb(0, i/n_polyloops, 0) for i in range(n_polyloops)]</span>
+            <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;rgba(</span><span class="si">%d</span><span class="s1">, </span><span class="si">%d</span><span class="s1">, </span><span class="si">%d</span><span class="s1">, 0.5)&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="o">*</span><span class="mi">255</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">g</span><span class="o">*</span><span class="mi">255</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="o">*</span><span class="mi">255</span><span class="p">))</span> <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">colors</span><span class="p">]</span>
+
         <span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
 
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">polyloop</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">polyloops_without_rests</span><span class="p">):</span>
@@ -107,16 +114,20 @@
                 <span class="n">start_thetas</span> <span class="o">=</span> <span class="p">[</span><span class="n">offset</span> <span class="o">*</span> <span class="mi">360</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_length</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">offset</span> <span class="ow">in</span> <span class="n">polyloop</span><span class="p">]</span>
                 <span class="n">start_thetas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_thetas</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-            <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatterpolar</span><span class="p">(</span>
+            <span class="n">traces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatterpolar</span><span class="p">(</span>
                 <span class="n">r</span><span class="o">=</span><span class="p">[</span><span class="n">n_polyloops</span><span class="o">-</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">polyloop</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span>  <span class="c1"># Account for the loop closure</span>
                 <span class="n">theta</span><span class="o">=</span><span class="n">start_thetas</span><span class="p">,</span>
                 <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines&#39;</span><span class="p">,</span>
-                <span class="n">line</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;rgba(160, 160, 160, 0.95)&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+                <span class="n">line</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;rgba(0, 0, 0, 0.65)&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
                 <span class="n">fill</span><span class="o">=</span><span class="s1">&#39;toself&#39;</span><span class="p">,</span>
+                <span class="n">fillcolor</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
                 <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Polyloop </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
                 <span class="n">showlegend</span><span class="o">=</span><span class="kc">False</span>
             <span class="p">))</span>
 
+        <span class="k">for</span> <span class="n">trace</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">traces</span><span class="p">):</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+        
         <span class="n">tickvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_length</span><span class="o">/</span><span class="n">pulse</span><span class="p">),</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">ticktext</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_length</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_length</span><span class="p">,</span> <span class="n">pulse</span><span class="p">)]</span>
         <span class="n">radial_tickvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_polyloops</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -159,32 +170,15 @@
             <p class="logo"><a href="../../index.html">
               <img class="logo" src="../../_static/logo.png" alt="Logo"/>
             </a></p>
-<h1 class="logo"><a href="../../index.html">djalgo</a></h1>
-
-
-
-
-
-
-
-
-<h3>Navigation</h3>
+<h3><a href="../../index.html">Table of Contents</a></h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../00_getting-started.html">Getting started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../01_musical.html">Pythonic Harmonies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_loops.html">Loops</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>
 
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
@@ -194,15 +188,10 @@
     </form>
     </div>
 </div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
-
-
-
-
-
-
-
-
+<script>document.getElementById('searchbox').style.display = "block"</script><div>
+<br/>
+<a href="https://www.buymeacoffee.com/essicolo">☕ Buy me a coffee</a>
+</div>
         </div>
       </div>
       <div class="clearer"></div>
