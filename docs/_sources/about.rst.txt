@@ -14,7 +14,7 @@ Mastodon: @essi@mozilla.social ; ORDID: https://orcid.org/0000-0003-1679-2287
 .. raw:: html
    
     <div style="text-align: center;">
-    <a href="https://www.buymeacoffee.com/app/essicolo"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=essicolo&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
+    <a href="https://www.buymeacoffee.com/essicolo"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=essicolo&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
     </div>
 
 
