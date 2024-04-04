@@ -32,7 +32,7 @@ exclude_patterns = []
 html_theme = 'alabaster'
 html_static_path = ['_static']
 # html_css_files = ['custom.css']
-html_logo = 'images/logo.png'
+html_logo = '_images/logo.png'
 html_sidebars = {
    '**': [
        'globaltoc.html',  # Includes the global TOC; adapt as necessary
