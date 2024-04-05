@@ -165,13 +165,16 @@
 <a class="viewcode-back" href="../../api.html#djalgo.conversion.to_prettymidi">[docs]</a>
 <span class="k">def</span> <span class="nf">to_prettymidi</span><span class="p">(</span><span class="n">notes</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert notes to PrettyMIDI format based on their structure.&quot;&quot;&quot;</span>
-    
+    <span class="n">pm_object</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">PrettyMIDI</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>  <span class="c1"># Single note, rest, or chord</span>
-        <span class="k">return</span> <span class="n">sequence_to_prettymidi_instrument</span><span class="p">([</span><span class="n">notes</span><span class="p">])</span>  <span class="c1"># Wrap it in a list as a single part</span>
+        <span class="n">pm_object</span><span class="o">.</span><span class="n">instruments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sequence_to_prettymidi_instrument</span><span class="p">([</span><span class="n">notes</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="n">pm_object</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">notes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>  <span class="c1"># List of lists</span>
-        <span class="k">return</span> <span class="n">sequences_to_prettymidi</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
+        <span class="n">pm_object</span><span class="o">.</span><span class="n">instruments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sequences_to_prettymidi</span><span class="p">(</span><span class="n">notes</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">pm_object</span>
     <span class="k">else</span><span class="p">:</span>  <span class="c1"># Single list of notes</span>
-        <span class="k">return</span> <span class="n">sequence_to_prettymidi_instrument</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span></div>
+        <span class="n">pm_object</span><span class="o">.</span><span class="n">instruments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sequence_to_prettymidi_instrument</span><span class="p">(</span><span class="n">notes</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">pm_object</span></div>
 
 
 <div class="viewcode-block" id="tuple_to_prettymidi_element">
@@ -207,10 +210,11 @@
 <a class="viewcode-back" href="../../api.html#djalgo.conversion.sequences_to_prettymidi">[docs]</a>
 <span class="k">def</span> <span class="nf">sequences_to_prettymidi</span><span class="p">(</span><span class="n">parts</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert multiple sequences of musical notes to a PrettyMIDI object.&quot;&quot;&quot;</span>
+    <span class="n">instruments</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">part_notes</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
         <span class="n">instrument</span> <span class="o">=</span> <span class="n">sequence_to_prettymidi_instrument</span><span class="p">(</span><span class="n">part_notes</span><span class="p">)</span>
-        <span class="n">pm</span><span class="o">.</span><span class="n">instruments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">instrument</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">pm</span></div>
+        <span class="n">instruments</span><span class="o">.</span><span class="n">instruments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">instrument</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">instruments</span></div>
 
 
 

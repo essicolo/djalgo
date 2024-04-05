@@ -114,13 +114,16 @@ def sequences_to_music21_score(parts, time_signature=None, key_signature=None):
 # ----------------------
 def to_prettymidi(notes):
     """Convert notes to PrettyMIDI format based on their structure."""
-    
+    pm_object = pm.PrettyMIDI()
     if isinstance(notes, tuple):  # Single note, rest, or chord
-        return sequence_to_prettymidi_instrument([notes])  # Wrap it in a list as a single part
+        pm_object.instruments.append(sequence_to_prettymidi_instrument([notes]))
+        return pm_object
     elif isinstance(notes[0], list):  # List of lists
-        return sequences_to_prettymidi(notes)
+        pm_object.instruments.append(sequences_to_prettymidi(notes))
+        return pm_object
     else:  # Single list of notes
-        return sequence_to_prettymidi_instrument(notes)
+        pm_object.instruments.append(sequence_to_prettymidi_instrument(notes))
+        return pm_object
 
 def tuple_to_prettymidi_element(note_tuple):
     """Convert a single note tuple to a list of PrettyMIDI Note objects."""
@@ -147,10 +150,11 @@ def sequence_to_prettymidi_instrument(notes):
 
 def sequences_to_prettymidi(parts):
     """Convert multiple sequences of musical notes to a PrettyMIDI object."""
+    instruments = []
     for part_notes in parts:
         instrument = sequence_to_prettymidi_instrument(part_notes)
-        pm.instruments.append(instrument)
-    return pm
+        instruments.instruments.append(instrument)
+    return instruments
 
 
 # Mido conversion
