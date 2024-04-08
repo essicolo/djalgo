@@ -63,59 +63,88 @@
     <span class="k">return</span> <span class="n">string</span></div>
 
 
-<div class="viewcode-block" id="get_degree_from_note">
-<a class="viewcode-back" href="../../api.html#djalgo.utils.get_degree_from_note">[docs]</a>
-<span class="k">def</span> <span class="nf">get_degree_from_note</span><span class="p">(</span><span class="n">note</span><span class="p">,</span> <span class="n">scale_list</span><span class="p">,</span> <span class="n">tonic_midi</span><span class="p">):</span>
-    <span class="n">ref_index</span> <span class="o">=</span> <span class="n">scale_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">tonic_midi</span><span class="p">)</span>
+<div class="viewcode-block" id="get_degree_from_pitch">
+<a class="viewcode-back" href="../../api.html#djalgo.utils.get_degree_from_pitch">[docs]</a>
+<span class="k">def</span> <span class="nf">get_degree_from_pitch</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">scale_list</span><span class="p">,</span> <span class="n">tonic_pitch</span><span class="p">):</span>
 
-    <span class="c1"># If the note is in the scale_type</span>
-    <span class="k">if</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">scale_list</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">pitch</span> <span class="o">=</span> <span class="n">abc_to_midi</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tonic_pitch</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">tonic_pitch</span> <span class="o">=</span> <span class="n">abc_to_midi</span><span class="p">(</span><span class="n">tonic_pitch</span><span class="p">)</span> 
+
+    <span class="n">tonic_index</span> <span class="o">=</span> <span class="n">scale_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">tonic_pitch</span><span class="p">)</span>
+
+    <span class="c1"># If the pitch is in the scale_type</span>
+    <span class="k">if</span> <span class="n">pitch</span> <span class="ow">in</span> <span class="n">scale_list</span><span class="p">:</span>
         <span class="c1"># Find its index and compute the degree</span>
-        <span class="n">note_index</span> <span class="o">=</span> <span class="n">scale_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
-        <span class="n">degree</span> <span class="o">=</span> <span class="n">note_index</span> <span class="o">-</span> <span class="n">ref_index</span>
+        <span class="n">pitch_index</span> <span class="o">=</span> <span class="n">scale_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span>
+        <span class="n">degree</span> <span class="o">=</span> <span class="n">pitch_index</span> <span class="o">-</span> <span class="n">tonic_index</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># If the note is not in the scale_type, find the two notes it falls between</span>
-        <span class="n">upper_note</span> <span class="o">=</span> <span class="n">round_to_list</span><span class="p">(</span><span class="n">note</span><span class="p">,</span> <span class="n">scale_list</span><span class="p">)</span>
-        <span class="n">upper_index</span> <span class="o">=</span> <span class="n">scale_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">upper_note</span><span class="p">)</span>
+        <span class="c1"># If the pitch is not in the scale_type, find the two pitches it falls between</span>
+        <span class="n">upper_pitch</span> <span class="o">=</span> <span class="n">round_to_list</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">scale_list</span><span class="p">)</span>
+        <span class="n">upper_index</span> <span class="o">=</span> <span class="n">scale_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">upper_pitch</span><span class="p">)</span>
         <span class="n">lower_index</span> <span class="o">=</span> <span class="n">upper_index</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">upper_index</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">upper_index</span>
-        <span class="n">lower_note</span> <span class="o">=</span> <span class="n">scale_list</span><span class="p">[</span><span class="n">lower_index</span><span class="p">]</span>
+        <span class="n">lower_pitch</span> <span class="o">=</span> <span class="n">scale_list</span><span class="p">[</span><span class="n">lower_index</span><span class="p">]</span>
 
-        <span class="c1"># Compute the degree as the weighted average of the degrees of the two notes</span>
-        <span class="n">distance_to_upper</span> <span class="o">=</span> <span class="n">upper_note</span> <span class="o">-</span> <span class="n">note</span>
-        <span class="n">distance_to_lower</span> <span class="o">=</span> <span class="n">note</span> <span class="o">-</span> <span class="n">lower_note</span>
+        <span class="c1"># Compute the degree as the weighted average of the degrees of the two pitches</span>
+        <span class="n">distance_to_upper</span> <span class="o">=</span> <span class="n">upper_pitch</span> <span class="o">-</span> <span class="n">pitch</span>
+        <span class="n">distance_to_lower</span> <span class="o">=</span> <span class="n">pitch</span> <span class="o">-</span> <span class="n">lower_pitch</span>
         <span class="n">upper_weight</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">distance_to_upper</span> <span class="o">/</span> <span class="p">(</span><span class="n">distance_to_upper</span> <span class="o">+</span> <span class="n">distance_to_lower</span><span class="p">)</span>
         <span class="n">lower_weight</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">distance_to_lower</span> <span class="o">/</span> <span class="p">(</span><span class="n">distance_to_upper</span> <span class="o">+</span> <span class="n">distance_to_lower</span><span class="p">)</span>
-        <span class="n">upper_degree</span> <span class="o">=</span> <span class="n">upper_index</span> <span class="o">-</span> <span class="n">ref_index</span>
-        <span class="n">lower_degree</span> <span class="o">=</span> <span class="n">lower_index</span> <span class="o">-</span> <span class="n">ref_index</span>
+        <span class="n">upper_degree</span> <span class="o">=</span> <span class="n">upper_index</span> <span class="o">-</span> <span class="n">tonic_index</span>
+        <span class="n">lower_degree</span> <span class="o">=</span> <span class="n">lower_index</span> <span class="o">-</span> <span class="n">tonic_index</span>
         <span class="n">degree</span> <span class="o">=</span> <span class="n">upper_degree</span> <span class="o">*</span> <span class="n">upper_weight</span> <span class="o">+</span> <span class="n">lower_degree</span> <span class="o">*</span> <span class="n">lower_weight</span>
 
     <span class="k">return</span> <span class="n">degree</span></div>
 
 
-<div class="viewcode-block" id="get_note_from_degree">
-<a class="viewcode-back" href="../../api.html#djalgo.utils.get_note_from_degree">[docs]</a>
-<span class="k">def</span> <span class="nf">get_note_from_degree</span><span class="p">(</span><span class="n">degree</span><span class="p">,</span> <span class="n">scale_list</span><span class="p">,</span> <span class="n">tonic_midi</span><span class="p">):</span>
-    <span class="n">ref_index</span> <span class="o">=</span> <span class="n">scale_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">tonic_midi</span><span class="p">)</span>
-    <span class="n">note_index</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">ref_index</span> <span class="o">+</span> <span class="n">degree</span><span class="p">)</span>  <span class="c1"># round to nearest integer</span>
+<div class="viewcode-block" id="get_pitch_from_degree">
+<a class="viewcode-back" href="../../api.html#djalgo.utils.get_pitch_from_degree">[docs]</a>
+<span class="k">def</span> <span class="nf">get_pitch_from_degree</span><span class="p">(</span><span class="n">degree</span><span class="p">,</span> <span class="n">scale_list</span><span class="p">,</span> <span class="n">tonic_pitch</span><span class="p">):</span>
+    <span class="n">tonic_index</span> <span class="o">=</span> <span class="n">scale_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">tonic_pitch</span><span class="p">)</span>
+    <span class="n">pitch_index</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">tonic_index</span> <span class="o">+</span> <span class="n">degree</span><span class="p">)</span>  <span class="c1"># round to nearest integer</span>
 
     <span class="c1"># If the degree is within the scale</span>
-    <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">note_index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">scale_list</span><span class="p">):</span>
-        <span class="n">note</span> <span class="o">=</span> <span class="n">scale_list</span><span class="p">[</span><span class="n">note_index</span><span class="p">]</span>
+    <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">pitch_index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">scale_list</span><span class="p">):</span>
+        <span class="n">pitch</span> <span class="o">=</span> <span class="n">scale_list</span><span class="p">[</span><span class="n">pitch_index</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># If the degree is not within the scale, find the two notes it falls between</span>
-        <span class="n">lower_index</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">note_index</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">scale_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
-        <span class="n">upper_index</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scale_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">note_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-        <span class="n">lower_note</span> <span class="o">=</span> <span class="n">scale_list</span><span class="p">[</span><span class="n">lower_index</span><span class="p">]</span>
-        <span class="n">upper_note</span> <span class="o">=</span> <span class="n">scale_list</span><span class="p">[</span><span class="n">upper_index</span><span class="p">]</span>
+        <span class="c1"># If the degree is not within the scale, find the two pitches it falls between</span>
+        <span class="n">lower_index</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">pitch_index</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">scale_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">upper_index</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scale_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">pitch_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">lower_pitch</span> <span class="o">=</span> <span class="n">scale_list</span><span class="p">[</span><span class="n">lower_index</span><span class="p">]</span>
+        <span class="n">upper_pitch</span> <span class="o">=</span> <span class="n">scale_list</span><span class="p">[</span><span class="n">upper_index</span><span class="p">]</span>
 
-        <span class="c1"># Compute the note as the weighted average of the two notes</span>
-        <span class="n">distance_to_upper</span> <span class="o">=</span> <span class="n">upper_index</span> <span class="o">-</span> <span class="n">note_index</span>
-        <span class="n">distance_to_lower</span> <span class="o">=</span> <span class="n">note_index</span> <span class="o">-</span> <span class="n">lower_index</span>
+        <span class="c1"># Compute the pitch as the weighted average of the two pitches</span>
+        <span class="n">distance_to_upper</span> <span class="o">=</span> <span class="n">upper_index</span> <span class="o">-</span> <span class="n">pitch_index</span>
+        <span class="n">distance_to_lower</span> <span class="o">=</span> <span class="n">pitch_index</span> <span class="o">-</span> <span class="n">lower_index</span>
         <span class="n">upper_weight</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">distance_to_upper</span> <span class="o">/</span> <span class="p">(</span><span class="n">distance_to_upper</span> <span class="o">+</span> <span class="n">distance_to_lower</span><span class="p">)</span>
         <span class="n">lower_weight</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">distance_to_lower</span> <span class="o">/</span> <span class="p">(</span><span class="n">distance_to_upper</span> <span class="o">+</span> <span class="n">distance_to_lower</span><span class="p">)</span>
-        <span class="n">note</span> <span class="o">=</span> <span class="n">upper_note</span> <span class="o">*</span> <span class="n">upper_weight</span> <span class="o">+</span> <span class="n">lower_note</span> <span class="o">*</span> <span class="n">lower_weight</span>
+        <span class="n">pitch</span> <span class="o">=</span> <span class="n">upper_pitch</span> <span class="o">*</span> <span class="n">upper_weight</span> <span class="o">+</span> <span class="n">lower_pitch</span> <span class="o">*</span> <span class="n">lower_weight</span>
 
-    <span class="k">return</span> <span class="n">note</span></div>
+    <span class="k">return</span> <span class="n">pitch</span></div>
+
+
+<div class="viewcode-block" id="set_offsets_according_to_durations">
+<a class="viewcode-back" href="../../api.html#djalgo.utils.set_offsets_according_to_durations">[docs]</a>
+<span class="k">def</span> <span class="nf">set_offsets_according_to_durations</span><span class="p">(</span><span class="n">notes</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Adjusts the offsets of the notes based on their durations.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        notes (list): A list of tuples, where each tuple contains a note (pitch),</span>
+<span class="sd">                      a duration (quarterLength), and an offset.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: The list of notes with adjusted offsets.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">adjusted_notes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">current_offset</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">notes</span><span class="p">:</span>
+        <span class="n">adjusted_notes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">pitch</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">current_offset</span><span class="p">))</span>
+        <span class="n">current_offset</span> <span class="o">+=</span> <span class="n">duration</span>
+
+    <span class="k">return</span> <span class="n">adjusted_notes</span></div>
 
 
 <div class="viewcode-block" id="fill_gaps_with_rests">
@@ -226,11 +255,15 @@
 
 <div class="viewcode-block" id="abc_to_midi">
 <a class="viewcode-back" href="../../api.html#djalgo.utils.abc_to_midi">[docs]</a>
-<span class="k">def</span> <span class="nf">abc_to_midi</span><span class="p">(</span><span class="n">note</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">abc_to_midi</span><span class="p">(</span><span class="n">pitch</span><span class="p">):</span>
     <span class="c1"># Mapping of note names to MIDI numbers</span>
-    <span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;C#&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;D#&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;F#&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;G#&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;A#&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]</span>
-    <span class="n">octave</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">note</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="n">key</span> <span class="o">=</span> <span class="n">notes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">note</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">pitches</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;C#&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;D#&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;F#&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;G#&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;A#&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">octave</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">pitches</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">pitch</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">octave</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pitch</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">pitches</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">pitch</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">midi</span> <span class="o">=</span> <span class="mi">12</span> <span class="o">*</span> <span class="n">octave</span> <span class="o">+</span> <span class="n">key</span>
     <span class="k">return</span> <span class="n">midi</span></div>
 
@@ -239,11 +272,11 @@
 <a class="viewcode-back" href="../../api.html#djalgo.utils.midi_to_abc">[docs]</a>
 <span class="k">def</span> <span class="nf">midi_to_abc</span><span class="p">(</span><span class="n">midi</span><span class="p">):</span>
     <span class="c1"># Mapping of MIDI numbers to note names</span>
-    <span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;C#&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;D#&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;F#&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;G#&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;A#&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]</span>
+    <span class="n">pitches</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;C#&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;D#&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;F#&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;G#&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;A#&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]</span>
     <span class="n">octave</span> <span class="o">=</span> <span class="n">midi</span> <span class="o">//</span> <span class="mi">12</span> <span class="o">-</span> <span class="mi">1</span>
     <span class="n">key</span> <span class="o">=</span> <span class="n">midi</span> <span class="o">%</span> <span class="mi">12</span>
-    <span class="n">note</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">octave</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">note</span></div>
+    <span class="n">pitch</span> <span class="o">=</span> <span class="n">pitches</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">octave</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pitch</span></div>
 
 
 <div class="viewcode-block" id="no_overlap">
@@ -353,6 +386,53 @@
         <span class="n">quantized_notes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">pitch</span><span class="p">,</span> <span class="n">quantized_duration</span><span class="p">,</span> <span class="n">quantized_offset</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">quantized_notes</span></div>
 
+
+
+<div class="viewcode-block" id="find_closest_pitch_at_measure_start">
+<a class="viewcode-back" href="../../api.html#djalgo.utils.find_closest_pitch_at_measure_start">[docs]</a>
+<span class="k">def</span> <span class="nf">find_closest_pitch_at_measure_start</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">measure_length</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Finds the closest pitch at the beginning of each measure.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        notes (list of tuples): A list of tuples where each tuple is (pitch, duration, offset).</span>
+<span class="sd">        measure_length (float): The length of a measure.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: A list of pitches, each representing the closest pitch at the start of a measure.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Sort the notes by offset to ensure they are in order</span>
+    <span class="n">notes_sorted_by_offset</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+    <span class="c1"># Find the maximum offset to determine how many measures we have</span>
+    <span class="n">max_offset</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">])[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">num_measures</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">max_offset</span> <span class="o">//</span> <span class="n">measure_length</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="n">closest_pitches</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">measure_num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_measures</span><span class="p">):</span>
+        <span class="n">measure_start</span> <span class="o">=</span> <span class="n">measure_num</span> <span class="o">*</span> <span class="n">measure_length</span>
+        <span class="n">closest_pitch</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">closest_distance</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">offset</span> <span class="ow">in</span> <span class="n">notes_sorted_by_offset</span><span class="p">:</span>
+            <span class="c1"># Calculate the distance from the start of the measure to the note&#39;s offset</span>
+            <span class="n">distance</span> <span class="o">=</span> <span class="n">measure_start</span> <span class="o">-</span> <span class="n">offset</span>
+
+            <span class="c1"># If the note starts before the measure and is closer than any note we&#39;ve looked at before</span>
+            <span class="k">if</span> <span class="n">distance</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">distance</span> <span class="o">&lt;</span> <span class="n">closest_distance</span><span class="p">:</span>
+                <span class="n">closest_distance</span> <span class="o">=</span> <span class="n">distance</span>
+                <span class="n">closest_pitch</span> <span class="o">=</span> <span class="n">pitch</span>
+
+            <span class="c1"># If we&#39;ve passed the current measure start, we can break out of the loop</span>
+            <span class="k">if</span> <span class="n">offset</span> <span class="o">&gt;</span> <span class="n">measure_start</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="k">if</span> <span class="n">closest_pitch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">closest_pitches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">closest_pitch</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">closest_pitches</span></div>
+
 </pre></div>
 
           </div>
@@ -366,9 +446,10 @@
             </a></p>
 <h3><a href="../../index.html">Table of Contents</a></h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../00_getting-started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../01_musical.html">Pythonic Harmonies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../02_loops.html">Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_getting-started.html">1. Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_harmony.html">2. Pythonic Harmonies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_loops.html">3. Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_minimalism.html">4. Minimalistic composition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>

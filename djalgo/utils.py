@@ -20,54 +20,80 @@ def get_sharp(string):
         string = dict_flat[string]
     return string
 
-def get_degree_from_note(note, scale_list, tonic_midi):
-    ref_index = scale_list.index(tonic_midi)
+def get_degree_from_pitch(pitch, scale_list, tonic_pitch):
 
-    # If the note is in the scale_type
-    if note in scale_list:
+    if isinstance(pitch, str):
+        pitch = abc_to_midi(pitch)
+    if isinstance(tonic_pitch, str):
+        tonic_pitch = abc_to_midi(tonic_pitch) 
+
+    tonic_index = scale_list.index(tonic_pitch)
+
+    # If the pitch is in the scale_type
+    if pitch in scale_list:
         # Find its index and compute the degree
-        note_index = scale_list.index(note)
-        degree = note_index - ref_index
+        pitch_index = scale_list.index(pitch)
+        degree = pitch_index - tonic_index
     else:
-        # If the note is not in the scale_type, find the two notes it falls between
-        upper_note = round_to_list(note, scale_list)
-        upper_index = scale_list.index(upper_note)
+        # If the pitch is not in the scale_type, find the two pitches it falls between
+        upper_pitch = round_to_list(pitch, scale_list)
+        upper_index = scale_list.index(upper_pitch)
         lower_index = upper_index - 1 if upper_index > 0 else upper_index
-        lower_note = scale_list[lower_index]
+        lower_pitch = scale_list[lower_index]
 
-        # Compute the degree as the weighted average of the degrees of the two notes
-        distance_to_upper = upper_note - note
-        distance_to_lower = note - lower_note
+        # Compute the degree as the weighted average of the degrees of the two pitches
+        distance_to_upper = upper_pitch - pitch
+        distance_to_lower = pitch - lower_pitch
         upper_weight = 1 - distance_to_upper / (distance_to_upper + distance_to_lower)
         lower_weight = 1 - distance_to_lower / (distance_to_upper + distance_to_lower)
-        upper_degree = upper_index - ref_index
-        lower_degree = lower_index - ref_index
+        upper_degree = upper_index - tonic_index
+        lower_degree = lower_index - tonic_index
         degree = upper_degree * upper_weight + lower_degree * lower_weight
 
     return degree
 
-def get_note_from_degree(degree, scale_list, tonic_midi):
-    ref_index = scale_list.index(tonic_midi)
-    note_index = round(ref_index + degree)  # round to nearest integer
+def get_pitch_from_degree(degree, scale_list, tonic_pitch):
+    tonic_index = scale_list.index(tonic_pitch)
+    pitch_index = round(tonic_index + degree)  # round to nearest integer
 
     # If the degree is within the scale
-    if 0 <= note_index < len(scale_list):
-        note = scale_list[note_index]
+    if 0 <= pitch_index < len(scale_list):
+        pitch = scale_list[pitch_index]
     else:
-        # If the degree is not within the scale, find the two notes it falls between
-        lower_index = max(0, min(note_index, len(scale_list) - 1))
-        upper_index = min(len(scale_list) - 1, max(note_index, 0))
-        lower_note = scale_list[lower_index]
-        upper_note = scale_list[upper_index]
+        # If the degree is not within the scale, find the two pitches it falls between
+        lower_index = max(0, min(pitch_index, len(scale_list) - 1))
+        upper_index = min(len(scale_list) - 1, max(pitch_index, 0))
+        lower_pitch = scale_list[lower_index]
+        upper_pitch = scale_list[upper_index]
 
-        # Compute the note as the weighted average of the two notes
-        distance_to_upper = upper_index - note_index
-        distance_to_lower = note_index - lower_index
+        # Compute the pitch as the weighted average of the two pitches
+        distance_to_upper = upper_index - pitch_index
+        distance_to_lower = pitch_index - lower_index
         upper_weight = 1 - distance_to_upper / (distance_to_upper + distance_to_lower)
         lower_weight = 1 - distance_to_lower / (distance_to_upper + distance_to_lower)
-        note = upper_note * upper_weight + lower_note * lower_weight
+        pitch = upper_pitch * upper_weight + lower_pitch * lower_weight
 
-    return note
+    return pitch
+
+def set_offsets_according_to_durations(notes):
+    """
+    Adjusts the offsets of the notes based on their durations.
+
+    Args:
+        notes (list): A list of tuples, where each tuple contains a note (pitch),
+                      a duration (quarterLength), and an offset.
+
+    Returns:
+        list: The list of notes with adjusted offsets.
+    """
+    adjusted_notes = []
+    current_offset = 0
+
+    for pitch, duration, _ in notes:
+        adjusted_notes.append((pitch, duration, current_offset))
+        current_offset += duration
+
+    return adjusted_notes
 
 def fill_gaps_with_rests(notes, parent_offset=0.0):
     """
@@ -163,21 +189,25 @@ def repair_notes(s: list) -> list:
     """
     return adjust_note_durations_to_prevent_overlaps(fill_gaps_with_rests(s))
 
-def abc_to_midi(note):
+def abc_to_midi(pitch):
     # Mapping of note names to MIDI numbers
-    notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-    octave = int(note[-1]) + 1
-    key = notes.index(note[:-1])
+    pitches = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+    if len(pitch) == 1:
+        octave = 4
+        key = pitches.index(pitch[0])
+    else:
+        octave = int(pitch[-1]) + 1
+        key = pitches.index(pitch[:-1])
     midi = 12 * octave + key
     return midi
 
 def midi_to_abc(midi):
     # Mapping of MIDI numbers to note names
-    notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+    pitches = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
     octave = midi // 12 - 1
     key = midi % 12
-    note = notes[key] + str(octave)
-    return note
+    pitch = pitches[key] + str(octave)
+    return pitch
 
 def no_overlap(notes, adjust='offsets'):
     """
@@ -271,3 +301,47 @@ def quantize_notes(notes, measure_length, time_resolution):
         quantized_duration = min(duration, measure_end - quantized_offset)
         quantized_notes.append((pitch, quantized_duration, quantized_offset))
     return quantized_notes
+
+
+def find_closest_pitch_at_measure_start(notes, measure_length):
+    """
+    Finds the closest pitch at the beginning of each measure.
+
+    Args:
+        notes (list of tuples): A list of tuples where each tuple is (pitch, duration, offset).
+        measure_length (float): The length of a measure.
+
+    Returns:
+        list: A list of pitches, each representing the closest pitch at the start of a measure.
+    """
+    # Sort the notes by offset to ensure they are in order
+    notes_sorted_by_offset = sorted(notes, key=lambda x: x[2])
+
+    # Find the maximum offset to determine how many measures we have
+    max_offset = max(notes, key=lambda x: x[2])[2]
+    num_measures = int(max_offset // measure_length) + 1
+
+    closest_pitches = []
+
+    for measure_num in range(num_measures):
+        measure_start = measure_num * measure_length
+        closest_pitch = None
+        closest_distance = float('inf')
+
+        for pitch, duration, offset in notes_sorted_by_offset:
+            # Calculate the distance from the start of the measure to the note's offset
+            distance = measure_start - offset
+
+            # If the note starts before the measure and is closer than any note we've looked at before
+            if distance >= 0 and distance < closest_distance:
+                closest_distance = distance
+                closest_pitch = pitch
+
+            # If we've passed the current measure start, we can break out of the loop
+            if offset > measure_start:
+                break
+
+        if closest_pitch is not None:
+            closest_pitches.append(closest_pitch)
+
+    return closest_pitches

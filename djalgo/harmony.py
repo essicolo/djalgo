@@ -1,5 +1,6 @@
 import random
 from . import utils
+from . import harmony
 
 class MusicTheoryConstants():
     """
@@ -187,83 +188,95 @@ class Progression(MusicTheoryConstants):
 
 class Voice(MusicTheoryConstants):
     """
-    Represents a musical voice that generates chords and arpeggios based on a given scale and degrees.
+    A class to represent a musical voice.
 
-    Args:
-        scale_type (str, optional): The type of scale to generate. Defaults to 'major'.
-        tonic (str, optional): The tonic note for the scale. Defaults to 'C'.
-        degrees (list, optional): The degrees for chord formation. Defaults to [0, 2, 4].
-
-    Attributes:
-        scale_type (str): The type of scale to generate.
-        tonic (str): The tonic note for the scale.
-        tonic_index (int): The index of the tonic note in the chromatic scale.
-        tonic_midi (int): The MIDI number of the tonic note.
-        scale (list): A list of MIDI notes for the complete scale.
-        degrees (list): The degrees for chord formation.
-    """
+    """  
 
     def __init__(self, scale_type='major', tonic='C', degrees=[0, 2, 4]):
-        self.scale_type = scale_type
+        """
+        Constructs all the necessary attributes for the voice object.
+
+        Parameters
+        ----------
+            scale_type : str, optional
+                The type of the scale (default is 'major').
+            tonic : str, optional
+                The tonic note of the scale (default is 'C').
+            degrees : list, optional
+                Relative degrees for chord formation (default is [0, 2, 4]).
+        """
         self.tonic = tonic
-        self.tonic_index = self.chromatic_scale.index(tonic)  # Index in chromatic scale
-        self.tonic_midi = 60 + self.tonic_index  # Assuming 'C' starts at MIDI number 60
-        self.scale = self.generate_scale(tonic, scale_type)  # This will be a list of MIDI notes for the scale
-        self.degrees = degrees  # Degrees for chord formation
+        self.scale = harmony.Scale(tonic, scale_type).generate()  # a list of MIDI notes for the scale
+        self.degrees = degrees  # relative degrees for chord formation
 
-    def generate_scale(self, tonic, scale_type):
+    def pitch_to_chord(self, pitch):
         """
-        Generate a complete scale based on the tonic and scale type.
+        Convert a MIDI note to a chord based on the scale using the specified degrees.
 
-        Args:
-            tonic (str): The tonic note for the scale.
-            scale_type (str): The type of scale to generate.
-        
-        Returns:
-            list: A list of MIDI notes for the complete scale.
+        Parameters
+        ----------
+            pitch : int
+                The MIDI note to convert.
+
+        Returns
+        -------
+            list
+                A list of MIDI notes representing the chord.
         """
-        scale_pattern = self.scale_intervals[scale_type]
-        scale_notes = [(self.tonic_index + interval) % 12 for interval in scale_pattern]  # Pitch classes
-        complete_scale = []  # This will store the full scale in MIDI numbers
-        for octave in range(-1, 10):  # Covering all MIDI octaves
-            for note in scale_notes:
-                midi_note = 12 * octave + note
-                if 0 <= midi_note <= 127:  # Valid MIDI range
-                    complete_scale.append(midi_note)
-        return complete_scale
+        # to get the degree, I need a the tonic in the right octave, i.e. the tonic midi pitch
+        octave = utils.get_octave(pitch)
+        tonic_abc_pitch = self.tonic + str(octave)
+        tonic_midi_pitch = utils.abc_to_midi(tonic_abc_pitch)
 
-    def midi_to_scale_degree(self, midi_note):
-        """Convert a MIDI note number to its corresponding scale degree index."""
-        note_in_scale = (midi_note - self.tonic_midi) % 12
-        # This checks if the pitch class of the note is in the scale
-        if note_in_scale in [note % 12 for note in self.scale]:  # Adjust this line
-            return self.scale.index(midi_note)  # Return index within actual MIDI scale
-        else:
-            return None
+        # the degrees of the whole scale
+        scale_degrees = [utils.get_degree_from_pitch(p, scale_list=self.scale, tonic_pitch=tonic_midi_pitch) for p in self.scale]
+        pitch_degree = utils.get_degree_from_pitch(pitch, scale_list=self.scale, tonic_pitch=tonic_midi_pitch)
+        pitch_degree = int(round(pitch_degree)) # round the degree if the pitch is out of scale
 
-    def pitch_to_chord(self, midi_note):
-        """Convert a MIDI note to a chord based on the scale using the specified degrees."""
-        scale_degree = self.midi_to_scale_degree(midi_note)
-        if scale_degree is not None:
-            chord_midi = [self.scale[(scale_degree + degree) % len(self.scale)] for degree in self.degrees]
-            return chord_midi  # Chord is now directly from the scale
-        else:
-            return []  # Return empty list if note is not in scale
+        chord = []
+        for degree in self.degrees:
+            absolute_degree = pitch_degree + degree
+            absolute_index = scale_degrees.index(absolute_degree)
+            chord.append(self.scale[absolute_index])
+        return chord  # Chord is now directly from the scale
 
     def generate(self, pitches):
-        """Convert the pitches to a list of chords based on the pitches."""
+        """
+        Convert the pitches to a list of chords based on the pitches.
+
+        Parameters
+        ----------
+            pitches : list
+                A list of MIDI notes to convert.
+
+        Returns
+        -------
+            list
+                A list of chords, each represented as a list of MIDI notes.
+        """
         return [self.pitch_to_chord(pitch) for pitch in pitches]
     
-    def generate_arpeggio(self, root_note, pattern_length=None):
-        """Generate an arpeggio based on the voice's scale and degrees."""
-        scale_degree = self.midi_to_scale_degree(root_note)
-        if scale_degree is not None:
-            # If pattern_length is specified, extend the degrees to match the pattern length
-            extended_degrees = self.degrees * (pattern_length // len(self.degrees) + 1) if pattern_length else self.degrees
-            arpeggio_midi = [self.scale[(scale_degree + degree) % len(self.scale)] for degree in extended_degrees]
-            return arpeggio_midi[:pattern_length]  # Trim the arpeggio to the pattern length if specified
-        else:
-            return []  # Return empty list if root note is not in scale
+    def generate_arpeggio(self, pitch, pattern_length=None):
+        """
+        Generate an arpeggio based on the voice's scale and degrees.
+
+        Parameters
+        ----------
+            pitch : int
+                The root pitch of the arpeggio.
+            pattern_length : int, optional
+                The length of the arpeggio pattern (default is None, which means use the length of the degrees).
+
+        Returns
+        -------
+            list
+                A list of MIDI notes representing the arpeggio.
+        """
+        scale_degree = utils.get_degree_from_pitch(pitch, scale_list=self.scale, tonic_pitch=self.tonic)
+        # If pattern_length is specified, extend the degrees to match the pattern length
+        extended_degrees = self.degrees * (pattern_length // len(self.degrees) + 1) if pattern_length else self.degrees
+        arpeggio_midi = [self.scale[(scale_degree + degree) % len(self.scale)] for degree in extended_degrees]
+        return arpeggio_midi[:pattern_length]  # Trim the arpeggio to the pattern length if specified
 
 
 class Ornament(MusicTheoryConstants):

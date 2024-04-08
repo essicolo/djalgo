@@ -36,6 +36,30 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">utils</span>
 
+<div class="viewcode-block" id="isorhythm">
+<a class="viewcode-back" href="../../api.html#djalgo.rhythm.isorhythm">[docs]</a>
+<span class="k">def</span> <span class="nf">isorhythm</span><span class="p">(</span><span class="n">durations</span><span class="p">,</span> <span class="n">pitches</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Merges durations and pitches until both ends coincide, then sets offsets according to successive durations.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        durations (list): The first list.</span>
+<span class="sd">        pitches (list): The second list.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: The zipped list.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lcm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">lcm</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pitches</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">durations</span><span class="p">))</span>
+
+    <span class="n">p_repeated</span> <span class="o">=</span> <span class="p">(</span><span class="n">pitches</span> <span class="o">*</span> <span class="p">(</span><span class="n">lcm</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">pitches</span><span class="p">)))[:</span><span class="n">lcm</span><span class="p">]</span>
+    <span class="n">d_repeated</span> <span class="o">=</span> <span class="p">(</span><span class="n">durations</span> <span class="o">*</span> <span class="p">(</span><span class="n">lcm</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">durations</span><span class="p">)))[:</span><span class="n">lcm</span><span class="p">]</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">lcm</span>
+    <span class="n">notes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">p_repeated</span><span class="p">,</span> <span class="n">d_repeated</span><span class="p">,</span> <span class="n">o</span><span class="p">))</span>
+    <span class="n">notes</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">set_offsets_according_to_durations</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">notes</span></div>
+
+
 <div class="viewcode-block" id="Rhythm">
 <a class="viewcode-back" href="../../api.html#djalgo.rhythm.Rhythm">[docs]</a>
 <span class="k">class</span> <span class="nc">Rhythm</span><span class="p">:</span>
@@ -122,34 +146,9 @@
     <span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">fib</span> <span class="o">=</span> <span class="n">Fibonacci</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">durations</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">fib</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span></div>
-
-
-<div class="viewcode-block" id="Rhythm.isorhythm">
-<a class="viewcode-back" href="../../api.html#djalgo.rhythm.Rhythm.isorhythm">[docs]</a>
-    <span class="nd">@staticmethod</span>    
-    <span class="k">def</span> <span class="nf">isorhythm</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">durations</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Zips two lists together until both ends coincide.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            a (list): The first list.</span>
-<span class="sd">            b (list): The second list.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            list: The zipped list.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">lcm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">lcm</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pitches</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">durations</span><span class="p">))</span>
-
-        <span class="n">p_repeated</span> <span class="o">=</span> <span class="p">(</span><span class="n">pitches</span> <span class="o">*</span> <span class="p">(</span><span class="n">lcm</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">pitches</span><span class="p">)))[:</span><span class="n">lcm</span><span class="p">]</span>
-        <span class="n">d_repeated</span> <span class="o">=</span> <span class="p">(</span><span class="n">durations</span> <span class="o">*</span> <span class="p">(</span><span class="n">lcm</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">durations</span><span class="p">)))[:</span><span class="n">lcm</span><span class="p">]</span>
-        <span class="n">o</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">lcm</span>
-        <span class="n">notes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">p_repeated</span><span class="p">,</span> <span class="n">d_repeated</span><span class="p">,</span> <span class="n">o</span><span class="p">))</span>
-        <span class="n">notes</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">repair_notes</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">notes</span></div>
 </div>
 
-    
+
 
 <div class="viewcode-block" id="GeneticRhythm">
 <a class="viewcode-back" href="../../api.html#djalgo.rhythm.GeneticRhythm">[docs]</a>
@@ -393,9 +392,10 @@
             </a></p>
 <h3><a href="../../index.html">Table of Contents</a></h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../00_getting-started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../01_musical.html">Pythonic Harmonies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../02_loops.html">Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_getting-started.html">1. Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_harmony.html">2. Pythonic Harmonies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_loops.html">3. Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_minimalism.html">4. Minimalistic composition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>

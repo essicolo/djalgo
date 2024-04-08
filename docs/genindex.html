@@ -150,8 +150,6 @@
 </li>
       <li><a href="api.html#djalgo.rhythm.Rhythm.darwin">darwin() (djalgo.rhythm.Rhythm method)</a>
 </li>
-      <li><a href="api.html#djalgo.harmony.Voice.degrees">degrees (djalgo.harmony.Voice attribute)</a>
-</li>
       <li><a href="api.html#djalgo.analysis.Analysis.dissonance">dissonance() (djalgo.analysis.Analysis method)</a>
 </li>
       <li>
@@ -269,6 +267,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#djalgo.utils.fill_gaps_with_rests">fill_gaps_with_rests() (in module djalgo.utils)</a>
 </li>
+      <li><a href="api.html#djalgo.utils.find_closest_pitch_at_measure_start">find_closest_pitch_at_measure_start() (in module djalgo.utils)</a>
+</li>
       <li><a href="api.html#djalgo.djai.DjFlow.fit">fit() (djalgo.djai.DjFlow method)</a>
 </li>
       <li><a href="api.html#djalgo.genetic.Darwin.fitness">fitness() (djalgo.genetic.Darwin method)</a>
@@ -316,20 +316,16 @@
       <li><a href="api.html#djalgo.rhythm.Fibonacci.generate_fibonacci_sequence">generate_fibonacci_sequence() (djalgo.rhythm.Fibonacci method)</a>
 </li>
       <li><a href="api.html#djalgo.harmony.Ornament.generate_scale">generate_scale() (djalgo.harmony.Ornament method)</a>
-
-      <ul>
-        <li><a href="api.html#djalgo.harmony.Voice.generate_scale">(djalgo.harmony.Voice method)</a>
 </li>
-      </ul></li>
       <li><a href="api.html#djalgo.rhythm.GeneticRhythm">GeneticRhythm (class in djalgo.rhythm)</a>
 </li>
       <li><a href="api.html#djalgo.djai.PositionalEncoding.get_angles">get_angles() (djalgo.djai.PositionalEncoding method)</a>
 </li>
-      <li><a href="api.html#djalgo.utils.get_degree_from_note">get_degree_from_note() (in module djalgo.utils)</a>
-</li>
-      <li><a href="api.html#djalgo.utils.get_note_from_degree">get_note_from_degree() (in module djalgo.utils)</a>
+      <li><a href="api.html#djalgo.utils.get_degree_from_pitch">get_degree_from_pitch() (in module djalgo.utils)</a>
 </li>
       <li><a href="api.html#djalgo.utils.get_octave">get_octave() (in module djalgo.utils)</a>
+</li>
+      <li><a href="api.html#djalgo.utils.get_pitch_from_degree">get_pitch_from_degree() (in module djalgo.utils)</a>
 </li>
       <li><a href="api.html#djalgo.utils.get_sharp">get_sharp() (in module djalgo.utils)</a>
 </li>
@@ -351,7 +347,7 @@
 </li>
       <li><a href="api.html#djalgo.harmony.MusicTheoryConstants.intervals">intervals (djalgo.harmony.MusicTheoryConstants attribute)</a>
 </li>
-      <li><a href="api.html#djalgo.rhythm.Rhythm.isorhythm">isorhythm() (djalgo.rhythm.Rhythm static method)</a>
+      <li><a href="api.html#djalgo.rhythm.isorhythm">isorhythm() (in module djalgo.rhythm)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -396,8 +392,6 @@
       <li><a href="api.html#djalgo.djai.DjFlow.midi_files_to_sequences">midi_files_to_sequences() (djalgo.djai.DjFlow method)</a>
 </li>
       <li><a href="api.html#djalgo.utils.midi_to_abc">midi_to_abc() (in module djalgo.utils)</a>
-</li>
-      <li><a href="api.html#djalgo.harmony.Voice.midi_to_scale_degree">midi_to_scale_degree() (djalgo.harmony.Voice method)</a>
 </li>
       <li><a href="api.html#djalgo.minimalism.Minimalism">Minimalism (class in djalgo.minimalism)</a>
 </li>
@@ -539,8 +533,6 @@
 </li>
         <li><a href="api.html#djalgo.fractal.Mandelbrot.scale">(djalgo.fractal.Mandelbrot attribute)</a>
 </li>
-        <li><a href="api.html#djalgo.harmony.Voice.scale">(djalgo.harmony.Voice attribute)</a>
-</li>
       </ul></li>
       <li><a href="api.html#djalgo.djai.DjFlow.scale_back_features">scale_back_features() (djalgo.djai.DjFlow method)</a>
 </li>
@@ -553,17 +545,13 @@
       <li><a href="api.html#djalgo.harmony.MusicTheoryConstants.scale_to_triad">scale_to_triad() (djalgo.harmony.MusicTheoryConstants static method)</a>
 </li>
       <li><a href="api.html#djalgo.harmony.Scale.scale_type">scale_type (djalgo.harmony.Scale attribute)</a>
-
-      <ul>
-        <li><a href="api.html#djalgo.harmony.Voice.scale_type">(djalgo.harmony.Voice attribute)</a>
 </li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#djalgo.djai.scan_midi_files">scan_midi_files() (in module djalgo.djai)</a>
 </li>
       <li><a href="api.html#djalgo.genetic.Darwin.select">select() (djalgo.genetic.Darwin method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#djalgo.rhythm.GeneticRhythm.select_parents">select_parents() (djalgo.rhythm.GeneticRhythm method)</a>
 </li>
       <li><a href="api.html#djalgo.conversion.sequence_to_mido_track">sequence_to_mido_track() (in module djalgo.conversion)</a>
@@ -577,6 +565,8 @@
       <li><a href="api.html#djalgo.conversion.sequences_to_music21_score">sequences_to_music21_score() (in module djalgo.conversion)</a>
 </li>
       <li><a href="api.html#djalgo.conversion.sequences_to_prettymidi">sequences_to_prettymidi() (in module djalgo.conversion)</a>
+</li>
+      <li><a href="api.html#djalgo.utils.set_offsets_according_to_durations">set_offsets_according_to_durations() (in module djalgo.utils)</a>
 </li>
       <li><a href="api.html#djalgo.fractal.Mandelbrot.start_note_index">start_note_index (djalgo.fractal.Mandelbrot attribute)</a>
 </li>
@@ -600,17 +590,9 @@
 </li>
       <li><a href="api.html#djalgo.conversion.to_prettymidi">to_prettymidi() (in module djalgo.conversion)</a>
 </li>
-      <li><a href="api.html#djalgo.harmony.Scale.tonic">tonic (djalgo.harmony.Scale attribute)</a>
-
-      <ul>
-        <li><a href="api.html#djalgo.harmony.Voice.tonic">(djalgo.harmony.Voice attribute)</a>
-</li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#djalgo.harmony.Voice.tonic_index">tonic_index (djalgo.harmony.Voice attribute)</a>
-</li>
-      <li><a href="api.html#djalgo.harmony.Voice.tonic_midi">tonic_midi (djalgo.harmony.Voice attribute)</a>
+      <li><a href="api.html#djalgo.harmony.Scale.tonic">tonic (djalgo.harmony.Scale attribute)</a>
 </li>
       <li><a href="api.html#djalgo.conversion.tuple_to_mido_messages">tuple_to_mido_messages() (in module djalgo.conversion)</a>
 </li>
@@ -678,9 +660,10 @@
             </a></p>
 <h3><a href="index.html">Table of Contents</a></h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="00_getting-started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="01_musical.html">Pythonic Harmonies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_loops.html">Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_getting-started.html">1. Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_harmony.html">2. Pythonic Harmonies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_loops.html">3. Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_minimalism.html">4. Minimalistic composition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 </ul>

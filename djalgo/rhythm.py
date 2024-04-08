@@ -2,6 +2,27 @@ import random
 import numpy as np
 from . import utils
 
+def isorhythm(durations, pitches):
+    """
+    Merges durations and pitches until both ends coincide, then sets offsets according to successive durations.
+
+    Args:
+        durations (list): The first list.
+        pitches (list): The second list.
+
+    Returns:
+        list: The zipped list.
+    """
+    lcm = np.lcm(len(pitches), len(durations))
+
+    p_repeated = (pitches * (lcm // len(pitches)))[:lcm]
+    d_repeated = (durations * (lcm // len(durations)))[:lcm]
+    o = [1] * lcm
+    notes = list(zip(p_repeated, d_repeated, o))
+    notes = utils.set_offsets_according_to_durations(notes)
+
+    return notes
+
 class Rhythm:
     """
     A class used to represent a Rhythm.
@@ -79,28 +100,6 @@ class Rhythm:
         fib = Fibonacci(self.measure_length, self.durations, reverse=reverse)
         return fib.generate()
 
-    @staticmethod    
-    def isorhythm(pitches, durations):
-        """
-        Zips two lists together until both ends coincide.
-
-        Args:
-            a (list): The first list.
-            b (list): The second list.
-
-        Returns:
-            list: The zipped list.
-        """
-        lcm = np.lcm(len(pitches), len(durations))
-
-        p_repeated = (pitches * (lcm // len(pitches)))[:lcm]
-        d_repeated = (durations * (lcm // len(durations)))[:lcm]
-        o = [1] * lcm
-        notes = list(zip(p_repeated, d_repeated, o))
-        notes = utils.repair_notes(notes)
-
-        return notes
-    
 
 class GeneticRhythm:
     def __init__(self, seed, population_size, measure_length, max_generations, mutation_rate, durations):

@@ -34,6 +34,7 @@
   <h1>Source code for djalgo.harmony</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">utils</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">harmony</span>
 
 <div class="viewcode-block" id="MusicTheoryConstants">
 <a class="viewcode-back" href="../../api.html#djalgo.harmony.MusicTheoryConstants">[docs]</a>
@@ -247,97 +248,103 @@
 <a class="viewcode-back" href="../../api.html#djalgo.harmony.Voice">[docs]</a>
 <span class="k">class</span> <span class="nc">Voice</span><span class="p">(</span><span class="n">MusicTheoryConstants</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Represents a musical voice that generates chords and arpeggios based on a given scale and degrees.</span>
+<span class="sd">    A class to represent a musical voice.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        scale_type (str, optional): The type of scale to generate. Defaults to &#39;major&#39;.</span>
-<span class="sd">        tonic (str, optional): The tonic note for the scale. Defaults to &#39;C&#39;.</span>
-<span class="sd">        degrees (list, optional): The degrees for chord formation. Defaults to [0, 2, 4].</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        scale_type (str): The type of scale to generate.</span>
-<span class="sd">        tonic (str): The tonic note for the scale.</span>
-<span class="sd">        tonic_index (int): The index of the tonic note in the chromatic scale.</span>
-<span class="sd">        tonic_midi (int): The MIDI number of the tonic note.</span>
-<span class="sd">        scale (list): A list of MIDI notes for the complete scale.</span>
-<span class="sd">        degrees (list): The degrees for chord formation.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>  
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale_type</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">tonic</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="n">degrees</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scale_type</span> <span class="o">=</span> <span class="n">scale_type</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tonic</span> <span class="o">=</span> <span class="n">tonic</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tonic_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromatic_scale</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">tonic</span><span class="p">)</span>  <span class="c1"># Index in chromatic scale</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tonic_midi</span> <span class="o">=</span> <span class="mi">60</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonic_index</span>  <span class="c1"># Assuming &#39;C&#39; starts at MIDI number 60</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_scale</span><span class="p">(</span><span class="n">tonic</span><span class="p">,</span> <span class="n">scale_type</span><span class="p">)</span>  <span class="c1"># This will be a list of MIDI notes for the scale</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">degrees</span> <span class="o">=</span> <span class="n">degrees</span>  <span class="c1"># Degrees for chord formation</span>
-
-<div class="viewcode-block" id="Voice.generate_scale">
-<a class="viewcode-back" href="../../api.html#djalgo.harmony.Voice.generate_scale">[docs]</a>
-    <span class="k">def</span> <span class="nf">generate_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tonic</span><span class="p">,</span> <span class="n">scale_type</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generate a complete scale based on the tonic and scale type.</span>
+<span class="sd">        Constructs all the necessary attributes for the voice object.</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            tonic (str): The tonic note for the scale.</span>
-<span class="sd">            scale_type (str): The type of scale to generate.</span>
-<span class="sd">        </span>
-<span class="sd">        Returns:</span>
-<span class="sd">            list: A list of MIDI notes for the complete scale.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            scale_type : str, optional</span>
+<span class="sd">                The type of the scale (default is &#39;major&#39;).</span>
+<span class="sd">            tonic : str, optional</span>
+<span class="sd">                The tonic note of the scale (default is &#39;C&#39;).</span>
+<span class="sd">            degrees : list, optional</span>
+<span class="sd">                Relative degrees for chord formation (default is [0, 2, 4]).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">scale_pattern</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="p">[</span><span class="n">scale_type</span><span class="p">]</span>
-        <span class="n">scale_notes</span> <span class="o">=</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">tonic_index</span> <span class="o">+</span> <span class="n">interval</span><span class="p">)</span> <span class="o">%</span> <span class="mi">12</span> <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="n">scale_pattern</span><span class="p">]</span>  <span class="c1"># Pitch classes</span>
-        <span class="n">complete_scale</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># This will store the full scale in MIDI numbers</span>
-        <span class="k">for</span> <span class="n">octave</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>  <span class="c1"># Covering all MIDI octaves</span>
-            <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">scale_notes</span><span class="p">:</span>
-                <span class="n">midi_note</span> <span class="o">=</span> <span class="mi">12</span> <span class="o">*</span> <span class="n">octave</span> <span class="o">+</span> <span class="n">note</span>
-                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">midi_note</span> <span class="o">&lt;=</span> <span class="mi">127</span><span class="p">:</span>  <span class="c1"># Valid MIDI range</span>
-                    <span class="n">complete_scale</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">midi_note</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">complete_scale</span></div>
-
-
-<div class="viewcode-block" id="Voice.midi_to_scale_degree">
-<a class="viewcode-back" href="../../api.html#djalgo.harmony.Voice.midi_to_scale_degree">[docs]</a>
-    <span class="k">def</span> <span class="nf">midi_to_scale_degree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">midi_note</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert a MIDI note number to its corresponding scale degree index.&quot;&quot;&quot;</span>
-        <span class="n">note_in_scale</span> <span class="o">=</span> <span class="p">(</span><span class="n">midi_note</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonic_midi</span><span class="p">)</span> <span class="o">%</span> <span class="mi">12</span>
-        <span class="c1"># This checks if the pitch class of the note is in the scale</span>
-        <span class="k">if</span> <span class="n">note_in_scale</span> <span class="ow">in</span> <span class="p">[</span><span class="n">note</span> <span class="o">%</span> <span class="mi">12</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">]:</span>  <span class="c1"># Adjust this line</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">midi_note</span><span class="p">)</span>  <span class="c1"># Return index within actual MIDI scale</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">tonic</span> <span class="o">=</span> <span class="n">tonic</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">harmony</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">tonic</span><span class="p">,</span> <span class="n">scale_type</span><span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>  <span class="c1"># a list of MIDI notes for the scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">degrees</span> <span class="o">=</span> <span class="n">degrees</span>  <span class="c1"># relative degrees for chord formation</span>
 
 <div class="viewcode-block" id="Voice.pitch_to_chord">
 <a class="viewcode-back" href="../../api.html#djalgo.harmony.Voice.pitch_to_chord">[docs]</a>
-    <span class="k">def</span> <span class="nf">pitch_to_chord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">midi_note</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert a MIDI note to a chord based on the scale using the specified degrees.&quot;&quot;&quot;</span>
-        <span class="n">scale_degree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">midi_to_scale_degree</span><span class="p">(</span><span class="n">midi_note</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">scale_degree</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">chord_midi</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">[(</span><span class="n">scale_degree</span> <span class="o">+</span> <span class="n">degree</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)]</span> <span class="k">for</span> <span class="n">degree</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">degrees</span><span class="p">]</span>
-            <span class="k">return</span> <span class="n">chord_midi</span>  <span class="c1"># Chord is now directly from the scale</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[]</span>  <span class="c1"># Return empty list if note is not in scale</span></div>
+    <span class="k">def</span> <span class="nf">pitch_to_chord</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pitch</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert a MIDI note to a chord based on the scale using the specified degrees.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            pitch : int</span>
+<span class="sd">                The MIDI note to convert.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">            list</span>
+<span class="sd">                A list of MIDI notes representing the chord.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># to get the degree, I need a the tonic in the right octave, i.e. the tonic midi pitch</span>
+        <span class="n">octave</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_octave</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span>
+        <span class="n">tonic_abc_pitch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tonic</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">octave</span><span class="p">)</span>
+        <span class="n">tonic_midi_pitch</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">abc_to_midi</span><span class="p">(</span><span class="n">tonic_abc_pitch</span><span class="p">)</span>
+
+        <span class="c1"># the degrees of the whole scale</span>
+        <span class="n">scale_degrees</span> <span class="o">=</span> <span class="p">[</span><span class="n">utils</span><span class="o">.</span><span class="n">get_degree_from_pitch</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">scale_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span> <span class="n">tonic_pitch</span><span class="o">=</span><span class="n">tonic_midi_pitch</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">]</span>
+        <span class="n">pitch_degree</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_degree_from_pitch</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">scale_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span> <span class="n">tonic_pitch</span><span class="o">=</span><span class="n">tonic_midi_pitch</span><span class="p">)</span>
+        <span class="n">pitch_degree</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">pitch_degree</span><span class="p">))</span> <span class="c1"># round the degree if the pitch is out of scale</span>
+
+        <span class="n">chord</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">degree</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">degrees</span><span class="p">:</span>
+            <span class="n">absolute_degree</span> <span class="o">=</span> <span class="n">pitch_degree</span> <span class="o">+</span> <span class="n">degree</span>
+            <span class="n">absolute_index</span> <span class="o">=</span> <span class="n">scale_degrees</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">absolute_degree</span><span class="p">)</span>
+            <span class="n">chord</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">[</span><span class="n">absolute_index</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">chord</span>  <span class="c1"># Chord is now directly from the scale</span></div>
 
 
 <div class="viewcode-block" id="Voice.generate">
 <a class="viewcode-back" href="../../api.html#djalgo.harmony.Voice.generate">[docs]</a>
     <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pitches</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert the pitches to a list of chords based on the pitches.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert the pitches to a list of chords based on the pitches.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            pitches : list</span>
+<span class="sd">                A list of MIDI notes to convert.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">            list</span>
+<span class="sd">                A list of chords, each represented as a list of MIDI notes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pitch_to_chord</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span> <span class="k">for</span> <span class="n">pitch</span> <span class="ow">in</span> <span class="n">pitches</span><span class="p">]</span></div>
 
     
 <div class="viewcode-block" id="Voice.generate_arpeggio">
 <a class="viewcode-back" href="../../api.html#djalgo.harmony.Voice.generate_arpeggio">[docs]</a>
-    <span class="k">def</span> <span class="nf">generate_arpeggio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root_note</span><span class="p">,</span> <span class="n">pattern_length</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate an arpeggio based on the voice&#39;s scale and degrees.&quot;&quot;&quot;</span>
-        <span class="n">scale_degree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">midi_to_scale_degree</span><span class="p">(</span><span class="n">root_note</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">scale_degree</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># If pattern_length is specified, extend the degrees to match the pattern length</span>
-            <span class="n">extended_degrees</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">degrees</span> <span class="o">*</span> <span class="p">(</span><span class="n">pattern_length</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">degrees</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">pattern_length</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">degrees</span>
-            <span class="n">arpeggio_midi</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">[(</span><span class="n">scale_degree</span> <span class="o">+</span> <span class="n">degree</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)]</span> <span class="k">for</span> <span class="n">degree</span> <span class="ow">in</span> <span class="n">extended_degrees</span><span class="p">]</span>
-            <span class="k">return</span> <span class="n">arpeggio_midi</span><span class="p">[:</span><span class="n">pattern_length</span><span class="p">]</span>  <span class="c1"># Trim the arpeggio to the pattern length if specified</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">[]</span>  <span class="c1"># Return empty list if root note is not in scale</span></div>
+    <span class="k">def</span> <span class="nf">generate_arpeggio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">pattern_length</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate an arpeggio based on the voice&#39;s scale and degrees.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">            pitch : int</span>
+<span class="sd">                The root pitch of the arpeggio.</span>
+<span class="sd">            pattern_length : int, optional</span>
+<span class="sd">                The length of the arpeggio pattern (default is None, which means use the length of the degrees).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">            list</span>
+<span class="sd">                A list of MIDI notes representing the arpeggio.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">scale_degree</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_degree_from_pitch</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">scale_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span> <span class="n">tonic_pitch</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tonic</span><span class="p">)</span>
+        <span class="c1"># If pattern_length is specified, extend the degrees to match the pattern length</span>
+        <span class="n">extended_degrees</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">degrees</span> <span class="o">*</span> <span class="p">(</span><span class="n">pattern_length</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">degrees</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">pattern_length</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">degrees</span>
+        <span class="n">arpeggio_midi</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">[(</span><span class="n">scale_degree</span> <span class="o">+</span> <span class="n">degree</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)]</span> <span class="k">for</span> <span class="n">degree</span> <span class="ow">in</span> <span class="n">extended_degrees</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">arpeggio_midi</span><span class="p">[:</span><span class="n">pattern_length</span><span class="p">]</span>  <span class="c1"># Trim the arpeggio to the pattern length if specified</span></div>
 </div>
 
 
@@ -655,9 +662,10 @@
             </a></p>
 <h3><a href="../../index.html">Table of Contents</a></h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../00_getting-started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../01_musical.html">Pythonic Harmonies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../02_loops.html">Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_getting-started.html">1. Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_harmony.html">2. Pythonic Harmonies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_loops.html">3. Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_minimalism.html">4. Minimalistic composition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>

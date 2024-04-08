@@ -309,14 +309,14 @@ class Minimalism:
 
             Args:
                 t_chord (list): The t-chord to be used.
-                direction (str): The direction of the operation. Can be 'up', 'down', 'nearest' or 'alternate'.
+                direction (str): The direction of the operation. Can be 'up', 'down', 'any' or 'alternate'.
                 rank (int): The rank of the t-chord.
             """
 
-            if direction in ['up', 'down', 'nearest', 'alternate']:
+            if direction in ['up', 'down', 'any', 'alternate']:
                 self.direction = direction
             else:
-                raise ValueError("Invalid output type. Choose 'up', 'down', 'nearest' or 'alternate'.")
+                raise ValueError("Invalid output type. Choose 'up', 'down', 'any' or 'alternate'.")
             
             if self.direction == 'alternate':
                 self.is_alternate = True
@@ -325,7 +325,14 @@ class Minimalism:
                 self.is_alternate = False
             
             self.t_chord = t_chord
-            self.rank = rank
+            if not isinstance(rank, int) or rank < 0:
+                raise ValueError("Position must be a non-negative integer lower or equal to the length of the t-chord.")
+            else:
+                self.rank = rank
+            
+            if self.rank >= len(self.t_chord):
+                self.rank = len(self.t_chord) - 1
+                print("Rank exceeds the length of the t-chord. Defaulting to the last note of the t-chord.")
 
         def generate(self, sequence):
             """
@@ -337,9 +344,8 @@ class Minimalism:
             Returns:
                 list: The t-voice sequence.
             """
-
             
-            self.sequence = sequence # the m-voice
+            self.sequence = sequence  # the m-voice
             if utils.check_input(self.sequence) == 'list of tuples':
                 pitch_sequence = [note[0] for note in self.sequence]
             elif utils.check_input(self.sequence) == 'list':
@@ -350,24 +356,30 @@ class Minimalism:
             t_voice = []
             for m in pitch_sequence:
                 differences = [t - m for t in self.t_chord]
+                sorted_differences = sorted(enumerate(differences), key=lambda x: abs(x[1]))
 
-                if self.direction == 'nearest':
-                    nearest_index = min(range(len(differences)), key=lambda i: abs(differences[i]))
-                    t_voice_i = self.t_chord[nearest_index] if nearest_index is not None else None
-                elif self.direction == 'up':
-                    positive_differences = [(index, value) for index, value in enumerate(differences) if value >= 0]
-                    if positive_differences:
-                        nearest_positive_index = min(positive_differences, key=lambda x: x[1])[0]
-                        t_voice_i = self.t_chord[nearest_positive_index]
+                # Ensure rank is within the range of available notes
+                effective_rank = self.rank  # Default to the specified rank
+                
+                if self.direction in ['up', 'down']:
+                    filtered_differences = [(index, value) for index, value in sorted_differences if value >= 0] if self.direction == 'up' else [(index, value) for index, value in sorted_differences if value <= 0]
+                    if not filtered_differences:
+                        # If there are no notes in the desired direction, default to the extreme note in that direction
+                        t_voice_i = max(self.t_chord) if self.direction == 'up' else min(self.t_chord)
                     else:
-                        t_voice_i = max(self.t_chord)
-                elif self.direction == 'down':
-                    negative_differences = [(index, value) for index, value in enumerate(differences) if value <= 0]
-                    if negative_differences:
-                        nearest_negative_index = max(negative_differences, key=lambda x: x[1])[0]
-                        t_voice_i = self.t_chord[nearest_negative_index]
-                    else:
-                        t_voice_i = min(self.t_chord)
+                        # Adjust rank if it exceeds the length of filtered differences
+                        if effective_rank >= len(filtered_differences):
+                            effective_rank = len(filtered_differences) - 1  # Use the last available note
+                        
+                        chosen_index = filtered_differences[effective_rank][0]
+                        t_voice_i = self.t_chord[chosen_index]
+                elif self.direction == 'any':
+                    # Adjust rank if it exceeds the length of sorted differences
+                    if effective_rank >= len(sorted_differences):
+                        effective_rank = len(sorted_differences) - 1  # Use the last available note
+                    
+                    chosen_index = sorted_differences[effective_rank][0]
+                    t_voice_i = self.t_chord[chosen_index]
 
                 # Change direction if alternate
                 if self.is_alternate:
