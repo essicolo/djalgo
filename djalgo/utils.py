@@ -97,32 +97,37 @@ def set_offsets_according_to_durations(notes):
 
 def fill_gaps_with_rests(notes, parent_offset=0.0):
     """
-    Analyze a list of notes (each note is a (pitch, duration, offset) tuple)
-    and insert rests (None, duration, offset) to fill gaps between notes.
+    Analyze a sorted list of notes (each note is a (pitch, duration, offset) tuple)
+    and insert rests (None, duration, offset) to fill gaps between notes. Notes are
+    sorted by offset before processing to ensure accurate gap detection and filling.
 
     Args:
-        notes (list): The list of notes to be processed.
-        parent_offset (float): The offset to consider from the parent list, used in recursion.
+        notes (list): The list of notes to be processed, not necessarily sorted.
+        parent_offset (float): The offset to consider from the parent sequence, used in recursion.
 
     Returns:
-        list: The modified list with gaps filled with rests.
+        list: The modified list with gaps filled with rests, ensuring continuity.
     """
+    # Sort notes by offset to ensure correct processing order
+    notes_sorted = sorted(notes, key=lambda x: x[2])
+
     last_offset = 0.0  # Keep track of the offset after the last note or rest
     filled_notes = []
 
-    for note in notes:
+    for note in notes_sorted:
         pitch, duration, offset = note
         current_offset = parent_offset + offset
         if current_offset > last_offset:
             # There is a gap that needs to be filled with a rest
             gap_duration = current_offset - last_offset
             rest_to_insert = (None, gap_duration, last_offset - parent_offset)
-            filled_notes.append(rest_to_insert)  # Adjust offset for insertion
+            filled_notes.append(rest_to_insert)  # Insert the rest to fill the gap
 
         filled_notes.append(note)
-        last_offset = max(last_offset, current_offset + duration)  # Update the last offset
+        last_offset = max(last_offset, current_offset + duration)  # Update last offset for the next iteration
 
     return filled_notes
+
 
 def adjust_note_durations_to_prevent_overlaps(notes):
     """
@@ -152,31 +157,6 @@ def adjust_note_durations_to_prevent_overlaps(notes):
 
     return notes
 
-def insert_rests(notes, measure_length=4.0):
-    result = []
-    current_offset = 0.0
-
-    for note in notes:
-        pitch, duration, offset = note
-
-        # If the offset of the current note is greater than the current offset
-        # plus the duration of the previous note, insert a rest
-        if offset > current_offset:
-            rest_duration = offset - current_offset
-            rest = (None, rest_duration, current_offset)
-            result.append(rest)
-
-        result.append(note)
-        current_offset = offset + duration
-
-    # Check if there is a rest at the end of the last measure
-    if current_offset % measure_length != 0:
-        rest_duration = measure_length - (current_offset % measure_length)
-        rest = (None, rest_duration, current_offset)
-        result.append(rest)
-
-    return result
-
 def repair_notes(s: list) -> list:
     """
     Apply the fill_gaps_with_rests and adjust_note_durations_to_prevent_overlaps functions to a stream.
@@ -190,16 +170,30 @@ def repair_notes(s: list) -> list:
     return adjust_note_durations_to_prevent_overlaps(fill_gaps_with_rests(s))
 
 def abc_to_midi(pitch):
-    # Mapping of note names to MIDI numbers
+    # Mapping of note names to MIDI numbers with sharps
     pitches = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-    if len(pitch) == 1:
-        octave = 4
-        key = pitches.index(pitch[0])
+    flat_to_sharp = {
+        'Db': 'C#', 'Eb': 'D#', 'Gb': 'F#', 'Ab': 'G#', 'Bb': 'A#',
+        'Cb': 'B',  # Special handling for 'Cb', converting it directly to 'B'
+    }
+
+    octave = 4  # Default octave if not specified in the pitch string
+
+    # Check and convert flat notes to sharp notes
+    if 'b' in pitch:
+        note = pitch[:-1]  # Exclude the octave number if present
+        if note in flat_to_sharp:
+            pitch = flat_to_sharp[note] + pitch[-1]  # Append the octave number back if it was present
+
+    # Extract the note (with sharp) and octave from the pitch
+    if len(pitch) > 2 or pitch[1].isdigit():
+        note, octave = pitch[:-1], int(pitch[-1])
     else:
-        octave = int(pitch[-1]) + 1
-        key = pitches.index(pitch[:-1])
-    midi = 12 * octave + key
+        note = pitch[0]
+
+    midi = 12 * (octave + 1) + pitches.index(note)
     return midi
+
 
 def midi_to_abc(midi):
     # Mapping of MIDI numbers to note names
