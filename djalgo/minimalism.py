@@ -326,7 +326,7 @@ class Minimalism:
             
             self.t_chord = t_chord
             if not isinstance(rank, int) or rank < 0:
-                raise ValueError("Position must be a non-negative integer lower or equal to the length of the t-chord.")
+                raise ValueError("Rank must be a non-negative integer lower or equal to the length of the t-chord.")
             else:
                 self.rank = rank
             
