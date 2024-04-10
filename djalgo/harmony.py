@@ -65,21 +65,26 @@ class Scale(MusicTheoryConstants):
     def generate(self):
         """
         Generates the full range of the scale.
-
+    
         Returns:
             list: A list of MIDI note numbers representing the full range of the scale.
         """
         tonic_note = self.chromatic_scale.index(self.tonic)
         scale = self.scale_intervals.get(self.scale_type, self.scale_intervals['major'])
-        
-        full_range_scale = [
-            note + octave * 12 
-            for octave in range(11) 
-            for note in [(tonic_note + interval) % 12 for interval in scale] 
-            if note + octave * 12 <= 127
-        ]
+    
+        full_range_scale = []
+        added_notes = set()  # Keep track of added notes
+    
+        for octave in range(11):
+            for interval in scale:
+                note = (tonic_note + interval) % 12 + octave * 12
+                if note <= 127 and note not in added_notes:
+                    full_range_scale.append(note)
+                    added_notes.add(note)
+    
         full_range_scale.sort()
         return full_range_scale
+
 
 
 class Progression(MusicTheoryConstants):

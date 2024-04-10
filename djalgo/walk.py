@@ -105,10 +105,9 @@ class Kernel:
         amplitude (float): The amplitude parameter of the kernel.
     """
 
-    def __init__(self, walk_around=0.0, length=10, data=None, length_scale=1.0, amplitude=1.0):
+    def __init__(self, walk_around=0.0, length=10, length_scale=1.0, amplitude=1.0):
         self.walk_around = walk_around
         self.length = length
-        self.data = data
         self.length_scale = length_scale
         self.amplitude = amplitude
 
@@ -146,10 +145,10 @@ class Kernel:
         if data is not None:
             if not isinstance(data, np.ndarray) or data.ndim != 2 or data.shape[1] != 2:
                 raise ValueError("data must be a two-dimensional NumPy array with two columns.")
-        if not (isinstance(self.length_scale, float) and self.length_scale > 0):
-            raise ValueError("length_scale must be a positive float.")
-        if not (isinstance(self.amplitude, float) and self.amplitude > 0):
-            raise ValueError("amplitude must be a positive float.")
+        if not (isinstance(self.length_scale, (float, int)) and self.length_scale > 0):
+            raise ValueError("length_scale must be a positive int or float.")
+        if not (isinstance(self.amplitude, (float, int)) and self.amplitude > 0):
+            raise ValueError("amplitude must be a positive int or float.")
         if not (isinstance(nsamples, int) and nsamples > 0):
             raise ValueError("nsamples must be a positive integer.")
         
@@ -174,11 +173,14 @@ class Kernel:
                 from sklearn.gaussian_process.kernels import RBF
             except ImportError:
                 raise ImportError("It seems that scikit-learn is not installed. Please install it using pip install scikit-learn or using your favorite installer.")
-            x = np.linspace(0, self.length-1, self.length)[:, np.newaxis]
-            kernel = self.amplitude * RBF(length_scale=self.length_scale, length_scale_bounds = (self.length_scale*0.95, self.length_scale*1.05))
+            x = np.linspace(0, self.data[:, 0].max(), self.length)[:, np.newaxis]
+            kernel = self.amplitude * RBF(length_scale=self.length_scale) # , length_scale_bounds = (self.length_scale*0.9, self.length_scale*1.1)
 
             gp = GaussianProcessRegressor(kernel=kernel, normalize_y=True, n_restarts_optimizer=10)
             gp.fit(data[:, 0].reshape(-1, 1), data[:, 1].reshape(-1, 1))
-            sequence = gp.sample_y(x, n_samples=nsamples).T.tolist()
+            sequence = [
+                x.flatten().tolist(),
+                gp.sample_y(x, n_samples=nsamples).T.tolist()
+            ]
         
         return sequence
