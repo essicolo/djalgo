@@ -151,32 +151,37 @@
 <a class="viewcode-back" href="../../api.html#djalgo.utils.fill_gaps_with_rests">[docs]</a>
 <span class="k">def</span> <span class="nf">fill_gaps_with_rests</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">parent_offset</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Analyze a list of notes (each note is a (pitch, duration, offset) tuple)</span>
-<span class="sd">    and insert rests (None, duration, offset) to fill gaps between notes.</span>
+<span class="sd">    Analyze a sorted list of notes (each note is a (pitch, duration, offset) tuple)</span>
+<span class="sd">    and insert rests (None, duration, offset) to fill gaps between notes. Notes are</span>
+<span class="sd">    sorted by offset before processing to ensure accurate gap detection and filling.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        notes (list): The list of notes to be processed.</span>
-<span class="sd">        parent_offset (float): The offset to consider from the parent list, used in recursion.</span>
+<span class="sd">        notes (list): The list of notes to be processed, not necessarily sorted.</span>
+<span class="sd">        parent_offset (float): The offset to consider from the parent sequence, used in recursion.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        list: The modified list with gaps filled with rests.</span>
+<span class="sd">        list: The modified list with gaps filled with rests, ensuring continuity.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Sort notes by offset to ensure correct processing order</span>
+    <span class="n">notes_sorted</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
     <span class="n">last_offset</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># Keep track of the offset after the last note or rest</span>
     <span class="n">filled_notes</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">notes</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">notes_sorted</span><span class="p">:</span>
         <span class="n">pitch</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">offset</span> <span class="o">=</span> <span class="n">note</span>
         <span class="n">current_offset</span> <span class="o">=</span> <span class="n">parent_offset</span> <span class="o">+</span> <span class="n">offset</span>
         <span class="k">if</span> <span class="n">current_offset</span> <span class="o">&gt;</span> <span class="n">last_offset</span><span class="p">:</span>
             <span class="c1"># There is a gap that needs to be filled with a rest</span>
             <span class="n">gap_duration</span> <span class="o">=</span> <span class="n">current_offset</span> <span class="o">-</span> <span class="n">last_offset</span>
             <span class="n">rest_to_insert</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">gap_duration</span><span class="p">,</span> <span class="n">last_offset</span> <span class="o">-</span> <span class="n">parent_offset</span><span class="p">)</span>
-            <span class="n">filled_notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rest_to_insert</span><span class="p">)</span>  <span class="c1"># Adjust offset for insertion</span>
+            <span class="n">filled_notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rest_to_insert</span><span class="p">)</span>  <span class="c1"># Insert the rest to fill the gap</span>
 
         <span class="n">filled_notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
-        <span class="n">last_offset</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">last_offset</span><span class="p">,</span> <span class="n">current_offset</span> <span class="o">+</span> <span class="n">duration</span><span class="p">)</span>  <span class="c1"># Update the last offset</span>
+        <span class="n">last_offset</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">last_offset</span><span class="p">,</span> <span class="n">current_offset</span> <span class="o">+</span> <span class="n">duration</span><span class="p">)</span>  <span class="c1"># Update last offset for the next iteration</span>
 
     <span class="k">return</span> <span class="n">filled_notes</span></div>
+
 
 
 <div class="viewcode-block" id="adjust_note_durations_to_prevent_overlaps">
@@ -210,34 +215,6 @@
     <span class="k">return</span> <span class="n">notes</span></div>
 
 
-<div class="viewcode-block" id="insert_rests">
-<a class="viewcode-back" href="../../api.html#djalgo.utils.insert_rests">[docs]</a>
-<span class="k">def</span> <span class="nf">insert_rests</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">measure_length</span><span class="o">=</span><span class="mf">4.0</span><span class="p">):</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">current_offset</span> <span class="o">=</span> <span class="mf">0.0</span>
-
-    <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">notes</span><span class="p">:</span>
-        <span class="n">pitch</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">offset</span> <span class="o">=</span> <span class="n">note</span>
-
-        <span class="c1"># If the offset of the current note is greater than the current offset</span>
-        <span class="c1"># plus the duration of the previous note, insert a rest</span>
-        <span class="k">if</span> <span class="n">offset</span> <span class="o">&gt;</span> <span class="n">current_offset</span><span class="p">:</span>
-            <span class="n">rest_duration</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">-</span> <span class="n">current_offset</span>
-            <span class="n">rest</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">rest_duration</span><span class="p">,</span> <span class="n">current_offset</span><span class="p">)</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span>
-
-        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
-        <span class="n">current_offset</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">duration</span>
-
-    <span class="c1"># Check if there is a rest at the end of the last measure</span>
-    <span class="k">if</span> <span class="n">current_offset</span> <span class="o">%</span> <span class="n">measure_length</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">rest_duration</span> <span class="o">=</span> <span class="n">measure_length</span> <span class="o">-</span> <span class="p">(</span><span class="n">current_offset</span> <span class="o">%</span> <span class="n">measure_length</span><span class="p">)</span>
-        <span class="n">rest</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">rest_duration</span><span class="p">,</span> <span class="n">current_offset</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rest</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">result</span></div>
-
-
 <div class="viewcode-block" id="repair_notes">
 <a class="viewcode-back" href="../../api.html#djalgo.utils.repair_notes">[docs]</a>
 <span class="k">def</span> <span class="nf">repair_notes</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
@@ -256,16 +233,30 @@
 <div class="viewcode-block" id="abc_to_midi">
 <a class="viewcode-back" href="../../api.html#djalgo.utils.abc_to_midi">[docs]</a>
 <span class="k">def</span> <span class="nf">abc_to_midi</span><span class="p">(</span><span class="n">pitch</span><span class="p">):</span>
-    <span class="c1"># Mapping of note names to MIDI numbers</span>
+    <span class="c1"># Mapping of note names to MIDI numbers with sharps</span>
     <span class="n">pitches</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;C#&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;D#&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;F#&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;G#&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;A#&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">octave</span> <span class="o">=</span> <span class="mi">4</span>
-        <span class="n">key</span> <span class="o">=</span> <span class="n">pitches</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">pitch</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">flat_to_sharp</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;Db&#39;</span><span class="p">:</span> <span class="s1">&#39;C#&#39;</span><span class="p">,</span> <span class="s1">&#39;Eb&#39;</span><span class="p">:</span> <span class="s1">&#39;D#&#39;</span><span class="p">,</span> <span class="s1">&#39;Gb&#39;</span><span class="p">:</span> <span class="s1">&#39;F#&#39;</span><span class="p">,</span> <span class="s1">&#39;Ab&#39;</span><span class="p">:</span> <span class="s1">&#39;G#&#39;</span><span class="p">,</span> <span class="s1">&#39;Bb&#39;</span><span class="p">:</span> <span class="s1">&#39;A#&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;Cb&#39;</span><span class="p">:</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span>  <span class="c1"># Special handling for &#39;Cb&#39;, converting it directly to &#39;B&#39;</span>
+    <span class="p">}</span>
+
+    <span class="n">octave</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># Default octave if not specified in the pitch string</span>
+
+    <span class="c1"># Check and convert flat notes to sharp notes</span>
+    <span class="k">if</span> <span class="s1">&#39;b&#39;</span> <span class="ow">in</span> <span class="n">pitch</span><span class="p">:</span>
+        <span class="n">note</span> <span class="o">=</span> <span class="n">pitch</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Exclude the octave number if present</span>
+        <span class="k">if</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">flat_to_sharp</span><span class="p">:</span>
+            <span class="n">pitch</span> <span class="o">=</span> <span class="n">flat_to_sharp</span><span class="p">[</span><span class="n">note</span><span class="p">]</span> <span class="o">+</span> <span class="n">pitch</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># Append the octave number back if it was present</span>
+
+    <span class="c1"># Extract the note (with sharp) and octave from the pitch</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">pitch</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+        <span class="n">note</span><span class="p">,</span> <span class="n">octave</span> <span class="o">=</span> <span class="n">pitch</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">pitch</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">octave</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pitch</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="n">key</span> <span class="o">=</span> <span class="n">pitches</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">pitch</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">midi</span> <span class="o">=</span> <span class="mi">12</span> <span class="o">*</span> <span class="n">octave</span> <span class="o">+</span> <span class="n">key</span>
+        <span class="n">note</span> <span class="o">=</span> <span class="n">pitch</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">midi</span> <span class="o">=</span> <span class="mi">12</span> <span class="o">*</span> <span class="p">(</span><span class="n">octave</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">pitches</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">midi</span></div>
+
 
 
 <div class="viewcode-block" id="midi_to_abc">
@@ -447,9 +438,10 @@
 <h3><a href="../../index.html">Table of Contents</a></h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../01_getting-started.html">1. Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../02_harmony.html">2. Pythonic Harmonies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_harmony.html">2. Harmonies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../03_loops.html">3. Loops</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../04_minimalism.html">4. Minimalistic composition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_minimalism.html">4. Minimalism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_walks.html">Walks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>

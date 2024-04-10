@@ -39,17 +39,40 @@
 <div class="viewcode-block" id="Chain">
 <a class="viewcode-back" href="../../api.html#djalgo.walk.Chain">[docs]</a>
 <span class="k">class</span> <span class="nc">Chain</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">walk_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">walk_start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">walk_probability</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">branching_probability</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">merging_probability</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">walk_range</span> <span class="o">=</span> <span class="n">walk_range</span> <span class="ow">or</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># Default step choices</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class representing a chain of sequences generated using random walks.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        walk_range (list): The range of step choices for the random walk. Defaults to [-1, 0, 1].</span>
+<span class="sd">        walk_start (int): The starting position for the random walk. Defaults to the middle value of walk_range.</span>
+<span class="sd">        walk_probability (list or object): The probability distribution for choosing a step in the random walk.</span>
+<span class="sd">            Can be a list of step choices or a random variable object. Defaults to [-1, 0, 1].</span>
+<span class="sd">        length (int): The length of each sequence in the chain. Defaults to 10.</span>
+<span class="sd">        branching_probability (float): The probability of branching at each step. Defaults to 0.0.</span>
+<span class="sd">        merging_probability (float): The probability of merging sequences with the same last value. Defaults to 0.0.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">walk_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">walk_start</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">walk_probability</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">round_to</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">branching_probability</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">merging_probability</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">walk_range</span> <span class="o">=</span> <span class="n">walk_range</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">walk_start</span> <span class="o">=</span> <span class="n">walk_start</span> <span class="k">if</span> <span class="n">walk_start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">walk_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">walk_range</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">//</span> <span class="mi">2</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">walk_probability</span> <span class="o">=</span> <span class="n">walk_probability</span> <span class="ow">or</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># Default step choices</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">branching_probability</span> <span class="o">=</span> <span class="n">branching_probability</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">merging_probability</span> <span class="o">=</span> <span class="n">merging_probability</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">round_to</span> <span class="o">=</span> <span class="n">round_to</span>
 
 <div class="viewcode-block" id="Chain.generate">
 <a class="viewcode-back" href="../../api.html#djalgo.walk.Chain.generate">[docs]</a>
     <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a chain of sequences using random walks.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            seed (int): The seed value for the random number generator. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of sequences generated using random walks.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
         <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
         <span class="n">sequences</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">self</span><span class="o">.</span><span class="n">walk_start</span><span class="p">]]</span>
@@ -65,13 +88,17 @@
                     <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">walk_probability</span><span class="p">,</span> <span class="s1">&#39;rvs&#39;</span><span class="p">):</span>
                         <span class="n">step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">walk_probability</span><span class="o">.</span><span class="n">rvs</span><span class="p">()</span>  <span class="c1"># Draw a sample and round to nearest integer</span>
                     
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_to</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">step</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_to</span><span class="p">)</span>
+
                     <span class="n">next_value</span> <span class="o">=</span> <span class="n">last_value</span> <span class="o">+</span> <span class="n">step</span>  <span class="c1"># Calculate next index</span>
 
                     <span class="c1"># Handle boundary conditions for next_value</span>
-                    <span class="k">if</span> <span class="n">next_value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">walk_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-                        <span class="n">next_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">walk_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                    <span class="k">elif</span> <span class="n">next_value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">walk_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-                        <span class="n">next_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">walk_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">walk_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">next_value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">walk_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                            <span class="n">next_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">walk_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="k">elif</span> <span class="n">next_value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">walk_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                            <span class="n">next_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">walk_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
                     <span class="c1"># Branching decision</span>
                     <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">branching_probability</span><span class="p">:</span>
@@ -109,16 +136,36 @@
 <div class="viewcode-block" id="Kernel">
 <a class="viewcode-back" href="../../api.html#djalgo.walk.Kernel">[docs]</a>
 <span class="k">class</span> <span class="nc">Kernel</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">walk_around</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length_scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class representing a kernel for generating sequences.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        walk_around (float): The mean value around which the sequence will walk.</span>
+<span class="sd">        length (int): The length of the sequence.</span>
+<span class="sd">        data (ndarray): The input data used for generating the sequence.</span>
+<span class="sd">        length_scale (float): The length scale parameter of the kernel.</span>
+<span class="sd">        amplitude (float): The amplitude parameter of the kernel.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">walk_around</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">length_scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">walk_around</span> <span class="o">=</span> <span class="n">walk_around</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">length_scale</span> <span class="o">=</span> <span class="n">length_scale</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">=</span> <span class="n">amplitude</span>
 
 <div class="viewcode-block" id="Kernel.rbf_kernel">
 <a class="viewcode-back" href="../../api.html#djalgo.walk.Kernel.rbf_kernel">[docs]</a>
     <span class="k">def</span> <span class="nf">rbf_kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimension</span><span class="p">,</span> <span class="n">length_scale</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the radial basis function (RBF) kernel matrix.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dimension (int): The dimension of the kernel matrix.</span>
+<span class="sd">            length_scale (float): The length scale parameter of the kernel.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ndarray: The RBF kernel matrix.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">covariance_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">dimension</span><span class="p">,</span> <span class="n">dimension</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimension</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimension</span><span class="p">):</span>
@@ -131,13 +178,24 @@
 <div class="viewcode-block" id="Kernel.generate">
 <a class="viewcode-back" href="../../api.html#djalgo.walk.Kernel.generate">[docs]</a>
     <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nsamples</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a sequence using the kernel.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (ndarray): The input data used for generating the sequence.</span>
+<span class="sd">            nsamples (int): The number of samples to generate.</span>
+<span class="sd">            seed (int): The seed value for random number generation.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: The generated sequence.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">or</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;data must be a two-dimensional NumPy array with two columns.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length_scale</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">length_scale</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;length_scale must be a positive float.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;amplitude must be a positive float.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length_scale</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">length_scale</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;length_scale must be a positive int or float.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">))</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;amplitude must be a positive int or float.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">nsamples</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="n">nsamples</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;nsamples must be a positive integer.&quot;</span><span class="p">)</span>
         
@@ -162,12 +220,15 @@
                 <span class="kn">from</span> <span class="nn">sklearn.gaussian_process.kernels</span> <span class="kn">import</span> <span class="n">RBF</span>
             <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;It seems that scikit-learn is not installed. Please install it using pip install scikit-learn or using your favorite installer.&quot;</span><span class="p">)</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-            <span class="n">kernel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">*</span> <span class="n">RBF</span><span class="p">(</span><span class="n">length_scale</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">length_scale</span><span class="p">,</span> <span class="n">length_scale_bounds</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length_scale</span><span class="o">*</span><span class="mf">0.95</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">length_scale</span><span class="o">*</span><span class="mf">1.05</span><span class="p">))</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+            <span class="n">kernel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">amplitude</span> <span class="o">*</span> <span class="n">RBF</span><span class="p">(</span><span class="n">length_scale</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">length_scale</span><span class="p">)</span> <span class="c1"># , length_scale_bounds = (self.length_scale*0.9, self.length_scale*1.1)</span>
 
             <span class="n">gp</span> <span class="o">=</span> <span class="n">GaussianProcessRegressor</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="n">kernel</span><span class="p">,</span> <span class="n">normalize_y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_restarts_optimizer</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
             <span class="n">gp</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-            <span class="n">sequence</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">sample_y</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="n">nsamples</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">sequence</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">x</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+                <span class="n">gp</span><span class="o">.</span><span class="n">sample_y</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="n">nsamples</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="p">]</span>
         
         <span class="k">return</span> <span class="n">sequence</span></div>
 </div>
@@ -185,9 +246,11 @@
             </a></p>
 <h3><a href="../../index.html">Table of Contents</a></h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../00_getting-started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../01_musical.html">Pythonic Harmonies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../02_loops.html">Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../01_getting-started.html">1. Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_harmony.html">2. Harmonies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../03_loops.html">3. Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_minimalism.html">4. Minimalism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_walks.html">Walks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>

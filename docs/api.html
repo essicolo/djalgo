@@ -16,7 +16,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="About" href="about.html" />
-    <link rel="prev" title="4. Minimalistic composition" href="04_minimalism.html" />
+    <link rel="prev" title="Walks" href="05_walks.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -1724,17 +1724,18 @@ to prevent overlaps, while keeping their offsets intact.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="djalgo.utils.fill_gaps_with_rests">
 <span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">fill_gaps_with_rests</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#fill_gaps_with_rests"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.fill_gaps_with_rests" title="Link to this definition">¶</a></dt>
-<dd><p>Analyze a list of notes (each note is a (pitch, duration, offset) tuple)
-and insert rests (None, duration, offset) to fill gaps between notes.</p>
+<dd><p>Analyze a sorted list of notes (each note is a (pitch, duration, offset) tuple)
+and insert rests (None, duration, offset) to fill gaps between notes. Notes are
+sorted by offset before processing to ensure accurate gap detection and filling.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>notes</strong> (<em>list</em>) – The list of notes to be processed.</p></li>
-<li><p><strong>parent_offset</strong> (<em>float</em>) – The offset to consider from the parent list, used in recursion.</p></li>
+<li><p><strong>notes</strong> (<em>list</em>) – The list of notes to be processed, not necessarily sorted.</p></li>
+<li><p><strong>parent_offset</strong> (<em>float</em>) – The offset to consider from the parent sequence, used in recursion.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The modified list with gaps filled with rests.</p>
+<dd class="field-even"><p>The modified list with gaps filled with rests, ensuring continuity.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list</p>
@@ -1780,11 +1781,6 @@ and insert rests (None, duration, offset) to fill gaps between notes.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="djalgo.utils.get_sharp">
 <span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">get_sharp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#get_sharp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.get_sharp" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="djalgo.utils.insert_rests">
-<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">insert_rests</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measure_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#insert_rests"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.insert_rests" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -1929,28 +1925,195 @@ a duration (quarterLength), and an offset.</p>
 
 <dl class="py class" id="module-djalgo.walk">
 <dt class="sig sig-object py" id="djalgo.walk.Chain">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.walk.</span></span><span class="sig-name descname"><span class="pre">Chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">walk_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branching_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merging_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Chain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Chain" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.walk.</span></span><span class="sig-name descname"><span class="pre">Chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">walk_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">round_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branching_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merging_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Chain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Chain" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class representing a chain of sequences generated using random walks.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.walk.Chain.walk_range">
+<span class="sig-name descname"><span class="pre">walk_range</span></span><a class="headerlink" href="#djalgo.walk.Chain.walk_range" title="Link to this definition">¶</a></dt>
+<dd><p>The range of step choices for the random walk. Defaults to [-1, 0, 1].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.walk.Chain.walk_start">
+<span class="sig-name descname"><span class="pre">walk_start</span></span><a class="headerlink" href="#djalgo.walk.Chain.walk_start" title="Link to this definition">¶</a></dt>
+<dd><p>The starting position for the random walk. Defaults to the middle value of walk_range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.walk.Chain.walk_probability">
+<span class="sig-name descname"><span class="pre">walk_probability</span></span><a class="headerlink" href="#djalgo.walk.Chain.walk_probability" title="Link to this definition">¶</a></dt>
+<dd><p>The probability distribution for choosing a step in the random walk.
+Can be a list of step choices or a random variable object. Defaults to [-1, 0, 1].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list or object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.walk.Chain.length">
+<span class="sig-name descname"><span class="pre">length</span></span><a class="headerlink" href="#djalgo.walk.Chain.length" title="Link to this definition">¶</a></dt>
+<dd><p>The length of each sequence in the chain. Defaults to 10.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.walk.Chain.branching_probability">
+<span class="sig-name descname"><span class="pre">branching_probability</span></span><a class="headerlink" href="#djalgo.walk.Chain.branching_probability" title="Link to this definition">¶</a></dt>
+<dd><p>The probability of branching at each step. Defaults to 0.0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.walk.Chain.merging_probability">
+<span class="sig-name descname"><span class="pre">merging_probability</span></span><a class="headerlink" href="#djalgo.walk.Chain.merging_probability" title="Link to this definition">¶</a></dt>
+<dd><p>The probability of merging sequences with the same last value. Defaults to 0.0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="djalgo.walk.Chain.generate">
 <span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Chain.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Chain.generate" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Generates a chain of sequences using random walks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seed</strong> (<em>int</em>) – The seed value for the random number generator. Defaults to None.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of sequences generated using random walks.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="djalgo.walk.Kernel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.walk.</span></span><span class="sig-name descname"><span class="pre">Kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">walk_around</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Kernel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Kernel" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.walk.</span></span><span class="sig-name descname"><span class="pre">Kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">walk_around</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Kernel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Kernel" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class representing a kernel for generating sequences.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.walk.Kernel.walk_around">
+<span class="sig-name descname"><span class="pre">walk_around</span></span><a class="headerlink" href="#djalgo.walk.Kernel.walk_around" title="Link to this definition">¶</a></dt>
+<dd><p>The mean value around which the sequence will walk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.walk.Kernel.length">
+<span class="sig-name descname"><span class="pre">length</span></span><a class="headerlink" href="#djalgo.walk.Kernel.length" title="Link to this definition">¶</a></dt>
+<dd><p>The length of the sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.walk.Kernel.data">
+<span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#djalgo.walk.Kernel.data" title="Link to this definition">¶</a></dt>
+<dd><p>The input data used for generating the sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.walk.Kernel.length_scale">
+<span class="sig-name descname"><span class="pre">length_scale</span></span><a class="headerlink" href="#djalgo.walk.Kernel.length_scale" title="Link to this definition">¶</a></dt>
+<dd><p>The length scale parameter of the kernel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.walk.Kernel.amplitude">
+<span class="sig-name descname"><span class="pre">amplitude</span></span><a class="headerlink" href="#djalgo.walk.Kernel.amplitude" title="Link to this definition">¶</a></dt>
+<dd><p>The amplitude parameter of the kernel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="djalgo.walk.Kernel.generate">
 <span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsamples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Kernel.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Kernel.generate" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Generates a sequence using the kernel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>ndarray</em>) – The input data used for generating the sequence.</p></li>
+<li><p><strong>nsamples</strong> (<em>int</em>) – The number of samples to generate.</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – The seed value for random number generation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The generated sequence.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="djalgo.walk.Kernel.rbf_kernel">
 <span class="sig-name descname"><span class="pre">rbf_kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dimension</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_scale</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Kernel.rbf_kernel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Kernel.rbf_kernel" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Computes the radial basis function (RBF) kernel matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dimension</strong> (<em>int</em>) – The dimension of the kernel matrix.</p></li>
+<li><p><strong>length_scale</strong> (<em>float</em>) – The length scale parameter of the kernel.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The RBF kernel matrix.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -1969,9 +2132,10 @@ a duration (quarterLength), and an offset.</p>
 <h3><a href="index.html">Table of Contents</a></h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="01_getting-started.html">1. Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_harmony.html">2. Pythonic Harmonies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_harmony.html">2. Harmonies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_loops.html">3. Loops</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_minimalism.html">4. Minimalistic composition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_minimalism.html">4. Minimalism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_walks.html">Walks</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 </ul>

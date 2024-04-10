@@ -109,22 +109,27 @@
     <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates the full range of the scale.</span>
-
+<span class="sd">    </span>
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A list of MIDI note numbers representing the full range of the scale.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">tonic_note</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromatic_scale</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tonic</span><span class="p">)</span>
         <span class="n">scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">])</span>
-        
-        <span class="n">full_range_scale</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">note</span> <span class="o">+</span> <span class="n">octave</span> <span class="o">*</span> <span class="mi">12</span> 
-            <span class="k">for</span> <span class="n">octave</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> 
-            <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="p">[(</span><span class="n">tonic_note</span> <span class="o">+</span> <span class="n">interval</span><span class="p">)</span> <span class="o">%</span> <span class="mi">12</span> <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="n">scale</span><span class="p">]</span> 
-            <span class="k">if</span> <span class="n">note</span> <span class="o">+</span> <span class="n">octave</span> <span class="o">*</span> <span class="mi">12</span> <span class="o">&lt;=</span> <span class="mi">127</span>
-        <span class="p">]</span>
+    
+        <span class="n">full_range_scale</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">added_notes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>  <span class="c1"># Keep track of added notes</span>
+    
+        <span class="k">for</span> <span class="n">octave</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="n">scale</span><span class="p">:</span>
+                <span class="n">note</span> <span class="o">=</span> <span class="p">(</span><span class="n">tonic_note</span> <span class="o">+</span> <span class="n">interval</span><span class="p">)</span> <span class="o">%</span> <span class="mi">12</span> <span class="o">+</span> <span class="n">octave</span> <span class="o">*</span> <span class="mi">12</span>
+                <span class="k">if</span> <span class="n">note</span> <span class="o">&lt;=</span> <span class="mi">127</span> <span class="ow">and</span> <span class="n">note</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">added_notes</span><span class="p">:</span>
+                    <span class="n">full_range_scale</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
+                    <span class="n">added_notes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
+    
         <span class="n">full_range_scale</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">full_range_scale</span></div>
 </div>
+
 
 
 
@@ -663,9 +668,10 @@
 <h3><a href="../../index.html">Table of Contents</a></h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../01_getting-started.html">1. Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../02_harmony.html">2. Pythonic Harmonies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../02_harmony.html">2. Harmonies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../03_loops.html">3. Loops</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../04_minimalism.html">4. Minimalistic composition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../04_minimalism.html">4. Minimalism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_walks.html">Walks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>

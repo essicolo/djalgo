@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Walks &#8212; Djalgo 0.1-alpha documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <script src="_static/documentation_options.js?v=737112c1"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API" href="api.html" />
+    <link rel="prev" title="4. Minimalism" href="04_minimalism.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="Walks">
+<h1>Walks<a class="headerlink" href="#Walks" title="Link to this heading">¶</a></h1>
+<p>Random and kernel walks represent fascinating techniques that have found applications in various fields, including music composition. Such stochastic processes allow for the generation of sequences where each step is a consequence of the previous step, creating coherent yet unpredictable progressions. Such methods have been embraced by composers and sound artists to wander through new territories of algorithmic and generative music, where the unpredictability and structure of these mathematical
+models can lead to innovative musical expressions. <strong>Iannis Xenakis</strong> is perhaps one of the most renowned composers to integrate stochastic processes, including random walks, into his compositions. Xenakis, a Greek-French composer and architect, utilized mathematical models to compose music that explores the interplay between order and randomness. Works like <a class="reference external" href="https://www.youtube.com/watch?v=Ifxs3TBSSAs">Mikka</a> and <a class="reference external" href="https://www.youtube.com/watch?v=8ZP3TbLtfq4">Epeï</a> are seminal examples
+where stochastic methods contribute to the structural foundation of the music. <strong>Karlheinz Stockhausen</strong> and his work with controlled randomness and serial techniques also touch upon concepts akin to random walks. His compositions, such as <a class="reference external" href="https://www.youtube.com/watch?v=mMDdihXI98A">Klavierstück XI</a>, employ a form of controlled chance that dictates the sequence of musical events, offering a multitude of possible paths through the piece.</p>
+<p>The application of random walks and kernel walks in music composition involves generating sequences of musical elements, usually pitches and sequences, where each element is selected based on a combination of random choice and a set of rules or conditions influenced by previous elements. This approach allows composers to explore new forms of musical structure and texture, creating pieces that can vary greatly with each performance or realization while maintaining an underlying coherence.</p>
+<section id="Random-walks">
+<h2>Random walks<a class="headerlink" href="#Random-walks" title="Link to this heading">¶</a></h2>
+<p>A random walk is a mathematical process where each step is a random choice relative to the one preceeding it. Mathematician call them Markov chains, named after mathematician Andrey Markov. The random choice can be as simple as a coin flip: if it goes tail, you take a diagional step left. Heads, a diagonal step on right. Repeat the process over and over and you obtain a random walk. On average, you should walk ahead, but in fact, you’ll probably derive from a straight path. The concept of
+randomness was introduced in <a class="reference external" href="04_minimalism.html">Minimalism</a>, but we didn’t really dig in its meaning.</p>
+<section id="Understanding-randomness">
+<h3>Understanding randomness<a class="headerlink" href="#Understanding-randomness" title="Link to this heading">¶</a></h3>
+<p>A mathematical function using a probability distribution is named a <em>stochastic</em> function. The concept of randomness is often misunderstood. It’s not about everything being possible without constraints. When we talk about selecting a random number, the process is not as open-ended as it might seem. When you flip a coin, its either heads or tails (or, rarely, the edge…).</p>
+<p>Randomness is structured by probability distributions, a collection of mathematical functions structuring randomness and approximate processes underlying a reality too complex to be perfectly predictable. The coin toss is a binomial distribution: it’s either true or false. Another familiar example is the Normal distribution, known for its bell-shaped curve. When we sample from this distribution, values near the mean (center of the curve) are more likely to occur than those far from it, say, more
+than 4 units away or less than -4 units from the mean. The Normal distribution is characterized by two parameters: the mean, which locates the center of the curve, and the standard deviation, which determines the width of the curve. The height of a population can have a mean and a standard deviation.</p>
+<p>There are numerous probability distributions, catering to different types of data. Continuous values, for instance, are often modelled using the Normal distribution, but also uniform distributions, where the likelihood of selecting any number within a specified range is exactly the same. This means that every number has an equal chance of being chosen, ensuring a flat distribution of probabilities across the entire range. Discrete data, such as categorical outcomes in music genres, can be
+represented by the multinomial distribution, which is described by a set of probabilities summing to 1. The Poisson distribution produces integer, useful for counting occurrences. Mathematicians have been working on probability distributions for centuries, and are still creating new ones, and exploring fascinating properties of existing ones.</p>
+<p>Understanding these distributions helps in contextualizing randomness, especially in creative domains like music, where generating random rhythms involves selecting from a defined range of possibilities according to a specific probability distribution. This structured approach to randomness allows for the generation of diverse and interesting rhythmic patterns within a coherent framework.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">plotly.subplots</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+
+<span class="c1"># Normal distribution</span>
+<span class="n">x_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y_norm</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x_norm</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># normal distribution with 0 mean and 1 standard deviation</span>
+
+<span class="c1"># Uniform distribution</span>
+<span class="n">x_unif</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y_unif</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">uniform</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x_unif</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># uniform distribution from -1, spanning 2</span>
+
+<span class="c1"># Multinomial distribution</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Folk&#39;</span><span class="p">,</span> <span class="s1">&#39;Classic&#39;</span><span class="p">,</span> <span class="s1">&#39;Punk rock&#39;</span><span class="p">,</span> <span class="s1">&#39;Jazz&#39;</span><span class="p">]</span>
+<span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.15</span><span class="p">,</span> <span class="mf">0.30</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">,</span> <span class="mf">0.45</span><span class="p">]</span>
+
+<span class="c1"># Poisson distribution</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">y_poisson</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">poisson</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">mu</span><span class="p">)</span>  <span class="c1"># distribution de Poisson</span>
+
+<span class="c1"># Figure</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">make_subplots</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x_norm</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y_norm</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines&#39;</span><span class="p">),</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">update_xaxes</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="s2">&quot;Normal distribution&quot;</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x_unif</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y_unif</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines&#39;</span><span class="p">),</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">update_xaxes</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="s2">&quot;Uniform distribution&quot;</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Bar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">categories</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">p</span><span class="p">),</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">update_xaxes</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="s2">&quot;Multinomial distribution&quot;</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Bar</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">y</span><span class="o">=</span><span class="n">y_poisson</span><span class="p">),</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">update_xaxes</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="s2">&quot;Poisson distribution&quot;</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">showlegend</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s2">&quot;_images/probability-distributions.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><img alt="probability distributions" src="_images/probability-distributions.png" /></p>
+</section>
+<section id="Logic-of-the-random-walk">
+<h3>Logic of the random walk<a class="headerlink" href="#Logic-of-the-random-walk" title="Link to this heading">¶</a></h3>
+<p>Random walks are available in Djalgo in file <code class="docutils literal notranslate"><span class="pre">walk.py</span></code>. From there, there are two options to generate walks. The first one, <code class="docutils literal notranslate"><span class="pre">Chain</span></code>, is a classic random walk, and the second, <code class="docutils literal notranslate"><span class="pre">Kernel</span></code>, is Gaussian processes generator, which will be discussed later in this section.</p>
+<p>The random walk generator takes several of arguments. The <code class="docutils literal notranslate"><span class="pre">walk_range</span></code> argument takes a list of the minimum and maximum numbers to confine the walk (to create a <em>bounded</em> random walk). For instance, if you aim at restraining the walk between -10 and 10, you would enter <code class="docutils literal notranslate"><span class="pre">walk_range=[-10,</span> <span class="pre">10]</span></code>. The <code class="docutils literal notranslate"><span class="pre">walk_probability</span></code> can take a list of numbers, for instance <code class="docutils literal notranslate"><span class="pre">[-1,</span> <span class="pre">0,</span> <span class="pre">1]</span></code> if you aim at generating steps of -1, 0 and 1. It can also take a <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/stats.html">Scipy probability
+distribution</a> function, for instance <code class="docutils literal notranslate"><span class="pre">scipy.stats.norm(loc=0,</span> <span class="pre">scale=1)</span></code>, where <code class="docutils literal notranslate"><span class="pre">loc</span></code> and <code class="docutils literal notranslate"><span class="pre">scale</span></code> are the mean and the standard deviation. The <code class="docutils literal notranslate"><span class="pre">length</span></code> argument specifies the number of steps. The <code class="docutils literal notranslate"><span class="pre">round_to</span></code> argument, with default <code class="docutils literal notranslate"><span class="pre">None</span></code>, rounds stepping to a given decimal.</p>
+<p>Djalgo has the ability to randomly branch a walk. When a walk is branched, a new walk is created and wanders on it own. The probability to branch is specified from 0 to 1 in the <code class="docutils literal notranslate"><span class="pre">branching_probability</span></code> argument. Conversely, <code class="docutils literal notranslate"><span class="pre">merging_probability</span></code> is the probability to merge random walks when they collide. If <code class="docutils literal notranslate"><span class="pre">round_to</span></code> is not triggered on, there is virtually no chance that branches collide.</p>
+</section>
+<section id="Example">
+<h3>Example<a class="headerlink" href="#Example" title="Link to this heading">¶</a></h3>
+<p>I’d like to generate a random walk through pitches from <code class="docutils literal notranslate"><span class="pre">C2</span></code> to <code class="docutils literal notranslate"><span class="pre">C8</span></code>, starting at <code class="docutils literal notranslate"><span class="pre">C4</span></code>. MIDI pitch numbers can be recovered using Djalgo’s abc_to_midi utility function.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">djalgo</span> <span class="k">as</span> <span class="nn">dj</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;C2:&#39;</span><span class="p">,</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">abc_to_midi</span><span class="p">(</span><span class="s1">&#39;C2&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;C4:&#39;</span><span class="p">,</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">abc_to_midi</span><span class="p">(</span><span class="s1">&#39;C4&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;C8:&#39;</span><span class="p">,</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">abc_to_midi</span><span class="p">(</span><span class="s1">&#39;C8&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+C2: 36
+C4: 60
+C8: 108
+</pre></div></div>
+</div>
+<p>The random walk will be conducted between numbers 36 to 108 through 20 steps, starting at 60. Through the walk, each step will branch with a probability of 0.1 and when branches fall to the same pitch, they will merge with a probability of 0.9.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rw</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">walk</span><span class="o">.</span><span class="n">Chain</span><span class="p">(</span>
+    <span class="n">walk_range</span><span class="o">=</span><span class="p">[</span><span class="mi">36</span><span class="p">,</span> <span class="mi">108</span><span class="p">],</span> <span class="n">walk_start</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">walk_probability</span><span class="o">=</span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+    <span class="n">length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">round_to</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">branching_probability</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">merging_probability</span><span class="o">=</span><span class="mf">0.9</span>
+<span class="p">)</span>
+<span class="n">rw</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;djalgo.walk.Chain at 0x12f9ee8d0&gt;
+</pre></div></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">rw</span></code> is a random walk object, which can be used to generate many random walks, although only one will be generated in this example.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rw_sequences</span> <span class="o">=</span> <span class="n">rw</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">rw_sequences</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+9
+</pre></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">rw_sequences</span></code> contains 5 branches. If you examine the object, you will see lists beginning with <code class="docutils literal notranslate"><span class="pre">None</span></code> values, which are generated when a new branch is created to make sure all branches are generated with the same length. At each step, if branching returns <code class="docutils literal notranslate"><span class="pre">True</span></code> with probability <code class="docutils literal notranslate"><span class="pre">branching_probability</span></code>, a new list is created, and the random walk becomes a list of lists, and all values of the new list happening before the branch are set to <code class="docutils literal notranslate"><span class="pre">None</span></code>. Each branch then has its own random
+walk, and can branch out. If two or more branch collide to the same values, and if merging if <code class="docutils literal notranslate"><span class="pre">True</span></code> according to probability <code class="docutils literal notranslate"><span class="pre">merging_probability</span></code>, lists are closed with <code class="docutils literal notranslate"><span class="pre">None</span></code> values to the following notes, except the branch with the lower index, on which the other branches are merged. The merged branch continues the random walk, and can branch again.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">seq</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rw_sequences</span><span class="p">):</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">],</span>
+        <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="n">val</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">seq</span> <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">],</span>
+        <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines&#39;</span>
+    <span class="p">))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">showlegend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s2">&quot;_images/chain-walk-example.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><img alt="plot of the result of the chain-walk example" src="_images/chain-walk-example.png" /></p>
+<p>We can map pitches to durations by creating a rhythm for each track.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">index_quarter_length</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># Length of a quarter note in the random walk index</span>
+<span class="n">measure_length</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># Duration of each measure</span>
+<span class="n">rw_notes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">rhythm_durations</span> <span class="o">=</span> <span class="p">[</span> <span class="c1"># the same number of sets as len(rw_sequences)</span>
+    <span class="p">[</span><span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">0.125</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="p">]</span>
+<span class="k">for</span> <span class="n">seq</span><span class="p">,</span> <span class="n">random_dur</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">rw_sequences</span><span class="p">,</span> <span class="n">rhythm_durations</span><span class="p">):</span> <span class="c1"># zip to the shortest length</span>
+    <span class="n">rhythm</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">rhythm</span><span class="o">.</span><span class="n">Rhythm</span><span class="p">(</span><span class="n">measure_length</span><span class="o">=</span><span class="n">measure_length</span><span class="p">,</span> <span class="n">durations</span><span class="o">=</span><span class="n">random_dur</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+    <span class="n">dur</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rhythm</span><span class="p">]</span>
+    <span class="n">iso</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">rhythm</span><span class="o">.</span><span class="n">isorhythm</span><span class="p">(</span><span class="n">pitches</span><span class="o">=</span><span class="n">seq</span><span class="p">,</span> <span class="n">durations</span><span class="o">=</span><span class="n">dur</span><span class="p">)</span>
+    <span class="n">rw_notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">iso</span><span class="p">)</span>
+<span class="c1">#dj.conversion.to_music21(rw_notes).show()</span>
+<span class="n">dj</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">to_music21</span><span class="p">(</span><span class="n">rw_notes</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;midi&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div id="midiPlayerDiv5453"></div>
+<link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
+
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
+></script>
+
+<script>
+function midiPlayerDiv5453_play() {
+    const rq = require.config({
+        paths: {
+            'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
+        }
+    });
+    rq(['music21'], function(music21) {
+        mp = new music21.miditools.MidiPlayer();
+        mp.addPlayer("#midiPlayerDiv5453");
+        mp.base64Load("data:audio/midi;base64,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");
+    });
+}
+if (typeof require === 'undefined') {
+    setTimeout(midiPlayerDiv5453_play, 2000);
+} else {
+    midiPlayerDiv5453_play();
+}
+</script></div>
+</div>
+<p>The notes wander on the chromatic scale. To provide a little structure to a walk, we can wander through indexes of a scale list rather than on notes.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g_major</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">harmony</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;major&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">()[</span><span class="mi">39</span><span class="p">:</span><span class="mi">53</span><span class="p">]</span>
+<span class="c1"># [dj.utils.midi_to_abc(p) for p in g_major] # used to adjust the range fro 39 to 53</span>
+<span class="n">rw_index</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">walk</span><span class="o">.</span><span class="n">Chain</span><span class="p">(</span>
+    <span class="n">walk_range</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">g_major</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">walk_start</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="c1"># the seventh index on the scale</span>
+    <span class="n">walk_probability</span><span class="o">=</span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+    <span class="n">length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">round_to</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">branching_probability</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">merging_probability</span><span class="o">=</span><span class="mf">0.9</span>
+<span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">rw_index</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+7
+</pre></div></div>
+</div>
+<p>Seven tracks have been generated. I can generate different rhythms from draws from a single list. I set the seed at the beginning of the block, and not in the <code class="docutils literal notranslate"><span class="pre">.random()</span></code> method to make sure that rhythms are not the same for all tracks, but remains the same each time I run the block. Setting seed is very useful to assures that random processes provide the same results, hence avoid losing an interesting pattern because it was random and can’t be recovered.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">measure_length</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">rw_notes_tuned</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">rw_index</span><span class="p">:</span>
+    <span class="n">rhythm</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">rhythm</span><span class="o">.</span><span class="n">Rhythm</span><span class="p">(</span><span class="n">measure_length</span><span class="o">=</span><span class="n">measure_length</span><span class="p">,</span> <span class="n">durations</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rhythm</span><span class="p">]</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="n">g_major</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">index</span><span class="p">)]</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">seq</span> <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="n">iso</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">rhythm</span><span class="o">.</span><span class="n">isorhythm</span><span class="p">(</span>
+        <span class="n">pitches</span><span class="o">=</span><span class="n">p</span><span class="p">,</span>
+        <span class="n">durations</span><span class="o">=</span><span class="n">d</span>
+    <span class="p">)</span>
+    <span class="n">rw_notes_tuned</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">iso</span><span class="p">)</span>
+<span class="n">dj</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">to_music21</span><span class="p">(</span><span class="n">rw_notes_tuned</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;midi&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div id="midiPlayerDiv8220"></div>
+<link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
+
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
+></script>
+
+<script>
+function midiPlayerDiv8220_play() {
+    const rq = require.config({
+        paths: {
+            'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
+        }
+    });
+    rq(['music21'], function(music21) {
+        mp = new music21.miditools.MidiPlayer();
+        mp.addPlayer("#midiPlayerDiv8220");
+        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQAIJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAASYA/wMAAOAAQM5gkE9agZ1AgE8AAJBUWqcwgFQAAJBTWqcwgFMAAJBRWoGdQIBRAACQTlqnMIBOAACQUVqnMIBRAACQSFqBnUCASAAAkE5apzCATgAAkEpapzCASgAAkExagZ1AgEwAAJBMWqcwgEwAAJBRWqcwgFEAAJBKWoGdQIBKAACQSFqnMIBIAACQRVqnMIBFAACQRVqBnUCARQAAkEhapzCASAAAkExapzCATAAAkEhagZ1AgEgAAJBHWqcwgEcAAJBDWqcwgEMAAJBDWoGdQIBDAACQRVqnMIBFAACQSlqnMIBKAACQUVqBnUCAUQAAkE9apzCATwAAkFNapzCAUwAAkFhagZ1AgFgAAJBaWqcwgFoAAJBaWqcwgFoAzmD/LwBNVHJrAAACugD/AwAA4ABAzmCQUVqnMIBRAACQT1rOYIBPAACQU1rOYIBTAACQU1qnMIBTAACQVFqnMIBUAACQWFrOYIBYAACQVlrOYIBWAACQVFqnMIBUAACQU1qnMIBTAACQUVrOYIBRAACQUVrOYIBRAACQUVqnMIBRAACQUVqnMIBRAACQUVrOYIBRAACQTlrOYIBOAACQT1qnMIBPAACQUVqnMIBRAACQUVrOYIBRAACQWFrOYIBYAACQUVqnMIBRAACQT1qnMIBPAACQU1rOYIBTAACQU1rOYIBTAACQVFqnMIBUAACQWFqnMIBYAACQVlrOYIBWAACQVFrOYIBUAACQU1qnMIBTAACQUVqnMIBRAACQUVrOYIBRAACQUVrOYIBRAACQUVqnMIBRAACQUVqnMIBRAACQTlrOYIBOAACQT1rOYIBPAACQUVqnMIBRAACQUVqnMIBRAACQWFrOYIBYAACQUVrOYIBRAACQT1qnMIBPAACQU1qnMIBTAACQU1rOYIBTAACQVFrOYIBUAACQWFqnMIBYAACQVlqnMIBWAACQVFrOYIBUAACQU1rOYIBTAACQUVqnMIBRAACQUVqnMIBRAACQUVrOYIBRAACQUVrOYIBRAACQUVqnMIBRAACQTlqnMIBOAACQT1rOYIBPAACQUVrOYIBRAACQUVqnMIBRAACQWFqnMIBYAACQUVrOYIBRAACQT1rOYIBPAACQU1qnMIBTAACQU1qnMIBTAACQVFrOYIBUAACQWFrOYIBYAACQVlqnMIBWAACQVFqnMIBUAACQU1rOYIBTAACQUVrOYIBRAACQUVqnMIBRAACQUVqnMIBRAACQUVrOYIBRAACQUVrOYIBRAACQTlqnMIBOAACQT1qnMIBPAACQUVrOYIBRAACQUVrOYIBRAACQWFqnMIBYAM5g/y8ATVRyawAAAW0A/wMAAOAAQM5gkFNazmCAUwAAkE9azmCATwAAkExazmCATAAAkE5azmCATgAAkE5azmCATgAAkE9azmCATwAAkE5azmCATgAAkE5azmCATgAAkFNazmCAUwAAkE9azmCATwAAkE5azmCATgAAkE9azmCATwAAkE5azmCATgAAkFNazmCAUwAAkE9azmCATwAAkExazmCATAAAkE5azmCATgAAkE5azmCATgAAkE9azmCATwAAkE5azmCATgAAkE5azmCATgAAkFNazmCAUwAAkE9azmCATwAAkE5azmCATgAAkE9azmCATwAAkE5azmCATgAAkFNazmCAUwAAkE9azmCATwAAkExazmCATAAAkE5azmCATgAAkE5azmCATgAAkE9azmCATwAAkE5azmCATgAAkE5azmCATgAAkFNazmCAUwAAkE9azmCATwAAkE5azmCATgAAkE9azmCATwAAkE5azmCATgDOYP8vAE1UcmsAAAC5AP8DAADgAEDOYJBDWoGdQIBDAACQQ1rOYIBDAACQQ1qBnUCAQwAAkEVazmCARQAAkEVagZ1AgEUAAJBIWs5ggEgAAJBHWoGdQIBHAACQSlrOYIBKAACQRVqBnUCARQAAkENazmCAQwAAkENagZ1AgEMAAJBDWs5ggEMAAJBFWoGdQIBFAACQRVrOYIBFAACQSFqBnUCASAAAkEdazmCARwAAkEpagZ1AgEoAAJBFWs5ggEUAzmD/LwBNVHJrAAAAKgD/AwAA4ABAzmCQUVqBnUCAUQAAkFNapzCAUwAAkE9apzCATwDOYP8vAE1UcmsAAABGAP8DAADgAEDOYJBPWoGdQIBPAACQU1qnMIBTAACQT1qnMIBPAACQU1qBnUCAUwAAkE9apzCATwAAkFNapzCAUwDOYP8vAE1UcmsAAABGAP8DAADgAEDOYJBaWqcwgFoAAJBUWoGdQIBUAACQWlqnMIBaAACQVFqnMIBUAACQWlqBnUCAWgAAkFRapzCAVADOYP8vAA==");
+    });
+}
+if (typeof require === 'undefined') {
+    setTimeout(midiPlayerDiv8220_play, 2000);
+} else {
+    midiPlayerDiv8220_play();
+}
+</script></div>
+</div>
+</section>
+</section>
+<section id="Gaussian-Processes">
+<h2>Gaussian Processes<a class="headerlink" href="#Gaussian-Processes" title="Link to this heading">¶</a></h2>
+<p>A normal distribution is a mathematically elegant way of describing the average and variance (or standard deviation, an index of diversity) among a population. We can stack as many normal distributions as the amount of variables describing a population, for example age, height and weight of people in Canada. When we think that our variables are linked to one another, like height, weight and age, we can merge normal distributions together in a single multivariate normal distribution. Such
+distribution is described by a vector of 3 means and a 3×3 covariance matrix, a squared matrix with variances on the diagonal and pairwise covariances between variables elsewhere, describing the strength of the link between variables. There is no limit on the amount of variables in the multivariate normal. For example, day after day, you measure air temperature hourly, at 7:00, 8:00, 9:00, etc. You will have one normal distribution of temperature at 7:00 for all days of the week, one at 8:00,
+etc. Since the temperature at hours closed to each other are likely correlated, you might use a multivariate normal. And because the correlation between temperatures will slowly vanish for distant measurements, you could use a function to describe the correlation. Such function will reveal to be useful if you narrow the time steps. For instance, if you record the temperature at each second, you will have a large amount of variables, thus a long mean vector and an extended covariance matrix. To
+go even further, since time is continuous, our multivariate normal will contain an infinity of dimensions. A multivariate normal distribution with infinite number of dimensions is called a Gaussian process.</p>
+<p>To allow infinite dimensions, and compute probabilities at any dimension, the mean vector and the covariance matrix must be described by functions. The mean function is usually ruled out of the equation since it can be dealt by setting it to constant zero, then offsetting the end result by the mean, for instance a pitch of 60, the midi number representing the center C on the keyboard of a piano. This is why Gaussian processes are mostly described by the covariance function, also called the
+<em>kernel</em>. Samples from a normal or a multivariate normal distribution are points. Samples from a Gaussian process, because they are continuous, are functions.</p>
+<p>These functions can be used just as we used random walks. So why bothering with abstract mathematical concepts if you could just use a random walk function? Because Gaussian processes carry very interesting properties. You might indeed have heard of Gaussian processes as a machine learning method. This means that they can be fitted to data. To perform such fitting task, the Scikit-Learn library should be installed though.</p>
+<p>In this section, I will introduce you to the use of unfitted and fitted Gaussian processes to generate music.</p>
+<section id="Unfitted-Gaussian-Processes">
+<h3><em>Unfitted</em> Gaussian Processes<a class="headerlink" href="#Unfitted-Gaussian-Processes" title="Link to this heading">¶</a></h3>
+<p>Unfitted Gaussian processes are only described by their kernel. Random samples from a kernel will create a pattern for music to follow. As any translational music practice, many music attributes can be generated. However, I will keep my focus on notes.</p>
+<p>For unfitted GPs, the covariance function is created but Djalgo’s <code class="docutils literal notranslate"><span class="pre">rbf_kernel</span></code> function, as known as the kernel, with two properties.</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">length_scale</span></code> parameter describes the inertia of the covariance. Larger lengths create longer waves.</p></li>
+<li><p>The multiplier of the kernel, often refered as <span class="math notranslate nohighlight">\(\alpha\)</span> in textbooks, describes the <code class="docutils literal notranslate"><span class="pre">amplitude</span></code> of the wave.</p></li>
+</ul>
+<p>The following plot was generated from <code class="docutils literal notranslate"><span class="pre">djalgo.walk.Kernel</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Building a dict filled with kernel responses for varying amplitude and length scale</span>
+<span class="n">length</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">kernel_walks</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;sample&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+<span class="k">for</span> <span class="n">ls</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mf">100.</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">amp</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_samples</span><span class="p">):</span>
+            <span class="n">kernel_walks</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;ls: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ls</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;, a: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">amp</span><span class="p">)]</span><span class="o">*</span><span class="n">length</span><span class="p">)</span>
+            <span class="n">kernel_walks</span><span class="p">[</span><span class="s1">&#39;sample&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s1">&#39;sample: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">s</span><span class="p">)]</span><span class="o">*</span><span class="n">length</span><span class="p">)</span>
+            <span class="n">kernel_walks</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">)))</span>
+            <span class="n">kernel_walks</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="n">dj</span><span class="o">.</span><span class="n">walk</span><span class="o">.</span><span class="n">Kernel</span><span class="p">(</span>
+                    <span class="n">walk_around</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+                    <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
+                    <span class="n">length_scale</span><span class="o">=</span><span class="n">ls</span><span class="p">,</span>
+                    <span class="n">amplitude</span><span class="o">=</span><span class="n">amp</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">kernel_walks</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="n">facet_col</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">facet_col_wrap</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">autosize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s2">&quot;_images/kernels-example.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><img alt="plot of the effects of amplitude and length scale on kernel response" src="_images/kernels-example.png" /></p>
+<p>Just like random walks, the signal of a Gaussian process can be transformed to really anything: pitches, scale indices, durations, MIDI channel, etc. Let’s use it here to generate scale indices from the following list.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b_blues_scale</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">harmony</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">])</span><span class="o">.</span><span class="n">generate</span><span class="p">()[</span><span class="mi">29</span><span class="p">:</span><span class="mi">42</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">midi_to_abc</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">b_blues_scale</span><span class="p">])</span> <span class="c1"># used to adjust the range fro 28 to 42</span>
+<span class="n">scale_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">b_blues_scale</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;B3&#39;, &#39;D4&#39;, &#39;E4&#39;, &#39;F4&#39;, &#39;F#4&#39;, &#39;A4&#39;, &#39;B4&#39;, &#39;D5&#39;, &#39;E5&#39;, &#39;F5&#39;, &#39;F#5&#39;, &#39;A5&#39;, &#39;B5&#39;]
+</pre></div></div>
+</div>
+<p>The next block does three things. First, the <code class="docutils literal notranslate"><span class="pre">dj.walk.Kernel</span></code> generates a number of <code class="docutils literal notranslate"><span class="pre">ntracks</span></code> samples from a Gaussian process. As for the second part, because the numbers generated are indexes and not pitches, the <code class="docutils literal notranslate"><span class="pre">for</span></code> loops, needs them to be integer values between (included) 0 to the rank of the last index of the scale we want to pick pitches from. Finally, the tracks are plotted. Plots are useful to calibrate <code class="docutils literal notranslate"><span class="pre">amplitude</span></code> and <code class="docutils literal notranslate"><span class="pre">length_scale</span></code>. Different combinations of <code class="docutils literal notranslate"><span class="pre">amplitude</span></code>
+and <code class="docutils literal notranslate"><span class="pre">length_scale</span></code> were tried to obtain signals that are sufficiently wavy in the x direction (length scale) and ranging through the indexes allowed in the scale list.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extract 3 samples of length 8 from a GP</span>
+<span class="n">length</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">ntracks</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">blues_tracks_i</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">walk</span><span class="o">.</span><span class="n">Kernel</span><span class="p">(</span>
+    <span class="n">walk_around</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="c1"># sixth index</span>
+    <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
+    <span class="n">length_scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">amplitude</span><span class="o">=</span><span class="mf">5.0</span>
+<span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">nsamples</span><span class="o">=</span><span class="n">ntracks</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># blues_tracks_i are list indexes. I must make sure that indexes are integer and between the range og the scale list</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ntracks</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
+        <span class="n">blues_tracks_i</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">blues_tracks_i</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">blues_tracks_i</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">scale_length</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">blues_tracks_i</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">scale_length</span><span class="o">-</span><span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">blues_tracks_i</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">blues_tracks_i</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Plot the tracks</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">track</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">blues_tracks_i</span><span class="p">):</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">)),</span> <span class="n">y</span><span class="o">=</span><span class="n">track</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Signal &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+    <span class="n">xaxis</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Time (quarter notes)&#39;</span><span class="p">),</span> <span class="n">yaxis</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Scale index&#39;</span><span class="p">),</span>
+    <span class="n">autosize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span>
+<span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s2">&quot;_images/gp-blues-tracks.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><img alt="plot of blues tracks" src="_images/gp-blues-tracks.png" /></p>
+<p>The following comprehensive list extracts the pitches from the scale for each track.</p>
+<blockquote>
+<div><p>I use intensively inline for loops. I founded them very confusing at first, but I have never been able to do without it since I understood how they worked.</p>
+</div></blockquote>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blues_tracks_p</span> <span class="o">=</span> <span class="p">[[</span><span class="n">b_blues_scale</span><span class="p">[</span><span class="n">blues_tracks_i</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="n">i</span><span class="p">]]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">)]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ntracks</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<p>Rhythms are generated randomly.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blues_rhythm</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">rhythm</span><span class="o">.</span><span class="n">Rhythm</span><span class="p">(</span><span class="n">durations</span><span class="o">=</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">measure_length</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">blues_rhythm</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[(0.25, 0.0), (1, 0.25), (1, 1.25), (0.5, 2.25), (0.5, 2.75), (0.25, 3.25), (0.5, 3.5)]
+</pre></div></div>
+</div>
+<p>Finally, isorhythms are applied to generate the four tracks.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blues_tracks</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">pitches</span> <span class="ow">in</span> <span class="n">blues_tracks_p</span><span class="p">:</span>
+    <span class="n">blues_tracks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">dj</span><span class="o">.</span><span class="n">rhythm</span><span class="o">.</span><span class="n">isorhythm</span><span class="p">(</span>
+            <span class="n">pitches</span><span class="o">=</span><span class="n">pitches</span><span class="p">,</span>
+            <span class="n">durations</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">blues_rhythm</span><span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blues_tracks_m21</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">blues_tracks</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s1">&#39;music21&#39;</span><span class="p">)</span>
+<span class="n">blues_tracks_m21</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">blues_tracks_m21</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;midi&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/05_walks_37_0.png" class="no-scaled-link" src="_images/05_walks_37_0.png" style="width: 732px; height: 838px;" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div id="midiPlayerDiv11380"></div>
+<link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
+
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
+></script>
+
+<script>
+function midiPlayerDiv11380_play() {
+    const rq = require.config({
+        paths: {
+            'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
+        }
+    });
+    rq(['music21'], function(music21) {
+        mp = new music21.miditools.MidiPlayer();
+        mp.addPlayer("#midiPlayerDiv11380");
+        mp.base64Load("data:audio/midi;base64,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");
+    });
+}
+if (typeof require === 'undefined') {
+    setTimeout(midiPlayerDiv11380_play, 2000);
+} else {
+    midiPlayerDiv11380_play();
+}
+</script></div>
+</div>
+</section>
+<section id="Fitted-Gaussian-Processes">
+<h3><em>Fitted</em> Gaussian Processes<a class="headerlink" href="#Fitted-Gaussian-Processes" title="Link to this heading">¶</a></h3>
+<p>One very interesting aspect of multivariate normal distributions is that they can be conditioned at will. Let’s recover our multivariate normal describing age, height and weight. The distribution of heights and weights <em>given</em> that age is between 32 years old is still a multivariate normal, but now in 2D rather than 3D. Just like we can condition multivariate normal, we can condition Gaussian processes with known data. When a Gaussian process is fitted on, for instance, temperature, the
+fundamental question you ask as the modeller is what function the temperature might have followed. A fitted Gaussian process can generate as many of such functions as you require, so you end up with a distribution of functions. The question can be asked similarly for a musical score: what variations be extracted from a constrained pattern? Djalgo doesn’t require Scikit-Learn to work, but its installation is required for fitted Gaussian processes.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>!pip install scikit-learn
+</pre></div>
+</div>
+<p>An interest question to ask: what variations be extracted from Pachelbel’s progression?</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the scale</span>
+<span class="n">d_major</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">harmony</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;major&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
+
+<span class="c1"># Find the pitches</span>
+<span class="n">pachelbel_progression_abc</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;A3&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">,</span> <span class="s1">&#39;F#3&#39;</span><span class="p">,</span> <span class="s1">&#39;G3&#39;</span><span class="p">,</span> <span class="s1">&#39;D3&#39;</span><span class="p">,</span> <span class="s1">&#39;G3&#39;</span><span class="p">,</span> <span class="s1">&#39;A3&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">]</span> <span class="c1"># looping, so I include final D4</span>
+<span class="n">pachelbel_progression_p</span> <span class="o">=</span> <span class="p">[</span><span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">abc_to_midi</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pachelbel_progression_abc</span><span class="p">]</span>
+
+<span class="c1"># Find the chors in d_major</span>
+<span class="n">pachelbel_progression_c</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pachelbel_progression_p</span><span class="p">:</span>
+    <span class="n">pachelbel_progression_c</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">p</span><span class="p">,</span> <span class="n">d_major</span><span class="p">[</span><span class="n">d_major</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="p">],</span> <span class="n">d_major</span><span class="p">[</span><span class="n">d_major</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">+</span> <span class="mi">4</span><span class="p">]])</span>
+
+<span class="c1"># Assemble it to Djalgo&#39;s format, then export to Music21</span>
+<span class="n">pachelbel_durations</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">pachelbel_progression_c</span><span class="p">)</span>
+<span class="n">pachelbel_progression_iso</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">rhythm</span><span class="o">.</span><span class="n">isorhythm</span><span class="p">(</span><span class="n">pitches</span><span class="o">=</span><span class="n">pachelbel_progression_c</span><span class="p">,</span> <span class="n">durations</span><span class="o">=</span><span class="n">pachelbel_durations</span><span class="p">)</span>
+<span class="n">pachelbel_progression_m21</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">pachelbel_progression_iso</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s1">&#39;music21&#39;</span><span class="p">)</span>
+<span class="n">pachelbel_progression_m21</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">pachelbel_progression_m21</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;midi&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/05_walks_39_0.png" class="no-scaled-link" src="_images/05_walks_39_0.png" style="width: 697px; height: 69px;" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div id="midiPlayerDiv11670"></div>
+<link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
+
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
+></script>
+
+<script>
+function midiPlayerDiv11670_play() {
+    const rq = require.config({
+        paths: {
+            'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
+        }
+    });
+    rq(['music21'], function(music21) {
+        mp = new music21.miditools.MidiPlayer();
+        mp.addPlayer("#midiPlayerDiv11670");
+        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQACJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAAPgA/wMAAOAAQM5gkD5aAJBCWgCQRVqBnUCAPgAAgEIAAIBFAACQOVoAkD1aAJBAWoGdQIA5AACAPQAAgEAAAJA7WgCQPloAkEJagZ1AgDsAAIA+AACAQgAAkDZaAJA5WgCQPVqBnUCANgAAgDkAAIA9AACQN1oAkDtaAJA+WoGdQIA3AACAOwAAgD4AAJAyWgCQNloAkDlagZ1AgDIAAIA2AACAOQAAkDdaAJA7WgCQPlqBnUCANwAAgDsAAIA+AACQOVoAkD1aAJBAWoGdQIA5AACAPQAAgEAAAJA+WgCQQloAkEVagZ1AgD4AAIBCAACARQDOYP8vAA==");
+    });
+}
+if (typeof require === 'undefined') {
+    setTimeout(midiPlayerDiv11670_play, 2000);
+} else {
+    midiPlayerDiv11670_play();
+}
+</script></div>
+</div>
+<p>We printed the chords, but our constrained will really be pitch indexes of the fundamentals. To model this, we add a <code class="docutils literal notranslate"><span class="pre">data</span></code> argument to our <code class="docutils literal notranslate"><span class="pre">djalgo.walk.Kernel</span></code> object in the form of a Numpy array with time (offset) in the first column, and pitch index in the second</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="n">note</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">pachelbel_progression_iso</span><span class="p">],</span>
+    <span class="p">[</span><span class="n">d_major</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">note</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">pachelbel_progression_iso</span><span class="p">]</span>
+<span class="p">])</span><span class="o">.</span><span class="n">T</span>
+<span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[ 0, 36],
+       [ 2, 33],
+       [ 4, 34],
+       [ 6, 31],
+       [ 8, 32],
+       [10, 29],
+       [12, 32],
+       [14, 33],
+       [16, 36]])
+</pre></div></div>
+</div>
+<p>When data are provided, Djalgo interpolates a number of <code class="docutils literal notranslate"><span class="pre">length</span></code> data points on the range of the data, fits the model, then export results in time and model predictions.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ntracks</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">length</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">pachelbel_tracks_pt</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">walk</span><span class="o">.</span><span class="n">Kernel</span><span class="p">(</span>
+    <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
+    <span class="n">length_scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">amplitude</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">nsamples</span><span class="o">=</span><span class="n">ntracks</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pachelbel_tracks_t</span> <span class="o">=</span> <span class="n">pachelbel_tracks_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">pachelbel_tracks_p</span> <span class="o">=</span> <span class="n">pachelbel_tracks_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">track</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pachelbel_tracks_p</span><span class="p">):</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">pachelbel_tracks_t</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">track</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Signal &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;markers&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s2">&quot;_images/pachelbel-tracks.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><img alt="plot of the pachelbel tracks" src="_images/pachelbel-tracks.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">{note}</span> <span class="pre">If</span> <span class="pre">you</span> <span class="pre">are</span> <span class="pre">interested</span> <span class="pre">in</span> <span class="pre">Scikit-learn,</span> <span class="pre">and</span> <span class="pre">would</span> <span class="pre">like</span> <span class="pre">more</span> <span class="pre">flexibility,</span> <span class="pre">this</span> <span class="pre">is</span> <span class="pre">what</span> <span class="pre">Djalgo</span> <span class="pre">does</span> <span class="pre">under</span> <span class="pre">the</span> <span class="pre">hood.</span></code></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from sklearn.gaussian_process import GaussianProcessRegressor
+from sklearn.gaussian_process.kernels import RBF
+x = np.linspace(0, self.data[:, 0].max(), self.length)[:, np.newaxis]
+kernel = self.amplitude * RBF(length_scale=self.length_scale) # , length_scale_bounds = (self.length_scale*0.9, self.length_scale*1.1)
+gp = GaussianProcessRegressor(kernel=kernel, normalize_y=True, n_restarts_optimizer=10)
+gp.fit(data[:, 0].reshape(-1, 1), data[:, 1].reshape(-1, 1))
+sequence = [
+    x.flatten().tolist(),
+    gp.sample_y(x, n_samples=nsamples).T.tolist()
+]
+</pre></div>
+</div>
+<p>We can extract the exact index value at every time using linear interpolation with Numpy.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="mf">3.5</span><span class="p">,</span> <span class="n">pachelbel_tracks_t</span><span class="p">,</span> <span class="n">pachelbel_tracks_p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+35.240185022580484
+</pre></div></div>
+</div>
+<p>So, for each track, let’s create a random rhythm, interpolate indexes to the offsets, find the indexes on the <code class="docutils literal notranslate"><span class="pre">d_major</span></code> scale, and assemble the tracks.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">tracks</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ntracks</span><span class="p">):</span>
+    <span class="n">rythm</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">rhythm</span><span class="o">.</span><span class="n">Rhythm</span><span class="p">(</span><span class="n">durations</span><span class="o">=</span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">measure_length</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span>
+    <span class="n">pitch_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rythm</span><span class="p">],</span>
+        <span class="n">xp</span><span class="o">=</span><span class="n">pachelbel_tracks_t</span><span class="p">,</span>
+        <span class="n">fp</span><span class="o">=</span><span class="n">pachelbel_tracks_p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">pitch_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">pitch_index</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">notes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">j</span><span class="p">,</span><span class="n">r</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pitch_index</span><span class="p">,</span> <span class="n">rythm</span><span class="p">):</span>
+        <span class="n">notes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span>
+            <span class="n">d_major</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">))</span>
+    <span class="n">tracks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>We can offset the tracks to create a cannon. The result is a reinterpretation of Pachelbel’s Cannon in D-major.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tracks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">offset_list_of_notes</span><span class="p">(</span><span class="n">tracks</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">by</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">tracks</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">offset_list_of_notes</span><span class="p">(</span><span class="n">tracks</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">by</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">tracks</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">offset_list_of_notes</span><span class="p">(</span><span class="n">tracks</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">by</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">tracks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pachelbel_progression_iso</span><span class="p">)</span>
+<span class="n">dj</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">tracks</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s1">&#39;music21&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;midi&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div id="midiPlayerDiv12649"></div>
+<link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
+
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
+></script>
+
+<script>
+function midiPlayerDiv12649_play() {
+    const rq = require.config({
+        paths: {
+            'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
+        }
+    });
+    rq(['music21'], function(music21) {
+        mp = new music21.miditools.MidiPlayer();
+        mp.addPlayer("#midiPlayerDiv12649");
+        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQAFJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAAIAA/wMAAOAAQM5gkD5apzCAPgAAkD5agZ1AgD4AAJA5WqcwgDkAAJA9WoGdQIA9AACQMlrOYIAyAACQNlqBnUCANgAAkD5apzCAPgAAkD5agZ1AgD4AAJA5WqcwgDkAAJA9WoGdQIA9AACQMlrOYIAyAACQNlqBnUCANgDOYP8vAE1UcmsAAAC2AP8DAADgAEDOYJA+WpNYgD4AAJA+WoGdQIA+AACQOVqTWIA5AACQN1qBnUCANwAAkDlagZ1AgDkAAJA3WqcwgDcAAJA5WqcwgDkAAJA7WpNYgDsAAJA5WpNYgDkAAJA+WpNYgD4AAJA+WoGdQIA+AACQOVqTWIA5AACQN1qBnUCANwAAkDlagZ1AgDkAAJA3WqcwgDcAAJA5WqcwgDkAAJA7WpNYgDsAAJA5WpNYgDkAzmD/LwBNVHJrAAAAtAD/AwAA4ABAzmCQPlrOYIA+AACQO1qBnUCAOwAAkDlagZ1AgDkAAJA3Ws5ggDcAAJA2WpNYgDYAAJA2Ws5ggDYAAJA2WpNYgDYAAJA2WpNYgDYAAJA3WpNYgDcAAJA+Ws5ggD4AAJA7WoGdQIA7AACQOVqBnUCAOQAAkDdazmCANwAAkDZak1iANgAAkDZazmCANgAAkDZak1iANgAAkDZak1iANgAAkDdak1iANwDOYP8vAE1UcmsAAAD4AP8DAADgAEDOYJA+WgCQQloAkEVagZ1AgD4AAIBCAACARQAAkDlaAJA9WgCQQFqBnUCAOQAAgD0AAIBAAACQO1oAkD5aAJBCWoGdQIA7AACAPgAAgEIAAJA2WgCQOVoAkD1agZ1AgDYAAIA5AACAPQAAkDdaAJA7WgCQPlqBnUCANwAAgDsAAIA+AACQMloAkDZaAJA5WoGdQIAyAACANgAAgDkAAJA3WgCQO1oAkD5agZ1AgDcAAIA7AACAPgAAkDlaAJA9WgCQQFqBnUCAOQAAgD0AAIBAAACQPloAkEJaAJBFWoGdQIA+AACAQgAAgEUAzmD/LwA=");
+    });
+}
+if (typeof require === 'undefined') {
+    setTimeout(midiPlayerDiv12649_play, 2000);
+} else {
+    midiPlayerDiv12649_play();
+}
+</script></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_getting-started.html">1. Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_harmony.html">2. Harmonies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_loops.html">3. Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_minimalism.html">4. Minimalism</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Walks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script><div>
+<br/>
+<a href="https://www.buymeacoffee.com/essicolo">☕ Buy me a coffee</a>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Essi Parent.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/05_walks.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
