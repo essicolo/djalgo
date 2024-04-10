@@ -4,7 +4,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "# Walks\n",
+    "# 5. Walks\n",
     "\n",
     "Random and kernel walks represent fascinating techniques that have found applications in various fields, including music composition. Such stochastic processes allow for the generation of sequences where each step is a consequence of the previous step, creating coherent yet unpredictable progressions. Such methods have been embraced by composers and sound artists to wander through new territories of algorithmic and generative music, where the unpredictability and structure of these mathematical models can lead to innovative musical expressions. **Iannis Xenakis** is perhaps one of the most renowned composers to integrate stochastic processes, including random walks, into his compositions. Xenakis, a Greek-French composer and architect, utilized mathematical models to compose music that explores the interplay between order and randomness. Works like [Mikka](https://www.youtube.com/watch?v=Ifxs3TBSSAs) and [Epeï](https://www.youtube.com/watch?v=8ZP3TbLtfq4) are seminal examples where stochastic methods contribute to the structural foundation of the music. **Karlheinz Stockhausen** and his work with controlled randomness and serial techniques also touch upon concepts akin to random walks. His compositions, such as [Klavierstück XI](https://www.youtube.com/watch?v=mMDdihXI98A), employ a form of controlled chance that dictates the sequence of musical events, offering a multitude of possible paths through the piece.\n",
     "\n",
