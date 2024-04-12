@@ -1,17 +1,18 @@
 import random
 import numpy as np
 from . import utils
+import itertools
 
-def isorhythm(durations, pitches):
+def isorhythm(pitches, durations):
     """
     Merges durations and pitches until both ends coincide, then sets offsets according to successive durations.
 
     Args:
-        durations (list): The first list.
-        pitches (list): The second list.
+        pitches (list): The first list.
+        durations (list): The second list.
 
     Returns:
-        list: The zipped list.
+        list: A list of notes.
     """
     lcm = np.lcm(len(pitches), len(durations))
 
@@ -23,39 +24,42 @@ def isorhythm(durations, pitches):
 
     return notes
 
+def beatcycle(pitches, durations):
+    """
+    Pitches are mapped to durations in a cyclical manner, then offsets are set according to successive durations.
+
+    Args:
+        pitches (list): The first list.
+        durations (list): The second list.
+
+    Returns:
+        list: A list of notes.
+    """
+    durations_cycle = itertools.cycle(durations)
+    notes = []
+    current_offset = 0
+    for p in pitches:
+        d = next(durations_cycle)
+        notes.append((p, d, current_offset))
+        current_offset += d
+    return notes
+
 class Rhythm:
     """
     A class used to represent a Rhythm.
 
-    ...
-
-    Attributes
-    ----------
-    measure_length : int
-        the length of the measure
-    output : str
-        the output type, either 'duration' or 'time' (default 'duration')
-
-    Methods
-    -------
-    _convert_to_output(durations):
-        Converts the durations to the specified output type.
-    random(durations, max_iter=100, seed=None):
-        Generates a random rhythm that fits within the measure length.
-    fibonacci(base=1):
-        Generates a rhythm based on the Fibonacci sequence.
+    Attributes:
+        measure_length (int): the length of the measure
+        durations (list): the durations of the notes
     """
 
     def __init__(self, measure_length, durations):
         """
         Constructs all the necessary attributes for the Rhythm object.
 
-        Parameters
-        ----------
-            measure_length : int
-                the length of the measure
-            output : str
-                the output type, either 'duration' or 'time' (default 'duration')
+        Args:
+            measure_length (int): the length of the measure
+            durations (list): the durations of the notes
         """
         self.measure_length = measure_length
         self.durations = durations
@@ -92,11 +96,34 @@ class Rhythm:
         return rhythm
     
     def darwin(self, seed=None, population_size=10, max_generations=50, mutation_rate=0.1):
+        """
+        Executes the Darwinian evolution algorithm to generate the best rhythm.
+
+        Args:
+            seed (int): The random seed for reproducibility.
+            population_size (int): The number of rhythms in each generation.
+            max_generations (int): The maximum number of generations to evolve.
+            mutation_rate (float): The probability of mutating a given rhythm.
+
+        Returns:
+            list: The best rhythm found after the last generation, sorted by ascending offset.
+        """
+
         ga = GeneticRhythm(seed, population_size, self.measure_length, max_generations, mutation_rate, self.durations)
         best_rhythm = ga.generate()
         return best_rhythm
 
     def fibonacci(self, base=1, reverse=False):
+        """
+        Generates a rhythm based on the Fibonacci sequence.
+
+        Args:
+            base (int): The base duration for the rhythm.
+            reverse (bool): If True, the generated rhythm will have increasing durations.
+
+        Returns:
+            list: A list of (duration, offset) tuples representing the rhythm.
+        """
         fib = Fibonacci(self.measure_length, self.durations, reverse=reverse)
         return fib.generate()
 

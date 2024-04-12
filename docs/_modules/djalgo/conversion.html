@@ -108,7 +108,8 @@
         <span class="n">element</span> <span class="o">=</span> <span class="n">m21</span><span class="o">.</span><span class="n">note</span><span class="o">.</span><span class="n">Rest</span><span class="p">()</span>
         <span class="n">element</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="n">m21</span><span class="o">.</span><span class="n">duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">note_tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">note_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>  <span class="c1"># it&#39;s a chord</span>
-        <span class="n">element</span> <span class="o">=</span> <span class="n">m21</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="n">note_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">element</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">note_tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span> <span class="c1"># Remove None values</span>
+        <span class="n">element</span> <span class="o">=</span> <span class="n">m21</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
         <span class="n">element</span><span class="o">.</span><span class="n">duration</span><span class="o">.</span><span class="n">quarterLength</span> <span class="o">=</span> <span class="n">note_tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>  <span class="c1"># it&#39;s a note</span>
         <span class="n">element</span> <span class="o">=</span> <span class="n">m21</span><span class="o">.</span><span class="n">note</span><span class="o">.</span><span class="n">Note</span><span class="p">()</span>
@@ -296,7 +297,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../02_harmony.html">2. Harmonies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../03_loops.html">3. Loops</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../04_minimalism.html">4. Minimalism</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../05_walks.html">Walks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_walks.html">5. Walks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_fractals.html">6. Fractals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>

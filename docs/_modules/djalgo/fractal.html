@@ -36,6 +36,9 @@
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">patches</span>
+<span class="kn">import</span> <span class="nn">matplotlib.axes</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">utils</span>
 
 <div class="viewcode-block" id="Fibonacci">
@@ -95,101 +98,280 @@
 </div>
 
 
-
 <div class="viewcode-block" id="CellularAutomata">
 <a class="viewcode-back" href="../../api.html#djalgo.fractal.CellularAutomata">[docs]</a>
 <span class="k">class</span> <span class="nc">CellularAutomata</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Represents a cellular automaton.</span>
+<span class="sd">    A class for simulating one-dimensional cellular automata based on a specific rule set.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        scale (list): A list of values representing the possible states of each cell.</span>
-<span class="sd">        length (int, optional): The number of generations to generate. Defaults to 10.</span>
-<span class="sd">        init (list, optional): The initial state of the automaton. Defaults to None.</span>
-<span class="sd">        rules (str or list, optional): The rules to apply for the automaton. Defaults to &#39;default_rule&#39;.</span>
-
-<span class="sd">    Raises:</span>
-<span class="sd">        ValueError: If the specified rule is not found in the JSON file.</span>
+<span class="sd">        rule_number (int or str): Rule number for the cellular automaton, must be between 0 and 255.</span>
+<span class="sd">        width (int): Number of cells in the automaton&#39;s width.</span>
+<span class="sd">        initial_state (list of int, optional): Initial state of the automaton. Defaults to all zeros with a central one.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        scale (list): A list of values representing the possible states of each cell.</span>
-<span class="sd">        length (int): The number of generations to generate.</span>
-<span class="sd">        init (list): The initial state of the automaton.</span>
-<span class="sd">        rules (list): The rules to apply for the automaton.</span>
-<span class="sd">        array (list): The generated cellular automaton.</span>
-
+<span class="sd">        width (int): The cellular automaton&#39;s width.</span>
+<span class="sd">        rule_number (str): The rule number, zero-padded to three digits.</span>
+<span class="sd">        initial_state (list of int): The initial state of the automaton.</span>
+<span class="sd">        state (list of int): The current state of the automaton.</span>
+<span class="sd">        rules (list of tuple): The rules loaded from a JSON file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rules</span><span class="o">=</span><span class="s1">&#39;default_rule&#39;</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
-
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rules</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data/ca1D_rules.json&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-                <span class="n">ca1D_rules</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">rules</span> <span class="ow">in</span> <span class="n">ca1D_rules</span><span class="p">:</span>
-                    <span class="n">rules</span> <span class="o">=</span> <span class="n">ca1D_rules</span><span class="p">[</span><span class="n">rules</span><span class="p">]</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rule </span><span class="si">{</span><span class="n">rules</span><span class="si">}</span><span class="s2"> not found in JSON file.&quot;</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">rules</span> <span class="o">=</span> <span class="n">rules</span>
-
-        <span class="k">if</span> <span class="n">init</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">init</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
-            <span class="n">init</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">init</span> <span class="o">=</span> <span class="n">init</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_ca1D</span><span class="p">()</span>
-
-<div class="viewcode-block" id="CellularAutomata.create_ca1D">
-<a class="viewcode-back" href="../../api.html#djalgo.fractal.CellularAutomata.create_ca1D">[docs]</a>
-    <span class="k">def</span> <span class="nf">create_ca1D</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule_number</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">initial_state</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Creates a 1D cellular automaton.</span>
+<span class="sd">        Initializes the CellularAutomata class with a rule number, width, and optionally an initial state.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            rule_number (int or str): The rule number for the cellular automaton, must be between 0 and 255.</span>
+<span class="sd">            width (int): The number of cells in one row of the automaton.</span>
+<span class="sd">            initial_state (list, optional): Initial binary state of the automaton. Defaults to a list of zeros with a single one in the center.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the rule number is not within the valid range (0 to 255).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">rule_number</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">int</span><span class="p">(</span><span class="n">rule_number</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Rule number must be an integer between 0 and 255.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rule_number</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">rule_number</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">rule_number</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rule_number</span> <span class="o">=</span> <span class="n">rule_number</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_rules</span><span class="p">(</span><span class="n">rule_number</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">width</span> <span class="k">if</span> <span class="n">initial_state</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">initial_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<div class="viewcode-block" id="CellularAutomata.load_rules">
+<a class="viewcode-back" href="../../api.html#djalgo.fractal.CellularAutomata.load_rules">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_rules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rule_number</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Loads the rules from a JSON file based on the rule number.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            rule_number (str): The rule number as a string, zero-padded to three digits.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            list: The generated cellular automaton.</span>
-
+<span class="sd">            list: A list of tuples representing the rules for the cellular automaton.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">ncells</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span>
-        <span class="n">nrows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span>
-        <span class="n">array</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">ncells</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nrows</span><span class="p">)]</span>
-        <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nrows</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ncells</span><span class="p">):</span>
-                <span class="n">ca_at</span> <span class="o">=</span> <span class="p">[</span><span class="n">array</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">ncells</span><span class="p">]]</span>
-                <span class="k">if</span> <span class="n">ca_at</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules</span><span class="p">:</span>
-                    <span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">array</span></div>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data/ca1D_rules.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">rules_json</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="n">rule_conditions</span> <span class="o">=</span> <span class="n">rules_json</span><span class="p">[</span><span class="n">rule_number</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span> <span class="k">for</span> <span class="n">condition</span> <span class="ow">in</span> <span class="n">rule_conditions</span><span class="p">]</span></div>
 
 
+<div class="viewcode-block" id="CellularAutomata.update_state">
+<a class="viewcode-back" href="../../api.html#djalgo.fractal.CellularAutomata.update_state">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the state of the automaton based on its rules for one generation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_state</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">):</span>
+            <span class="n">neighborhood</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">],</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">])</span>
+            <span class="n">new_state</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">neighborhood</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">new_state</span></div>
+
+
+<div class="viewcode-block" id="CellularAutomata.validate_strips">
+<a class="viewcode-back" href="../../api.html#djalgo.fractal.CellularAutomata.validate_strips">[docs]</a>
+    <span class="k">def</span> <span class="nf">validate_strips</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strips</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Validates that the strips are correctly formatted and within the valid range.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            strips (list of tuples): Each tuple should specify the start and end indices of a strip in the automaton.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If strips are not properly formatted or indices are out of range.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">strips</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">strips</span> <span class="o">=</span> <span class="p">[</span><span class="n">strips</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">strip</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">for</span> <span class="n">strip</span> <span class="ow">in</span> <span class="n">strips</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">strip</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">strip</span> <span class="ow">in</span> <span class="n">strips</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">for</span> <span class="n">strip</span> <span class="ow">in</span> <span class="n">strips</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">strip</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Strips must be a tuple of two integers or a list of tuples with two integers each.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">strip</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">strip</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="k">for</span> <span class="n">strip</span> <span class="ow">in</span> <span class="n">strips</span><span class="p">):</span> 
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Strip values must be within the width of the automata.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CellularAutomata.validate_values">
+<a class="viewcode-back" href="../../api.html#djalgo.fractal.CellularAutomata.validate_values">[docs]</a>
+    <span class="k">def</span> <span class="nf">validate_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">strips</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Validates that the values are provided as dictionaries, and there is a dictionary for each strip.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            values (list or dict): List of dictionaries mapping indices to pitches or other data.</span>
+<span class="sd">            strips (list of tuples): List of strip ranges to validate against.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If values are not provided as a list of dictionaries or their count doesn&#39;t match the strips.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">values</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">val_dict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="k">for</span> <span class="n">val_dict</span> <span class="ow">in</span> <span class="n">values</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Values must be provided as a dictionnary or a list of dictionaries mapping indices to pitches or other data.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">strips</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The number of value dictionaries must match the number of strips.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CellularAutomata.generate_01">
+<a class="viewcode-back" href="../../api.html#djalgo.fractal.CellularAutomata.generate_01">[docs]</a>
+    <span class="k">def</span> <span class="nf">generate_01</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">strips</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a binary (0 or 1) evolution of the automaton over a specified number of iterations, optionally for specific strips.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            iterations (int): Number of iterations to evolve the automaton.</span>
+<span class="sd">            strips (list of tuples, optional): Specific sections of the automaton to evolve.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list representing the evolution of the automaton, either as a whole or just the specified strips.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">strips</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">validate_strips</span><span class="p">(</span><span class="n">strips</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_state</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">evolution</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_state</span><span class="p">()</span>
+            <span class="n">evolution</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        
+        <span class="k">if</span> <span class="n">strips</span><span class="p">:</span>
+            <span class="n">strip_evolutions</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">strip</span> <span class="ow">in</span> <span class="n">strips</span><span class="p">:</span>
+                <span class="n">strip_evolution</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="n">strip</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">strip</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">evolution</span><span class="p">]</span>
+                <span class="n">strip_evolutions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">strip_evolution</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">strip_evolutions</span>
+        
+        <span class="k">return</span> <span class="n">evolution</span></div>
+
+    
 <div class="viewcode-block" id="CellularAutomata.generate">
 <a class="viewcode-back" href="../../api.html#djalgo.fractal.CellularAutomata.generate">[docs]</a>
-    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">strips</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generates a signal based on the cellular automaton.</span>
+<span class="sd">        Generates the evolution of the automaton, mapping binary states (0 or 1) to specific values based on provided mappings.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            iterations (int): Number of iterations to evolve the automaton.</span>
+<span class="sd">            strips (list of tuples): Sections of the automaton for which to generate values.</span>
+<span class="sd">            values (list of dicts): Mappings from indices in each strip to specific values.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            list: The generated signal.</span>
-
+<span class="sd">            list: A list of evolutions for each strip, with binary states mapped to specified values.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">nevents</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span>
-        <span class="n">ncells</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span>
-        <span class="n">signal</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nevents</span><span class="p">):</span>
-            <span class="n">notes_i</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ncells</span><span class="p">):</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">array</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="n">notes_i</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">notes_i</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">signal</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">notes_i</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">signal</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">notes_i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="c1"># Validate strips and value mapping</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validate_strips</span><span class="p">(</span><span class="n">strips</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">validate_values</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">strips</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">values</span><span class="p">]</span>
+
+        <span class="c1"># Generate the binary evolution for specified strips</span>
+        <span class="n">evolution_01</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_01</span><span class="p">(</span><span class="n">iterations</span><span class="p">,</span> <span class="n">strips</span><span class="p">)</span>
+        <span class="n">values_evolution</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">strip_evolution</span><span class="p">,</span> <span class="n">value_dict</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">evolution_01</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>  <span class="c1"># Process each strip with its corresponding value map</span>
+            <span class="n">strip_values</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">strip_evolution</span><span class="p">:</span>
+                <span class="n">row_values</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cell</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">cell</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">value_dict</span><span class="p">:</span>
+                        <span class="n">row_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value_dict</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">row_values</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row_values</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">strip_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row_values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># Single value</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">strip_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row_values</span><span class="p">)</span>  <span class="c1"># Multiple values forming a chord</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">strip_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="n">values_evolution</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">strip_values</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values_evolution</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">values_evolution</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">values_evolution</span></div>
+
+
+<div class="viewcode-block" id="CellularAutomata.plot">
+<a class="viewcode-back" href="../../api.html#djalgo.fractal.CellularAutomata.plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">strips</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">extract_strip</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_axis</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plots the evolution of the cellular automaton.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            iterations (int): Number of generations to simulate.</span>
+<span class="sd">            ax (matplotlib.axes.Axes, optional): The matplotlib axis to plot on. If None, a new figure is created.</span>
+<span class="sd">            strips (list of tuples, optional): Ranges to highlight or exclusively plot.</span>
+<span class="sd">            extract_strip (bool): If True, only the specified strips are plotted each in separate subplots.</span>
+<span class="sd">            title (str, optional): Title for the plot. Default is based on the rule number.</span>
+<span class="sd">            show_axis (bool): Whether to show axis labels and grid.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            matplotlib.axes.Axes: The axis with the plot.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Handle based on the extraction flag</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">extract_strip</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Cellular Automata Evolution for Rule </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rule_number</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="c1"># Display the complete evolution</span>
+            <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+            <span class="n">evolution</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">generate_01</span><span class="p">(</span><span class="n">iterations</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">evolution</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;binary&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Cell Position&quot;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Generation&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Add strips if provided</span>
+            <span class="k">if</span> <span class="n">strips</span><span class="p">:</span>
+                <span class="n">label_offset</span> <span class="o">=</span> <span class="mi">3</span>
+                <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">strip</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">strips</span><span class="p">):</span>
+                    <span class="n">rect</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">(</span>
+                        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">strip</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                        <span class="n">iterations</span><span class="p">,</span> <span class="n">strip</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">strip</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;#88888880&#39;</span>
+                    <span class="p">)</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+                        <span class="mi">1</span><span class="p">,</span> <span class="n">strip</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">label_offset</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Strip </span><span class="si">{</span><span class="n">index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span>
+                        <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;#333333&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+                    <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Handle multiple strips, each in its own subplot</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">strips</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">strips</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>  <span class="c1"># Use a new axis for a single strip</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">signal</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">notes_i</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">signal</span></div>
+                <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">strips</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">strips</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span> <span class="p">))</span>
+                <span class="n">axs</span> <span class="o">=</span> <span class="n">axs</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">axs</span><span class="p">,</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">Axes</span><span class="p">):</span>
+                <span class="n">axs</span> <span class="o">=</span> <span class="p">[</span><span class="n">axs</span><span class="p">]</span>
+
+            <span class="n">strip_evolutions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_01</span><span class="p">(</span><span class="n">iterations</span><span class="p">,</span> <span class="n">strips</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">strip_data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">strip_evolutions</span><span class="p">):</span>
+                <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">strip_data</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;binary&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+                <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">strip_title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Strip </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> Evolution&quot;</span> 
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">strip_title</span> <span class="o">=</span> <span class="n">title</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">strip_title</span><span class="p">)</span>
+                <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Cell Position&quot;</span><span class="p">)</span>
+                <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Generation&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Optionally turn off axis</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">show_axis</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+        <span class="c1"># If this function created the figure and it&#39;s handling a subplot setup, adjust the layout</span>
+        <span class="k">if</span> <span class="n">extract_strip</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>  <span class="c1"># Adjust horizontal space if needed</span>
+
+        <span class="k">return</span> <span class="n">ax</span></div>
 </div>
 
+    
+    
 
 
 <div class="viewcode-block" id="Mandelbrot">
@@ -259,6 +441,56 @@
         <span class="k">return</span> <span class="n">signal</span></div>
 </div>
 
+    
+
+<div class="viewcode-block" id="LogisticMap">
+<a class="viewcode-back" href="../../api.html#djalgo.fractal.LogisticMap">[docs]</a>
+<span class="k">class</span> <span class="nc">LogisticMap</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a logistic map generator.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        scale (list or None): A list of values to map the generated logistic map values to. If None, the raw values will be used.</span>
+<span class="sd">        start_note_index (int): The starting index in the scale list.</span>
+<span class="sd">        length (int): The length of the generated logistic map signal.</span>
+<span class="sd">        r (float): The r parameter of the logistic map. Determines the chaos of the generated sequence.</span>
+<span class="sd">        x0 (float): The initial x value for the logistic map.</span>
+<span class="sd">        center_offset (bool): Whether to offset the generated values by the center of the scale list.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">start_note_index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">3.9</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">center_offset</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_note_index</span> <span class="o">=</span> <span class="n">start_note_index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">r</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x0</span> <span class="o">=</span> <span class="n">x0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">center_offset</span> <span class="o">=</span> <span class="n">center_offset</span>
+
+<div class="viewcode-block" id="LogisticMap.generate">
+<a class="viewcode-back" href="../../api.html#djalgo.fractal.LogisticMap.generate">[docs]</a>
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logistic_map_values</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x0</span>
+
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span>
+            <span class="n">logistic_map_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">signal</span> <span class="o">=</span> <span class="n">logistic_map_values</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">signal</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">current_note_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_note_index</span>
+            <span class="k">for</span> <span class="n">offset</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="n">logistic_map_values</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">center_offset</span><span class="p">:</span>
+                    <span class="n">current_note_index</span> <span class="o">=</span> <span class="p">(</span><span class="n">current_note_index</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)))</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">current_note_index</span> <span class="o">=</span> <span class="p">(</span><span class="n">current_note_index</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)))</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span>
+                <span class="n">signal</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">[</span><span class="n">current_note_index</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">signal</span></div>
+</div>
+
 </pre></div>
 
           </div>
@@ -276,7 +508,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../02_harmony.html">2. Harmonies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../03_loops.html">3. Loops</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../04_minimalism.html">4. Minimalism</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../05_walks.html">Walks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_walks.html">5. Walks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_fractals.html">6. Fractals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>

@@ -66,7 +66,8 @@ def tuple_to_music21_element(note_tuple):
         element = m21.note.Rest()
         element.duration = m21.duration.Duration(note_tuple[1])
     elif isinstance(note_tuple[0], list):  # it's a chord
-        element = m21.chord.Chord(note_tuple[0])
+        element = [item for item in note_tuple[0] if item is not None] # Remove None values
+        element = m21.chord.Chord(element)
         element.duration.quarterLength = note_tuple[1]
     else:  # it's a note
         element = m21.note.Note()

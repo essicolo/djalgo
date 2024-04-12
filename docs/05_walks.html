@@ -18,7 +18,7 @@
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API" href="api.html" />
+    <link rel="next" title="6. Fractals" href="06_fractals.html" />
     <link rel="prev" title="4. Minimalism" href="04_minimalism.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -39,10 +39,11 @@
             
   <section id="5.-Walks">
 <h1>5. Walks<a class="headerlink" href="#5.-Walks" title="Link to this heading">¶</a></h1>
-<p>Random and kernel walks represent fascinating techniques that have found applications in various fields, including music composition. Such stochastic processes allow for the generation of sequences where each step is a consequence of the previous step, creating coherent yet unpredictable progressions. Such methods have been embraced by composers and sound artists to wander through new territories of algorithmic and generative music, where the unpredictability and structure of these mathematical
-models can lead to innovative musical expressions. <strong>Iannis Xenakis</strong> is perhaps one of the most renowned composers to integrate stochastic processes, including random walks, into his compositions. Xenakis, a Greek-French composer and architect, utilized mathematical models to compose music that explores the interplay between order and randomness. Works like <a class="reference external" href="https://www.youtube.com/watch?v=Ifxs3TBSSAs">Mikka</a> and <a class="reference external" href="https://www.youtube.com/watch?v=8ZP3TbLtfq4">Epeï</a> are seminal examples
-where stochastic methods contribute to the structural foundation of the music. <strong>Karlheinz Stockhausen</strong> and his work with controlled randomness and serial techniques also touch upon concepts akin to random walks. His compositions, such as <a class="reference external" href="https://www.youtube.com/watch?v=mMDdihXI98A">Klavierstück XI</a>, employ a form of controlled chance that dictates the sequence of musical events, offering a multitude of possible paths through the piece.</p>
-<p>The application of random walks and kernel walks in music composition involves generating sequences of musical elements, usually pitches and sequences, where each element is selected based on a combination of random choice and a set of rules or conditions influenced by previous elements. This approach allows composers to explore new forms of musical structure and texture, creating pieces that can vary greatly with each performance or realization while maintaining an underlying coherence.</p>
+<p>Random and kernel walks represent fascinating techniques that have found applications in various fields. Each step of a walk is a consequence of the previous state, creating coherent yet unpredictable progressions. Walks have been embraced by composers and sound artists to wander through new territories of algorithmic music. Iannis Xenakis, a composer and architect, is perhaps one of the most renowned composers to integrate random processes, including random walks, into his compositions. Works
+like <a class="reference external" href="https://www.youtube.com/watch?v=Ifxs3TBSSAs">Mikka</a> and <a class="reference external" href="https://www.youtube.com/watch?v=8ZP3TbLtfq4">Epeï</a> are seminal examples where randomized methods contribute to the structural foundation of the music. Karlheinz Stockhausen and his work with controlled randomness and serial techniques also touch upon concepts akin to random walks. His compositions, such as <a class="reference external" href="https://www.youtube.com/watch?v=mMDdihXI98A">Klavierstück XI</a>, employ a form of controlled chance that dictates the
+sequence of musical events, offering a multitude of possible paths through the piece.</p>
+<p>The application of random walks in music composition involves generating sequences of musical elements, usually pitches and sequences, where each element is selected based on a combination of random choice and a set of rules or conditions influenced by previous elements. This approach allows composers to explore new forms of musical structure and texture, creating pieces that can vary greatly with each performance or realization while maintaining an underlying coherence.</p>
+<p>In this section, we will also cover <em>kernel walks</em>, an innovative technique akin to random walks. This approach dig into well-known statistical objects named Gaussian processes to generate randomly oscillating paths. Most interestingly, kernel walks can be forced to pass through predefined points, and create melodies wandering around predefined progressions.</p>
 <section id="Random-walks">
 <h2>Random walks<a class="headerlink" href="#Random-walks" title="Link to this heading">¶</a></h2>
 <p>A random walk is a mathematical process where each step is a random choice relative to the one preceeding it. Mathematician call them Markov chains, named after mathematician Andrey Markov. The random choice can be as simple as a coin flip: if it goes tail, you take a diagional step left. Heads, a diagonal step on right. Repeat the process over and over and you obtain a random walk. On average, you should walk ahead, but in fact, you’ll probably derive from a straight path. The concept of
@@ -149,7 +150,7 @@ C8: 108
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;djalgo.walk.Chain at 0x12f9ee8d0&gt;
+&lt;djalgo.walk.Chain at 0x1290de1d0&gt;
 </pre></div></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">rw</span></code> is a random walk object, which can be used to generate many random walks, although only one will be generated in this example.</p>
@@ -224,7 +225,7 @@ walk, and can branch out. If two or more branch collide to the same values, and 
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv5453"></div>
+<div id="midiPlayerDiv5580"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -232,7 +233,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv5453_play() {
+function midiPlayerDiv5580_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -240,14 +241,14 @@ function midiPlayerDiv5453_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv5453");
+        mp.addPlayer("#midiPlayerDiv5580");
         mp.base64Load("data:audio/midi;base64,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");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv5453_play, 2000);
+    setTimeout(midiPlayerDiv5580_play, 2000);
 } else {
-    midiPlayerDiv5453_play();
+    midiPlayerDiv5580_play();
 }
 </script></div>
 </div>
@@ -303,7 +304,7 @@ if (typeof require === 'undefined') {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv8220"></div>
+<div id="midiPlayerDiv8311"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -311,7 +312,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv8220_play() {
+function midiPlayerDiv8311_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -319,14 +320,14 @@ function midiPlayerDiv8220_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv8220");
-        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQAIJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAASYA/wMAAOAAQM5gkE9agZ1AgE8AAJBUWqcwgFQAAJBTWqcwgFMAAJBRWoGdQIBRAACQTlqnMIBOAACQUVqnMIBRAACQSFqBnUCASAAAkE5apzCATgAAkEpapzCASgAAkExagZ1AgEwAAJBMWqcwgEwAAJBRWqcwgFEAAJBKWoGdQIBKAACQSFqnMIBIAACQRVqnMIBFAACQRVqBnUCARQAAkEhapzCASAAAkExapzCATAAAkEhagZ1AgEgAAJBHWqcwgEcAAJBDWqcwgEMAAJBDWoGdQIBDAACQRVqnMIBFAACQSlqnMIBKAACQUVqBnUCAUQAAkE9apzCATwAAkFNapzCAUwAAkFhagZ1AgFgAAJBaWqcwgFoAAJBaWqcwgFoAzmD/LwBNVHJrAAACugD/AwAA4ABAzmCQUVqnMIBRAACQT1rOYIBPAACQU1rOYIBTAACQU1qnMIBTAACQVFqnMIBUAACQWFrOYIBYAACQVlrOYIBWAACQVFqnMIBUAACQU1qnMIBTAACQUVrOYIBRAACQUVrOYIBRAACQUVqnMIBRAACQUVqnMIBRAACQUVrOYIBRAACQTlrOYIBOAACQT1qnMIBPAACQUVqnMIBRAACQUVrOYIBRAACQWFrOYIBYAACQUVqnMIBRAACQT1qnMIBPAACQU1rOYIBTAACQU1rOYIBTAACQVFqnMIBUAACQWFqnMIBYAACQVlrOYIBWAACQVFrOYIBUAACQU1qnMIBTAACQUVqnMIBRAACQUVrOYIBRAACQUVrOYIBRAACQUVqnMIBRAACQUVqnMIBRAACQTlrOYIBOAACQT1rOYIBPAACQUVqnMIBRAACQUVqnMIBRAACQWFrOYIBYAACQUVrOYIBRAACQT1qnMIBPAACQU1qnMIBTAACQU1rOYIBTAACQVFrOYIBUAACQWFqnMIBYAACQVlqnMIBWAACQVFrOYIBUAACQU1rOYIBTAACQUVqnMIBRAACQUVqnMIBRAACQUVrOYIBRAACQUVrOYIBRAACQUVqnMIBRAACQTlqnMIBOAACQT1rOYIBPAACQUVrOYIBRAACQUVqnMIBRAACQWFqnMIBYAACQUVrOYIBRAACQT1rOYIBPAACQU1qnMIBTAACQU1qnMIBTAACQVFrOYIBUAACQWFrOYIBYAACQVlqnMIBWAACQVFqnMIBUAACQU1rOYIBTAACQUVrOYIBRAACQUVqnMIBRAACQUVqnMIBRAACQUVrOYIBRAACQUVrOYIBRAACQTlqnMIBOAACQT1qnMIBPAACQUVrOYIBRAACQUVrOYIBRAACQWFqnMIBYAM5g/y8ATVRyawAAAW0A/wMAAOAAQM5gkFNazmCAUwAAkE9azmCATwAAkExazmCATAAAkE5azmCATgAAkE5azmCATgAAkE9azmCATwAAkE5azmCATgAAkE5azmCATgAAkFNazmCAUwAAkE9azmCATwAAkE5azmCATgAAkE9azmCATwAAkE5azmCATgAAkFNazmCAUwAAkE9azmCATwAAkExazmCATAAAkE5azmCATgAAkE5azmCATgAAkE9azmCATwAAkE5azmCATgAAkE5azmCATgAAkFNazmCAUwAAkE9azmCATwAAkE5azmCATgAAkE9azmCATwAAkE5azmCATgAAkFNazmCAUwAAkE9azmCATwAAkExazmCATAAAkE5azmCATgAAkE5azmCATgAAkE9azmCATwAAkE5azmCATgAAkE5azmCATgAAkFNazmCAUwAAkE9azmCATwAAkE5azmCATgAAkE9azmCATwAAkE5azmCATgDOYP8vAE1UcmsAAAC5AP8DAADgAEDOYJBDWoGdQIBDAACQQ1rOYIBDAACQQ1qBnUCAQwAAkEVazmCARQAAkEVagZ1AgEUAAJBIWs5ggEgAAJBHWoGdQIBHAACQSlrOYIBKAACQRVqBnUCARQAAkENazmCAQwAAkENagZ1AgEMAAJBDWs5ggEMAAJBFWoGdQIBFAACQRVrOYIBFAACQSFqBnUCASAAAkEdazmCARwAAkEpagZ1AgEoAAJBFWs5ggEUAzmD/LwBNVHJrAAAAKgD/AwAA4ABAzmCQUVqBnUCAUQAAkFNapzCAUwAAkE9apzCATwDOYP8vAE1UcmsAAABGAP8DAADgAEDOYJBPWoGdQIBPAACQU1qnMIBTAACQT1qnMIBPAACQU1qBnUCAUwAAkE9apzCATwAAkFNapzCAUwDOYP8vAE1UcmsAAABGAP8DAADgAEDOYJBaWqcwgFoAAJBUWoGdQIBUAACQWlqnMIBaAACQVFqnMIBUAACQWlqBnUCAWgAAkFRapzCAVADOYP8vAA==");
+        mp.addPlayer("#midiPlayerDiv8311");
+        mp.base64Load("data:audio/midi;base64,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");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv8220_play, 2000);
+    setTimeout(midiPlayerDiv8311_play, 2000);
 } else {
-    midiPlayerDiv8220_play();
+    midiPlayerDiv8311_play();
 }
 </script></div>
 </div>
@@ -442,21 +443,47 @@ and <code class="docutils literal notranslate"><span class="pre">length_scale</s
 </div>
 </div>
 <p><img alt="plot of blues tracks" src="_images/gp-blues-tracks.png" /></p>
-<p>The following comprehensive list extracts the pitches from the scale for each track.</p>
+<p>The following comprehensive list extracts the pitches from the scale for each track to create chords.</p>
 <blockquote>
 <div><p>I use intensively inline for loops. I founded them very confusing at first, but I have never been able to do without it since I understood how they worked.</p>
 </div></blockquote>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blues_tracks_p</span> <span class="o">=</span> <span class="p">[[</span><span class="n">b_blues_scale</span><span class="p">[</span><span class="n">blues_tracks_i</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="n">i</span><span class="p">]]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">)]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ntracks</span><span class="p">)]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blues_track_chords</span> <span class="o">=</span> <span class="p">[[</span><span class="n">b_blues_scale</span><span class="p">[</span><span class="n">blues_tracks_i</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="n">i</span><span class="p">]]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ntracks</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">)]</span>
+<span class="n">blues_track_chords</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[66, 76, 66],
+ [59, 69, 71],
+ [59, 64, 74],
+ [64, 59, 66],
+ [59, 64, 65],
+ [59, 69, 66],
+ [59, 66, 65],
+ [59, 64, 66]]
+</pre></div></div>
+</div>
+<p>The first chord plays pitch 66 twice. We could create a function to scan and remove them, but here it’s simpler to manually alter the pitch to None.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blues_track_chords</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 </pre></div>
 </div>
 </div>
 <p>Rhythms are generated randomly.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blues_rhythm</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">rhythm</span><span class="o">.</span><span class="n">Rhythm</span><span class="p">(</span><span class="n">durations</span><span class="o">=</span><span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">measure_length</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -472,29 +499,15 @@ and <code class="docutils literal notranslate"><span class="pre">length_scale</s
 [(0.25, 0.0), (1, 0.25), (1, 1.25), (0.5, 2.25), (0.5, 2.75), (0.25, 3.25), (0.5, 3.5)]
 </pre></div></div>
 </div>
-<p>Finally, isorhythms are applied to generate the four tracks.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blues_tracks</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">pitches</span> <span class="ow">in</span> <span class="n">blues_tracks_p</span><span class="p">:</span>
-    <span class="n">blues_tracks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-        <span class="n">dj</span><span class="o">.</span><span class="n">rhythm</span><span class="o">.</span><span class="n">isorhythm</span><span class="p">(</span>
-            <span class="n">pitches</span><span class="o">=</span><span class="n">pitches</span><span class="p">,</span>
-            <span class="n">durations</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">blues_rhythm</span><span class="p">]</span>
-        <span class="p">)</span>
-    <span class="p">)</span>
-</pre></div>
-</div>
-</div>
+<p>Finally, isorhythms are applied to generateone track of chords.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blues_tracks_m21</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">blues_tracks</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s1">&#39;music21&#39;</span><span class="p">)</span>
-<span class="n">blues_tracks_m21</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="n">blues_tracks_m21</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;midi&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blues_track</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">rhythm</span><span class="o">.</span><span class="n">isorhythm</span><span class="p">(</span><span class="n">pitches</span><span class="o">=</span><span class="n">blues_track_chords</span><span class="p">,</span> <span class="n">durations</span><span class="o">=</span><span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">blues_rhythm</span><span class="p">])</span>
+<span class="n">blues_track_m21</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">blues_track</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s1">&#39;music21&#39;</span><span class="p">)</span>
+<span class="n">blues_track_m21</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">blues_track_m21</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;midi&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -502,14 +515,14 @@ and <code class="docutils literal notranslate"><span class="pre">length_scale</s
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/05_walks_37_0.png" class="no-scaled-link" src="_images/05_walks_37_0.png" style="width: 732px; height: 838px;" />
+<img alt="_images/05_walks_38_0.png" class="no-scaled-link" src="_images/05_walks_38_0.png" style="width: 732px; height: 396px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv11380"></div>
+<div id="midiPlayerDiv9546"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -517,7 +530,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv11380_play() {
+function midiPlayerDiv9546_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -525,14 +538,14 @@ function midiPlayerDiv11380_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv11380");
-        mp.base64Load("data:audio/midi;base64,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");
+        mp.addPlayer("#midiPlayerDiv9546");
+        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQACJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAABU4A/wMAAOAAQM5gkEJaAJBMWpNYgEIAAIBMAACQO1oAkEVaAJBHWs5ggDsAAIBFAACARwAAkDtaAJBAWgCQSlrOYIA7AACAQAAAgEoAAJBAWgCQO1oAkEJapzCAQAAAgDsAAIBCAACQO1oAkEBaAJBBWqcwgDsAAIBAAACAQQAAkDtaAJBFWgCQQlqTWIA7AACARQAAgEIAAJA7WgCQQloAkEFapzCAOwAAgEIAAIBBAACQO1oAkEBaAJBCWpNYgDsAAIBAAACAQgAAkEJaAJBMWs5ggEIAAIBMAACQO1oAkEVaAJBHWs5ggDsAAIBFAACARwAAkDtaAJBAWgCQSlqnMIA7AACAQAAAgEoAAJBAWgCQO1oAkEJapzCAQAAAgDsAAIBCAACQO1oAkEBaAJBBWpNYgDsAAIBAAACAQQAAkDtaAJBFWgCQQlqnMIA7AACARQAAgEIAAJA7WgCQQloAkEFak1iAOwAAgEIAAIBBAACQO1oAkEBaAJBCWs5ggDsAAIBAAACAQgAAkEJaAJBMWs5ggEIAAIBMAACQO1oAkEVaAJBHWqcwgDsAAIBFAACARwAAkDtaAJBAWgCQSlqnMIA7AACAQAAAgEoAAJBAWgCQO1oAkEJak1iAQAAAgDsAAIBCAACQO1oAkEBaAJBBWqcwgDsAAIBAAACAQQAAkDtaAJBFWgCQQlqTWIA7AACARQAAgEIAAJA7WgCQQloAkEFazmCAOwAAgEIAAIBBAACQO1oAkEBaAJBCWs5ggDsAAIBAAACAQgAAkEJaAJBMWqcwgEIAAIBMAACQO1oAkEVaAJBHWqcwgDsAAIBFAACARwAAkDtaAJBAWgCQSlqTWIA7AACAQAAAgEoAAJBAWgCQO1oAkEJapzCAQAAAgDsAAIBCAACQO1oAkEBaAJBBWpNYgDsAAIBAAACAQQAAkDtaAJBFWgCQQlrOYIA7AACARQAAgEIAAJA7WgCQQloAkEFazmCAOwAAgEIAAIBBAACQO1oAkEBaAJBCWqcwgDsAAIBAAACAQgAAkEJaAJBMWqcwgEIAAIBMAACQO1oAkEVaAJBHWpNYgDsAAIBFAACARwAAkDtaAJBAWgCQSlqnMIA7AACAQAAAgEoAAJBAWgCQO1oAkEJak1iAQAAAgDsAAIBCAACQO1oAkEBaAJBBWs5ggDsAAIBAAACAQQAAkDtaAJBFWgCQQlrOYIA7AACARQAAgEIAAJA7WgCQQloAkEFapzCAOwAAgEIAAIBBAACQO1oAkEBaAJBCWqcwgDsAAIBAAACAQgAAkEJaAJBMWpNYgEIAAIBMAACQO1oAkEVaAJBHWqcwgDsAAIBFAACARwAAkDtaAJBAWgCQSlqTWIA7AACAQAAAgEoAAJBAWgCQO1oAkEJazmCAQAAAgDsAAIBCAACQO1oAkEBaAJBBWs5ggDsAAIBAAACAQQAAkDtaAJBFWgCQQlqnMIA7AACARQAAgEIAAJA7WgCQQloAkEFapzCAOwAAgEIAAIBBAACQO1oAkEBaAJBCWpNYgDsAAIBAAACAQgAAkEJaAJBMWqcwgEIAAIBMAACQO1oAkEVaAJBHWpNYgDsAAIBFAACARwAAkDtaAJBAWgCQSlrOYIA7AACAQAAAgEoAAJBAWgCQO1oAkEJazmCAQAAAgDsAAIBCAACQO1oAkEBaAJBBWqcwgDsAAIBAAACAQQAAkDtaAJBFWgCQQlqnMIA7AACARQAAgEIAAJA7WgCQQloAkEFak1iAOwAAgEIAAIBBAACQO1oAkEBaAJBCWqcwgDsAAIBAAACAQgDOYP8vAA==");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv11380_play, 2000);
+    setTimeout(midiPlayerDiv9546_play, 2000);
 } else {
-    midiPlayerDiv11380_play();
+    midiPlayerDiv9546_play();
 }
 </script></div>
 </div>
@@ -574,14 +587,14 @@ fundamental question you ask as the modeller is what function the temperature mi
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/05_walks_39_0.png" class="no-scaled-link" src="_images/05_walks_39_0.png" style="width: 697px; height: 69px;" />
+<img alt="_images/05_walks_40_0.png" class="no-scaled-link" src="_images/05_walks_40_0.png" style="width: 697px; height: 69px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv11670"></div>
+<div id="midiPlayerDiv9839"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -589,7 +602,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv11670_play() {
+function midiPlayerDiv9839_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -597,17 +610,18 @@ function midiPlayerDiv11670_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv11670");
+        mp.addPlayer("#midiPlayerDiv9839");
         mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQACJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAAPgA/wMAAOAAQM5gkD5aAJBCWgCQRVqBnUCAPgAAgEIAAIBFAACQOVoAkD1aAJBAWoGdQIA5AACAPQAAgEAAAJA7WgCQPloAkEJagZ1AgDsAAIA+AACAQgAAkDZaAJA5WgCQPVqBnUCANgAAgDkAAIA9AACQN1oAkDtaAJA+WoGdQIA3AACAOwAAgD4AAJAyWgCQNloAkDlagZ1AgDIAAIA2AACAOQAAkDdaAJA7WgCQPlqBnUCANwAAgDsAAIA+AACQOVoAkD1aAJBAWoGdQIA5AACAPQAAgEAAAJA+WgCQQloAkEVagZ1AgD4AAIBCAACARQDOYP8vAA==");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv11670_play, 2000);
+    setTimeout(midiPlayerDiv9839_play, 2000);
 } else {
-    midiPlayerDiv11670_play();
+    midiPlayerDiv9839_play();
 }
 </script></div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">{Note}</span> <span class="pre">The</span> <span class="pre">code</span> <span class="pre">under</span> <span class="pre">`#</span> <span class="pre">Find</span> <span class="pre">the</span> <span class="pre">chors</span> <span class="pre">in</span> <span class="pre">d_major`</span> <span class="pre">is</span> <span class="pre">really</span> <span class="pre">helpful</span> <span class="pre">to</span> <span class="pre">add</span> <span class="pre">*voicing*</span> <span class="pre">to</span> <span class="pre">a</span> <span class="pre">progression.</span></code></p>
 <p>We printed the chords, but our constrained will really be pitch indexes of the fundamentals. To model this, we add a <code class="docutils literal notranslate"><span class="pre">data</span></code> argument to our <code class="docutils literal notranslate"><span class="pre">djalgo.walk.Kernel</span></code> object in the form of a Numpy array with time (offset) in the first column, and pitch index in the second</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
@@ -641,7 +655,7 @@ array([[ 0, 36],
 </div>
 <p>When data are provided, Djalgo interpolates a number of <code class="docutils literal notranslate"><span class="pre">length</span></code> data points on the range of the data, fits the model, then export results in time and model predictions.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ntracks</span> <span class="o">=</span> <span class="mi">3</span>
@@ -650,14 +664,14 @@ array([[ 0, 36],
     <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
     <span class="n">length_scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
     <span class="n">amplitude</span><span class="o">=</span><span class="mi">1</span>
-<span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">nsamples</span><span class="o">=</span><span class="n">ntracks</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">nsamples</span><span class="o">=</span><span class="n">ntracks</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">pachelbel_tracks_t</span> <span class="o">=</span> <span class="n">pachelbel_tracks_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">pachelbel_tracks_p</span> <span class="o">=</span> <span class="n">pachelbel_tracks_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
@@ -669,7 +683,7 @@ array([[ 0, 36],
 </div>
 </div>
 <p><img alt="plot of the pachelbel tracks" src="_images/pachelbel-tracks.png" /></p>
-<p><code class="docutils literal notranslate"><span class="pre">{note}</span> <span class="pre">If</span> <span class="pre">you</span> <span class="pre">are</span> <span class="pre">interested</span> <span class="pre">in</span> <span class="pre">Scikit-learn,</span> <span class="pre">and</span> <span class="pre">would</span> <span class="pre">like</span> <span class="pre">more</span> <span class="pre">flexibility,</span> <span class="pre">this</span> <span class="pre">is</span> <span class="pre">what</span> <span class="pre">Djalgo</span> <span class="pre">does</span> <span class="pre">under</span> <span class="pre">the</span> <span class="pre">hood.</span></code></p>
+<p>If you are interested in Scikit-learn, and would like more flexibility, this is what Djalgo does under the hood.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF
 x = np.linspace(0, self.data[:, 0].max(), self.length)[:, np.newaxis]
@@ -684,7 +698,7 @@ sequence = [
 </div>
 <p>We can extract the exact index value at every time using linear interpolation with Numpy.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="mf">3.5</span><span class="p">,</span> <span class="n">pachelbel_tracks_t</span><span class="p">,</span> <span class="n">pachelbel_tracks_p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -692,7 +706,7 @@ sequence = [
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -702,11 +716,11 @@ sequence = [
 </div>
 <p>So, for each track, let’s create a random rhythm, interpolate indexes to the offsets, find the indexes on the <code class="docutils literal notranslate"><span class="pre">d_major</span></code> scale, and assemble the tracks.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
-<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">tracks</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ntracks</span><span class="p">):</span>
     <span class="n">rythm</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">rhythm</span><span class="o">.</span><span class="n">Rhythm</span><span class="p">(</span><span class="n">durations</span><span class="o">=</span><span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">measure_length</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span>
@@ -727,7 +741,7 @@ sequence = [
 </div>
 <p>We can offset the tracks to create a cannon. The result is a reinterpretation of Pachelbel’s Cannon in D-major.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tracks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">offset_list_of_notes</span><span class="p">(</span><span class="n">tracks</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">by</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -742,7 +756,7 @@ sequence = [
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv12649"></div>
+<div id="midiPlayerDiv15211"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -750,7 +764,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv12649_play() {
+function midiPlayerDiv15211_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -758,24 +772,16 @@ function midiPlayerDiv12649_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv12649");
-        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQAFJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAAIAA/wMAAOAAQM5gkD5apzCAPgAAkD5agZ1AgD4AAJA5WqcwgDkAAJA9WoGdQIA9AACQMlrOYIAyAACQNlqBnUCANgAAkD5apzCAPgAAkD5agZ1AgD4AAJA5WqcwgDkAAJA9WoGdQIA9AACQMlrOYIAyAACQNlqBnUCANgDOYP8vAE1UcmsAAAC2AP8DAADgAEDOYJA+WpNYgD4AAJA+WoGdQIA+AACQOVqTWIA5AACQN1qBnUCANwAAkDlagZ1AgDkAAJA3WqcwgDcAAJA5WqcwgDkAAJA7WpNYgDsAAJA5WpNYgDkAAJA+WpNYgD4AAJA+WoGdQIA+AACQOVqTWIA5AACQN1qBnUCANwAAkDlagZ1AgDkAAJA3WqcwgDcAAJA5WqcwgDkAAJA7WpNYgDsAAJA5WpNYgDkAzmD/LwBNVHJrAAAAtAD/AwAA4ABAzmCQPlrOYIA+AACQO1qBnUCAOwAAkDlagZ1AgDkAAJA3Ws5ggDcAAJA2WpNYgDYAAJA2Ws5ggDYAAJA2WpNYgDYAAJA2WpNYgDYAAJA3WpNYgDcAAJA+Ws5ggD4AAJA7WoGdQIA7AACQOVqBnUCAOQAAkDdazmCANwAAkDZak1iANgAAkDZazmCANgAAkDZak1iANgAAkDZak1iANgAAkDdak1iANwDOYP8vAE1UcmsAAAD4AP8DAADgAEDOYJA+WgCQQloAkEVagZ1AgD4AAIBCAACARQAAkDlaAJA9WgCQQFqBnUCAOQAAgD0AAIBAAACQO1oAkD5aAJBCWoGdQIA7AACAPgAAgEIAAJA2WgCQOVoAkD1agZ1AgDYAAIA5AACAPQAAkDdaAJA7WgCQPlqBnUCANwAAgDsAAIA+AACQMloAkDZaAJA5WoGdQIAyAACANgAAgDkAAJA3WgCQO1oAkD5agZ1AgDcAAIA7AACAPgAAkDlaAJA9WgCQQFqBnUCAOQAAgD0AAIBAAACQPloAkEJaAJBFWoGdQIA+AACAQgAAgEUAzmD/LwA=");
+        mp.addPlayer("#midiPlayerDiv15211");
+        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQAFJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAAPoA/wMAAOAAQM5gkD5apzCAPgAAkD5ak1iAPgAAkD1ak1iAPQAAkD1azmCAPQAAkDlapzCAOQAAkDlapzCAOQAAkD1apzCAPQAAkD1ak1iAPQAAkD1azmCAPQAAkDRak1iANAAAkDJapzCAMgAAkDJagZ1AgDIAAJA3WqcwgDcAAJA+WqcwgD4AAJA+WpNYgD4AAJA9WpNYgD0AAJA9Ws5ggD0AAJA5WqcwgDkAAJA5WqcwgDkAAJA9WqcwgD0AAJA9WpNYgD0AAJA9Ws5ggD0AAJA0WpNYgDQAAJAyWqcwgDIAAJAyWoGdQIAyAACQN1qnMIA3AM5g/y8ATVRyawAAAUAA/wMAAOAAQM5gkD5azmCAPgAAkD5ak1iAPgAAkD1apzCAPQAAkDtapzCAOwAAkDlapzCAOQAAkDlapzCAOQAAkDtak1iAOwAAkDtapzCAOwAAkDtapzCAOwAAkDlak1iAOQAAkDdak1iANwAAkDdapzCANwAAkDZapzCANgAAkDZazmCANgAAkDlak1iAOQAAkDtapzCAOwAAkDlak1iAOQAAkD5azmCAPgAAkD5ak1iAPgAAkD1apzCAPQAAkDtapzCAOwAAkDlapzCAOQAAkDlapzCAOQAAkDtak1iAOwAAkDtapzCAOwAAkDtapzCAOwAAkDlak1iAOQAAkDdak1iANwAAkDdapzCANwAAkDZapzCANgAAkDZazmCANgAAkDlak1iAOQAAkDtapzCAOwAAkDlak1iAOQDOYP8vAE1UcmsAAACSAP8DAADgAEDOYJA+WoGdQIA+AACQOVqBnUCAOQAAkDtak1iAOwAAkDtagZ1AgDsAAJA2WpNYgDYAAJA2WqcwgDYAAJA2Ws5ggDYAAJA+WoGdQIA+AACQOVqBnUCAOQAAkDtak1iAOwAAkDtagZ1AgDsAAJA2WpNYgDYAAJA2WqcwgDYAAJA2Ws5ggDYAzmD/LwBNVHJrAAAA+AD/AwAA4ABAzmCQPloAkEJaAJBFWoGdQIA+AACAQgAAgEUAAJA5WgCQPVoAkEBagZ1AgDkAAIA9AACAQAAAkDtaAJA+WgCQQlqBnUCAOwAAgD4AAIBCAACQNloAkDlaAJA9WoGdQIA2AACAOQAAgD0AAJA3WgCQO1oAkD5agZ1AgDcAAIA7AACAPgAAkDJaAJA2WgCQOVqBnUCAMgAAgDYAAIA5AACQN1oAkDtaAJA+WoGdQIA3AACAOwAAgD4AAJA5WgCQPVoAkEBagZ1AgDkAAIA9AACAQAAAkD5aAJBCWgCQRVqBnUCAPgAAgEIAAIBFAM5g/y8A");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv12649_play, 2000);
+    setTimeout(midiPlayerDiv15211_play, 2000);
 } else {
-    midiPlayerDiv12649_play();
+    midiPlayerDiv15211_play();
 }
 </script></div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
 </div>
 </section>
 </section>
@@ -798,6 +804,7 @@ if (typeof require === 'undefined') {
 <li class="toctree-l1"><a class="reference internal" href="03_loops.html">3. Loops</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04_minimalism.html">4. Minimalism</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">5. Walks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_fractals.html">6. Fractals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 </ul>

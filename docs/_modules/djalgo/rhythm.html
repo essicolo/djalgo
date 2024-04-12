@@ -35,19 +35,20 @@
 <span></span><span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">utils</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
 
 <div class="viewcode-block" id="isorhythm">
 <a class="viewcode-back" href="../../api.html#djalgo.rhythm.isorhythm">[docs]</a>
-<span class="k">def</span> <span class="nf">isorhythm</span><span class="p">(</span><span class="n">durations</span><span class="p">,</span> <span class="n">pitches</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">isorhythm</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">durations</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Merges durations and pitches until both ends coincide, then sets offsets according to successive durations.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        durations (list): The first list.</span>
-<span class="sd">        pitches (list): The second list.</span>
+<span class="sd">        pitches (list): The first list.</span>
+<span class="sd">        durations (list): The second list.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        list: The zipped list.</span>
+<span class="sd">        list: A list of notes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">lcm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">lcm</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pitches</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">durations</span><span class="p">))</span>
 
@@ -60,41 +61,47 @@
     <span class="k">return</span> <span class="n">notes</span></div>
 
 
+<div class="viewcode-block" id="beatcycle">
+<a class="viewcode-back" href="../../api.html#djalgo.rhythm.beatcycle">[docs]</a>
+<span class="k">def</span> <span class="nf">beatcycle</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">durations</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pitches are mapped to durations in a cyclical manner, then offsets are set according to successive durations.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pitches (list): The first list.</span>
+<span class="sd">        durations (list): The second list.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: A list of notes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">durations_cycle</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span>
+    <span class="n">notes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">current_offset</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pitches</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">durations_cycle</span><span class="p">)</span>
+        <span class="n">notes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">p</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">current_offset</span><span class="p">))</span>
+        <span class="n">current_offset</span> <span class="o">+=</span> <span class="n">d</span>
+    <span class="k">return</span> <span class="n">notes</span></div>
+
+
 <div class="viewcode-block" id="Rhythm">
 <a class="viewcode-back" href="../../api.html#djalgo.rhythm.Rhythm">[docs]</a>
 <span class="k">class</span> <span class="nc">Rhythm</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class used to represent a Rhythm.</span>
 
-<span class="sd">    ...</span>
-
-<span class="sd">    Attributes</span>
-<span class="sd">    ----------</span>
-<span class="sd">    measure_length : int</span>
-<span class="sd">        the length of the measure</span>
-<span class="sd">    output : str</span>
-<span class="sd">        the output type, either &#39;duration&#39; or &#39;time&#39; (default &#39;duration&#39;)</span>
-
-<span class="sd">    Methods</span>
-<span class="sd">    -------</span>
-<span class="sd">    _convert_to_output(durations):</span>
-<span class="sd">        Converts the durations to the specified output type.</span>
-<span class="sd">    random(durations, max_iter=100, seed=None):</span>
-<span class="sd">        Generates a random rhythm that fits within the measure length.</span>
-<span class="sd">    fibonacci(base=1):</span>
-<span class="sd">        Generates a rhythm based on the Fibonacci sequence.</span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        measure_length (int): the length of the measure</span>
+<span class="sd">        durations (list): the durations of the notes</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">measure_length</span><span class="p">,</span> <span class="n">durations</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs all the necessary attributes for the Rhythm object.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">            measure_length : int</span>
-<span class="sd">                the length of the measure</span>
-<span class="sd">            output : str</span>
-<span class="sd">                the output type, either &#39;duration&#39; or &#39;time&#39; (default &#39;duration&#39;)</span>
+<span class="sd">        Args:</span>
+<span class="sd">            measure_length (int): the length of the measure</span>
+<span class="sd">            durations (list): the durations of the notes</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">measure_length</span> <span class="o">=</span> <span class="n">measure_length</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">durations</span> <span class="o">=</span> <span class="n">durations</span>
@@ -136,6 +143,19 @@
 <div class="viewcode-block" id="Rhythm.darwin">
 <a class="viewcode-back" href="../../api.html#djalgo.rhythm.Rhythm.darwin">[docs]</a>
     <span class="k">def</span> <span class="nf">darwin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">population_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_generations</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Executes the Darwinian evolution algorithm to generate the best rhythm.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            seed (int): The random seed for reproducibility.</span>
+<span class="sd">            population_size (int): The number of rhythms in each generation.</span>
+<span class="sd">            max_generations (int): The maximum number of generations to evolve.</span>
+<span class="sd">            mutation_rate (float): The probability of mutating a given rhythm.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: The best rhythm found after the last generation, sorted by ascending offset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">ga</span> <span class="o">=</span> <span class="n">GeneticRhythm</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">population_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_length</span><span class="p">,</span> <span class="n">max_generations</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">durations</span><span class="p">)</span>
         <span class="n">best_rhythm</span> <span class="o">=</span> <span class="n">ga</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">best_rhythm</span></div>
@@ -144,6 +164,16 @@
 <div class="viewcode-block" id="Rhythm.fibonacci">
 <a class="viewcode-back" href="../../api.html#djalgo.rhythm.Rhythm.fibonacci">[docs]</a>
     <span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a rhythm based on the Fibonacci sequence.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            base (int): The base duration for the rhythm.</span>
+<span class="sd">            reverse (bool): If True, the generated rhythm will have increasing durations.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of (duration, offset) tuples representing the rhythm.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">fib</span> <span class="o">=</span> <span class="n">Fibonacci</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">durations</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">fib</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span></div>
 </div>
@@ -396,7 +426,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../02_harmony.html">2. Harmonies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../03_loops.html">3. Loops</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../04_minimalism.html">4. Minimalism</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../05_walks.html">Walks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../05_walks.html">5. Walks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../06_fractals.html">6. Fractals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>
