@@ -1,3 +1,4 @@
+import os
 import itertools
 import warnings
 import json
@@ -107,7 +108,10 @@ class CellularAutomata:
         Returns:
             list: A list of tuples representing the rules for the cellular automaton.
         """
-        with open('data/ca1D_rules.json', 'r') as file:
+        script_dir = os.path.dirname(os.path.realpath(__file__))
+        file_path = os.path.join(script_dir, 'data', 'ca1D_rules.json')
+
+        with open(file_path, 'r') as file:
             rules_json = json.load(file)
         rule_conditions = rules_json[rule_number]
         return [tuple(condition) for condition in rule_conditions]
