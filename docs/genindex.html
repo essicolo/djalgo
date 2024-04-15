@@ -57,7 +57,6 @@
  | <a href="#V"><strong>V</strong></a>
  | <a href="#W"><strong>W</strong></a>
  | <a href="#X"><strong>X</strong></a>
- | <a href="#Y"><strong>Y</strong></a>
  
 </div>
 <h2 id="A">A</h2>
@@ -122,11 +121,7 @@
       <li><a href="api.html#djalgo.fractal.CellularAutomata">CellularAutomata (class in djalgo.fractal)</a>
 </li>
       <li><a href="api.html#djalgo.fractal.LogisticMap.center_offset">center_offset (djalgo.fractal.LogisticMap attribute)</a>
-
-      <ul>
-        <li><a href="api.html#djalgo.fractal.Mandelbrot.center_offset">(djalgo.fractal.Mandelbrot attribute)</a>
 </li>
-      </ul></li>
       <li><a href="api.html#djalgo.walk.Chain">Chain (class in djalgo.walk)</a>
 </li>
       <li><a href="api.html#djalgo.utils.check_input">check_input() (in module djalgo.utils)</a>
@@ -332,6 +327,10 @@
 </li>
       <li><a href="api.html#djalgo.rhythm.Fibonacci.generate_fibonacci_sequence">generate_fibonacci_sequence() (djalgo.rhythm.Fibonacci method)</a>
 </li>
+      <li><a href="api.html#djalgo.fractal.Mandelbrot.generate_mandelbrot">generate_mandelbrot() (djalgo.fractal.Mandelbrot method)</a>
+</li>
+      <li><a href="api.html#djalgo.fractal.generate_mandelbrot_jit">generate_mandelbrot_jit() (in module djalgo.fractal)</a>
+</li>
       <li><a href="api.html#djalgo.harmony.Ornament.generate_scale">generate_scale() (djalgo.harmony.Ornament method)</a>
 </li>
       <li><a href="api.html#djalgo.rhythm.GeneticRhythm">GeneticRhythm (class in djalgo.rhythm)</a>
@@ -383,8 +382,6 @@
       <ul>
         <li><a href="api.html#djalgo.fractal.LogisticMap.length">(djalgo.fractal.LogisticMap attribute)</a>
 </li>
-        <li><a href="api.html#djalgo.fractal.Mandelbrot.length">(djalgo.fractal.Mandelbrot attribute)</a>
-</li>
         <li><a href="api.html#djalgo.walk.Chain.length">(djalgo.walk.Chain attribute)</a>
 </li>
         <li><a href="api.html#djalgo.walk.Kernel.length">(djalgo.walk.Kernel attribute)</a>
@@ -409,8 +406,6 @@
       <li><a href="api.html#djalgo.fractal.Mandelbrot">Mandelbrot (class in djalgo.fractal)</a>
 </li>
       <li><a href="api.html#djalgo.rhythm.Fibonacci.map_fibonacci_to_durations">map_fibonacci_to_durations() (djalgo.rhythm.Fibonacci method)</a>
-</li>
-      <li><a href="api.html#djalgo.fractal.Mandelbrot.max_iter">max_iter (djalgo.fractal.Mandelbrot attribute)</a>
 </li>
       <li><a href="api.html#djalgo.rhythm.Rhythm.measure_length">measure_length (djalgo.rhythm.Rhythm attribute)</a>
 </li>
@@ -494,15 +489,19 @@
       <li><a href="api.html#djalgo.harmony.Voice.pitch_to_chord">pitch_to_chord() (djalgo.harmony.Voice method)</a>
 </li>
       <li><a href="api.html#djalgo.fractal.CellularAutomata.plot">plot() (djalgo.fractal.CellularAutomata method)</a>
+
+      <ul>
+        <li><a href="api.html#djalgo.fractal.Mandelbrot.plot">(djalgo.fractal.Mandelbrot method)</a>
 </li>
+      </ul></li>
       <li><a href="api.html#djalgo.loop.Polyloop.plot_polyloops">plot_polyloops() (djalgo.loop.Polyloop method)</a>
 </li>
       <li><a href="api.html#djalgo.loop.Polyloop">Polyloop (class in djalgo.loop)</a>
 </li>
-      <li><a href="api.html#djalgo.djai.PositionalEncoding.pos_encoding">pos_encoding (djalgo.djai.PositionalEncoding attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api.html#djalgo.djai.PositionalEncoding.pos_encoding">pos_encoding (djalgo.djai.PositionalEncoding attribute)</a>
+</li>
       <li><a href="api.html#djalgo.djai.PositionalEncoding.positional_encoding">positional_encoding() (djalgo.djai.PositionalEncoding method)</a>
 </li>
       <li><a href="api.html#djalgo.djai.PositionalEncoding">PositionalEncoding (class in djalgo.djai)</a>
@@ -562,8 +561,6 @@
       <ul>
         <li><a href="api.html#djalgo.fractal.LogisticMap.scale">(djalgo.fractal.LogisticMap attribute)</a>
 </li>
-        <li><a href="api.html#djalgo.fractal.Mandelbrot.scale">(djalgo.fractal.Mandelbrot attribute)</a>
-</li>
       </ul></li>
       <li><a href="api.html#djalgo.djai.DjFlow.scale_back_features">scale_back_features() (djalgo.djai.DjFlow method)</a>
 </li>
@@ -600,11 +597,7 @@
       <li><a href="api.html#djalgo.utils.set_offsets_according_to_durations">set_offsets_according_to_durations() (in module djalgo.utils)</a>
 </li>
       <li><a href="api.html#djalgo.fractal.LogisticMap.start_note_index">start_note_index (djalgo.fractal.LogisticMap attribute)</a>
-
-      <ul>
-        <li><a href="api.html#djalgo.fractal.Mandelbrot.start_note_index">(djalgo.fractal.Mandelbrot attribute)</a>
 </li>
-      </ul></li>
       <li><a href="api.html#djalgo.fractal.CellularAutomata.state">state (djalgo.fractal.CellularAutomata attribute)</a>
 </li>
       <li><a href="api.html#djalgo.minimalism.Minimalism.Process.subtractive_backward">subtractive_backward() (djalgo.minimalism.Minimalism.Process method)</a>
@@ -688,24 +681,6 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api.html#djalgo.fractal.LogisticMap.x0">x0 (djalgo.fractal.LogisticMap attribute)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#djalgo.fractal.Mandelbrot.x_max">x_max (djalgo.fractal.Mandelbrot attribute)</a>
-</li>
-      <li><a href="api.html#djalgo.fractal.Mandelbrot.x_min">x_min (djalgo.fractal.Mandelbrot attribute)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="Y">Y</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#djalgo.fractal.Mandelbrot.y_max">y_max (djalgo.fractal.Mandelbrot attribute)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api.html#djalgo.fractal.Mandelbrot.y_min">y_min (djalgo.fractal.Mandelbrot attribute)</a>
 </li>
   </ul></td>
 </tr></table>
