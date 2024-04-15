@@ -3,6 +3,7 @@ import itertools
 import warnings
 import json
 import numpy as np
+from numba import jit # Just-in-time compilation for faster execution of the Mandelbrot fractal generator
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib.axes
@@ -311,71 +312,82 @@ class CellularAutomata:
 
         return ax
     
-    
 
+@jit
+def generate_mandelbrot_jit(x_range, y_range, dimensions, max_iter):
+    x_lin = np.linspace(x_range[0], x_range[1], dimensions[0])
+    y_lin = np.linspace(y_range[0], y_range[1], dimensions[1])
+    output = np.zeros(dimensions, dtype=np.int32)  # Initialize the output array
+
+    for i in range(dimensions[0]):
+        for j in range(dimensions[1]):
+            x = x_lin[i]
+            y = y_lin[j]
+            C = complex(x, y)  # Ensure using complex number
+            Z = 0 + 0j  # Initialize Z as a complex zero
+            count = 0  # Initialize escape time count
+
+            while abs(Z) < 2 and count < max_iter:
+                Z = Z**2 + C
+                count += 1
+            
+            output[i, j] = count  # Set the output based on the escape time
+    
+    return output
 
 class Mandelbrot:
-    """
-    Represents a Mandelbrot fractal generator.
-    
-    Attributes:
-        scale (list or None): A list of values to map the generated fractal values to. If None, the raw values will be used.
-        start_note_index (int): The starting index in the scale list.
-        length (int): The length of the generated fractal signal.
-        max_iter (int): The maximum number of iterations to perform for each point in the fractal.
-        x_min (float): The minimum x-coordinate value of the fractal.
-        x_max (float): The maximum x-coordinate value of the fractal.
-        y_min (float): The minimum y-coordinate value of the fractal.
-        y_max (float): The maximum y-coordinate value of the fractal.
-        center_offset (bool): Whether to offset the generated values by the center of the scale list.
-    """
-
-    def __init__(self, scale, start_note_index=0, length=10, max_iter=1000, x_min=-2.0, x_max=1.0, y_min=-1.5, y_max=1.5, center_offset=False):
+    def __init__(self, scale=None, start_note_index=0, dimensions=(800, 800), max_iter=1000, x_range=(-2.0, 1.0), y_range=(-1.5, 1.5)):
+        if isinstance(dimensions, int):
+            dimensions = (dimensions, dimensions)
+        if not isinstance(dimensions, tuple) or not isinstance(max_iter, int):
+            raise ValueError("Dimensions must be a tuple and max_iter must be an integer.")
+        if dimensions[0] <= 0 or dimensions[1] <= 0 or max_iter <= 0:
+            raise ValueError("Dimensions and max_iter must be positive.")
+        
         self.scale = scale
         self.start_note_index = start_note_index
-        self.length = length
+        self.dimensions = dimensions
         self.max_iter = max_iter
-        self.x_min = x_min
-        self.x_max = x_max
-        self.y_min = y_min
-        self.y_max = y_max
-        self.center_offset = center_offset
+        self.x_range = x_range
+        self.y_range = y_range
+
+    def generate_mandelbrot(self):
+        return generate_mandelbrot_jit(self.x_range, self.y_range, self.dimensions, self.max_iter)
     
-    def generate(self):        
-        mandelbrot_values = []
-        
-        for i in range(self.length):
-            x = self.x_min + (self.x_max - self.x_min) * ((i % int(self.length ** 0.5)) / (self.length ** 0.5))
-            y = self.y_min + (self.y_max - self.y_min) * ((i // int(self.length ** 0.5)) / (self.length ** 0.5))
-            
-            z = 0 + 0j
-            c = complex(x, y)
-            for _ in range(self.max_iter):
-                if abs(z) > 2.0:
-                    break 
-                z = z * z + c
-            
-            if self.scale is None:
-                mandelbrot_value = _  # Append the raw value to the list
-            else:
-                if self.center_offset:
-                    mandelbrot_value = (_ % len(self.scale)) - len(self.scale) // 2
-                else:
-                    mandelbrot_value = _ % len(self.scale)
-                
-            mandelbrot_values.append(mandelbrot_value)
-        
-        if self.scale is None:
-            signal = mandelbrot_values
-        else:
-            signal = []
-            current_note_index = self.start_note_index
-            for offset in itertools.islice(itertools.cycle(mandelbrot_values), self.length):
-                current_note_index = (current_note_index + offset) % len(self.scale)
-                signal.append(self.scale[current_note_index])
-            
-        return signal
-    
+    def generate(self, method='horizontal', line_index=0):
+        data = self.generate_mandelbrot()
+        if method == 'horizontal':
+            return data[line_index, :]
+        elif method == 'vertical':
+            return data[:, line_index]
+        elif method == 'diagonal':
+            return np.diagonal(data)
+        elif method == 'random':
+            flat_data = data.flatten()
+            return np.random.choice(flat_data, size=100, replace=False)
+
+    def plot(self, ax=None, figsize=(10, 10), zoom_rect=None):
+        if ax is None:
+            fig, ax = plt.subplots(figsize=figsize)
+        fractal = self.generate_mandelbrot()
+        im = ax.imshow(
+            fractal.T,
+            extent=(self.x_range[0], self.x_range[1], self.y_range[0], self.y_range[1]),
+            cmap='hot', aspect='equal', origin='lower'
+        )
+        ax.set_title('Mandelbrot Set')
+        ax.set_xlabel('Real')
+        ax.set_ylabel('Imaginary')
+        #plt.colorbar(im, ax=ax, orientation='vertical')
+        if zoom_rect:
+            rect = patches.Rectangle(
+                (zoom_rect[0][0], zoom_rect[1][0]),
+                zoom_rect[0][1] - zoom_rect[0][0], zoom_rect[1][1] - zoom_rect[1][0],
+                linewidth=1, edgecolor='red', facecolor='none'
+            )
+            ax.add_patch(rect)
+        return ax
+
 
 class LogisticMap:
     """
