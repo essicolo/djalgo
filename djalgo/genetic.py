@@ -1,6 +1,6 @@
 import copy
 import random
-from .analysis import Analysis
+from .analysis import Index
 
 class Darwin:
     def __init__(
@@ -73,7 +73,7 @@ class Darwin:
     
     def calculate_fitness_components(self, phrase):
         """
-        Calculate the fitness components based on the Analysis class for a given phrase.
+        Calculate the fitness components based on the Index class for a given phrase.
 
         Args:
             phrase (list): The musical phrase.
@@ -86,28 +86,28 @@ class Darwin:
         pitches, durations, offsets = zip(*phrase)
 
         # Gini coefficient for pitch and duration
-        fitness_components['gini_pitch'] = Analysis(pitches).gini()
-        fitness_components['gini_duration'] = Analysis(durations).gini()
+        fitness_components['gini_pitch'] = Index(pitches).gini()
+        fitness_components['gini_duration'] = Index(durations).gini()
 
         # Balance for pitch and duration
-        fitness_components['balance_pitch'] = Analysis(pitches).balance()
-        fitness_components['balance_duration'] = Analysis(durations).balance()
+        fitness_components['balance_pitch'] = Index(pitches).balance()
+        fitness_components['balance_duration'] = Index(durations).balance()
 
         # Motif for pitch and duration (and potentially offsets if applicable)
-        fitness_components['motif_pitch'] = Analysis(pitches).motif()
-        fitness_components['motif_duration'] = Analysis(durations).motif()  # Add this if you're analyzing motifs in durations too
+        fitness_components['motif_pitch'] = Index(pitches).motif()
+        fitness_components['motif_duration'] = Index(durations).motif()  # Add this if you're analyzing motifs in durations too
 
         # Dissonance, only applicable to pitches
         if self.scale is not None:
-            fitness_components['dissonance_pitch'] = Analysis(pitches).dissonance(self.scale)
+            fitness_components['dissonance_pitch'] = Index(pitches).dissonance(self.scale)
 
         # Rhythmic fit based on durations
-        # Note: Here, I am assuming you have a method in Analysis class for rhythm analysis. Adjust if necessary.
-        fitness_components['rhythmic'] = Analysis(durations).rhythmic(self.measure_length)  # Adjust method as needed
+        # Note: Here, I am assuming you have a method in Index class for rhythm analysis. Adjust if necessary.
+        fitness_components['rhythmic'] = Index(durations).rhythmic(self.measure_length)  # Adjust method as needed
 
         # gini and balance for offsets?
-        #fitness_components['gini_offset'] = Analysis(offsets).gini()  # Add if relevant
-        #fitness_components['balance_offset'] = Analysis(offsets).balance()  # Add if relevant
+        #fitness_components['gini_offset'] = Index(offsets).gini()  # Add if relevant
+        #fitness_components['balance_offset'] = Index(offsets).balance()  # Add if relevant
 
         # Calculate the proportion of rest notes (notes where pitch is None)
         rest_notes = [note for note in phrase if note[0] is None]
@@ -148,7 +148,6 @@ class Darwin:
     def mutate(self, phrase, rate=None, rest_rate=0.02):
         """
         Mutate a musical phrase while respecting musical structures and boundaries.
-        USE SCIPY PROBABILITY DISTRIBUTIONS FOR MUTATION
         """
         if rate is None:
             rate = self.mutation_rate

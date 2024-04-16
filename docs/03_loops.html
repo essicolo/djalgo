@@ -41,7 +41,7 @@
 <h1>3. Loops<a class="headerlink" href="#3.-Loops" title="Link to this heading">¶</a></h1>
 <p>Let’s delve into a technique centred around numbers, but essentially visual, steering clear of mathematical functions. Multilevel rhythms in music and mathematics are about orchestrating beats, durations, and accents across various tiers or facets of a composition or sequence. These rhythmic patterns often manifest as polygons nestled within a circle, symbolizing the loop’s periodic nature. I’ve coined the term polyloops for these looping polygons (poly) to capture the essence of looping
 multiple shapes. Imagine a radar plot, as depicted in the next figure, that emits a beep each time a rotating line intersects a point on the circle’s perimeter. This setup allows us to: (1) introduce any number of points, (2) layer multiple polygons, each associated with a distinct instrument, (3) create triggered notes with tailored pitches and durations, and (4) adjust the rotation’s velocity to our liking.</p>
-<p><img alt="cd744c61837b40748463ff6a5e42a6ec" src="_images/polyloops.svg" /></p>
+<p><img alt="2fa862ef7eb24d4d832b360b9509e65e" src="_images/polyloops.svg" /></p>
 <p>In Djalgo, we represent each polyloop as a track, i.e. a list of note tuples, each tuple being a note defined as (pitch, duration, offset). A first polyloop might cover the basic rhythmic pattern of a loop. A second, as another layer of rhythms, and a third that leans towards the melodic side. The latter polyloop could incorporate varying pitches, adding a melodic layer to our rhythmic foundation. By carefully selecting the timing, we can craft a composition that not only has rhythmic interest
 but also melodic movement.</p>
 <div class="nbinput nblast docutils container">
@@ -103,7 +103,7 @@ but also melodic movement.</p>
 </pre></div>
 </div>
 </div>
-<p><img alt="b2d9966a1af14aada79aa41611e52efc" src="_images/pl1.png" /></p>
+<p><img alt="77dc765951e549808f78f7d3afa3ac20" src="_images/pl1.png" /></p>
 <p>The plot show the structure of the loop in terms of durations and offsets. The pitch information is purposely excluded to simplify the visualization and prevent the plot from becoming too cluttered. The polyloops are displayed starting from the innermost loop, featuring the shortest radius, progressing outward to the final loop according to the order of the list in the <code class="docutils literal notranslate"><span class="pre">polyloops</span></code> argument. Each loop’s shape is delineated by a polygon to represent its structure. For instance, polyloop 0, which
 initiates four notes, forms a polygon that appears as a square. Since the four segments are equal, this loop is said to be <em>Euclidean</em>. The durations are depicted by arcs, with tiny radial marks denoting the start of the arc and its conclusion. Upon closer inspection, you might notice that some arcs appear darker than others. This indicates moments where one note sustains as the next begins. While this overlap is intentional, it’s worth noting that traditional western music notation sometimes
 struggles to accurately represent such overlapping notes. We might correct that manually. I’d also like to make polyloop0 to be less Euclidean.</p>
@@ -230,7 +230,7 @@ struggles to accurately represent such overlapping notes. We might correct that 
 </pre></div>
 </div>
 </div>
-<p><img alt="45f09024dfc74f3983e6498622de625e" src="_images/pl2.png" /></p>
+<p><img alt="84fa27da40cb477fb5cf0da7c6b9be10" src="_images/pl2.png" /></p>
 <p>The following code block uses another approach for stacking loops. Instead of appending new notes to the Polyloop object as we did earlier, the stacking is done with Music21. Notice how the key signature and tempo are stacked horizontally in parts before measures are themselves stacking horizontally, and how parts are stacking vertically in a score. The first polyloop had a measure length of 4, and was repeated 6 times. The second has a measure length of 6, so it must be repeated 4 times to have
 de same length.</p>
 <div class="nbinput docutils container">
@@ -306,7 +306,7 @@ if (typeof require === 'undefined') {
 </div>
 <section id="Signal-analysis">
 <h3>Signal analysis<a class="headerlink" href="#Signal-analysis" title="Link to this heading">¶</a></h3>
-<p>Signal analysis will reveal its full potential when introducing genetic algorithms in the <a class="reference external" href="api.html#djalgo.genetic.Darwin">Darwin</a> class. But since our focus is loops, we will use the <a class="reference external" href="api.html#djalgo.analysis.Analysis">Analysis</a> class to quantify some attributes of our composition.</p>
+<p>Signal analysis will reveal its full potential when introducing genetic algorithms in the <a class="reference external" href="api.html#djalgo.genetic.Darwin">Darwin</a> class. But since our focus is loops, we will use the <a class="reference external" href="api.html#djalgo.analysis.Index">Index</a> class to quantify some attributes of our composition.</p>
 </section>
 </section>
 <section id="Wellformness-as-loop-inequalities">
@@ -317,13 +317,13 @@ music’s adherence to established musical norms and patterns, which can vary ac
 <div class="math notranslate nohighlight">
 \[G = \frac{1}{n} \left( n + 1 - 2 \left( \frac{\sum_{i=1}^{n} (n + 1 - i) \cdot x_i \cdot w_i}{\sum_{i=1}^{n} x_i \cdot w_i} \right) \right)\]</div>
 <p>where: - <span class="math notranslate nohighlight">\(n\)</span> is the number of observations (notes in this context), - <span class="math notranslate nohighlight">\(x_i\)</span> is the value of the <span class="math notranslate nohighlight">\(i^{th}\)</span> observation sorted in non-decreasing order (the attribute of each note), - <span class="math notranslate nohighlight">\(w_i\)</span> is the weight associated with the <span class="math notranslate nohighlight">\(i^{th}\)</span> observation, - and the sum <span class="math notranslate nohighlight">\(\sum_{i=1}^{n} x_i \cdot w_i\)</span> is the total weighted sum of all observations.</p>
-<p>An implementation of this equation can be found in the <a class="reference external" href="api.html#djalgo.analysis.Analysis">Analysis</a> class. Without weights,</p>
+<p>An implementation of this equation can be found in the <a class="reference external" href="api.html#djalgo.analysis.Index">Index</a> class. Without weights,</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unequal: &quot;</span><span class="p">,</span> <span class="n">dj</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Analysis</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">gini</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Equal:   &quot;</span><span class="p">,</span> <span class="n">dj</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Analysis</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">gini</span><span class="p">())</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unequal: &quot;</span><span class="p">,</span> <span class="n">dj</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">gini</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Equal:   &quot;</span><span class="p">,</span> <span class="n">dj</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">gini</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
@@ -354,9 +354,9 @@ Equal:    0.0
     <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="n">note</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">polyloop</span> <span class="k">if</span> <span class="n">note</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
     <span class="n">d</span> <span class="o">=</span> <span class="p">[</span><span class="n">note</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">polyloop</span> <span class="k">if</span> <span class="n">note</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
     <span class="n">o</span> <span class="o">=</span> <span class="p">[</span><span class="n">note</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">polyloop</span> <span class="k">if</span> <span class="n">note</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">gini_pitch</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Analysis</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">gini</span><span class="p">())</span>
-    <span class="n">gini_duration</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Analysis</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">gini</span><span class="p">())</span>
-    <span class="n">gini_offset</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Analysis</span><span class="p">(</span><span class="n">o</span><span class="p">)</span><span class="o">.</span><span class="n">gini</span><span class="p">())</span>
+    <span class="n">gini_pitch</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">.</span><span class="n">gini</span><span class="p">())</span>
+    <span class="n">gini_duration</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">gini</span><span class="p">())</span>
+    <span class="n">gini_offset</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">o</span><span class="p">)</span><span class="o">.</span><span class="n">gini</span><span class="p">())</span>
 
 
 <span class="n">gini_data</span> <span class="o">=</span> <span class="p">{</span>
@@ -404,7 +404,7 @@ Equal:    0.0
 </pre></div>
 </div>
 </div>
-<p><img alt="6591d4d106984aef9c42c515247ccc99" src="_images/gini.png" /></p>
+<p><img alt="67bcfe05b0f84b0e816323347996cfe7" src="_images/gini.png" /></p>
 </section>
 <section id="Balance">
 <h2>Balance<a class="headerlink" href="#Balance" title="Link to this heading">¶</a></h2>
@@ -429,8 +429,8 @@ rhythm being centrally located. The mathematical condition for perfect balance i
     <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="n">note</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">polyloop</span> <span class="k">if</span> <span class="n">note</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
     <span class="n">d</span> <span class="o">=</span> <span class="p">[</span><span class="n">note</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">polyloop</span> <span class="k">if</span> <span class="n">note</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
     <span class="n">o</span> <span class="o">=</span> <span class="p">[</span><span class="n">note</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">polyloop</span> <span class="k">if</span> <span class="n">note</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
-    <span class="n">balance_pitch</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Analysis</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">gini</span><span class="p">())</span>
-    <span class="n">balance_offset</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Analysis</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">gini</span><span class="p">())</span>
+    <span class="n">balance_pitch</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">gini</span><span class="p">())</span>
+    <span class="n">balance_offset</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dj</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">gini</span><span class="p">())</span>
 
 <span class="n">balance_data</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;Pitch&#39;</span><span class="p">:</span> <span class="n">balance_pitch</span><span class="p">,</span>
@@ -455,7 +455,7 @@ rhythm being centrally located. The mathematical condition for perfect balance i
 </pre></div>
 </div>
 </div>
-<p><img alt="cbe5485b4e494a309eae77a8c2c0dd69" src="_images/balance.png" /></p>
+<p><img alt="0220d4055cef44a9905cd9b903d85b8f" src="_images/balance.png" /></p>
 <p>When designing polyloops, lower levels (the first ones) are characterized by lower pitches, with darker (warmer) timbres (which are richer in low pitches) and more regular. Going higher is level (last polyloops), pitches become higher, timbres become brighter, and beats become less well-formed.</p>
 <p>The design helpers are not made to reach equality and balance. They are made to reach a desired approximation for indices. As a composer, you may desire to have imbalance and inequality, for wilder music, but balance and equality for more predictable parts.</p>
 <p>↳ <a class="reference external" href="04_minimalism.html">Minimalism</a></p>
@@ -488,6 +488,7 @@ rhythm being centrally located. The mathematical condition for perfect balance i
 <li class="toctree-l1"><a class="reference internal" href="04_minimalism.html">4. Minimalism</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05_walks.html">5. Walks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_fractals.html">6. Fractals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_genetic.html">7. Genetic algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 </ul>

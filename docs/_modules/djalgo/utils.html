@@ -230,9 +230,9 @@
     <span class="k">return</span> <span class="n">adjust_note_durations_to_prevent_overlaps</span><span class="p">(</span><span class="n">fill_gaps_with_rests</span><span class="p">(</span><span class="n">s</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="abc_to_midi">
-<a class="viewcode-back" href="../../api.html#djalgo.utils.abc_to_midi">[docs]</a>
-<span class="k">def</span> <span class="nf">abc_to_midi</span><span class="p">(</span><span class="n">pitch</span><span class="p">):</span>
+<div class="viewcode-block" id="cde_to_midi">
+<a class="viewcode-back" href="../../api.html#djalgo.utils.cde_to_midi">[docs]</a>
+<span class="k">def</span> <span class="nf">cde_to_midi</span><span class="p">(</span><span class="n">pitch</span><span class="p">):</span>
     <span class="c1"># Mapping of note names to MIDI numbers with sharps</span>
     <span class="n">pitches</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;C#&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;D#&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;F#&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;G#&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;A#&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]</span>
     <span class="n">flat_to_sharp</span> <span class="o">=</span> <span class="p">{</span>
@@ -259,9 +259,9 @@
 
 
 
-<div class="viewcode-block" id="midi_to_abc">
-<a class="viewcode-back" href="../../api.html#djalgo.utils.midi_to_abc">[docs]</a>
-<span class="k">def</span> <span class="nf">midi_to_abc</span><span class="p">(</span><span class="n">midi</span><span class="p">):</span>
+<div class="viewcode-block" id="midi_to_cde">
+<a class="viewcode-back" href="../../api.html#djalgo.utils.midi_to_cde">[docs]</a>
+<span class="k">def</span> <span class="nf">midi_to_cde</span><span class="p">(</span><span class="n">midi</span><span class="p">):</span>
     <span class="c1"># Mapping of MIDI numbers to note names</span>
     <span class="n">pitches</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;C#&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="s1">&#39;D#&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">,</span> <span class="s1">&#39;F&#39;</span><span class="p">,</span> <span class="s1">&#39;F#&#39;</span><span class="p">,</span> <span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="s1">&#39;G#&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;A#&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]</span>
     <span class="n">octave</span> <span class="o">=</span> <span class="n">midi</span> <span class="o">//</span> <span class="mi">12</span> <span class="o">-</span> <span class="mi">1</span>
@@ -375,6 +375,7 @@
         <span class="n">measure_end</span> <span class="o">=</span> <span class="p">((</span><span class="n">quantized_offset</span> <span class="o">//</span> <span class="n">measure_length</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">measure_length</span>
         <span class="n">quantized_duration</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">measure_end</span> <span class="o">-</span> <span class="n">quantized_offset</span><span class="p">)</span>
         <span class="n">quantized_notes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">pitch</span><span class="p">,</span> <span class="n">quantized_duration</span><span class="p">,</span> <span class="n">quantized_offset</span><span class="p">))</span>
+    <span class="n">quantized_notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">note</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">quantized_notes</span> <span class="k">if</span> <span class="n">note</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="c1"># remove notes with zero duration</span>
     <span class="k">return</span> <span class="n">quantized_notes</span></div>
 
 
@@ -443,6 +444,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../04_minimalism.html">4. Minimalism</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../05_walks.html">5. Walks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../06_fractals.html">6. Fractals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_genetic.html">7. Genetic algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>

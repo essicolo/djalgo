@@ -169,7 +169,7 @@ def repair_notes(s: list) -> list:
     """
     return adjust_note_durations_to_prevent_overlaps(fill_gaps_with_rests(s))
 
-def abc_to_midi(pitch):
+def cde_to_midi(pitch):
     # Mapping of note names to MIDI numbers with sharps
     pitches = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
     flat_to_sharp = {
@@ -195,7 +195,7 @@ def abc_to_midi(pitch):
     return midi
 
 
-def midi_to_abc(midi):
+def midi_to_cde(midi):
     # Mapping of MIDI numbers to note names
     pitches = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
     octave = midi // 12 - 1
@@ -294,6 +294,7 @@ def quantize_notes(notes, measure_length, time_resolution):
         measure_end = ((quantized_offset // measure_length) + 1) * measure_length
         quantized_duration = min(duration, measure_end - quantized_offset)
         quantized_notes.append((pitch, quantized_duration, quantized_offset))
+    quantized_notes = [note for note in quantized_notes if note[1] != 0] # remove notes with zero duration
     return quantized_notes
 
 

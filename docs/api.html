@@ -16,7 +16,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="About" href="about.html" />
-    <link rel="prev" title="6. Fractals" href="06_fractals.html" />
+    <link rel="prev" title="7. Genetic algorithms" href="07_genetic.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -37,8 +37,8 @@
   <section id="module-djalgo.analysis">
 <span id="api"></span><h1>API<a class="headerlink" href="#module-djalgo.analysis" title="Link to this heading">¶</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="djalgo.analysis.Analysis">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.analysis.</span></span><span class="sig-name descname"><span class="pre">Analysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Analysis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Analysis" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="djalgo.analysis.Index">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.analysis.</span></span><span class="sig-name descname"><span class="pre">Index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Index" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class that performs various analysis on a list of values.</p>
 <dl class="field-list simple">
@@ -50,8 +50,8 @@
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="djalgo.analysis.Analysis.values">
-<span class="sig-name descname"><span class="pre">values</span></span><a class="headerlink" href="#djalgo.analysis.Analysis.values" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="djalgo.analysis.Index.values">
+<span class="sig-name descname"><span class="pre">values</span></span><a class="headerlink" href="#djalgo.analysis.Index.values" title="Link to this definition">¶</a></dt>
 <dd><p>A list of numerical values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -61,8 +61,8 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="djalgo.analysis.Analysis.weights">
-<span class="sig-name descname"><span class="pre">weights</span></span><a class="headerlink" href="#djalgo.analysis.Analysis.weights" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="djalgo.analysis.Index.weights">
+<span class="sig-name descname"><span class="pre">weights</span></span><a class="headerlink" href="#djalgo.analysis.Index.weights" title="Link to this definition">¶</a></dt>
 <dd><p>A list of weights corresponding to the values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -72,8 +72,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="djalgo.analysis.Analysis.autocorrelation">
-<span class="sig-name descname"><span class="pre">autocorrelation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Analysis.autocorrelation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Analysis.autocorrelation" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="djalgo.analysis.Index.autocorrelation">
+<span class="sig-name descname"><span class="pre">autocorrelation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Index.autocorrelation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Index.autocorrelation" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates the autocorrelation of the values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -86,8 +86,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="djalgo.analysis.Analysis.balance">
-<span class="sig-name descname"><span class="pre">balance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Analysis.balance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Analysis.balance" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="djalgo.analysis.Index.balance">
+<span class="sig-name descname"><span class="pre">balance</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Index.balance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Index.balance" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates the balance index of the values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -100,8 +100,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="djalgo.analysis.Analysis.dissonance">
-<span class="sig-name descname"><span class="pre">dissonance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Analysis.dissonance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Analysis.dissonance" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="djalgo.analysis.Index.dissonance">
+<span class="sig-name descname"><span class="pre">dissonance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Index.dissonance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Index.dissonance" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates the dissonance of the values with respect to a scale.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -117,8 +117,22 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="djalgo.analysis.Analysis.gini">
-<span class="sig-name descname"><span class="pre">gini</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Analysis.gini"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Analysis.gini" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="djalgo.analysis.Index.fibonacci_index">
+<span class="sig-name descname"><span class="pre">fibonacci_index</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Index.fibonacci_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Index.fibonacci_index" title="Link to this definition">¶</a></dt>
+<dd><p>Calculates a Fibonacci index to evaluate how closely the sequence matches a Fibonacci sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The Fibonacci index, lower values indicate closer match to Fibonacci sequence.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.analysis.Index.gini">
+<span class="sig-name descname"><span class="pre">gini</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Index.gini"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Index.gini" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates the Gini index of the values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -131,8 +145,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="djalgo.analysis.Analysis.motif">
-<span class="sig-name descname"><span class="pre">motif</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Analysis.motif"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Analysis.motif" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="djalgo.analysis.Index.motif">
+<span class="sig-name descname"><span class="pre">motif</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Index.motif"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Index.motif" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates the motif score of the values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -145,8 +159,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="djalgo.analysis.Analysis.rhythmic">
-<span class="sig-name descname"><span class="pre">rhythmic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measure_length</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Analysis.rhythmic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Analysis.rhythmic" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="djalgo.analysis.Index.rhythmic">
+<span class="sig-name descname"><span class="pre">rhythmic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measure_length</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/analysis.html#Index.rhythmic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.analysis.Index.rhythmic" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates the rhythmic score of the values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -614,135 +628,17 @@ History: The history object generated by the training process. This contains inf
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="djalgo.fractal.Fibonacci">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.fractal.</span></span><span class="sig-name descname"><span class="pre">Fibonacci</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/fractal.html#Fibonacci"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.fractal.Fibonacci" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>A class that generates a Fibonacci sequence.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>scale</strong> (<em>list</em><em> or </em><em>None</em>) – A list of values to scale the generated sequence to. If None, the sequence is not scaled.</p></li>
-<li><p><strong>length</strong> (<em>int</em>) – The length of the generated sequence.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="djalgo.fractal.Fibonacci.scale">
-<span class="sig-name descname"><span class="pre">scale</span></span><a class="headerlink" href="#djalgo.fractal.Fibonacci.scale" title="Link to this definition">¶</a></dt>
-<dd><p>A list of values to scale the generated sequence to. If None, the sequence is not scaled.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list or None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="djalgo.fractal.Fibonacci.length">
-<span class="sig-name descname"><span class="pre">length</span></span><a class="headerlink" href="#djalgo.fractal.Fibonacci.length" title="Link to this definition">¶</a></dt>
-<dd><p>The length of the generated sequence.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="field-list simple">
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>UserWarning</strong> – If the length is greater than 10 and the scale is not provided, a warning is raised.</p>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="djalgo.fractal.Fibonacci.generate">
-<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/fractal.html#Fibonacci.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.fractal.Fibonacci.generate" title="Link to this definition">¶</a></dt>
-<dd><p>Generates a Fibonacci sequence.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The generated Fibonacci sequence.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>list</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="djalgo.fractal.LogisticMap">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.fractal.</span></span><span class="sig-name descname"><span class="pre">LogisticMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_note_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/fractal.html#LogisticMap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.fractal.LogisticMap" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.fractal.</span></span><span class="sig-name descname"><span class="pre">LogisticMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rates</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/fractal.html#LogisticMap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.fractal.LogisticMap" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Represents a logistic map generator.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="djalgo.fractal.LogisticMap.scale">
-<span class="sig-name descname"><span class="pre">scale</span></span><a class="headerlink" href="#djalgo.fractal.LogisticMap.scale" title="Link to this definition">¶</a></dt>
-<dd><p>A list of values to map the generated logistic map values to. If None, the raw values will be used.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list or None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="djalgo.fractal.LogisticMap.start_note_index">
-<span class="sig-name descname"><span class="pre">start_note_index</span></span><a class="headerlink" href="#djalgo.fractal.LogisticMap.start_note_index" title="Link to this definition">¶</a></dt>
-<dd><p>The starting index in the scale list.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="djalgo.fractal.LogisticMap.length">
-<span class="sig-name descname"><span class="pre">length</span></span><a class="headerlink" href="#djalgo.fractal.LogisticMap.length" title="Link to this definition">¶</a></dt>
-<dd><p>The length of the generated logistic map signal.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="djalgo.fractal.LogisticMap.r">
-<span class="sig-name descname"><span class="pre">r</span></span><a class="headerlink" href="#djalgo.fractal.LogisticMap.r" title="Link to this definition">¶</a></dt>
-<dd><p>The r parameter of the logistic map. Determines the chaos of the generated sequence.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="djalgo.fractal.LogisticMap.x0">
-<span class="sig-name descname"><span class="pre">x0</span></span><a class="headerlink" href="#djalgo.fractal.LogisticMap.x0" title="Link to this definition">¶</a></dt>
-<dd><p>The initial x value for the logistic map.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="djalgo.fractal.LogisticMap.center_offset">
-<span class="sig-name descname"><span class="pre">center_offset</span></span><a class="headerlink" href="#djalgo.fractal.LogisticMap.center_offset" title="Link to this definition">¶</a></dt>
-<dd><p>Whether to offset the generated values by the center of the scale list.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="djalgo.fractal.LogisticMap.generate">
 <span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/fractal.html#LogisticMap.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.fractal.LogisticMap.generate" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.fractal.LogisticMap.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(10,</span> <span class="pre">6)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/fractal.html#LogisticMap.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.fractal.LogisticMap.plot" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -763,15 +659,27 @@ History: The history object generated by the training process. This contains inf
 
 <dl class="py method">
 <dt class="sig sig-object py" id="djalgo.fractal.Mandelbrot.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(10,</span> <span class="pre">10)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zoom_rect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/fractal.html#Mandelbrot.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.fractal.Mandelbrot.plot" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(10,</span> <span class="pre">10)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zoom_rect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_numbers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/fractal.html#Mandelbrot.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.fractal.Mandelbrot.plot" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.fractal.compute_logistic">
+<span class="sig-prename descclassname"><span class="pre">djalgo.fractal.</span></span><span class="sig-name descname"><span class="pre">compute_logistic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_n</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/fractal.html#compute_logistic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.fractal.compute_logistic" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the logistic map for a range of r values, collecting the last <cite>last_n</cite> iterations.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="djalgo.fractal.generate_mandelbrot_jit">
 <span class="sig-prename descclassname"><span class="pre">djalgo.fractal.</span></span><span class="sig-name descname"><span class="pre">generate_mandelbrot_jit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dimensions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/fractal.html#generate_mandelbrot_jit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.fractal.generate_mandelbrot_jit" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.fractal.logistic_map">
+<span class="sig-prename descclassname"><span class="pre">djalgo.fractal.</span></span><span class="sig-name descname"><span class="pre">logistic_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">growth_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pop</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/fractal.html#logistic_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.fractal.logistic_map" title="Link to this definition">¶</a></dt>
+<dd><p>Compute logistic map iteratively for a given rate over many iterations.</p>
+</dd></dl>
 
 <dl class="py class" id="module-djalgo.genetic">
 <dt class="sig sig-object py" id="djalgo.genetic.Darwin">
@@ -780,7 +688,7 @@ History: The history object generated by the training process. This contains inf
 <dl class="py method">
 <dt class="sig sig-object py" id="djalgo.genetic.Darwin.calculate_fitness_components">
 <span class="sig-name descname"><span class="pre">calculate_fitness_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phrase</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/genetic.html#Darwin.calculate_fitness_components"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.genetic.Darwin.calculate_fitness_components" title="Link to this definition">¶</a></dt>
-<dd><p>Calculate the fitness components based on the Analysis class for a given phrase.</p>
+<dd><p>Calculate the fitness components based on the Index class for a given phrase.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>phrase</strong> (<em>list</em>) – The musical phrase.</p>
@@ -845,8 +753,7 @@ History: The history object generated by the training process. This contains inf
 <dl class="py method">
 <dt class="sig sig-object py" id="djalgo.genetic.Darwin.mutate">
 <span class="sig-name descname"><span class="pre">mutate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phrase</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rest_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.02</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/genetic.html#Darwin.mutate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.genetic.Darwin.mutate" title="Link to this definition">¶</a></dt>
-<dd><p>Mutate a musical phrase while respecting musical structures and boundaries.
-USE SCIPY PROBABILITY DISTRIBUTIONS FOR MUTATION</p>
+<dd><p>Mutate a musical phrase while respecting musical structures and boundaries.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1810,11 +1717,6 @@ USE SCIPY PROBABILITY DISTRIBUTIONS FOR MUTATION</p>
 </dd></dl>
 
 <dl class="py function" id="module-djalgo.utils">
-<dt class="sig sig-object py" id="djalgo.utils.abc_to_midi">
-<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">abc_to_midi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pitch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#abc_to_midi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.abc_to_midi" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="djalgo.utils.adjust_note_durations_to_prevent_overlaps">
 <span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">adjust_note_durations_to_prevent_overlaps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#adjust_note_durations_to_prevent_overlaps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.adjust_note_durations_to_prevent_overlaps" title="Link to this definition">¶</a></dt>
 <dd><p>Adjust the durations of notes in a list (each note is a (pitch, duration, offset) tuple)
@@ -1831,6 +1733,11 @@ to prevent overlaps, while keeping their offsets intact.</p>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.utils.cde_to_midi">
+<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">cde_to_midi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pitch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#cde_to_midi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.cde_to_midi" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="djalgo.utils.check_input">
@@ -1917,8 +1824,8 @@ sorted by offset before processing to ensure accurate gap detection and filling.
 <dd></dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="djalgo.utils.midi_to_abc">
-<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">midi_to_abc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#midi_to_abc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.midi_to_abc" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="djalgo.utils.midi_to_cde">
+<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">midi_to_cde</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#midi_to_cde"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.midi_to_cde" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -2270,6 +2177,7 @@ Can be a list of step choices or a random variable object. Defaults to [-1, 0, 1
 <li class="toctree-l1"><a class="reference internal" href="04_minimalism.html">4. Minimalism</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05_walks.html">5. Walks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_fractals.html">6. Fractals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_genetic.html">7. Genetic algorithms</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 </ul>

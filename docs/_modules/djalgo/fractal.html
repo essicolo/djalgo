@@ -43,63 +43,9 @@
 <span class="kn">import</span> <span class="nn">matplotlib.axes</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">utils</span>
 
-<div class="viewcode-block" id="Fibonacci">
-<a class="viewcode-back" href="../../api.html#djalgo.fractal.Fibonacci">[docs]</a>
-<span class="k">class</span> <span class="nc">Fibonacci</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A class that generates a Fibonacci sequence.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        scale (list or None): A list of values to scale the generated sequence to. If None, the sequence is not scaled.</span>
-<span class="sd">        length (int): The length of the generated sequence.</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        scale (list or None): A list of values to scale the generated sequence to. If None, the sequence is not scaled.</span>
-<span class="sd">        length (int): The length of the generated sequence.</span>
-
-<span class="sd">    Raises:</span>
-<span class="sd">        UserWarning: If the length is greater than 10 and the scale is not provided, a warning is raised.</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">6</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
-
-        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
-            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Fibonacci numbers grow rapidly. Since the outcome is scaled to the specified scale, the first note will be repeated a large amount of times, hence creating a monotone piece.&quot;</span><span class="p">,</span> <span class="ne">UserWarning</span><span class="p">)</span>
-        
-<div class="viewcode-block" id="Fibonacci.generate">
-<a class="viewcode-back" href="../../api.html#djalgo.fractal.Fibonacci.generate">[docs]</a>
-    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generates a Fibonacci sequence.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            list: The generated Fibonacci sequence.</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">fibonacci_number</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># Initialize the Fibonacci sequence with the first two numbers</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span>
-        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
-            <span class="c1"># Fibonacci sequence</span>
-            <span class="n">fibonacci_next_number</span> <span class="o">=</span> <span class="n">fibonacci_number</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">fibonacci_number</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
-            <span class="n">fibonacci_number</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fibonacci_next_number</span><span class="p">)</span>
-
-            <span class="c1"># Increment loop</span>
-            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">signal</span> <span class="o">=</span> <span class="n">fibonacci_number</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fibonacci_number</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fibonacci_number</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">))</span>
-            <span class="n">signal</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-            <span class="n">signal</span> <span class="o">=</span> <span class="p">[</span><span class="n">utils</span><span class="o">.</span><span class="n">nearest_neighbor</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">signal</span><span class="p">]</span>
-        
-        <span class="k">return</span> <span class="n">signal</span></div>
-</div>
-
-
+<span class="c1"># Cellular automata</span>
+<span class="c1"># -----------------</span>
 <div class="viewcode-block" id="CellularAutomata">
 <a class="viewcode-back" href="../../api.html#djalgo.fractal.CellularAutomata">[docs]</a>
 <span class="k">class</span> <span class="nc">CellularAutomata</span><span class="p">:</span>
@@ -377,6 +323,8 @@
 
     
 
+<span class="c1"># Mandelbrot fractal</span>
+<span class="c1"># ------------------</span>
 <div class="viewcode-block" id="generate_mandelbrot_jit">
 <a class="viewcode-back" href="../../api.html#djalgo.fractal.generate_mandelbrot_jit">[docs]</a>
 <span class="nd">@jit</span>
@@ -434,8 +382,10 @@
             <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">line_index</span><span class="p">,</span> <span class="p">:]</span>
         <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;vertical&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">data</span><span class="p">[:,</span> <span class="n">line_index</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;diagonal&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;diagonal-increasing&#39;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;diagonal-decreasing&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
         <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;random&#39;</span><span class="p">:</span>
             <span class="n">flat_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">flat_data</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
@@ -443,77 +393,97 @@
 
 <div class="viewcode-block" id="Mandelbrot.plot">
 <a class="viewcode-back" href="../../api.html#djalgo.fractal.Mandelbrot.plot">[docs]</a>
-    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">zoom_rect</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">zoom_rect</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">show_numbers</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
         <span class="n">fractal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_mandelbrot</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">zoom_rect</span><span class="p">:</span>
+            <span class="n">extent</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_range</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_range</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">extent</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">zoom_rect</span> <span class="ow">and</span> <span class="n">show_numbers</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Both zoom rectangle and showing numbers are enabled. Numbers are hidden.&quot;</span><span class="p">,</span> <span class="ne">UserWarning</span><span class="p">)</span>
         <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
             <span class="n">fractal</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-            <span class="n">extent</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_range</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
-            <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;hot&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span>
+            <span class="n">extent</span><span class="o">=</span><span class="n">extent</span><span class="p">,</span>
+            <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span>
         <span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Mandelbrot Set&#39;</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Real&#39;</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Imaginary&#39;</span><span class="p">)</span>
-        <span class="c1">#plt.colorbar(im, ax=ax, orientation=&#39;vertical&#39;)</span>
+
+        <span class="k">if</span> <span class="n">show_numbers</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">fractal</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">fractal</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">fractal</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">zoom_rect</span><span class="p">:</span>
             <span class="n">rect</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">(</span>
                 <span class="p">(</span><span class="n">zoom_rect</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">zoom_rect</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
                 <span class="n">zoom_rect</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">zoom_rect</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">zoom_rect</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">zoom_rect</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
-                <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span>
+                <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span>
             <span class="p">)</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ax</span></div>
 </div>
 
 
+<span class="c1"># Logistic map</span>
+<span class="c1"># ------------</span>
+<div class="viewcode-block" id="logistic_map">
+<a class="viewcode-back" href="../../api.html#djalgo.fractal.logistic_map">[docs]</a>
+<span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">logistic_map</span><span class="p">(</span><span class="n">growth_rate</span><span class="p">,</span> <span class="n">pop</span><span class="p">,</span> <span class="n">iterations</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute logistic map iteratively for a given rate over many iterations.&quot;&quot;&quot;</span>
+    <span class="n">final_pop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">iterations</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
+        <span class="n">pop</span> <span class="o">=</span> <span class="n">growth_rate</span> <span class="o">*</span> <span class="n">pop</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pop</span><span class="p">)</span>
+        <span class="n">final_pop</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">pop</span>
+    <span class="k">return</span> <span class="n">final_pop</span></div>
+
+
+<div class="viewcode-block" id="compute_logistic">
+<a class="viewcode-back" href="../../api.html#djalgo.fractal.compute_logistic">[docs]</a>
+<span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">compute_logistic</span><span class="p">(</span><span class="n">rate_values</span><span class="p">,</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">last_n</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the logistic map for a range of r values, collecting the last `last_n` iterations.&quot;&quot;&quot;</span>
+    <span class="n">num_rate</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rate_values</span><span class="p">)</span>
+    <span class="n">plot_pop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">num_rate</span> <span class="o">*</span> <span class="n">last_n</span><span class="p">)</span>
+    <span class="n">plot_rate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">num_rate</span> <span class="o">*</span> <span class="n">last_n</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rate_values</span><span class="p">):</span>
+        <span class="n">xs</span> <span class="o">=</span> <span class="n">logistic_map</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">iterations</span> <span class="o">+</span> <span class="n">last_n</span><span class="p">)</span>  <span class="c1"># Drop initial values to skip transient</span>
+        <span class="n">plot_pop</span><span class="p">[</span><span class="n">idx</span><span class="o">*</span><span class="n">last_n</span><span class="p">:(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">last_n</span><span class="p">]</span> <span class="o">=</span> <span class="n">xs</span><span class="p">[</span><span class="o">-</span><span class="n">last_n</span><span class="p">:]</span>  <span class="c1"># Take only the last `last_n` iterations</span>
+        <span class="n">plot_rate</span><span class="p">[</span><span class="n">idx</span><span class="o">*</span><span class="n">last_n</span><span class="p">:(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">last_n</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span>
+    <span class="k">return</span> <span class="n">plot_rate</span><span class="p">,</span> <span class="n">plot_pop</span></div>
+
 
 <div class="viewcode-block" id="LogisticMap">
 <a class="viewcode-back" href="../../api.html#djalgo.fractal.LogisticMap">[docs]</a>
 <span class="k">class</span> <span class="nc">LogisticMap</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Represents a logistic map generator.</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        scale (list or None): A list of values to map the generated logistic map values to. If None, the raw values will be used.</span>
-<span class="sd">        start_note_index (int): The starting index in the scale list.</span>
-<span class="sd">        length (int): The length of the generated logistic map signal.</span>
-<span class="sd">        r (float): The r parameter of the logistic map. Determines the chaos of the generated sequence.</span>
-<span class="sd">        x0 (float): The initial x value for the logistic map.</span>
-<span class="sd">        center_offset (bool): Whether to offset the generated values by the center of the scale list.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">start_note_index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mf">3.9</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">center_offset</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">start_note_index</span> <span class="o">=</span> <span class="n">start_note_index</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">r</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">x0</span> <span class="o">=</span> <span class="n">x0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">center_offset</span> <span class="o">=</span> <span class="n">center_offset</span>
-
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rates</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">last_n</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rates</span> <span class="o">=</span> <span class="n">rates</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iterations</span> <span class="o">=</span> <span class="n">iterations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_n</span> <span class="o">=</span> <span class="n">last_n</span>
+    
 <div class="viewcode-block" id="LogisticMap.generate">
 <a class="viewcode-back" href="../../api.html#djalgo.fractal.LogisticMap.generate">[docs]</a>
     <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">logistic_map_values</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x0</span>
+        <span class="n">rate</span><span class="p">,</span> <span class="n">pop</span> <span class="o">=</span> <span class="n">compute_logistic</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rates</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">iterations</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_n</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">rate</span><span class="p">,</span> <span class="n">pop</span></div>
 
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">):</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span>
-            <span class="n">logistic_map_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">signal</span> <span class="o">=</span> <span class="n">logistic_map_values</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">signal</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">current_note_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_note_index</span>
-            <span class="k">for</span> <span class="n">offset</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="n">logistic_map_values</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">):</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">center_offset</span><span class="p">:</span>
-                    <span class="n">current_note_index</span> <span class="o">=</span> <span class="p">(</span><span class="n">current_note_index</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)))</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">current_note_index</span> <span class="o">=</span> <span class="p">(</span><span class="n">current_note_index</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">offset</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)))</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span>
-                <span class="n">signal</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">[</span><span class="n">current_note_index</span><span class="p">])</span>
-
-        <span class="k">return</span> <span class="n">signal</span></div>
+    
+<div class="viewcode-block" id="LogisticMap.plot">
+<a class="viewcode-back" href="../../api.html#djalgo.fractal.LogisticMap.plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="n">rate</span><span class="p">,</span> <span class="n">pop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rate</span><span class="p">,</span> <span class="n">pop</span><span class="p">,</span> <span class="s1">&#39;,k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;rate&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;population&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rates</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">rates</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ax</span></div>
 </div>
 
 </pre></div>
@@ -535,6 +505,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../04_minimalism.html">4. Minimalism</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../05_walks.html">5. Walks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../06_fractals.html">6. Fractals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_genetic.html">7. Genetic algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>

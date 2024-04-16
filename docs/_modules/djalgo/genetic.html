@@ -34,7 +34,7 @@
   <h1>Source code for djalgo.genetic</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">from</span> <span class="nn">.analysis</span> <span class="kn">import</span> <span class="n">Analysis</span>
+<span class="kn">from</span> <span class="nn">.analysis</span> <span class="kn">import</span> <span class="n">Index</span>
 
 <div class="viewcode-block" id="Darwin">
 <a class="viewcode-back" href="../../api.html#djalgo.genetic.Darwin">[docs]</a>
@@ -111,7 +111,7 @@
 <a class="viewcode-back" href="../../api.html#djalgo.genetic.Darwin.calculate_fitness_components">[docs]</a>
     <span class="k">def</span> <span class="nf">calculate_fitness_components</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Calculate the fitness components based on the Analysis class for a given phrase.</span>
+<span class="sd">        Calculate the fitness components based on the Index class for a given phrase.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            phrase (list): The musical phrase.</span>
@@ -124,28 +124,28 @@
         <span class="n">pitches</span><span class="p">,</span> <span class="n">durations</span><span class="p">,</span> <span class="n">offsets</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">phrase</span><span class="p">)</span>
 
         <span class="c1"># Gini coefficient for pitch and duration</span>
-        <span class="n">fitness_components</span><span class="p">[</span><span class="s1">&#39;gini_pitch&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">(</span><span class="n">pitches</span><span class="p">)</span><span class="o">.</span><span class="n">gini</span><span class="p">()</span>
-        <span class="n">fitness_components</span><span class="p">[</span><span class="s1">&#39;gini_duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span><span class="o">.</span><span class="n">gini</span><span class="p">()</span>
+        <span class="n">fitness_components</span><span class="p">[</span><span class="s1">&#39;gini_pitch&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Index</span><span class="p">(</span><span class="n">pitches</span><span class="p">)</span><span class="o">.</span><span class="n">gini</span><span class="p">()</span>
+        <span class="n">fitness_components</span><span class="p">[</span><span class="s1">&#39;gini_duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Index</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span><span class="o">.</span><span class="n">gini</span><span class="p">()</span>
 
         <span class="c1"># Balance for pitch and duration</span>
-        <span class="n">fitness_components</span><span class="p">[</span><span class="s1">&#39;balance_pitch&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">(</span><span class="n">pitches</span><span class="p">)</span><span class="o">.</span><span class="n">balance</span><span class="p">()</span>
-        <span class="n">fitness_components</span><span class="p">[</span><span class="s1">&#39;balance_duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span><span class="o">.</span><span class="n">balance</span><span class="p">()</span>
+        <span class="n">fitness_components</span><span class="p">[</span><span class="s1">&#39;balance_pitch&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Index</span><span class="p">(</span><span class="n">pitches</span><span class="p">)</span><span class="o">.</span><span class="n">balance</span><span class="p">()</span>
+        <span class="n">fitness_components</span><span class="p">[</span><span class="s1">&#39;balance_duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Index</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span><span class="o">.</span><span class="n">balance</span><span class="p">()</span>
 
         <span class="c1"># Motif for pitch and duration (and potentially offsets if applicable)</span>
-        <span class="n">fitness_components</span><span class="p">[</span><span class="s1">&#39;motif_pitch&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">(</span><span class="n">pitches</span><span class="p">)</span><span class="o">.</span><span class="n">motif</span><span class="p">()</span>
-        <span class="n">fitness_components</span><span class="p">[</span><span class="s1">&#39;motif_duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span><span class="o">.</span><span class="n">motif</span><span class="p">()</span>  <span class="c1"># Add this if you&#39;re analyzing motifs in durations too</span>
+        <span class="n">fitness_components</span><span class="p">[</span><span class="s1">&#39;motif_pitch&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Index</span><span class="p">(</span><span class="n">pitches</span><span class="p">)</span><span class="o">.</span><span class="n">motif</span><span class="p">()</span>
+        <span class="n">fitness_components</span><span class="p">[</span><span class="s1">&#39;motif_duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Index</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span><span class="o">.</span><span class="n">motif</span><span class="p">()</span>  <span class="c1"># Add this if you&#39;re analyzing motifs in durations too</span>
 
         <span class="c1"># Dissonance, only applicable to pitches</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">fitness_components</span><span class="p">[</span><span class="s1">&#39;dissonance_pitch&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">(</span><span class="n">pitches</span><span class="p">)</span><span class="o">.</span><span class="n">dissonance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span>
+            <span class="n">fitness_components</span><span class="p">[</span><span class="s1">&#39;dissonance_pitch&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Index</span><span class="p">(</span><span class="n">pitches</span><span class="p">)</span><span class="o">.</span><span class="n">dissonance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span>
 
         <span class="c1"># Rhythmic fit based on durations</span>
-        <span class="c1"># Note: Here, I am assuming you have a method in Analysis class for rhythm analysis. Adjust if necessary.</span>
-        <span class="n">fitness_components</span><span class="p">[</span><span class="s1">&#39;rhythmic&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span><span class="o">.</span><span class="n">rhythmic</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_length</span><span class="p">)</span>  <span class="c1"># Adjust method as needed</span>
+        <span class="c1"># Note: Here, I am assuming you have a method in Index class for rhythm analysis. Adjust if necessary.</span>
+        <span class="n">fitness_components</span><span class="p">[</span><span class="s1">&#39;rhythmic&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Index</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span><span class="o">.</span><span class="n">rhythmic</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_length</span><span class="p">)</span>  <span class="c1"># Adjust method as needed</span>
 
         <span class="c1"># gini and balance for offsets?</span>
-        <span class="c1">#fitness_components[&#39;gini_offset&#39;] = Analysis(offsets).gini()  # Add if relevant</span>
-        <span class="c1">#fitness_components[&#39;balance_offset&#39;] = Analysis(offsets).balance()  # Add if relevant</span>
+        <span class="c1">#fitness_components[&#39;gini_offset&#39;] = Index(offsets).gini()  # Add if relevant</span>
+        <span class="c1">#fitness_components[&#39;balance_offset&#39;] = Index(offsets).balance()  # Add if relevant</span>
 
         <span class="c1"># Calculate the proportion of rest notes (notes where pitch is None)</span>
         <span class="n">rest_notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">note</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">phrase</span> <span class="k">if</span> <span class="n">note</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">]</span>
@@ -192,7 +192,6 @@
     <span class="k">def</span> <span class="nf">mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rest_rate</span><span class="o">=</span><span class="mf">0.02</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Mutate a musical phrase while respecting musical structures and boundaries.</span>
-<span class="sd">        USE SCIPY PROBABILITY DISTRIBUTIONS FOR MUTATION</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">rate</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">rate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutation_rate</span>
@@ -306,6 +305,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../04_minimalism.html">4. Minimalism</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../05_walks.html">5. Walks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../06_fractals.html">6. Fractals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_genetic.html">7. Genetic algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>

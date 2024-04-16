@@ -9,57 +9,9 @@ import matplotlib.patches as patches
 import matplotlib.axes
 from . import utils
 
-class Fibonacci:
-    """
-    A class that generates a Fibonacci sequence.
 
-    Args:
-        scale (list or None): A list of values to scale the generated sequence to. If None, the sequence is not scaled.
-        length (int): The length of the generated sequence.
-
-    Attributes:
-        scale (list or None): A list of values to scale the generated sequence to. If None, the sequence is not scaled.
-        length (int): The length of the generated sequence.
-
-    Raises:
-        UserWarning: If the length is greater than 10 and the scale is not provided, a warning is raised.
-
-    """
-
-    def __init__(self, scale=None, length=6):
-        self.scale = scale
-        self.length = length
-
-        if (self.length > 10) and (self.scale is None):
-            warnings.warn("Fibonacci numbers grow rapidly. Since the outcome is scaled to the specified scale, the first note will be repeated a large amount of times, hence creating a monotone piece.", UserWarning)
-        
-    def generate(self):
-        """
-        Generates a Fibonacci sequence.
-
-        Returns:
-            list: The generated Fibonacci sequence.
-
-        """
-        fibonacci_number = [1, 1]  # Initialize the Fibonacci sequence with the first two numbers
-        i = 2
-        while i < self.length:
-            # Fibonacci sequence
-            fibonacci_next_number = fibonacci_number[i-1] + fibonacci_number[i-2]
-            fibonacci_number.append(fibonacci_next_number)
-
-            # Increment loop
-            i += 1
-
-        if self.scale is None:
-            signal = fibonacci_number
-        else:
-            signal = np.min(self.scale) + (np.array(fibonacci_number) - 1) / (np.max(np.array(fibonacci_number)) - 1) * (np.max(self.scale) - np.min(self.scale))
-            signal = signal.tolist()
-            signal = [utils.nearest_neighbor(i, self.scale) for i in signal]
-        
-        return signal
-
+# Cellular automata
+# -----------------
 class CellularAutomata:
     """
     A class for simulating one-dimensional cellular automata based on a specific rule set.
@@ -313,6 +265,8 @@ class CellularAutomata:
         return ax
     
 
+# Mandelbrot fractal
+# ------------------
 @jit
 def generate_mandelbrot_jit(x_range, y_range, dimensions, max_iter):
     x_lin = np.linspace(x_range[0], x_range[1], dimensions[0])
@@ -360,74 +314,87 @@ class Mandelbrot:
             return data[line_index, :]
         elif method == 'vertical':
             return data[:, line_index]
-        elif method == 'diagonal':
+        elif method == 'diagonal-increasing':
             return np.diagonal(data)
+        elif method == 'diagonal-decreasing':
+            return np.diagonal(np.flipud(data))
         elif method == 'random':
             flat_data = data.flatten()
             return np.random.choice(flat_data, size=100, replace=False)
 
-    def plot(self, ax=None, figsize=(10, 10), zoom_rect=None):
+    def plot(self, ax=None, figsize=(10, 10), zoom_rect=None, show_numbers=False):
         if ax is None:
             fig, ax = plt.subplots(figsize=figsize)
         fractal = self.generate_mandelbrot()
+        if zoom_rect:
+            extent = (self.x_range[0], self.x_range[1], self.y_range[0], self.y_range[1])
+        else:
+            extent = None
+        if zoom_rect and show_numbers:
+            warnings.warn("Both zoom rectangle and showing numbers are enabled. Numbers are hidden.", UserWarning)
         im = ax.imshow(
             fractal.T,
-            extent=(self.x_range[0], self.x_range[1], self.y_range[0], self.y_range[1]),
-            cmap='hot', aspect='equal', origin='lower'
+            extent=extent,
+            cmap='viridis', aspect='auto', origin='lower'
         )
         ax.set_title('Mandelbrot Set')
         ax.set_xlabel('Real')
         ax.set_ylabel('Imaginary')
-        #plt.colorbar(im, ax=ax, orientation='vertical')
+
+        if show_numbers:
+            for i in range(fractal.shape[0]):
+                for j in range(fractal.shape[1]):
+                    ax.text(j, i, fractal[i, j], ha="center", va="center", color="w")
+
         if zoom_rect:
             rect = patches.Rectangle(
                 (zoom_rect[0][0], zoom_rect[1][0]),
                 zoom_rect[0][1] - zoom_rect[0][0], zoom_rect[1][1] - zoom_rect[1][0],
-                linewidth=1, edgecolor='red', facecolor='none'
+                linewidth=1, edgecolor='white', facecolor='none'
             )
             ax.add_patch(rect)
         return ax
 
+# Logistic map
+# ------------
+@jit(nopython=True)
+def logistic_map(growth_rate, pop, iterations):
+    """Compute logistic map iteratively for a given rate over many iterations."""
+    final_pop = np.empty(iterations)
+    for i in range(iterations):
+        pop = growth_rate * pop * (1 - pop)
+        final_pop[i] = pop
+    return final_pop
+
+@jit(nopython=True)
+def compute_logistic(rate_values, iterations, last_n):
+    """Compute the logistic map for a range of r values, collecting the last `last_n` iterations."""
+    num_rate = len(rate_values)
+    plot_pop = np.empty(num_rate * last_n)
+    plot_rate = np.empty(num_rate * last_n)
+    for idx, r in enumerate(rate_values):
+        xs = logistic_map(r, 0.5, iterations + last_n)  # Drop initial values to skip transient
+        plot_pop[idx*last_n:(idx+1)*last_n] = xs[-last_n:]  # Take only the last `last_n` iterations
+        plot_rate[idx*last_n:(idx+1)*last_n] = r
+    return plot_rate, plot_pop
 
 class LogisticMap:
-    """
-    Represents a logistic map generator.
-
-    Attributes:
-        scale (list or None): A list of values to map the generated logistic map values to. If None, the raw values will be used.
-        start_note_index (int): The starting index in the scale list.
-        length (int): The length of the generated logistic map signal.
-        r (float): The r parameter of the logistic map. Determines the chaos of the generated sequence.
-        x0 (float): The initial x value for the logistic map.
-        center_offset (bool): Whether to offset the generated values by the center of the scale list.
-    """
-
-    def __init__(self, scale, start_note_index=0, length=10, r=3.9, x0=0.5, center_offset=False):
-        self.scale = scale
-        self.start_note_index = start_note_index
-        self.length = length
-        self.r = r
-        self.x0 = x0
-        self.center_offset = center_offset
-
+    def __init__(self, rates, iterations=1000, last_n=100):
+        self.rates = rates
+        self.iterations = iterations
+        self.last_n = last_n
+    
     def generate(self):
-        logistic_map_values = []
-        x = self.x0
-
-        for _ in range(self.length):
-            x = self.r * x * (1 - x)
-            logistic_map_values.append(x)
-
-        if self.scale is None:
-            signal = logistic_map_values
-        else:
-            signal = []
-            current_note_index = self.start_note_index
-            for offset in itertools.islice(itertools.cycle(logistic_map_values), self.length):
-                if self.center_offset:
-                    current_note_index = (current_note_index + int(offset * len(self.scale))) - len(self.scale) // 2
-                else:
-                    current_note_index = (current_note_index + int(offset * len(self.scale))) % len(self.scale)
-                signal.append(self.scale[current_note_index])
-
-        return signal
+        rate, pop = compute_logistic(self.rates, self.iterations, self.last_n)
+        return rate, pop
+    
+    def plot(self, ax=None, figsize=(10, 6)):
+        if ax is None:
+            fig, ax = plt.subplots(figsize=figsize)
+        rate, pop = self.generate()
+        ax.plot(rate, pop, ',k', alpha=0.5)
+        ax.set_xlabel('rate')
+        ax.set_ylabel('population')
+        ax.set_xlim(self.rates[0], self.rates[-1])
+        ax.set_ylim(0, 1)
+        return ax

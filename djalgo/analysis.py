@@ -2,7 +2,7 @@ import numpy as np
 from scipy.signal import correlate, find_peaks
 
 
-class Analysis:
+class Index:
     """
     A class that performs various analysis on a list of values.
 
@@ -16,12 +16,18 @@ class Analysis:
 
     """
 
-    def __init__(self, values, weights=None):
-        self.values = values
+    def __init__(self, values, weights=None): 
         if weights is None:
             self.weights = [1] * len(values)
         else:
             self.weights = weights
+        
+        # Pair values and weights to filter out None values jointly
+        cleaned_data = [(v, w) for v, w in zip(values, self.weights) if v is not None]
+        self.values, self.weights = zip(*cleaned_data) if cleaned_data else ([], [])
+
+        # Initialize positions assuming sequential values
+        self.positions = list(range(len(self.values)))
 
     def gini(self):
         """
@@ -146,3 +152,24 @@ class Analysis:
 
         # Return the average score if there are scores, else return 0 (indicating no fit)
         return np.mean(scores) if scores else 0
+    
+    def fibonacci_index(self):
+        """
+        Calculates a Fibonacci index to evaluate how closely the sequence matches a Fibonacci sequence.
+
+        Returns:
+            float: The Fibonacci index, lower values indicate closer match to Fibonacci sequence.
+        """
+        if len(self.values) < 3:
+            return float('inf')  # Not enough data to compute Fibonacci likeness
+
+        # Calculate ratios of consecutive numbers
+        ratios = [self.values[i] / self.values[i-1] for i in range(1, len(self.values)) if self.values[i-1] != 0]
+
+        # Calculate how these ratios deviate from the golden ratio
+        golden_ratio = (1 + np.sqrt(5)) / 2
+        deviations = [abs(ratio - golden_ratio) for ratio in ratios]
+
+        # Calculate an index as the average of these deviations
+        fibonacci_index = sum(deviations) / len(deviations)
+        return fibonacci_index

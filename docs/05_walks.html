@@ -109,15 +109,15 @@ distribution</a> function, for instance <code class="docutils literal notranslat
 </section>
 <section id="Example">
 <h3>Example<a class="headerlink" href="#Example" title="Link to this heading">¶</a></h3>
-<p>I’d like to generate a random walk through pitches from <code class="docutils literal notranslate"><span class="pre">C2</span></code> to <code class="docutils literal notranslate"><span class="pre">C8</span></code>, starting at <code class="docutils literal notranslate"><span class="pre">C4</span></code>. MIDI pitch numbers can be recovered using Djalgo’s abc_to_midi utility function.</p>
+<p>I’d like to generate a random walk through pitches from <code class="docutils literal notranslate"><span class="pre">C2</span></code> to <code class="docutils literal notranslate"><span class="pre">C8</span></code>, starting at <code class="docutils literal notranslate"><span class="pre">C4</span></code>. MIDI pitch numbers can be recovered using Djalgo’s cde_to_midi utility function.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">djalgo</span> <span class="k">as</span> <span class="nn">dj</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;C2:&#39;</span><span class="p">,</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">abc_to_midi</span><span class="p">(</span><span class="s1">&#39;C2&#39;</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;C4:&#39;</span><span class="p">,</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">abc_to_midi</span><span class="p">(</span><span class="s1">&#39;C4&#39;</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;C8:&#39;</span><span class="p">,</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">abc_to_midi</span><span class="p">(</span><span class="s1">&#39;C8&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;C2:&#39;</span><span class="p">,</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">cde_to_midi</span><span class="p">(</span><span class="s1">&#39;C2&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;C4:&#39;</span><span class="p">,</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">cde_to_midi</span><span class="p">(</span><span class="s1">&#39;C4&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;C8:&#39;</span><span class="p">,</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">cde_to_midi</span><span class="p">(</span><span class="s1">&#39;C8&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -567,7 +567,7 @@ fundamental question you ask as the modeller is what function the temperature mi
 
 <span class="c1"># Find the pitches</span>
 <span class="n">pachelbel_progression_abc</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;D4&#39;</span><span class="p">,</span> <span class="s1">&#39;A3&#39;</span><span class="p">,</span> <span class="s1">&#39;B3&#39;</span><span class="p">,</span> <span class="s1">&#39;F#3&#39;</span><span class="p">,</span> <span class="s1">&#39;G3&#39;</span><span class="p">,</span> <span class="s1">&#39;D3&#39;</span><span class="p">,</span> <span class="s1">&#39;G3&#39;</span><span class="p">,</span> <span class="s1">&#39;A3&#39;</span><span class="p">,</span> <span class="s1">&#39;D4&#39;</span><span class="p">]</span> <span class="c1"># looping, so I include final D4</span>
-<span class="n">pachelbel_progression_p</span> <span class="o">=</span> <span class="p">[</span><span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">abc_to_midi</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pachelbel_progression_abc</span><span class="p">]</span>
+<span class="n">pachelbel_progression_p</span> <span class="o">=</span> <span class="p">[</span><span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">cde_to_midi</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pachelbel_progression_abc</span><span class="p">]</span>
 
 <span class="c1"># Find the chors in d_major</span>
 <span class="n">pachelbel_progression_c</span> <span class="o">=</span> <span class="p">[]</span>
@@ -805,6 +805,7 @@ if (typeof require === 'undefined') {
 <li class="toctree-l1"><a class="reference internal" href="04_minimalism.html">4. Minimalism</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">5. Walks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_fractals.html">6. Fractals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_genetic.html">7. Genetic algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 </ul>
