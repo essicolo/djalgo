@@ -292,9 +292,10 @@ def quantize_notes(notes, measure_length, time_resolution):
         pitch, duration, offset = note
         quantized_offset = round(offset / time_resolution) * time_resolution
         measure_end = ((quantized_offset // measure_length) + 1) * measure_length
-        quantized_duration = min(duration, measure_end - quantized_offset)
+        quantized_duration = round(duration / time_resolution) * time_resolution
+        quantized_duration = min(quantized_duration, measure_end - quantized_offset)
         quantized_notes.append((pitch, quantized_duration, quantized_offset))
-    quantized_notes = [note for note in quantized_notes if note[1] != 0] # remove notes with zero duration
+    quantized_notes = [note for note in quantized_notes if note[1] > 0]  # remove notes with zero duration
     return quantized_notes
 
 

@@ -373,9 +373,10 @@
         <span class="n">pitch</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">offset</span> <span class="o">=</span> <span class="n">note</span>
         <span class="n">quantized_offset</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">offset</span> <span class="o">/</span> <span class="n">time_resolution</span><span class="p">)</span> <span class="o">*</span> <span class="n">time_resolution</span>
         <span class="n">measure_end</span> <span class="o">=</span> <span class="p">((</span><span class="n">quantized_offset</span> <span class="o">//</span> <span class="n">measure_length</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">measure_length</span>
-        <span class="n">quantized_duration</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">measure_end</span> <span class="o">-</span> <span class="n">quantized_offset</span><span class="p">)</span>
+        <span class="n">quantized_duration</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">duration</span> <span class="o">/</span> <span class="n">time_resolution</span><span class="p">)</span> <span class="o">*</span> <span class="n">time_resolution</span>
+        <span class="n">quantized_duration</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">quantized_duration</span><span class="p">,</span> <span class="n">measure_end</span> <span class="o">-</span> <span class="n">quantized_offset</span><span class="p">)</span>
         <span class="n">quantized_notes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">pitch</span><span class="p">,</span> <span class="n">quantized_duration</span><span class="p">,</span> <span class="n">quantized_offset</span><span class="p">))</span>
-    <span class="n">quantized_notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">note</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">quantized_notes</span> <span class="k">if</span> <span class="n">note</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span> <span class="c1"># remove notes with zero duration</span>
+    <span class="n">quantized_notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">note</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">quantized_notes</span> <span class="k">if</span> <span class="n">note</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># remove notes with zero duration</span>
     <span class="k">return</span> <span class="n">quantized_notes</span></div>
 
 
@@ -445,6 +446,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../05_walks.html">5. Walks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../06_fractals.html">6. Fractals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../07_genetic.html">7. Genetic algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_ai.html">8. Machine learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>

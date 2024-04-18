@@ -13,5 +13,6 @@ Djalgo is a Python toolkit for music composition. Crafted for musicians and deve
    05_walks.ipynb
    06_fractals.ipynb
    07_genetic.ipynb
+   08_ai.ipynb
    api.rst
    about.rst
