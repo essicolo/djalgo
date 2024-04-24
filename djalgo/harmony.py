@@ -105,7 +105,7 @@ class Progression(MusicTheoryConstants):
             ValueError: If the circle_of value is not among the available intervals.
             ValueError: If the type value is not 'chords' or 'pitches'.
         """
-        self.tonic_midi = utils.abc_to_midi(tonic_pitch)
+        self.tonic_midi = utils.cde_to_midi(tonic_pitch)
         self.circle_of = circle_of
         self.type = type
         self.radius = radius
@@ -230,8 +230,8 @@ class Voice(MusicTheoryConstants):
         """
         # to get the degree, I need a the tonic in the right octave, i.e. the tonic midi pitch
         octave = utils.get_octave(pitch)
-        tonic_abc_pitch = self.tonic + str(octave)
-        tonic_midi_pitch = utils.abc_to_midi(tonic_abc_pitch)
+        tonic_cde_pitch = self.tonic + str(octave)
+        tonic_midi_pitch = utils.cde_to_midi(tonic_cde_pitch)
 
         # the degrees of the whole scale
         scale_degrees = [utils.get_degree_from_pitch(p, scale_list=self.scale, tonic_pitch=tonic_midi_pitch) for p in self.scale]
