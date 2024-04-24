@@ -16,7 +16,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="About" href="about.html" />
-    <link rel="prev" title="8. Machine learning" href="08_ai.html" />
+    <link rel="prev" title="8. 🤖 Machine learning" href="08_ai.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -274,7 +274,7 @@
 
 <dl class="py class" id="module-djalgo.djai">
 <dt class="sig sig-object py" id="djalgo.djai.DataProcessor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.djai.</span></span><span class="sig-name descname"><span class="pre">DataProcessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence_length_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequence_length_o</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_instruments</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DataProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DataProcessor" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.djai.</span></span><span class="sig-name descname"><span class="pre">DataProcessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence_length_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequence_length_o</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_instruments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_mins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_maxs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DataProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DataProcessor" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="djalgo.djai.DataProcessor.compute_scaling_parameters">
@@ -282,8 +282,13 @@
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="djalgo.djai.DataProcessor.encode_instruments">
+<span class="sig-name descname"><span class="pre">encode_instruments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DataProcessor.encode_instruments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DataProcessor.encode_instruments" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="djalgo.djai.DataProcessor.extract_features">
-<span class="sig-name descname"><span class="pre">extract_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">midi_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DataProcessor.extract_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DataProcessor.extract_features" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">extract_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument_vector</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DataProcessor.extract_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DataProcessor.extract_features" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -297,20 +302,15 @@
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="djalgo.djai.DataProcessor.preprocess_data">
-<span class="sig-name descname"><span class="pre">preprocess_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DataProcessor.preprocess_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DataProcessor.preprocess_data" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="djalgo.djai.DataProcessor.scale_numerical_features">
-<span class="sig-name descname"><span class="pre">scale_numerical_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numerical_sequences</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DataProcessor.scale_numerical_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DataProcessor.scale_numerical_features" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">scale_numerical_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DataProcessor.scale_numerical_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DataProcessor.scale_numerical_features" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="djalgo.djai.ModelManager">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.djai.</span></span><span class="sig-name descname"><span class="pre">ModelManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence_length_i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequence_length_o</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_instruments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lstm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.005</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_heads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#ModelManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.ModelManager" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.djai.</span></span><span class="sig-name descname"><span class="pre">ModelManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence_length_i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequence_length_o</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_instruments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lstm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.005</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_heads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#ModelManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.ModelManager" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="djalgo.djai.ModelManager.fit">
@@ -333,13 +333,8 @@
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="djalgo.djai.ModelManager.scaled_back">
-<span class="sig-name descname"><span class="pre">scaled_back</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predicted_outputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#ModelManager.scaled_back"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.ModelManager.scaled_back" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="djalgo.djai.ModelManager.sequences_to_track_list">
-<span class="sig-name descname"><span class="pre">sequences_to_track_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predicted_sequences</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#ModelManager.sequences_to_track_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.ModelManager.sequences_to_track_list" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="djalgo.djai.ModelManager.scale_back">
+<span class="sig-name descname"><span class="pre">scale_back</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predicted_outputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#ModelManager.scale_back"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.ModelManager.scale_back" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -2134,7 +2129,7 @@ Can be a list of step choices or a random variable object. Defaults to [-1, 0, 1
 <li class="toctree-l1"><a class="reference internal" href="05_walks.html">5. Walks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_fractals.html">6. Fractals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_genetic.html">7. Genetic algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="08_ai.html">8. Machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_ai.html">8. 🤖 Machine learning</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 </ul>

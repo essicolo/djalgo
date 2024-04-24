@@ -55,7 +55,7 @@
 <span class="sd">        - insert_rests (bool): Whether to insert rests in the polyloops. Defaults to True.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">measure_length</span> <span class="o">=</span> <span class="n">measure_length</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">polyloops</span> <span class="o">=</span> <span class="p">[</span><span class="n">utils</span><span class="o">.</span><span class="n">insert_rests</span><span class="p">(</span><span class="n">polyloop</span><span class="p">)</span> <span class="k">for</span> <span class="n">polyloop</span> <span class="ow">in</span> <span class="n">polyloops</span><span class="p">]</span> <span class="k">if</span> <span class="n">insert_rests</span> <span class="k">else</span> <span class="n">polyloops</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">polyloops</span> <span class="o">=</span> <span class="p">[</span><span class="n">utils</span><span class="o">.</span><span class="n">fill_gaps_with_rests</span><span class="p">(</span><span class="n">polyloop</span><span class="p">)</span> <span class="k">for</span> <span class="n">polyloop</span> <span class="ow">in</span> <span class="n">polyloops</span><span class="p">]</span> <span class="k">if</span> <span class="n">insert_rests</span> <span class="k">else</span> <span class="n">polyloops</span>
 
 <div class="viewcode-block" id="Polyloop.plot_polyloops">
 <a class="viewcode-back" href="../../api.html#djalgo.loop.Polyloop.plot_polyloops">[docs]</a>
@@ -178,6 +178,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../04_minimalism.html">4. Minimalism</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../05_walks.html">5. Walks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../06_fractals.html">6. Fractals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_genetic.html">7. Genetic algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_ai.html">8. 🤖 Machine learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>

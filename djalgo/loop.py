@@ -19,7 +19,7 @@ class Polyloop:
         - insert_rests (bool): Whether to insert rests in the polyloops. Defaults to True.
         """
         self.measure_length = measure_length
-        self.polyloops = [utils.insert_rests(polyloop) for polyloop in polyloops] if insert_rests else polyloops
+        self.polyloops = [utils.fill_gaps_with_rests(polyloop) for polyloop in polyloops] if insert_rests else polyloops
 
     def plot_polyloops(self, pulse=1/4, colors=None):
         """

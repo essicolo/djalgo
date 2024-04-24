@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>8. Machine learning &#8212; Djalgo 0.1-alpha documentation</title>
+    <title>8. 🤖 Machine learning &#8212; Djalgo 0.1-alpha documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
     <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
@@ -37,13 +37,13 @@
 
           <div class="body" role="main">
             
-  <section id="8.-Machine-learning">
-<h1>8. Machine learning<a class="headerlink" href="#8.-Machine-learning" title="Link to this heading">¶</a></h1>
+  <section id="8.-🤖-Machine-learning">
+<h1>8. 🤖 Machine learning<a class="headerlink" href="#8.-🤖-Machine-learning" title="Link to this heading">¶</a></h1>
 <blockquote>
-<div><p><strong>Note</strong>. Djalgo’s AI approach is experimental.</p>
+<div><p><strong>Note</strong>. Djalgo’s AI approach produces uniform outcomes. Want to help? github.com/essicolo/djalgo</p>
 </div></blockquote>
-<p>We introduced machine learning while fitting Gaussian processes in section <a class="reference external" href="05_walks.html">5. Walks</a>. Djalgo’s module <code class="docutils literal notranslate"><span class="pre">djai</span></code> includes tools for modeling music from MIDI data relying on Tensorflow (a package for deep learning). <code class="docutils literal notranslate"><span class="pre">djai</span></code> is not loaded by default when importing Djalgo, since otherwise Tensorflow, a large and complicated package, should have been added to Djalgo’s dependencies. To use <code class="docutils literal notranslate"><span class="pre">djalgo</span></code>, you must <a class="reference external" href="https://www.tensorflow.org/install">install Tensorflow</a> in your
-environment. <code class="docutils literal notranslate"><span class="pre">djai</span></code> also rely on Pretty-midi to load and process MIDI files: you should also install it with <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span> <span class="pre">pretty-midi</span></code>. <code class="docutils literal notranslate"><span class="pre">djai</span></code> should be loaded as:</p>
+<p>We introduced machine learning while fitting Gaussian processes in section <a class="reference external" href="05_walks.html">5. Walks</a>. Djalgo’s module <code class="docutils literal notranslate"><span class="pre">djai</span></code> includes tools for modeling music from MIDI data relying on Tensorflow (a package for deep learning). <code class="docutils literal notranslate"><span class="pre">djai</span></code> is not loaded by default when importing Djalgo, since otherwise Tensorflow, a large and complicated package, should have been added to Djalgo’s dependencies. To use <code class="docutils literal notranslate"><span class="pre">djai</span></code>, you must <a class="reference external" href="https://www.tensorflow.org/install">install Tensorflow</a> in your
+environment. <code class="docutils literal notranslate"><span class="pre">djai</span></code> also rely on Music21 to load and process MIDI files: you should also install it with <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span> <span class="pre">music21</span></code>. Although Music21 is not as fast as Pretty-midi to process MIDI files, I had a better experience with processing files with it. <code class="docutils literal notranslate"><span class="pre">djai</span></code> should be loaded as:</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -58,85 +58,99 @@ environment. <code class="docutils literal notranslate"><span class="pre">djai</
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2024-04-18 15:07:15.500285: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+2024-04-24 11:52:38.056833: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
 To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
 </pre></div></div>
 </div>
-<p>The <code class="docutils literal notranslate"><span class="pre">djalgo</span></code> module is a sophisticated Python library designed for processing MIDI files using deep learning models. It extracts pitch, durations, offsets, an extra timing feature (time delta) and the (one-hot encoded) track the note belongs to. This module is could be useful for music researchers, AI enthusiasts, and developers working in the domain of automated music generation.</p>
-<p>Before goind into coding…</p>
-<section id="Ethics:-art-as-the-witnesses-of-experience">
-<h2>Ethics: art as the witnesses of experience<a class="headerlink" href="#Ethics:-art-as-the-witnesses-of-experience" title="Link to this heading">¶</a></h2>
-<p>My ethos will fluctuate and evolve, as anything should in the precious, short time we exist. Their is nothing inherently wrong woth AI, but if your piece was generating with a banal command prompt, your creative process is anything but banal and uninteresting, no matter the result. In times when any artistic piece needed years of work, the result was more important than the process. Now, when anyone can ask a LLM to generate an image of a cat riding a dinausar in a 5D space in the style of a
-mixed of Daly and cyber-punk, well, results are generated within seconds, and the process becomes more relevant. If, like me, you have spent years to designed your own AI, the <em>process</em> (not the result) behind the musical piece has an artistic value as good as any composer who has spent those years studying musical theory. Artists are people who spent the precious time they own to think on the narration of the object they created. When the process becomes applying reciepe, it belongs to home
-sweet home printed carpets sold on Amazon.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">djai</span></code> module is designed for processing MIDI files using deep learning models. It extracts pitch, durations, an offset computed in terms of difference in quarter lengths from the previous note (called tick delta) and the (one-hot encoded) track the note belongs to.</p>
+<section id="💭-Ethics:-art-as-the-witnesses-of-experience">
+<h2>💭 Ethics: art as the witnesses of experience<a class="headerlink" href="#💭-Ethics:-art-as-the-witnesses-of-experience" title="Link to this heading">¶</a></h2>
+<p>Even though <code class="docutils literal notranslate"><span class="pre">djai</span></code> was the module which took me the most time to develop, it is these days, to my opinion, the least interesting. Who needs to DIY their own AI when interesting results can already be generated with a command prompt to an AI? My ethos will fluctuate and evolve, as anything should in the precious, short time we exist. Their is nothing inherently wrong woth AI, but if your piece was generating with a banal command prompt, your creative process is anything but banal and
+uninteresting, no matter the result. In times when any artistic piece needed years of work, the result was as, or more important than the process. Now, when anyone can ask a LLM to generate an image of a cat riding a dinausar in space in the style of a mixed of Daly and cyber-punk, well, results are generated within seconds, and the process becomes more relevant. Nonetheless, if, like me, you have spent months to designed your own AI, the <em>process</em> (not the result) behind the musical piece has
+an artistic value as good as any composer who has spent those months studying musical theory. Finally, artists are people who spent the precious time they own to think on the narration of the object they created. When the process becomes applying reciepe, it belongs to home sweet home printed carpets sold on Amazon.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">djai</span></code> module doesn’t come with pre-trained models. That would have been too easy, right? I prefer seeing you tweak it and train it with your own compositions rather than just use it on Leonard Cohen song to generate new one. You worth more than this, and the world deserves more than command-prompt artists.</p>
 </section>
-<section id="Key-Features">
-<h2>Key Features<a class="headerlink" href="#Key-Features" title="Link to this heading">¶</a></h2>
+<section id="🗝️-Features">
+<h2>🗝️ Features<a class="headerlink" href="#🗝️-Features" title="Link to this heading">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">djai</span></code> has the following features.</p>
 <ol class="arabic simple">
 <li><p><strong>MIDI File Scanning</strong>: Scans directories for MIDI files, allowing for selective processing based on user-defined limits.</p></li>
 <li><p><strong>Feature Extraction</strong>: Extracts musical features such as pitch, duration, and timing from MIDI files.</p></li>
 <li><p><strong>Data Preprocessing</strong>: Handles scaling and one-hot encoding of musical features for neural network processing.</p></li>
-<li><p><strong>Model Training and Prediction</strong>: Supports building and training of LSTM and Transformer-based models for music prediction.</p></li>
+<li><p><strong>Model Training and Prediction</strong>: Supports building and training models for music prediction.</p></li>
 <li><p><strong>Music Generation</strong>: Generates new music tracks by predicting sequences of musical notes.</p></li>
 </ol>
 </section>
-<section id="Components">
-<h2>Components<a class="headerlink" href="#Components" title="Link to this heading">¶</a></h2>
+<section id="🧩-Components">
+<h2>🧩 Components<a class="headerlink" href="#🧩-Components" title="Link to this heading">¶</a></h2>
 <p>There are three classes in <code class="docutils literal notranslate"><span class="pre">djai</span></code>. The <code class="docutils literal notranslate"><span class="pre">DataProcessor</span></code> class is used internally tomanages feature extraction and sequence generation from MIDI files and performs preprocessing tasks such as feature scaling and encoding. <code class="docutils literal notranslate"><span class="pre">DataProcessor</span></code> is automatically called in the second class, <code class="docutils literal notranslate"><span class="pre">ModelManager</span></code>, which facilitates the creation, training, and management of neural network models. <code class="docutils literal notranslate"><span class="pre">ModelManager</span></code> supports three kinds of architectures: <em>LSTM</em>, <em>GRU</em> and <em>transformer</em> and provides
 functionalities for model training, prediction, and music generation. The third class, <code class="docutils literal notranslate"><span class="pre">PositionalEncoding</span></code>, is a custom Tensorflow layer used internally to build transformer models.</p>
 </section>
-<section id="Example">
-<h2>Example<a class="headerlink" href="#Example" title="Link to this heading">¶</a></h2>
-<p>The maestro data set comprises hundreds of midi files. Only three were selected to showcase the <code class="docutils literal notranslate"><span class="pre">DjFlow</span></code> class. To scan the files, use the <code class="docutils literal notranslate"><span class="pre">scan_midi_files</span></code> utility.</p>
-<div class="nbinput nblast docutils container">
+<section id="🪜-Example">
+<h2>🪜 Example<a class="headerlink" href="#🪜-Example" title="Link to this heading">¶</a></h2>
+<p>I downloaded three midi files were selected to showcase DjAI. To scan the files, use the <code class="docutils literal notranslate"><span class="pre">scan_midi_files</span></code> utility.</p>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_files</span> <span class="o">=</span> <span class="n">djai</span><span class="o">.</span><span class="n">scan_midi_files</span><span class="p">(</span><span class="s1">&#39;_djai-files/_maestro-sample&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_files</span> <span class="o">=</span> <span class="n">djai</span><span class="o">.</span><span class="n">scan_midi_files</span><span class="p">(</span><span class="s1">&#39;_midi&#39;</span><span class="p">)</span>
+<span class="n">midi_files</span>
 </pre></div>
 </div>
 </div>
-<p>The model can be created with a class instanciation comprising a long list of arguments.</p>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;_midi/tetris.mid&#39;,
+ &#39;_midi/pinkpanther.mid&#39;,
+ &#39;_midi/adams.mid&#39;,
+ &#39;_midi/rocky.mid&#39;,
+ &#39;_midi/mario.mid&#39;]
+</pre></div></div>
+</div>
+<p>The model can be created with a class instanciation comprising a list of arguments, which are explained right away.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">deep_djmodel</span> <span class="o">=</span> <span class="n">djai</span><span class="o">.</span><span class="n">ModelManager</span><span class="p">(</span>
-    <span class="n">sequence_length_i</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">sequence_length_o</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
-    <span class="n">num_instruments</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">model_type</span><span class="o">=</span><span class="s1">&#39;gru&#39;</span><span class="p">,</span>
-    <span class="n">n_layers</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_units</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
-    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span> <span class="n">loss_weights</span><span class="o">=</span><span class="kc">None</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_manager</span> <span class="o">=</span> <span class="n">djai</span><span class="o">.</span><span class="n">ModelManager</span><span class="p">(</span>
+    <span class="n">sequence_length_i</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">sequence_length_o</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">n_instruments</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">model_type</span><span class="o">=</span><span class="s1">&#39;gru&#39;</span><span class="p">,</span>
+    <span class="n">n_layers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">n_units</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.0001</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<section id="Understanding-Model-Configuration-in-djalgo">
-<h3>Understanding Model Configuration in <code class="docutils literal notranslate"><span class="pre">djalgo</span></code><a class="headerlink" href="#Understanding-Model-Configuration-in-djalgo" title="Link to this heading">¶</a></h3>
+<section id="🎛️-Understanding-Model-Configuration-in-djai">
+<h3>🎛️ Understanding Model Configuration in <code class="docutils literal notranslate"><span class="pre">djai</span></code><a class="headerlink" href="#🎛️-Understanding-Model-Configuration-in-djai" title="Link to this heading">¶</a></h3>
 <section id="Key-Parameters-and-Their-Impact-on-Model-Performance">
 <h4>Key Parameters and Their Impact on Model Performance<a class="headerlink" href="#Key-Parameters-and-Their-Impact-on-Model-Performance" title="Link to this heading">¶</a></h4>
-<p>In the <code class="docutils literal notranslate"><span class="pre">djalgo</span></code> module, several parameters play critical roles in defining how the neural network learns and generates music based on MIDI files. Let’s break down these parameters for better clarity.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">djai</span></code> module, several parameters play critical roles in defining how the neural network learns and generates music based on MIDI files. Let’s break down these parameters for better clarity.</p>
 <section id="Sequence-Length">
 <h5>Sequence Length<a class="headerlink" href="#Sequence-Length" title="Link to this heading">¶</a></h5>
 <ul class="simple">
-<li><p><strong>``sequence_length_i``</strong> and <strong>``sequence_length_o``</strong> determine the number of notes the model uses to make predictions. Specifically, <code class="docutils literal notranslate"><span class="pre">sequence_length_i</span></code> refers to the number of input notes used to predict the next <code class="docutils literal notranslate"><span class="pre">sequence_length_o</span></code> notes. For example, setting <code class="docutils literal notranslate"><span class="pre">sequence_length_i</span></code> to 30 and <code class="docutils literal notranslate"><span class="pre">sequence_length_o</span></code> to 10 means the model uses 30 notes to predict the subsequent 10 notes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sequence_length_i</span></code> and <code class="docutils literal notranslate"><span class="pre">sequence_length_o</span></code> determine the number of notes the model uses to make predictions. Specifically, <code class="docutils literal notranslate"><span class="pre">sequence_length_i</span></code> refers to the number of input notes used to predict the next <code class="docutils literal notranslate"><span class="pre">sequence_length_o</span></code> notes. For example, setting <code class="docutils literal notranslate"><span class="pre">sequence_length_i</span></code> to 30 and <code class="docutils literal notranslate"><span class="pre">sequence_length_o</span></code> to 10 means the model uses 30 notes to predict the subsequent 10 notes. Even though the model predicts a sequence, DjAI retains only the first prediction, an approach named <em>teacher
+forcing</em>. The autoregressive approach removes the first item of the sequence to predict from, then append the newly predicted one as basis to predict the next.</p></li>
 </ul>
 </section>
 <section id="Number-of-Instruments">
 <h5>Number of Instruments<a class="headerlink" href="#Number-of-Instruments" title="Link to this heading">¶</a></h5>
 <ul class="simple">
-<li><p><strong>``num_instruments``</strong> specifies how many different instruments the model should consider. This parameter is crucial for models trained on diverse ensembles. Note that training on MIDI files with fewer instruments than specified can lead to inefficiencies and unnecessary computational overhead.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_instruments</span></code> specifies how many different instruments the model should consider, starting from the first of each MIDI file. This parameter is crucial for models trained on diverse ensembles. Note that training on MIDI files with fewer instruments than specified can lead to inefficiencies and unnecessary computational overhead.</p></li>
 </ul>
 </section>
 <section id="Model-Type">
 <h5>Model Type<a class="headerlink" href="#Model-Type" title="Link to this heading">¶</a></h5>
 <ul class="simple">
-<li><p><strong>``model_type``</strong> can be set to <code class="docutils literal notranslate"><span class="pre">'lstm'</span></code>, <code class="docutils literal notranslate"><span class="pre">'gru'</span></code>, or <code class="docutils literal notranslate"><span class="pre">'transformer'</span></code>:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">model_type</span></code> can be set to <code class="docutils literal notranslate"><span class="pre">'lstm'</span></code>, <code class="docutils literal notranslate"><span class="pre">'gru'</span></code>, or <code class="docutils literal notranslate"><span class="pre">'transformer'</span></code>:</p>
 <ul>
-<li><p><strong>LSTMs</strong> (Long Short-Term Memory networks) are more traditional and capable but tend to be complex.</p></li>
-<li><p><strong>GRUs</strong> (Gated Recurrent Units) aim to simplify the architecture of LSTMs with fewer parameters while maintaining performance.</p></li>
-<li><p><strong>Transformers</strong> are at the forefront of current large language model (LLM) technology, offering potentially superior learning capabilities due to their attention mechanisms, albeit at the cost of increased complexity and computational demands.</p></li>
+<li><p>LSTMs (Long Short-Term Memory networks) are more traditional and capable but tend to be complex.</p></li>
+<li><p>GRUs (Gated Recurrent Units) aim to simplify the architecture of LSTMs with fewer parameters while maintaining performance.</p></li>
+<li><p>Transformers are at the forefront of current large language model (LLM) technology, offering potentially superior learning capabilities due to their attention mechanisms, albeit at the cost of increased complexity and computational demands.</p></li>
 </ul>
 </li>
 </ul>
@@ -144,34 +158,33 @@ functionalities for model training, prediction, and music generation. The third 
 <section id="Architecture-Configuration">
 <h5>Architecture Configuration<a class="headerlink" href="#Architecture-Configuration" title="Link to this heading">¶</a></h5>
 <ul class="simple">
-<li><p><strong>``n_layers``</strong> and <strong>``n_units``</strong> control the depth and width of the neural network. <code class="docutils literal notranslate"><span class="pre">n_layers</span></code> is the number of layers in the network, and <code class="docutils literal notranslate"><span class="pre">n_units</span></code> represents the number of neurons in each of these layers.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n_layers</span></code> and <code class="docutils literal notranslate"><span class="pre">n_units</span></code> control the depth and width of the neural network. <code class="docutils literal notranslate"><span class="pre">n_layers</span></code> is the number of layers in the network, and <code class="docutils literal notranslate"><span class="pre">n_units</span></code> represents the number of neurons in each of these layers. <code class="docutils literal notranslate"><span class="pre">n_heads</span></code> is the number of heads in the multi-head attention algorithm, and is only taken into account in the <em>transformer</em> model type.</p></li>
 </ul>
 </section>
 <section id="Training-Dynamics">
 <h5>Training Dynamics<a class="headerlink" href="#Training-Dynamics" title="Link to this heading">¶</a></h5>
 <ul class="simple">
-<li><p><strong>``dropout``</strong> is a technique to prevent overfitting by randomly deactivating a portion of the neurons during training, specified by a ratio between 0 and 1.</p></li>
-<li><p><strong>``batch_size``</strong> affects how many samples are processed before the model updates its internal parameters, impacting both training speed and convergence behavior.</p></li>
-<li><p><strong>``learning_rate``</strong> influences the step size at each iteration in the training process. A higher learning rate can cause overshooting optimal solutions, while a very low rate may lead to slow convergence.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dropout</span></code> is a technique to prevent overfitting by randomly deactivating a portion of the neurons during training, specified by a ratio between 0 and 1.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">batch_size</span></code> affects how many samples are processed before the model updates its internal parameters, impacting both training speed and convergence behavior.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">learning_rate</span></code> influences the step size at each iteration in the training process. A higher learning rate can cause overshooting optimal solutions, while a very low rate may lead to slow convergence.</p></li>
 </ul>
 </section>
 <section id="Loss-Weights">
 <h5>Loss Weights<a class="headerlink" href="#Loss-Weights" title="Link to this heading">¶</a></h5>
 <ul class="simple">
-<li><p><strong>``loss_weights``</strong> allows customization of the importance of different prediction components such as pitch, duration, offset, and time delta, potentially skewing the model to prioritize accuracy in specific areas.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">loss_weights</span></code> allows customization of the importance of different prediction components such as pitch, duration, offset, and time delta, potentially skewing the model to prioritize accuracy in specific areas.</p></li>
 </ul>
 </section>
 </section>
 </section>
-<section id="Fitting-the-Model">
-<h3>Fitting the Model<a class="headerlink" href="#Fitting-the-Model" title="Link to this heading">¶</a></h3>
+<section id="🏋️-Fitting-the-Model">
+<h3>🏋️ Fitting the Model<a class="headerlink" href="#🏋️-Fitting-the-Model" title="Link to this heading">¶</a></h3>
 <p>To train the model, you use the <code class="docutils literal notranslate"><span class="pre">.fit()</span></code> method with a list of MIDI file paths. The number of epochs, which represent complete passes over the entire dataset, can be adjusted according to the complexity of the task and desired accuracy. More epochs typically lead to better model performance but require more time to complete.</p>
-<p>This configuration gives a comprehensive view of how <code class="docutils literal notranslate"><span class="pre">djalgo</span></code> harnesses advanced neural network architectures to generate music, allowing users to tailor the learning process to specific needs and datasets.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">history</span> <span class="o">=</span> <span class="n">deep_djmodel</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">midi_files</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">history</span> <span class="o">=</span> <span class="n">model_manager</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">midi_files</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -180,56 +193,66 @@ functionalities for model training, prediction, and music generation. The third 
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Epoch 1/5
-<span class="ansi-bold">311/311</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">61s</span> 103ms/step - instrument_index_accuracy: 0.9812 - loss: 7.2406
-Epoch 2/5
-<span class="ansi-bold">311/311</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">33s</span> 105ms/step - instrument_index_accuracy: 0.9994 - loss: 2.6191
-Epoch 3/5
-<span class="ansi-bold">311/311</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">31s</span> 98ms/step - instrument_index_accuracy: 1.0000 - loss: 2.5502
-Epoch 4/5
-<span class="ansi-bold">311/311</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">31s</span> 99ms/step - instrument_index_accuracy: 1.0000 - loss: 2.3235
-Epoch 5/5
-<span class="ansi-bold">311/311</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">30s</span> 98ms/step - instrument_index_accuracy: 1.0000 - loss: 2.1008
+Epoch 1/10
+<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">8s</span> 71ms/step - loss: 0.1528
+Epoch 2/10
+<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">1s</span> 70ms/step - loss: 0.0665
+Epoch 3/10
+<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">2s</span> 73ms/step - loss: 0.0585
+Epoch 4/10
+<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">2s</span> 73ms/step - loss: 0.0552
+Epoch 5/10
+<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">1s</span> 71ms/step - loss: 0.0537
+Epoch 6/10
+<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">2s</span> 71ms/step - loss: 0.0516
+Epoch 7/10
+<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">2s</span> 71ms/step - loss: 0.0523
+Epoch 8/10
+<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">2s</span> 80ms/step - loss: 0.0508
+Epoch 9/10
+<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">2s</span> 77ms/step - loss: 0.0503
+Epoch 10/10
+<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">2s</span> 85ms/step - loss: 0.0506
 </pre></div></div>
 </div>
 <p>Models are long to fit, so you might want to save it for future use.</p>
 <div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_manager</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;_output/lstm.keras&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>To predict a new sequence, you can use the <code class="docutils literal notranslate"><span class="pre">.generate()</span></code> method of the <code class="docutils literal notranslate"><span class="pre">djai.ModelManager</span></code> object. The generate method takes the first notes of a MIDI file (defined in <code class="docutils literal notranslate"><span class="pre">sequence_length_i</span></code>) and returns a Djalgo track or, for multiple instruments, a list of tracks. Make sure that the MIDI file has enough notes.</p>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">deep_djmodel</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;_djai-files/lstm.keras&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<p>To predict a new sequence, you can use the <code class="docutils literal notranslate"><span class="pre">.generate()</span></code> method of the ModelManager object. The predict method takes the first notes of a MIDI file (defined in <code class="docutils literal notranslate"><span class="pre">sequence_length_i</span></code>) and returns a Djalgo track or, for multiple instruments, a list of tracks. Make sure that the MIDI file has enough notes.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">deep_djmodel</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">midi_files</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">model_manager</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="s1">&#39;_output/polyloop.mid&#39;</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">predictions</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[[(71, 0.0021451586, 1.2516425),
-  (71, 0.0021453972, 1.2528331),
-  (71, 0.0021450035, 1.2544166),
-  (71, 0.0021549403, 1.2575257),
-  (71, 0.00215076, 1.2582741),
-  (71, 0.0021510506, 1.2592133),
-  (71, 0.0021390854, 1.2571211),
-  (71, 0.002152808, 1.2582511),
-  (71, 0.002152864, 1.2610896),
-  (71, 0.0021475654, 1.2620306)]]
+[(68, 0.9924258, 0.28069848),
+ (68, 0.99277496, 0.28115964),
+ (68, 0.9936436, 0.28131378),
+ (69, 0.99493337, 0.28136227),
+ (69, 0.9964782, 0.28146863),
+ (69, 0.9980702, 0.28165814),
+ (69, 0.9995358, 0.28189823),
+ (69, 1.0007924, 0.28215533),
+ (69, 1.0018008, 0.28239486),
+ (69, 1.0025604, 0.28259254)]
 </pre></div></div>
 </div>
-<p>Predictions are clearly not suited yet for music.</p>
+<p>Predictions are uniform and clearly not suited yet for music yet.</p>
 </section>
 </section>
 </section>
@@ -253,7 +276,7 @@ Epoch 5/5
 <li class="toctree-l1"><a class="reference internal" href="05_walks.html">5. Walks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_fractals.html">6. Fractals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_genetic.html">7. Genetic algorithms</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">8. Machine learning</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">8. 🤖 Machine learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 </ul>

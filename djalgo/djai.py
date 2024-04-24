@@ -28,91 +28,115 @@ def scan_midi_files(directory, max_files=None):
 
     return midi_files
 
+import numpy as np
+import music21 as m21
+
 class DataProcessor:
-    def __init__(self, sequence_length_i, sequence_length_o, num_instruments):
+    def __init__(self, sequence_length_i, sequence_length_o, n_instruments, scale_mins=None, scale_maxs=None):
         self.sequence_length_i = sequence_length_i
         self.sequence_length_o = sequence_length_o
-        self.num_instruments = num_instruments
-        # feature indices metadata
-        self.feature_config = {
-            'numerical_features': slice(0, 4),  # assuming first 4 features are numerical
-            'instrument_features': slice(4, None)  # assuming features from index 4 onwards are instrument
-        }
-        self.numerical_indices = self.feature_config['numerical_features']
-        self.instrument_indices = self.feature_config['instrument_features']
-        self.means = None
-        self.stds = None
+        self.total_sequence_length = sequence_length_i + sequence_length_o
+        self.n_instruments = n_instruments
+        self.numerical_indices = slice(0, 3) # hard coded, pitch, duration, tick_delta
+        self.instrument_encoding = {}
+        self.scale_mins = scale_mins
+        self.scale_maxs = scale_maxs
 
-    def extract_features(self, notes, instrument_index, midi_data):
-        # Get tempo changes and tick per beat
-        tempo_changes = midi_data.get_tempo_changes()
-        tick_per_beat = midi_data.resolution
-        
-        # Interpolate tempo changes to find the tempo at each note start time
-        tempos = np.interp([note.start for note in notes], tempo_changes[0], tempo_changes[1])
-        ticks_to_quarters = 60.0 / (tempos / tick_per_beat)  # Converts ticks to quarter note length
+    def encode_instruments(self, part):
+        if part.partName not in self.instrument_encoding:
+            if len(self.instrument_encoding) < self.n_instruments:
+                self.instrument_encoding[part.partName] = len(self.instrument_encoding)
+            else:
+                return np.zeros(self.n_instruments)  # Return an empty one-hot vector
+        index = self.instrument_encoding.get(part.partName, 0)
+        one_hot = np.zeros(self.n_instruments)
+        one_hot[index] = 1
+        return one_hot
 
-        # Calculate features using interpolated ticks to quarters for each note
-        pitches = [note.pitch for note in notes]
-        durations = [(note.end - note.start) / tpb for note, tpb in zip(notes, ticks_to_quarters)]
-        offsets = [note.start / tpb for note, tpb in zip(notes, ticks_to_quarters)]
-        time_deltas = [offsets[i] - (offsets[i-1] + durations[i-1]) if i > 0 else offsets[0] for i in range(len(notes))]
+    def extract_features(self, notes, instrument_vector):
+        pitches = []
+        durations = []
+        tick_deltas = []
         
-        instrument_indices = [instrument_index] * len(notes)
-        return np.stack([pitches, durations, offsets, time_deltas, instrument_indices], axis=1)
+        # Ensure that notes are sorted correctly by their offsets
+        notes.sort(key=lambda x: x.offset)
+
+        # Use the first note's offset as the starting point for delta calculations
+        previous_offset = notes[0].offset
+
+        for i, note in enumerate(notes):
+            current_offset = note.offset  # Handle both chords and notes uniformly
+            if note.isChord:
+                # If it's a chord, process each note in the chord
+                for chord_note in note.notes:
+                    if len(pitches) < self.total_sequence_length:
+                        pitches.append(chord_note.pitch.midi)
+                        durations.append(chord_note.duration.quarterLength)
+                        tick_deltas.append(current_offset - previous_offset)  # Delta calculation
+                        previous_offset = current_offset  # Update previous offset after processing the chord
+            elif note.isNote:
+                if len(pitches) < self.total_sequence_length:
+                    pitches.append(note.pitch.midi)
+                    durations.append(note.duration.quarterLength)
+                    tick_deltas.append(current_offset - previous_offset)
+                    previous_offset = current_offset
+
+        # Adjust the first tick delta to zero for the sequence start
+        if tick_deltas:
+            tick_deltas[0] = 0
+
+        # Combine features and tile the instrument vector
+        features = np.column_stack((pitches, durations, tick_deltas))
+        instrument_features = np.tile(instrument_vector, (len(pitches), 1))
+        return np.column_stack((features, instrument_features))
+
 
     def midi_files_to_sequences(self, midi_files):
         all_sequences = []
         for midi_file in midi_files:
-            midi_data = pretty_midi.PrettyMIDI(midi_file)
-            for instrument in midi_data.instruments:
-                notes = instrument.notes
-                if len(notes) < self.sequence_length_i + self.sequence_length_o:
+            score = m21.converter.parse(midi_file)
+            for part in score.parts:
+                instrument_vector = self.encode_instruments(part)
+                if instrument_vector is None:
                     continue
-                for i in range(len(notes) - self.sequence_length_i - self.sequence_length_o + 1):
-                    sequence = notes[i:i + self.sequence_length_i + self.sequence_length_o]
-                    features = self.extract_features(sequence, instrument.program, midi_data)
-                    all_sequences.append(features)
-        return np.array(all_sequences)
+
+                notes = list(part.flatten().notesAndRests)
+                notes.sort(key=lambda note: note.offset)
+                # Iterate through the notes to extract all possible sequences of the defined length
+                for i in range(len(notes) - self.total_sequence_length + 1):
+                    sequence = notes[i:i + self.total_sequence_length]
+                    features = self.extract_features(sequence, instrument_vector)
+                    if features.shape[0] == self.total_sequence_length:  # Ensure only complete sequences are added
+                        all_sequences.append(features)
+
+        return np.array(all_sequences, dtype=object)
 
     def compute_scaling_parameters(self, sequences):
-        self.means = np.nanmean(sequences[:, :, self.numerical_indices], axis=(0, 1))
-        self.stds = np.nanstd(sequences[:, :, self.numerical_indices], axis=(0, 1))
+        self.scale_mins = np.nanmin(sequences[:, :, self.numerical_indices], axis=(0, 1))
+        self.scale_maxs = np.nanmax(sequences[:, :, self.numerical_indices], axis=(0, 1))
+        self.scale_mins[0] = 0  # Min pitch
+        self.scale_maxs[0] = 127  # Max pitch
 
-    def scale_numerical_features(self, numerical_sequences):
-        if self.means is None or self.stds is None:
-            self.compute_scaling_parameters(numerical_sequences)
-        sequences_scaled = (numerical_sequences - self.means) / self.stds
-        return sequences_scaled
-    
-    def preprocess_data(self, sequences):
-        numerical_sequences = sequences[:, :, self.numerical_indices]
-        scaled_numerical_sequences = self.scale_numerical_features(numerical_sequences)
-        instrument_sequences = sequences[:, :, self.instrument_indices]
+    def scale_numerical_features(self, sequences):
+        if self.scale_mins is None or self.scale_maxs is None:
+            self.compute_scaling_parameters(sequences)
+        sequences[:, :, self.numerical_indices] = (sequences[:, :, self.numerical_indices] - self.scale_mins) / (self.scale_maxs - self.scale_mins)
+        return sequences
 
-        # One-hot encoding for instrument indices for both inputs and outputs
-        instrument_indices = instrument_sequences.astype(int).reshape(-1)
-        one_hot_instruments = np.eye(self.num_instruments)[instrument_indices]
-        one_hot_instruments = one_hot_instruments.reshape(instrument_sequences.shape[0], instrument_sequences.shape[1], self.num_instruments)
-
-        #print("scaled sequences shape:", scaled_numerical_sequences.shape)
-        #print("one hot instruments shape:", one_hot_instruments.shape)
-
-        # Concatenate scaled features with one-hot encoded instrument indices
-        numerical_input_data = scaled_numerical_sequences[:, :self.sequence_length_i, self.numerical_indices]
-        nunerical_output_data = scaled_numerical_sequences[:, self.sequence_length_i:, self.numerical_indices]
-        instrument_input_data = one_hot_instruments[:, :self.sequence_length_i]
-        instrument_output_data = one_hot_instruments[:, self.sequence_length_i:]
-        inputs = np.concatenate([numerical_input_data, instrument_input_data], axis=-1)
-        outputs = [nunerical_output_data[:, :, i] for i in range(nunerical_output_data.shape[2])]
-        outputs.append(instrument_output_data)  # Add one-hot encoded instrument index as the last output
-
-        return inputs, tuple(outputs)
-    
     def prepare_data(self, midi_files):
-        sequences = self.midi_files_to_sequences(midi_files)
-        inputs, outputs = self.preprocess_data(sequences)
-        return inputs, outputs
+        self.sequences = self.midi_files_to_sequences(midi_files)
+        if len(self.sequences) == 0:
+            raise ValueError("No sequences were extracted. Check the input data, maybe just a wrong path definition.")
+        if self.n_instruments == 1:
+            self.sequences = self.sequences[:, :, self.numerical_indices] # remove the instrument feature if only one instrument is scanned
+        self.sequences_sc = self.scale_numerical_features(self.sequences.copy())
+        sequences_input = np.array(self.sequences_sc[:, :self.sequence_length_i, :], dtype=np.float32)
+        sequences_output = self.sequences_sc[:, self.sequence_length_i:, :]
+        sequences_output_list = [np.array(sequences_output[:, :, i], dtype=np.float32) for i in range(self.numerical_indices.stop)]
+        sequences_output_list.append(
+            np.array(sequences_output[:, :, self.numerical_indices.stop:], dtype=np.float32)
+        )
+        return sequences_input, tuple(sequences_output_list)
 
 
 @tf.keras.utils.register_keras_serializable()
@@ -148,19 +172,34 @@ class PositionalEncoding(tf.keras.layers.Layer):
         return config
 
 class ModelManager:
-    def __init__(self, sequence_length_i=30, sequence_length_o=10, num_instruments=2, model_type='lstm', n_layers=3, n_units=128, dropout=0.2, batch_size=32, learning_rate=0.005, num_heads=2, loss_weights=None):
+    def __init__(self, sequence_length_i=32, sequence_length_o=8, n_instruments=1, model_type='lstm', n_layers=3, n_units=128, dropout=0.2, batch_size=32, learning_rate=0.005, n_heads=2, loss_weights=None):
+        """
+        sequence_length_o is not 1, even though we work in autoregression. Predicting multiple steps ahead even though subsequent steps are ignored is called teacher forcing.
+        """
+
         self.sequence_length_i = sequence_length_i
         self.sequence_length_o = sequence_length_o
-        self.num_instruments = num_instruments
-        self.num_features = 5  # pitch, duration, offset, time_delta, instrument_index
+        self.n_instruments = n_instruments
+        self.num_numeric_features = 3  # pitch, duration, tick_delta
         self.learning_rate = learning_rate
         self.batch_size = batch_size
-        self.loss_weights = loss_weights if loss_weights else {'pitch': 1.0, 'duration': 1.0, 'offset': 1.0, 'time_delta': 100.0, 'instrument_index': 100.0}
-        self.data_processor = DataProcessor(sequence_length_i, sequence_length_o, num_instruments)
-        self.model = self._create_default_model(n_layers, n_units, dropout, num_heads, model_type, num_instruments)
-        
-    def _create_default_model(self, n_layers, n_units, dropout, num_heads, model_type, num_instruments):
-        n_features_onehot = self.num_features - 1 + num_instruments
+        if loss_weights is None:
+            # Set default loss weights
+            self.loss_weights = {'pitch': 1.0, 'duration': 1.0, 'tick_delta': 1.0}
+            if n_instruments > 1:
+                self.loss_weights['instrument_index'] = 1.0  # Add instrument loss weight 
+        else:
+            self.loss_weights = loss_weights
+        self.model = self._create_default_model(n_layers, n_units, dropout, n_heads, model_type, n_instruments)
+
+        self.data_processor = DataProcessor(sequence_length_i, sequence_length_o, n_instruments)
+        self.model = self._create_default_model(n_layers, n_units, dropout, n_heads, model_type, n_instruments)
+
+    def _create_default_model(self, n_layers, n_units, dropout, n_heads, model_type, n_instruments):
+        if n_instruments < 2:
+            n_features_onehot = self.num_numeric_features
+        else:
+            n_features_onehot = self.num_numeric_features + n_instruments
         input_shape = (self.sequence_length_i, n_features_onehot)
         inputs = tf.keras.Input(shape=input_shape)
 
@@ -169,7 +208,7 @@ class ModelManager:
             positional_encoding_layer = PositionalEncoding(self.sequence_length_i, n_features_onehot)
             x = positional_encoding_layer(x)
             for i in range(n_layers):
-                attention_output = tf.keras.layers.MultiHeadAttention(num_heads=num_heads, key_dim=n_units)(x, x)
+                attention_output = tf.keras.layers.MultiHeadAttention(n_heads=n_heads, key_dim=n_units)(x, x)
                 x = tf.keras.layers.Dropout(dropout)(x)
                 x = tf.keras.layers.LayerNormalization(epsilon=1e-6)(x + attention_output)
                 ff_output = tf.keras.Sequential([
@@ -184,31 +223,37 @@ class ModelManager:
                 elif model_type == 'gru':
                     x = tf.keras.layers.GRU(n_units, return_sequences=True, dropout=dropout)(x)
 
-        # Using direct slicing here
         x = x[:, -self.sequence_length_o:]
 
         outputs = [
-            tf.keras.layers.Dense(1, name=f"{feature}")(x) for feature in ["pitch", "duration", "offset", "time_delta"]
+            tf.keras.layers.Dense(1, name=f"{feature}")(x) for feature in ["pitch", "duration", "tick_delta"]
         ]
-        if num_instruments > 1:
+        if n_instruments > 1:
             instruments_output = tf.keras.layers.TimeDistributed(
-                tf.keras.layers.Dense(num_instruments, activation='softmax'), name='instrument_index'
+                tf.keras.layers.Dense(n_instruments, activation='softmax'), name='instrument_index'
             )(x)
-        else:
-            instruments_output = tf.keras.layers.TimeDistributed(
-                tf.keras.layers.Dense(1, activation='sigmoid'), name='instrument_index'
-            )(x)
-        outputs.append(instruments_output)
+            outputs.append(instruments_output)
 
         model = tf.keras.Model(inputs=inputs, outputs=outputs)
-        model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=self.learning_rate),
-                      loss={'pitch': 'mean_squared_error',
-                            'duration': 'mean_squared_error',
-                            'offset': 'mean_squared_error',
-                            'time_delta': 'mean_squared_error',
-                            'instrument_index': 'categorical_crossentropy' if num_instruments > 1 else 'binary_crossentropy'},
-                      loss_weights=self.loss_weights,
-                      metrics={'instrument_index': 'accuracy'})
+        
+        lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
+            self.learning_rate,
+            decay_steps=10000,
+            decay_rate=0.96,
+            staircase=True
+        )
+        optimizer = tf.keras.optimizers.RMSprop(learning_rate=lr_schedule)
+        
+        loss_dict = {'pitch': 'mean_squared_error',
+                    'duration': 'mean_squared_error',
+                    'tick_delta': 'mean_squared_error'}
+        if n_instruments > 1:
+            loss_dict['instrument_index'] = 'categorical_crossentropy'
+        
+        model.compile(optimizer=optimizer,
+                    loss=loss_dict,
+                    loss_weights=self.loss_weights,
+                    metrics={'instrument_index': 'accuracy'} if n_instruments > 1 else None)
         return model
     
     def fit(self, midi_files, epochs=10):
@@ -216,34 +261,20 @@ class ModelManager:
         dataset = tf.data.Dataset.from_tensor_slices((inputs, targets)).batch(self.batch_size)
         history = self.model.fit(dataset, epochs=epochs)
         return history
-    
-    def scaled_back(self, predicted_outputs):
-        rescaled_outputs = predicted_outputs.copy()
-        numerical_indices = self.data_processor.numerical_indices
-        means = self.data_processor.means
-        stds = self.data_processor.stds
-        for i in range(predicted_outputs.shape[2]):  # Loop over the last dimension (features)
-            if i in range(numerical_indices.start, numerical_indices.stop): 
-                rescaled_outputs[:, :, i] = predicted_outputs[:, :, i] * stds[i - numerical_indices.start] + means[i - numerical_indices.start]
-        return rescaled_outputs
+        
+    def scale_back(self, predicted_outputs):
+        unscaled_outputs = []
+        for i, p in enumerate(predicted_outputs):
+            if i < self.data_processor.numerical_indices.stop:  # Handle numerical features
+                min_val = self.data_processor.scale_mins[i]
+                max_val = self.data_processor.scale_maxs[i]
+                unscaled_outputs.append(p * (max_val - min_val) + min_val)
+            else:  # Handle one-hot encoded instruments
+                exp_logits = np.exp(p)
+                softmax_output = exp_logits / np.sum(exp_logits, axis=-1, keepdims=True)
+                unscaled_outputs.append(softmax_output)
+        return unscaled_outputs
 
-    def sequences_to_track_list(self, predicted_sequences):
-        tracks = []
-        instrument_indices = self.data_processor.instrument_indices
-        numerical_indices = self.data_processor.numerical_indices
-        for i in range(self.num_instruments):
-            track = []
-            for j in range(predicted_sequences.shape[1]):
-                max_instrument_index = np.argmax(predicted_sequences[0, j, instrument_indices])
-                if max_instrument_index == i:
-                    pitch = int(round(predicted_sequences[0, j, numerical_indices.start]))
-                    duration = predicted_sequences[0, j, numerical_indices.start + 1]
-                    offset = predicted_sequences[0, j, numerical_indices.start + 2]
-                    track.append((pitch, duration, offset))
-            tracks.append(track)
-
-        return tracks
-    
     def generate(self, midi_file_path, length=10):
         if isinstance(midi_file_path, str):
             midi_file_path = [midi_file_path]
@@ -251,22 +282,40 @@ class ModelManager:
         if inputs.size == 0:
             print("No sequences extracted, possibly too few notes.")
             return None
-        input_data = inputs[0:1, :self.sequence_length_i, :] # 0:1 for only use the first sequence
-        predictions = self.model.predict(input_data, verbose=0)
-        predictions = np.concatenate(predictions, axis=2) # the prediction has one output for each feature (necessary for loss calculation)
-        if predictions.shape[1] > length:
-            predictions = predictions[:, :length, :]
-        else:
-            total_steps = length - predictions.shape[1]
-            for _ in range(total_steps):
-                input_data = np.concatenate((input_data[:, 1:, :], predictions[:, -1:, :]), axis=1)
-                next_step = np.concatenate(self.model.predict(input_data, verbose=0), axis=2)
-                predictions = np.concatenate((predictions, next_step), axis=1)
 
-        predictions = self.scaled_back(predictions)
-        #print("Print predictions:", predictions)
-        tracks = self.sequences_to_track_list(predictions)
-        return tracks
+        current_sequences = inputs[0:1, :self.sequence_length_i, :]  # Initial input
+        generated_sequences = [[] for _ in range(self.n_instruments)]
+
+        for _ in range(length):
+            predictions = self.model.predict(current_sequences, verbose=0)
+            scaled_predictions = self.scale_back(predictions)
+
+            for i in range(self.n_instruments):
+                pitch = int(round(scaled_predictions[0][0, -1, 0]))  # Assumes pitch is the first feature
+                duration = scaled_predictions[1][0, -1, 0]  # Assumes duration is the second feature
+                offset = scaled_predictions[2][0, -1, 0]  # Assumes offset is the third feature
+                if self.n_instruments > 1:
+                    instrument_probabilities = scaled_predictions[3][0, -1, :]  # Instrument classification
+                    chosen_instrument = np.argmax(instrument_probabilities)
+                    if chosen_instrument == i:
+                        generated_sequences[i].append((pitch, duration, offset))
+                else:
+                    generated_sequences[i].append((pitch, duration, offset))
+
+                # Update the sequence for the next prediction
+                next_step_features = []
+                for i in range(len(predictions)):
+                    if i < self.data_processor.numerical_indices.stop:
+                        next_step_features.append(predictions[i][0, 0, 0])
+                    else:
+                        next_step_features.extend([p for p in predictions[i][0, 0, :]])
+                next_step_features = np.array(next_step_features, dtype=np.float32).reshape(1, 1, -1)
+                current_sequences = np.concatenate([current_sequences[:, 1:, :], next_step_features], axis=1)
+        
+        if len(generated_sequences) == 1:
+            return generated_sequences[0]
+        else:
+            return generated_sequences
 
     def save(self, filepath):
         self.model.save(filepath)
@@ -274,4 +323,3 @@ class ModelManager:
     @staticmethod
     def load(filepath):
         return tf.keras.models.load_model(filepath, custom_objects={'PositionalEncoding': PositionalEncoding})
-    

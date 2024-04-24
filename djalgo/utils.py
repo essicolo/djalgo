@@ -23,9 +23,9 @@ def get_sharp(string):
 def get_degree_from_pitch(pitch, scale_list, tonic_pitch):
 
     if isinstance(pitch, str):
-        pitch = abc_to_midi(pitch)
+        pitch = cde_to_midi(pitch)
     if isinstance(tonic_pitch, str):
-        tonic_pitch = abc_to_midi(tonic_pitch) 
+        tonic_pitch = cde_to_midi(tonic_pitch) 
 
     tonic_index = scale_list.index(tonic_pitch)
 

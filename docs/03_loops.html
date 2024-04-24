@@ -41,7 +41,7 @@
 <h1>3. Loops<a class="headerlink" href="#3.-Loops" title="Link to this heading">¶</a></h1>
 <p>Let’s delve into a technique centred around numbers, but essentially visual, steering clear of mathematical functions. Multilevel rhythms in music and mathematics are about orchestrating beats, durations, and accents across various tiers or facets of a composition or sequence. These rhythmic patterns often manifest as polygons nestled within a circle, symbolizing the loop’s periodic nature. I’ve coined the term polyloops for these looping polygons (poly) to capture the essence of looping
 multiple shapes. Imagine a radar plot, as depicted in the next figure, that emits a beep each time a rotating line intersects a point on the circle’s perimeter. This setup allows us to: (1) introduce any number of points, (2) layer multiple polygons, each associated with a distinct instrument, (3) create triggered notes with tailored pitches and durations, and (4) adjust the rotation’s velocity to our liking.</p>
-<p><img alt="2fa862ef7eb24d4d832b360b9509e65e" src="_images/polyloops.svg" /></p>
+<p><img alt="1ff8522029aa411f8cbf6bcb01ecf1ef" src="_images/polyloops.svg" /></p>
 <p>In Djalgo, we represent each polyloop as a track, i.e. a list of note tuples, each tuple being a note defined as (pitch, duration, offset). A first polyloop might cover the basic rhythmic pattern of a loop. A second, as another layer of rhythms, and a third that leans towards the melodic side. The latter polyloop could incorporate varying pitches, adding a melodic layer to our rhythmic foundation. By carefully selecting the timing, we can craft a composition that not only has rhythmic interest
 but also melodic movement.</p>
 <div class="nbinput nblast docutils container">
@@ -103,7 +103,7 @@ but also melodic movement.</p>
 </pre></div>
 </div>
 </div>
-<p><img alt="77dc765951e549808f78f7d3afa3ac20" src="_images/pl1.png" /></p>
+<p><img alt="93c574f0d98e442699f8b1432956ce20" src="_images/pl1.png" /></p>
 <p>The plot show the structure of the loop in terms of durations and offsets. The pitch information is purposely excluded to simplify the visualization and prevent the plot from becoming too cluttered. The polyloops are displayed starting from the innermost loop, featuring the shortest radius, progressing outward to the final loop according to the order of the list in the <code class="docutils literal notranslate"><span class="pre">polyloops</span></code> argument. Each loop’s shape is delineated by a polygon to represent its structure. For instance, polyloop 0, which
 initiates four notes, forms a polygon that appears as a square. Since the four segments are equal, this loop is said to be <em>Euclidean</em>. The durations are depicted by arcs, with tiny radial marks denoting the start of the arc and its conclusion. Upon closer inspection, you might notice that some arcs appear darker than others. This indicates moments where one note sustains as the next begins. While this overlap is intentional, it’s worth noting that traditional western music notation sometimes
 struggles to accurately represent such overlapping notes. We might correct that manually. I’d also like to make polyloop0 to be less Euclidean.</p>
@@ -230,7 +230,7 @@ struggles to accurately represent such overlapping notes. We might correct that 
 </pre></div>
 </div>
 </div>
-<p><img alt="84fa27da40cb477fb5cf0da7c6b9be10" src="_images/pl2.png" /></p>
+<p><img alt="e4ba19040eb443df845705249286ae5a" src="_images/pl2.png" /></p>
 <p>The following code block uses another approach for stacking loops. Instead of appending new notes to the Polyloop object as we did earlier, the stacking is done with Music21. Notice how the key signature and tempo are stacked horizontally in parts before measures are themselves stacking horizontally, and how parts are stacking vertically in a score. The first polyloop had a measure length of 4, and was repeated 6 times. The second has a measure length of 6, so it must be repeated 4 times to have
 de same length.</p>
 <div class="nbinput docutils container">
@@ -258,7 +258,7 @@ de same length.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/03_loops_19_0.png" class="no-scaled-link" src="_images/03_loops_19_0.png" style="width: 732px; height: 833px;" />
+<img alt="_images/03_loops_19_0.png" class="no-scaled-link" src="_images/03_loops_19_0.png" style="width: 732px; height: 633px;" />
 </div>
 </div>
 <p>In Music21, you can stack vertically (like stacking tracks) by inserting score at offset 0.</p>
@@ -277,7 +277,7 @@ de same length.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv4481"></div>
+<div id="midiPlayerDiv3958"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -285,7 +285,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv4481_play() {
+function midiPlayerDiv3958_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -293,16 +293,33 @@ function midiPlayerDiv4481_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv4481");
-        mp.base64Load("data:audio/midi;base64,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");
+        mp.addPlayer("#midiPlayerDiv3958");
+        mp.base64Load("data:audio/midi;base64,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");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv4481_play, 2000);
+    setTimeout(midiPlayerDiv3958_play, 2000);
 } else {
-    midiPlayerDiv4481_play();
+    midiPlayerDiv3958_play();
 }
 </script></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pl_score</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;midi&#39;</span><span class="p">,</span> <span class="s1">&#39;_output/polyloop.mid&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;_output/polyloop.mid&#39;
+</pre></div></div>
 </div>
 <section id="Signal-analysis">
 <h3>Signal analysis<a class="headerlink" href="#Signal-analysis" title="Link to this heading">¶</a></h3>
@@ -319,7 +336,7 @@ music’s adherence to established musical norms and patterns, which can vary ac
 <p>where: - <span class="math notranslate nohighlight">\(n\)</span> is the number of observations (notes in this context), - <span class="math notranslate nohighlight">\(x_i\)</span> is the value of the <span class="math notranslate nohighlight">\(i^{th}\)</span> observation sorted in non-decreasing order (the attribute of each note), - <span class="math notranslate nohighlight">\(w_i\)</span> is the weight associated with the <span class="math notranslate nohighlight">\(i^{th}\)</span> observation, - and the sum <span class="math notranslate nohighlight">\(\sum_{i=1}^{n} x_i \cdot w_i\)</span> is the total weighted sum of all observations.</p>
 <p>An implementation of this equation can be found in the <a class="reference external" href="api.html#djalgo.analysis.Index">Index</a> class. Without weights,</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Unequal: &quot;</span><span class="p">,</span> <span class="n">dj</span><span class="o">.</span><span class="n">analysis</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">gini</span><span class="p">())</span>
@@ -344,7 +361,7 @@ Equal:    0.0
 </ul>
 <p>We can compute a Gini index for each polyloop, and for all of them, on offsets, pitches and durations.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gini_pitch</span> <span class="o">=</span> <span class="p">[]</span>
@@ -370,7 +387,7 @@ Equal:    0.0
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -382,7 +399,7 @@ Equal:    0.0
 </div>
 <p>Djalgo just do the analysis for lists of numbers. We extract the indices, then plot them with Plotly, a ploting library used under the hood to plot polyloops. Plotly should have been installed when you installed Djalgo. The longer the bar, the wilder polyloops are going to be.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
@@ -404,7 +421,7 @@ Equal:    0.0
 </pre></div>
 </div>
 </div>
-<p><img alt="67bcfe05b0f84b0e816323347996cfe7" src="_images/gini.png" /></p>
+<p><img alt="1d8f07585c834710b251e90a8f53f1c6" src="_images/gini.png" /></p>
 </section>
 <section id="Balance">
 <h2>Balance<a class="headerlink" href="#Balance" title="Link to this heading">¶</a></h2>
@@ -419,7 +436,7 @@ rhythm being centrally located. The mathematical condition for perfect balance i
 <li><p><em>Pitch balance</em> involves the distribution of musical pitches or harmonic functions throughout a composition. Pitch balance can also be weighed by the durations, to mgnify the importance of longer notes. In polyphonic textures, achieving pitch balance might mean evenly distributing high and low pitches or ensuring that harmonic tension and resolution are symmetrically placed, contributing to the overall harmonic structure’s equilibrium.</p></li>
 </ul>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">balance_pitch</span> <span class="o">=</span> <span class="p">[]</span>
@@ -455,18 +472,10 @@ rhythm being centrally located. The mathematical condition for perfect balance i
 </pre></div>
 </div>
 </div>
-<p><img alt="0220d4055cef44a9905cd9b903d85b8f" src="_images/balance.png" /></p>
+<p><img alt="df6fed70fc3346048a0f23dcae6b01ab" src="_images/balance.png" /></p>
 <p>When designing polyloops, lower levels (the first ones) are characterized by lower pitches, with darker (warmer) timbres (which are richer in low pitches) and more regular. Going higher is level (last polyloops), pitches become higher, timbres become brighter, and beats become less well-formed.</p>
 <p>The design helpers are not made to reach equality and balance. They are made to reach a desired approximation for indices. As a composer, you may desire to have imbalance and inequality, for wilder music, but balance and equality for more predictable parts.</p>
 <p>↳ <a class="reference external" href="04_minimalism.html">Minimalism</a></p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-</div>
 </section>
 </section>
 
@@ -489,6 +498,7 @@ rhythm being centrally located. The mathematical condition for perfect balance i
 <li class="toctree-l1"><a class="reference internal" href="05_walks.html">5. Walks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_fractals.html">6. Fractals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_genetic.html">7. Genetic algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_ai.html">8. 🤖 Machine learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 </ul>
