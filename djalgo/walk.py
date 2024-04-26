@@ -184,3 +184,111 @@ class Kernel:
             ]
         
         return sequence
+    
+class CelestialBody:
+    """
+    Represents a celestial body in space.
+
+    Attributes:
+        distance (float): The distance of the celestial body from its parent body.
+        orbital_speed (float): The orbital speed of the celestial body.
+        phase (float, optional): The phase of the celestial body's orbit (default is 0).
+        moons (list, optional): A list of CelestialBody objects representing the moons of the celestial body (default is None).
+    """
+
+    def __init__(self, distance, orbital_speed, phase=0, moons=None):
+        """
+        Initializes a new instance of the CelestialBody class.
+
+        Args:
+            distance (float): The distance of the celestial body from its parent body.
+            orbital_speed (float): The orbital speed of the celestial body.
+            phase (float, optional): The phase of the celestial body's orbit (default is 0).
+            moons (list, optional): A list of CelestialBody objects representing the moons of the celestial body (default is None).
+        """
+        self.distance = distance
+        self.orbital_speed = orbital_speed
+        self.phase = phase
+        self.moons = moons if moons else []
+
+    def position(self, times):
+        """
+        Calculates the position of the celestial body at the given times.
+
+        Args:
+            times (array-like): An array-like object containing the times at which to calculate the position.
+
+        Returns:
+            tuple: A tuple containing the x and y coordinates of the celestial body's position at the given times.
+        """
+        # Vectorize the position calculations
+        angles = self.orbital_speed * times + self.phase
+        x = self.distance * np.cos(angles)
+        y = self.distance * np.sin(angles)
+        return x, y
+
+    def simulate(self, times, parent_position=None):
+        """
+        Simulates the motion of the celestial body over the given times.
+
+        Args:
+            times (array-like): An array-like object containing the times at which to simulate the motion.
+            parent_position (tuple, optional): A tuple containing the x and y coordinates of the parent body's position (default is None).
+
+        Returns:
+            list: A list of tuples representing the distances and angles of the celestial body at the given times.
+        """
+        if parent_position is None:
+            parent_position = (np.zeros_like(times), np.zeros_like(times))
+
+        x, y = self.position(times)
+        x_total = parent_position[0] + x
+        y_total = parent_position[1] + y
+
+        results = []
+        for moon in self.moons:
+            results.extend(moon.simulate(times, (x_total, y_total)))
+
+        if not self.moons:
+            distances = np.sqrt(x_total**2 + y_total**2)
+            angles = np.arctan2(y_total, x_total) * 180 / np.pi  # Convert to degrees
+            return [(distances, angles % 360)]  # Ensure angles are from 0 to 360
+        return results
+
+class SolarSystem:
+    """
+    Represents a solar system.
+
+    Attributes:
+        planets (list): A list of celestial bodies in the solar system.
+    """
+
+    def __init__(self):
+        """
+        Initializes a new instance of the SolarSystem class.
+        """
+        self.planets = []
+
+    def add_planet(self, planet):
+        """
+        Adds a new planet to the solar system.
+
+        Args:
+            planet (CelestialBody): A CelestialBody object representing the planet to add.
+        """
+        self.planets.append(planet)
+
+    def simulate(self, times):
+        """
+        Simulates the motion of all planets in the solar system.
+
+        Args:
+            times (list): A list of time points at which to simulate the motion.
+
+        Returns:
+            list: A list of simulation results for all planets.
+        """
+        results = []
+        for planet in self.planets:
+            results.extend(planet.simulate(times))
+        return results

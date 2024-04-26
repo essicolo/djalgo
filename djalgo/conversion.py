@@ -1,3 +1,6 @@
+import difflib
+from .utils import instrument_mapping 
+
 try:
     import music21 as m21
 except ImportError:
@@ -13,13 +16,23 @@ try:
 except ImportError:
     mido = None
 
-# To do...
-#try:
-#    import scamp
-#except ImportError:
-#    scamp = None
+try:
+    import miditoolkit
+except ImportError:
+    miditoolkit = None
 
-def convert(notes, to, time_signature=None, key_signature=None):
+
+def get_program_number(instrument_name):
+    """Find the closest program number for a given instrument name."""
+    if instrument_name in instrument_mapping:
+        return instrument_mapping[instrument_name]
+    closest_match = difflib.get_close_matches(instrument_name, instrument_mapping.keys(), n=1)
+    if closest_match:
+        return instrument_mapping[closest_match[0]]
+    return 0  # Default to piano if no close match is found
+
+
+def convert(notes, to, bpm=120, time_signature=None, key_signature=None):
     """
     Convert a list of musical notes to the specified format.
 
@@ -36,174 +49,229 @@ def convert(notes, to, time_signature=None, key_signature=None):
     if to == 'music21':
         if m21 is None:
             raise ImportError("The music21 library is not installed. Please install it to use this function.")
-        return to_music21(notes, time_signature, key_signature)
+        return to_music21(notes, bpm, time_signature, key_signature)
     elif to == 'mido':
         if mido is None:
             raise ImportError("The mido library is not installed. Please install it to use this function.")
-        return to_mido(notes)
-    elif to == 'pretty_midi':
+        return to_mido(notes, bpm)
+    elif to == 'pretty_midi' or to == 'pretty-midi':
         if pm is None:
             raise ImportError("The pretty_midi library is not installed. Please install it to use this function.")
-        return to_prettymidi(notes)
+        return to_prettymidi(notes, bpm)
+    elif to == 'miditoolkit':
+        if pm is None:
+            raise ImportError("The miditoolkit library is not installed. Please install it to use this function.")
+        return to_miditoolkit(notes, bpm)
     else:
-        raise ValueError('Format not supported. Please use "music21", "mido" or "pretty_midi".')
+        raise ValueError('Format not supported. Please use "music21", "mido", "pretty_midi" or "miditoolkit".')
 
 
 # Music21 conversion
 # ------------------
-def to_music21(notes, time_signature=None, key_signature=None):
-    """Convert notes to music21 format based on their structure."""
-    if isinstance(notes, tuple):  # Single note, rest, or chord
-        return tuple_to_music21_element(notes)
-    elif isinstance(notes[0], list):  # List of lists
-        return sequences_to_music21_score(notes, time_signature, key_signature)
-    else:  # Single list of notes
-        return sequence_to_music21_part(notes, time_signature, key_signature)
+import music21 as m21
 
 def tuple_to_music21_element(note_tuple):
-    """Convert a single note tuple to a music21 element (Note, Rest, or Chord)."""
-    if note_tuple[0] is None:  # it's a rest
-        element = m21.note.Rest()
-        element.duration = m21.duration.Duration(note_tuple[1])
-    elif isinstance(note_tuple[0], list):  # it's a chord
-        element = [item for item in note_tuple[0] if item is not None] # Remove None values
-        element = m21.chord.Chord(element)
-        element.duration.quarterLength = note_tuple[1]
-    else:  # it's a note
-        element = m21.note.Note()
-        element.pitch.midi = note_tuple[0]
-        element.duration.quarterLength = note_tuple[1]
-    element.offset = note_tuple[2]
-    return element
+    """Convert a single note tuple to a music21 Note, Chord, or Rest."""
+    if note_tuple[0] is None:  # Rest
+        rest = m21.note.Rest()
+        rest.duration.quarterLength = note_tuple[1]
+        return rest
+    elif isinstance(note_tuple[0], list):  # Chord
+        # Filter out None values from the chord
+        valid_pitches = [pitch for pitch in note_tuple[0] if pitch is not None]
+        if not valid_pitches:  # If no valid pitches, return a Rest instead
+            rest = m21.note.Rest()
+            rest.duration.quarterLength = note_tuple[1]
+            return rest
+        chord = m21.chord.Chord(valid_pitches)
+        chord.duration.quarterLength = note_tuple[1]
+        return chord
+    else:  # Single note
+        note = m21.note.Note(note_tuple[0])
+        note.duration.quarterLength = note_tuple[1]
+        return note
 
-def sequence_to_music21_part(notes, time_signature=None, key_signature=None):
-    """Convert a sequence of musical notes to a music21 Part, ensuring no trailing measures."""
-    p = m21.stream.Part()
-    if time_signature:
-        ts = m21.meter.TimeSignature(time_signature)
-        p.append(ts)
-    if key_signature:
-        ks = m21.key.KeySignature(m21.key.pitchToSharps(key_signature))
-        p.append(ks)
 
-    last_offset = 0.0  # Track the last note's end time to prevent overlaps and trailing measures
+
+def sequence_to_music21_stream(notes, bpm=120):
+    """Convert a sequence of musical notes to a music21 Stream, with a tempo mark."""
+    stream = m21.stream.Part()
+    stream.append(m21.tempo.MetronomeMark(number=bpm))  # Set tempo mark at the beginning of the stream
     for note_tuple in notes:
         element = tuple_to_music21_element(note_tuple)
-        p.append(element)
-        last_offset = max(last_offset, element.offset + element.duration.quarterLength)
+        stream.insert(note_tuple[2], element)  # Insert element at the specified offset in quarter lengths
+    return stream
 
-    # Ensure the Part does not extend beyond the last note or rest by trimming or filling the final measure
-    p.makeMeasures(inPlace=True)  # Organize notes into measures
-    if p.getElementsByClass(m21.stream.Measure):  # Check if there are measures
-        last_measure = p.getElementsByClass(m21.stream.Measure).last()  # Get the last measure
-        if last_measure and last_measure.barDuration.quarterLength > last_measure.duration.quarterLength:  # If the last measure is underfilled
-            fill_rest = m21.note.Rest(quarterLength=last_measure.barDuration.quarterLength - last_measure.duration.quarterLength)
-            last_measure.append(fill_rest)  # Fill the remaining time in the last measure with a rest
-    return p
+def to_music21(notes, bpm=120, time_signature=None, key_signature=None):
+    """Convert notes to music21 format based on their structure, with BPM defining the tempo."""
+    score = m21.stream.Score()
+    if time_signature:
+        score.insert(0, m21.meter.TimeSignature(time_signature))
+    if key_signature:
+        score.insert(0, m21.key.KeySignature(key_signature))
+    if isinstance(notes, tuple) and len(notes) == 3:  # Single note, rest, or chord
+        score.append(sequence_to_music21_stream([notes], bpm))
+    elif isinstance(notes, list):
+        if all(isinstance(note, tuple) and len(note) == 3 for note in notes):  # List of notes
+            score.append(sequence_to_music21_stream(notes, bpm))
+        else:  # List of lists
+            for note_sequence in notes:
+                score.append(sequence_to_music21_stream(note_sequence, bpm))
+    elif isinstance(notes, dict):  # Dictionary of lists
+        for key, value in notes.items():
+            part = sequence_to_music21_stream(value, bpm)
+            part.id = str(key)  # Optionally set part ID to the dictionary key
+            score.insert(0, part)
+    return score
 
 
-def sequences_to_music21_score(parts, time_signature=None, key_signature=None):
-    """Convert multiple sequences of musical notes to a music21 Score."""
-    s = m21.stream.Score()
-    for part_notes in parts:
-        part = sequence_to_music21_part(part_notes, time_signature, key_signature)
-        s.insert(0, part)
-    return s
 
 
 # Pretty-midi conversion
 # ----------------------
-def to_prettymidi(notes):
-    """Convert notes to PrettyMIDI format based on their structure."""
-    pm_object = pm.PrettyMIDI()
-    if isinstance(notes, tuple):  # Single note, rest, or chord
-        pm_object.instruments.append(sequence_to_prettymidi_instrument([notes]))
-        return pm_object
-    elif isinstance(notes[0], list):  # List of lists
-        pm_object.instruments.append(sequences_to_prettymidi(notes))
-        return pm_object
-    else:  # Single list of notes
-        pm_object.instruments.append(sequence_to_prettymidi_instrument(notes))
-        return pm_object
-
-def tuple_to_prettymidi_element(note_tuple):
+def tuple_to_prettymidi_element(note_tuple, bpm=120, velocity=64):
     """Convert a single note tuple to a list of PrettyMIDI Note objects."""
     elements = []
-    if note_tuple[0] is None:  # Rest, so no note is created
+    if isinstance(note_tuple, (list, tuple)) and note_tuple[0] is None:  # Rest, so no note is created
         return elements
-    elif isinstance(note_tuple[0], list):  # Chord
+    elif isinstance(note_tuple, (list, tuple)) and isinstance(note_tuple[0], list):  # Chord
         for pitch in note_tuple[0]:
             # Assuming note_tuple structure is (pitches, start, end)
-            note = pm.Note(velocity=64, pitch=pitch, start=note_tuple[1], end=note_tuple[2])
+            note = pm.Note(velocity=64, pitch=pitch, start=note_tuple[1]*60/bpm, end=note_tuple[2]*60/bpm)
             elements.append(note)
     else:  # Single note
-        note = pm.Note(velocity=64, pitch=note_tuple[0], start=note_tuple[1], end=note_tuple[2])
-        elements.append(note)
+        if isinstance(note_tuple, (list, tuple)):
+            note = pm.Note(velocity=velocity, pitch=note_tuple[0], start=note_tuple[1]*60/bpm, end=note_tuple[2]*60/bpm)
+            elements.append(note)
     return elements
 
-def sequence_to_prettymidi_instrument(notes):
+def sequence_to_prettymidi_instrument(notes, bpm=120, velocity=64, program=0):
     """Convert a sequence of musical notes to a PrettyMIDI instrument."""
-    instrument = pm.Instrument(program=0)  # Default to piano; modify as needed
+    instrument = pm.Instrument(program=program)
+    if isinstance(notes, int):  # Check if notes is an integer
+        notes = [notes] 
     for note_tuple in notes:
-        for note in tuple_to_prettymidi_element(note_tuple):
+        for note in tuple_to_prettymidi_element(note_tuple, bpm, velocity):
             instrument.notes.append(note)
     return instrument
 
-def sequences_to_prettymidi(parts):
+def sequences_to_prettymidi(parts, bpm=120, velocity=64):
     """Convert multiple sequences of musical notes to a PrettyMIDI object."""
-    instruments = []
-    for part_notes in parts:
-        instrument = sequence_to_prettymidi_instrument(part_notes)
-        instruments.instruments.append(instrument)
-    return instruments
+    return [sequence_to_prettymidi_instrument(part_notes, bpm, velocity) for part_notes in parts]
 
+def to_prettymidi(notes, bpm=120, velocity=64):
+    """Convert notes to PrettyMIDI format based on their structure."""
+    pm_object = pm.PrettyMIDI()
+    if isinstance(notes, tuple) and len(notes) == 3:  # Single note, rest, or chord
+        pm_object.instruments.append(sequence_to_prettymidi_instrument([notes], bpm, velocity))
+    elif isinstance(notes, list):  
+        if all(isinstance(note, tuple) and len(note) == 3 for note in notes):  # List of notes
+            pm_object.instruments.append(sequence_to_prettymidi_instrument(notes, bpm, velocity))
+        else:  # List of lists
+            for note_sequence in notes:
+                pm_object.instruments.append(sequence_to_prettymidi_instrument(note_sequence, bpm, velocity))
+    elif isinstance(notes, dict):  # Dictionary of lists
+        for key, value in notes.items():
+            program = get_program_number(key) if isinstance(key, str) else key
+            instrument = sequence_to_prettymidi_instrument(value, bpm, velocity, program)
+            pm_object.instruments.append(instrument)
+    return pm_object
 
 # Mido conversion
 # ---------------
-def to_mido(notes, channel=0, velocity=64):
-    """Convert notes to Mido format based on their structure."""
-    if isinstance(notes, tuple):  # Single note, rest, or chord
-        return sequence_to_mido_track([notes], channel, velocity)  # Wrap it in a list as a single part
-    elif isinstance(notes[0], list):  # List of lists
-        return sequences_to_mido_midi(notes, channel, velocity)
-    else:  # Single list of notes
-        return sequence_to_mido_track(notes, channel, velocity)
-
-def tuple_to_mido_messages(note_tuple, channel=0, velocity=64):
-    """Convert a single note tuple to Mido messages."""
+def tuple_to_mido_messages(note_tuple, bpm=120, velocity=64):
+    """Convert a single note tuple to a list of Mido messages."""
     messages = []
-    if note_tuple[0] is None:  # it's a rest
-        # Mido doesn't need explicit rest messages; just no note on/off messages during this time
+    if isinstance(note_tuple, (list, tuple)) and note_tuple[0] is None:  # Rest, so no note is created
         return messages
-    elif isinstance(note_tuple[0], list):  # it's a chord
+    elif isinstance(note_tuple, (list, tuple)) and isinstance(note_tuple[0], list):  # Chord
         for pitch in note_tuple[0]:
-            # Note on and note off messages for each note in the chord
-            messages.append(mido.Message('note_on', channel=channel, note=pitch, velocity=velocity, time=int(note_tuple[1]*1000)))  # time for note_on is start time
-            messages.append(mido.Message('note_off', channel=channel, note=pitch, velocity=velocity, time=int(note_tuple[2]*1000)))  # time for note_off is end time
-    else:  # it's a single note
-        messages.append(mido.Message('note_on', channel=channel, note=note_tuple[0], velocity=velocity, time=int(note_tuple[1]*1000)))
-        messages.append(mido.Message('note_off', channel=channel, note=note_tuple[0], velocity=velocity, time=int(note_tuple[2]*1000)))
+            # Assuming note_tuple structure is (pitches, start, end)
+            note_on = mido.Message('note_on', note=pitch, velocity=velocity, time=int(note_tuple[1]*60/bpm))
+            note_off = mido.Message('note_off', note=pitch, velocity=velocity, time=int(note_tuple[2]*60/bpm))
+            messages.extend([note_on, note_off])
+    else:  # Single note
+        if isinstance(note_tuple, (list, tuple)):
+            note_on = mido.Message('note_on', note=note_tuple[0], velocity=velocity, time=int(note_tuple[1]*60/bpm))
+            note_off = mido.Message('note_off', note=note_tuple[0], velocity=velocity, time=int(note_tuple[2]*60/bpm))
+            messages.extend([note_on, note_off])
     return messages
 
-def sequence_to_mido_track(notes, channel=0, velocity=64):
+def sequence_to_mido_track(notes, bpm=120, velocity=64, program=0):
     """Convert a sequence of musical notes to a Mido track."""
     track = mido.MidiTrack()
+    track.append(mido.Message('program_change', program=program, time=0))
+    if isinstance(notes, int):  # Check if notes is an integer
+        notes = [notes] 
     for note_tuple in notes:
-        for msg in tuple_to_mido_messages(note_tuple, channel, velocity):
-            track.append(msg)
+        for message in tuple_to_mido_messages(note_tuple, bpm, velocity):
+            track.append(message)
     return track
 
-def sequences_to_mido_midi(parts, channel=0, velocity=64):
-    """Convert multiple sequences of musical notes to a Mido MidiFile object."""
-    mid = mido.MidiFile()
-    for part_notes in parts:
-        track = sequence_to_mido_track(part_notes, channel, velocity)
-        mid.tracks.append(track)
-    return mid
+def to_mido(notes, bpm=120, velocity=64):
+    """Convert notes to Mido format based on their structure."""
+    mido_object = mido.MidiFile()
+    if isinstance(notes, tuple) and len(notes) == 3:  # Single note, rest, or chord
+        mido_object.tracks.append(sequence_to_mido_track([notes], bpm, velocity))
+    elif isinstance(notes, list):  
+        if all(isinstance(note, tuple) and len(note) == 3 for note in notes):  # List of notes
+            mido_object.tracks.append(sequence_to_mido_track(notes, bpm, velocity))
+        else:  # List of lists
+            for note_sequence in notes:
+                mido_object.tracks.append(sequence_to_mido_track(note_sequence, bpm, velocity))
+    elif isinstance(notes, dict):  # Dictionary of lists
+        for key, value in notes.items():
+            program = get_program_number(key) if isinstance(key, str) else key
+            track = sequence_to_mido_track(value, bpm, velocity, program)
+            mido_object.tracks.append(track)
+    return mido_object
 
-# SCAMP conversion
-# ---------------
-# To do...
-#def to_scamp(notes, tempo=120, time_signature=(4, 4), key_signature=None):
-#    """Convert notes to SCAMP format based on their structure."""
-#    pass
+# Miditoolkit conversion
+# ----------------------
+def tuple_to_miditoolkit_notes(note_tuple, bpm=120, velocity=64):
+    """Convert a single note tuple to a list of miditoolkit Notes."""
+    notes = []
+    if isinstance(note_tuple, (list, tuple)) and note_tuple[0] is None:  # Rest, so no note is created
+        return notes
+    elif isinstance(note_tuple, (list, tuple)) and isinstance(note_tuple[0], list):  # Chord
+        for pitch in note_tuple[0]:
+            # Assuming note_tuple structure is (pitches, start, end)
+            note = miditoolkit.midi.containers.Note(pitch, int(note_tuple[1]*60/bpm), int(note_tuple[2]*60/bpm), velocity)
+            notes.append(note)
+    else:  # Single note
+        if isinstance(note_tuple, (list, tuple)):
+            note = miditoolkit.midi.containers.Note(note_tuple[0], int(note_tuple[1]*60/bpm), int(note_tuple[2]*60/bpm), velocity)
+            notes.append(note)
+    return notes
+
+def sequence_to_miditoolkit_instrument(notes, bpm=120, velocity=64, program=0):
+    """Convert a sequence of musical notes to a miditoolkit Instrument."""
+    instrument = miditoolkit.midi.containers.Instrument(program)
+    if isinstance(notes, int):  # Check if notes is an integer
+        notes = [notes] 
+    for note_tuple in notes:
+        for note in tuple_to_miditoolkit_notes(note_tuple, bpm, velocity):
+            instrument.notes.append(note)
+    return instrument
+
+def to_miditoolkit(notes, bpm=120, velocity=64):
+    """Convert notes to miditoolkit format based on their structure."""
+    midi_obj = miditoolkit.midi.parser.MidiFile()
+    midi_obj.ticks_per_beat = 480  # Set ticks per beat
+    if isinstance(notes, tuple) and len(notes) == 3:  # Single note, rest, or chord
+        instrument = sequence_to_miditoolkit_instrument([notes], bpm, velocity)
+        midi_obj.instruments.append(instrument)
+    elif isinstance(notes, list):  
+        if all(isinstance(note, tuple) and len(note) == 3 for note in notes):  # List of notes
+            instrument = sequence_to_miditoolkit_instrument(notes, bpm, velocity)
+            midi_obj.instruments.append(instrument)
+        else:  # List of lists
+            for note_sequence in notes:
+                instrument = sequence_to_miditoolkit_instrument(note_sequence, bpm, velocity)
+                midi_obj.instruments.append(instrument)
+    elif isinstance(notes, dict):  # Dictionary of lists
+        for key, value in notes.items():
+            program = get_program_number(key) if isinstance(key, str) else key
+            instrument = sequence_to_miditoolkit_instrument(value, bpm, velocity, program)
+            midi_obj.instruments.append(instrument)
+    return midi_obj

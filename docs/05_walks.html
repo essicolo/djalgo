@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
     <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script src="_static/documentation_options.js?v=737112c1"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
@@ -44,6 +44,9 @@ like <a class="reference external" href="https://www.youtube.com/watch?v=Ifxs3TB
 sequence of musical events, offering a multitude of possible paths through the piece.</p>
 <p>The application of random walks in music composition involves generating sequences of musical elements, usually pitches and sequences, where each element is selected based on a combination of random choice and a set of rules or conditions influenced by previous elements. This approach allows composers to explore new forms of musical structure and texture, creating pieces that can vary greatly with each performance or realization while maintaining an underlying coherence.</p>
 <p>In this section, we will also cover <em>kernel walks</em>, an innovative technique akin to random walks. This approach dig into well-known statistical objects named Gaussian processes to generate randomly oscillating paths. Most interestingly, kernel walks can be forced to pass through predefined points, and create melodies wandering around predefined progressions.</p>
+<p>Some walks can offer perfectly predictable, although intricate patterns. An example is the movements of planets in solar systems. Imagine a planet orbiting the sun with a circular orbit. The distance from the sun is steady, an the angle grows linearly from 0 to 360, then goes back to zero to create a saw wave. Then a moon orbits the planet, then a moon orbits the moon, and so on. The movements are predictable, but the periodic shape can create interestic patterns. <em>Celestial walks</em> are also part
+of Djalgo.</p>
+<p>Finally, walk are additive and multiplicative. You can, at will, add up a random walk to a celestial walk.</p>
 <section id="Random-walks">
 <h2>Random walks<a class="headerlink" href="#Random-walks" title="Link to this heading">¶</a></h2>
 <p>A random walk is a mathematical process where each step is a random choice relative to the one preceeding it. Mathematician call them Markov chains, named after mathematician Andrey Markov. The random choice can be as simple as a coin flip: if it goes tail, you take a diagional step left. Heads, a diagonal step on right. Repeat the process over and over and you obtain a random walk. On average, you should walk ahead, but in fact, you’ll probably derive from a straight path. The concept of
@@ -150,7 +153,7 @@ C8: 108
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;djalgo.walk.Chain at 0x1290de1d0&gt;
+&lt;djalgo.walk.Chain at 0x12a777530&gt;
 </pre></div></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">rw</span></code> is a random walk object, which can be used to generate many random walks, although only one will be generated in this example.</p>
@@ -225,7 +228,7 @@ walk, and can branch out. If two or more branch collide to the same values, and 
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv5580"></div>
+<div id="midiPlayerDiv1977"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -233,7 +236,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv5580_play() {
+function midiPlayerDiv1977_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -241,14 +244,14 @@ function midiPlayerDiv5580_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv5580");
-        mp.base64Load("data:audio/midi;base64,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");
+        mp.addPlayer("#midiPlayerDiv1977");
+        mp.base64Load("data:audio/midi;base64,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");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv5580_play, 2000);
+    setTimeout(midiPlayerDiv1977_play, 2000);
 } else {
-    midiPlayerDiv5580_play();
+    midiPlayerDiv1977_play();
 }
 </script></div>
 </div>
@@ -304,7 +307,7 @@ if (typeof require === 'undefined') {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv8311"></div>
+<div id="midiPlayerDiv3109"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -312,7 +315,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv8311_play() {
+function midiPlayerDiv3109_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -320,14 +323,14 @@ function midiPlayerDiv8311_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv8311");
-        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQAIJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAASsA/wMAAOAAQM5gkE9azmCATwAAkFRagZ1AgFQAAJBTWs5ggFMAAJBRWoGdQIBRAACQTlrOYIBOAACQUVqBnUCAUQAAkEhazmCASAAAkE5agZ1AgE4AAJBKWs5ggEoAAJBMWoGdQIBMAACQTFrOYIBMAACQUVqBnUCAUQAAkEpazmCASgAAkEhagZ1AgEgAAJBFWs5ggEUAAJBFWoGdQIBFAACQSFrOYIBIAACQTFqBnUCATAAAkEhazmCASAAAkEdagZ1AgEcAAJBDWs5ggEMAAJBDWoGdQIBDAACQRVrOYIBFAACQSlqBnUCASgAAkFFazmCAUQAAkE9agZ1AgE8AAJBTWs5ggFMAAJBYWoGdQIBYAACQWlrOYIBaAACQWlqBnUCAWgDOYP8vAE1UcmsAAAF3AP8DAADgAEDOYJBRWoGdQIBRAACQT1rOYIBPAACQU1qBnUCAUwAAkFNazmCAUwAAkFRagZ1AgFQAAJBYWs5ggFgAAJBWWoGdQIBWAACQVFrOYIBUAACQU1qBnUCAUwAAkFFazmCAUQAAkFFagZ1AgFEAAJBRWs5ggFEAAJBRWoGdQIBRAACQUVrOYIBRAACQTlqBnUCATgAAkE9azmCATwAAkFFagZ1AgFEAAJBRWs5ggFEAAJBYWoGdQIBYAACQUVrOYIBRAACQT1qBnUCATwAAkFNazmCAUwAAkFNagZ1AgFMAAJBUWs5ggFQAAJBYWoGdQIBYAACQVlrOYIBWAACQVFqBnUCAVAAAkFNazmCAUwAAkFFagZ1AgFEAAJBRWs5ggFEAAJBRWoGdQIBRAACQUVrOYIBRAACQUVqBnUCAUQAAkE5azmCATgAAkE9agZ1AgE8AAJBRWs5ggFEAAJBRWoGdQIBRAACQWFrOYIBYAM5g/y8ATVRyawAAAW0A/wMAAOAAQM5gkFNazmCAUwAAkE9azmCATwAAkExazmCATAAAkE5azmCATgAAkE5azmCATgAAkE9azmCATwAAkE5azmCATgAAkE5azmCATgAAkFNazmCAUwAAkE9azmCATwAAkE5azmCATgAAkE9azmCATwAAkE5azmCATgAAkFNazmCAUwAAkE9azmCATwAAkExazmCATAAAkE5azmCATgAAkE5azmCATgAAkE9azmCATwAAkE5azmCATgAAkE5azmCATgAAkFNazmCAUwAAkE9azmCATwAAkE5azmCATgAAkE9azmCATwAAkE5azmCATgAAkFNazmCAUwAAkE9azmCATwAAkExazmCATAAAkE5azmCATgAAkE5azmCATgAAkE9azmCATwAAkE5azmCATgAAkE5azmCATgAAkFNazmCAUwAAkE9azmCATwAAkE5azmCATgAAkE9azmCATwAAkE5azmCATgDOYP8vAE1UcmsAAAGjAP8DAADgAEDOYJBDWqcwgEMAAJBDWs5ggEMAAJBDWqcwgEMAAJBFWqcwgEUAAJBFWqcwgEUAAJBIWqcwgEgAAJBHWs5ggEcAAJBKWqcwgEoAAJBFWqcwgEUAAJBDWqcwgEMAAJBDWqcwgEMAAJBDWs5ggEMAAJBFWqcwgEUAAJBFWqcwgEUAAJBIWqcwgEgAAJBHWqcwgEcAAJBKWs5ggEoAAJBFWqcwgEUAAJBDWqcwgEMAAJBDWqcwgEMAAJBDWqcwgEMAAJBFWs5ggEUAAJBFWqcwgEUAAJBIWqcwgEgAAJBHWqcwgEcAAJBKWqcwgEoAAJBFWs5ggEUAAJBDWqcwgEMAAJBDWqcwgEMAAJBDWqcwgEMAAJBFWqcwgEUAAJBFWs5ggEUAAJBIWqcwgEgAAJBHWqcwgEcAAJBKWqcwgEoAAJBFWqcwgEUAAJBDWs5ggEMAAJBDWqcwgEMAAJBDWqcwgEMAAJBFWqcwgEUAAJBFWqcwgEUAAJBIWs5ggEgAAJBHWqcwgEcAAJBKWqcwgEoAAJBFWqcwgEUAzmD/LwBNVHJrAAAAegD/AwAA4ABAzmCQUVqnMIBRAACQU1rOYIBTAACQT1qnMIBPAACQUVrOYIBRAACQU1qnMIBTAACQT1rOYIBPAACQUVqnMIBRAACQU1rOYIBTAACQT1qnMIBPAACQUVrOYIBRAACQU1qnMIBTAACQT1rOYIBPAM5g/y8ATVRyawAAAEYA/wMAAOAAQM5gkE9apzCATwAAkFNapzCAUwAAkE9agZ1AgE8AAJBTWqcwgFMAAJBPWqcwgE8AAJBTWoGdQIBTAM5g/y8ATVRyawAAADIA/wMAAOAAQM5gkFpazmCAWgAAkFRazmCAVAAAkFpapzCAWgAAkFRapzCAVADOYP8vAA==");
+        mp.addPlayer("#midiPlayerDiv3109");
+        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQAIJ2BNVHJrAAAASgD/UQMHoSAA/1gEBAIYCJvXYP9RAwehIKOIYP9RAwehIJf/IP9RAwehIJDOIP9RAwehIIHsIP9RAwehIIPYQP9RAwehIM5g/y8ATVRyawAAAioA/wMAAOAAQM5gkE9azmCATwAAkFRapzCAVAAAkFNapzCAUwAAkFFazmCAUQAAkE5azmCATgAAkFFapzCAUQAAkEhapzCASAAAkE5azmCATgAAkEpazmCASgAAkExapzCATAAAkExapzCATAAAkFFazmCAUQAAkEpazmCASgAAkEhapzCASAAAkEVapzCARQAAkEVazmCARQAAkEhazmCASAAAkExapzCATAAAkEhapzCASAAAkEdazmCARwAAkENazmCAQwAAkENapzCAQwAAkEVapzCARQAAkEpazmCASgAAkFFazmCAUQAAkE9apzCATwAAkFNapzCAUwAAkFhazmCAWAAAkFpazmCAWgAAkFpapzCAWgAAkE9apzCATwAAkFRazmCAVAAAkFNazmCAUwAAkFFapzCAUQAAkE5apzCATgAAkFFazmCAUQAAkEhazmCASAAAkE5apzCATgAAkEpapzCASgAAkExazmCATAAAkExazmCATAAAkFFapzCAUQAAkEpapzCASgAAkEhazmCASAAAkEVazmCARQAAkEVapzCARQAAkEhapzCASAAAkExazmCATAAAkEhazmCASAAAkEdapzCARwAAkENapzCAQwAAkENazmCAQwAAkEVazmCARQAAkEpapzCASgAAkFFapzCAUQAAkE9azmCATwAAkFNazmCAUwAAkFhapzCAWAAAkFpapzCAWgAAkFpazmCAWgDOYP8vAE1UcmsAAAF3AP8DAADgAEDOYJBRWoGdQIBRAACQT1rOYIBPAACQU1qBnUCAUwAAkFNazmCAUwAAkFRagZ1AgFQAAJBYWs5ggFgAAJBWWoGdQIBWAACQVFrOYIBUAACQU1qBnUCAUwAAkFFazmCAUQAAkFFagZ1AgFEAAJBRWs5ggFEAAJBRWoGdQIBRAACQUVrOYIBRAACQTlqBnUCATgAAkE9azmCATwAAkFFagZ1AgFEAAJBRWs5ggFEAAJBYWoGdQIBYAACQUVrOYIBRAACQT1qBnUCATwAAkFNazmCAUwAAkFNagZ1AgFMAAJBUWs5ggFQAAJBYWoGdQIBYAACQVlrOYIBWAACQVFqBnUCAVAAAkFNazmCAUwAAkFFagZ1AgFEAAJBRWs5ggFEAAJBRWoGdQIBRAACQUVrOYIBRAACQUVqBnUCAUQAAkE5azmCATgAAkE9agZ1AgE8AAJBRWs5ggFEAAJBRWoGdQIBRAACQWFrOYIBYAM5g/y8ATVRyawAAAeIA/wMAAOAAQM5gkFNapzCAUwAAkE9azmCATwAAkExazmCATAAAkE5apzCATgAAkE5apzCATgAAkE9azmCATwAAkE5azmCATgAAkE5apzCATgAAkFNapzCAUwAAkE9azmCATwAAkE5azmCATgAAkE9apzCATwAAkE5apzCATgAAkFNazmCAUwAAkE9azmCATwAAkExapzCATAAAkE5apzCATgAAkE5azmCATgAAkE9azmCATwAAkE5apzCATgAAkE5apzCATgAAkFNazmCAUwAAkE9azmCATwAAkE5apzCATgAAkE9apzCATwAAkE5azmCATgAAkFNazmCAUwAAkE9apzCATwAAkExapzCATAAAkE5azmCATgAAkE5azmCATgAAkE9apzCATwAAkE5apzCATgAAkE5azmCATgAAkFNazmCAUwAAkE9apzCATwAAkE5apzCATgAAkE9azmCATwAAkE5azmCATgAAkFNapzCAUwAAkE9apzCATwAAkExazmCATAAAkE5azmCATgAAkE5apzCATgAAkE9apzCATwAAkE5azmCATgAAkE5azmCATgAAkFNapzCAUwAAkE9apzCATwAAkE5azmCATgAAkE9azmCATwAAkE5apzCATgDOYP8vAE1UcmsAAAGjAP8DAADgAEDOYJBDWqcwgEMAAJBDWqcwgEMAAJBDWqcwgEMAAJBFWqcwgEUAAJBFWs5ggEUAAJBIWqcwgEgAAJBHWqcwgEcAAJBKWqcwgEoAAJBFWqcwgEUAAJBDWs5ggEMAAJBDWqcwgEMAAJBDWqcwgEMAAJBFWqcwgEUAAJBFWqcwgEUAAJBIWs5ggEgAAJBHWqcwgEcAAJBKWqcwgEoAAJBFWqcwgEUAAJBDWqcwgEMAAJBDWs5ggEMAAJBDWqcwgEMAAJBFWqcwgEUAAJBFWqcwgEUAAJBIWqcwgEgAAJBHWs5ggEcAAJBKWqcwgEoAAJBFWqcwgEUAAJBDWqcwgEMAAJBDWqcwgEMAAJBDWs5ggEMAAJBFWqcwgEUAAJBFWqcwgEUAAJBIWqcwgEgAAJBHWqcwgEcAAJBKWs5ggEoAAJBFWqcwgEUAAJBDWqcwgEMAAJBDWqcwgEMAAJBDWqcwgEMAAJBFWs5ggEUAAJBFWqcwgEUAAJBIWqcwgEgAAJBHWqcwgEcAAJBKWqcwgEoAAJBFWs5ggEUAzmD/LwBNVHJrAAAAKgD/AwAA4ABAzmCQUVqnMIBRAACQU1qBnUCAUwAAkE9apzCATwDOYP8vAE1UcmsAAABGAP8DAADgAEDOYJBPWoGdQIBPAACQU1qnMIBTAACQT1qnMIBPAACQU1qBnUCAUwAAkE9apzCATwAAkFNapzCAUwDOYP8vAE1UcmsAAABoAP8DAADgAEDOYJBaWs5ggFoAAJBUWqcwgFQAAJBaWqcwgFoAAJBUWqcwgFQAAJBaWqcwgFoAAJBUWs5ggFQAAJBaWqcwgFoAAJBUWqcwgFQAAJBaWqcwgFoAAJBUWqcwgFQAzmD/LwA=");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv8311_play, 2000);
+    setTimeout(midiPlayerDiv3109_play, 2000);
 } else {
-    midiPlayerDiv8311_play();
+    midiPlayerDiv3109_play();
 }
 </script></div>
 </div>
@@ -391,7 +394,7 @@ go even further, since time is continuous, our multivariate normal will contain 
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b_blues_scale</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">harmony</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">])</span><span class="o">.</span><span class="n">generate</span><span class="p">()[</span><span class="mi">29</span><span class="p">:</span><span class="mi">42</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">([</span><span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">midi_to_abc</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">b_blues_scale</span><span class="p">])</span> <span class="c1"># used to adjust the range fro 28 to 42</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">midi_to_cde</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">b_blues_scale</span><span class="p">])</span> <span class="c1"># used to adjust the range fro 28 to 42</span>
 <span class="n">scale_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">b_blues_scale</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -515,14 +518,14 @@ and <code class="docutils literal notranslate"><span class="pre">length_scale</s
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/05_walks_38_0.png" class="no-scaled-link" src="_images/05_walks_38_0.png" style="width: 732px; height: 396px;" />
+<img alt="_images/05_walks_38_0.png" class="no-scaled-link" src="_images/05_walks_38_0.png" style="width: 732px; height: 413px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv9546"></div>
+<div id="midiPlayerDiv4162"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -530,7 +533,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv9546_play() {
+function midiPlayerDiv4162_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -538,14 +541,14 @@ function midiPlayerDiv9546_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv9546");
+        mp.addPlayer("#midiPlayerDiv4162");
         mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQACJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAABU4A/wMAAOAAQM5gkEJaAJBMWpNYgEIAAIBMAACQO1oAkEVaAJBHWs5ggDsAAIBFAACARwAAkDtaAJBAWgCQSlrOYIA7AACAQAAAgEoAAJBAWgCQO1oAkEJapzCAQAAAgDsAAIBCAACQO1oAkEBaAJBBWqcwgDsAAIBAAACAQQAAkDtaAJBFWgCQQlqTWIA7AACARQAAgEIAAJA7WgCQQloAkEFapzCAOwAAgEIAAIBBAACQO1oAkEBaAJBCWpNYgDsAAIBAAACAQgAAkEJaAJBMWs5ggEIAAIBMAACQO1oAkEVaAJBHWs5ggDsAAIBFAACARwAAkDtaAJBAWgCQSlqnMIA7AACAQAAAgEoAAJBAWgCQO1oAkEJapzCAQAAAgDsAAIBCAACQO1oAkEBaAJBBWpNYgDsAAIBAAACAQQAAkDtaAJBFWgCQQlqnMIA7AACARQAAgEIAAJA7WgCQQloAkEFak1iAOwAAgEIAAIBBAACQO1oAkEBaAJBCWs5ggDsAAIBAAACAQgAAkEJaAJBMWs5ggEIAAIBMAACQO1oAkEVaAJBHWqcwgDsAAIBFAACARwAAkDtaAJBAWgCQSlqnMIA7AACAQAAAgEoAAJBAWgCQO1oAkEJak1iAQAAAgDsAAIBCAACQO1oAkEBaAJBBWqcwgDsAAIBAAACAQQAAkDtaAJBFWgCQQlqTWIA7AACARQAAgEIAAJA7WgCQQloAkEFazmCAOwAAgEIAAIBBAACQO1oAkEBaAJBCWs5ggDsAAIBAAACAQgAAkEJaAJBMWqcwgEIAAIBMAACQO1oAkEVaAJBHWqcwgDsAAIBFAACARwAAkDtaAJBAWgCQSlqTWIA7AACAQAAAgEoAAJBAWgCQO1oAkEJapzCAQAAAgDsAAIBCAACQO1oAkEBaAJBBWpNYgDsAAIBAAACAQQAAkDtaAJBFWgCQQlrOYIA7AACARQAAgEIAAJA7WgCQQloAkEFazmCAOwAAgEIAAIBBAACQO1oAkEBaAJBCWqcwgDsAAIBAAACAQgAAkEJaAJBMWqcwgEIAAIBMAACQO1oAkEVaAJBHWpNYgDsAAIBFAACARwAAkDtaAJBAWgCQSlqnMIA7AACAQAAAgEoAAJBAWgCQO1oAkEJak1iAQAAAgDsAAIBCAACQO1oAkEBaAJBBWs5ggDsAAIBAAACAQQAAkDtaAJBFWgCQQlrOYIA7AACARQAAgEIAAJA7WgCQQloAkEFapzCAOwAAgEIAAIBBAACQO1oAkEBaAJBCWqcwgDsAAIBAAACAQgAAkEJaAJBMWpNYgEIAAIBMAACQO1oAkEVaAJBHWqcwgDsAAIBFAACARwAAkDtaAJBAWgCQSlqTWIA7AACAQAAAgEoAAJBAWgCQO1oAkEJazmCAQAAAgDsAAIBCAACQO1oAkEBaAJBBWs5ggDsAAIBAAACAQQAAkDtaAJBFWgCQQlqnMIA7AACARQAAgEIAAJA7WgCQQloAkEFapzCAOwAAgEIAAIBBAACQO1oAkEBaAJBCWpNYgDsAAIBAAACAQgAAkEJaAJBMWqcwgEIAAIBMAACQO1oAkEVaAJBHWpNYgDsAAIBFAACARwAAkDtaAJBAWgCQSlrOYIA7AACAQAAAgEoAAJBAWgCQO1oAkEJazmCAQAAAgDsAAIBCAACQO1oAkEBaAJBBWqcwgDsAAIBAAACAQQAAkDtaAJBFWgCQQlqnMIA7AACARQAAgEIAAJA7WgCQQloAkEFak1iAOwAAgEIAAIBBAACQO1oAkEBaAJBCWqcwgDsAAIBAAACAQgDOYP8vAA==");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv9546_play, 2000);
+    setTimeout(midiPlayerDiv4162_play, 2000);
 } else {
-    midiPlayerDiv9546_play();
+    midiPlayerDiv4162_play();
 }
 </script></div>
 </div>
@@ -587,14 +590,14 @@ fundamental question you ask as the modeller is what function the temperature mi
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/05_walks_40_0.png" class="no-scaled-link" src="_images/05_walks_40_0.png" style="width: 697px; height: 69px;" />
+<img alt="_images/05_walks_40_0.png" class="no-scaled-link" src="_images/05_walks_40_0.png" style="width: 697px; height: 88px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv9839"></div>
+<div id="midiPlayerDiv4363"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -602,7 +605,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv9839_play() {
+function midiPlayerDiv4363_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -610,14 +613,14 @@ function midiPlayerDiv9839_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv9839");
+        mp.addPlayer("#midiPlayerDiv4363");
         mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQACJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAAPgA/wMAAOAAQM5gkD5aAJBCWgCQRVqBnUCAPgAAgEIAAIBFAACQOVoAkD1aAJBAWoGdQIA5AACAPQAAgEAAAJA7WgCQPloAkEJagZ1AgDsAAIA+AACAQgAAkDZaAJA5WgCQPVqBnUCANgAAgDkAAIA9AACQN1oAkDtaAJA+WoGdQIA3AACAOwAAgD4AAJAyWgCQNloAkDlagZ1AgDIAAIA2AACAOQAAkDdaAJA7WgCQPlqBnUCANwAAgDsAAIA+AACQOVoAkD1aAJBAWoGdQIA5AACAPQAAgEAAAJA+WgCQQloAkEVagZ1AgD4AAIBCAACARQDOYP8vAA==");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv9839_play, 2000);
+    setTimeout(midiPlayerDiv4363_play, 2000);
 } else {
-    midiPlayerDiv9839_play();
+    midiPlayerDiv4363_play();
 }
 </script></div>
 </div>
@@ -655,7 +658,7 @@ array([[ 0, 36],
 </div>
 <p>When data are provided, Djalgo interpolates a number of <code class="docutils literal notranslate"><span class="pre">length</span></code> data points on the range of the data, fits the model, then export results in time and model predictions.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ntracks</span> <span class="o">=</span> <span class="mi">3</span>
@@ -671,7 +674,7 @@ array([[ 0, 36],
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
@@ -698,7 +701,7 @@ sequence = [
 </div>
 <p>We can extract the exact index value at every time using linear interpolation with Numpy.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="mf">3.5</span><span class="p">,</span> <span class="n">pachelbel_tracks_t</span><span class="p">,</span> <span class="n">pachelbel_tracks_p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -706,7 +709,7 @@ sequence = [
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -716,7 +719,7 @@ sequence = [
 </div>
 <p>So, for each track, let’s create a random rhythm, interpolate indexes to the offsets, find the indexes on the <code class="docutils literal notranslate"><span class="pre">d_major</span></code> scale, and assemble the tracks.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
@@ -739,9 +742,9 @@ sequence = [
 </pre></div>
 </div>
 </div>
-<p>We can offset the tracks to create a cannon. The result is a reinterpretation of Pachelbel’s Cannon in D-major.</p>
+<p>We can offset the tracks to create a cannon. The result is a reinterpretation of Pachelbel’s Canon in D-major (a Gauss canon!).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tracks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">offset_list_of_notes</span><span class="p">(</span><span class="n">tracks</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">by</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -756,7 +759,7 @@ sequence = [
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv15211"></div>
+<div id="midiPlayerDiv4736"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -764,7 +767,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv15211_play() {
+function midiPlayerDiv4736_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -772,18 +775,119 @@ function midiPlayerDiv15211_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv15211");
-        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQAFJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAAPoA/wMAAOAAQM5gkD5apzCAPgAAkD5ak1iAPgAAkD1ak1iAPQAAkD1azmCAPQAAkDlapzCAOQAAkDlapzCAOQAAkD1apzCAPQAAkD1ak1iAPQAAkD1azmCAPQAAkDRak1iANAAAkDJapzCAMgAAkDJagZ1AgDIAAJA3WqcwgDcAAJA+WqcwgD4AAJA+WpNYgD4AAJA9WpNYgD0AAJA9Ws5ggD0AAJA5WqcwgDkAAJA5WqcwgDkAAJA9WqcwgD0AAJA9WpNYgD0AAJA9Ws5ggD0AAJA0WpNYgDQAAJAyWqcwgDIAAJAyWoGdQIAyAACQN1qnMIA3AM5g/y8ATVRyawAAAUAA/wMAAOAAQM5gkD5azmCAPgAAkD5ak1iAPgAAkD1apzCAPQAAkDtapzCAOwAAkDlapzCAOQAAkDlapzCAOQAAkDtak1iAOwAAkDtapzCAOwAAkDtapzCAOwAAkDlak1iAOQAAkDdak1iANwAAkDdapzCANwAAkDZapzCANgAAkDZazmCANgAAkDlak1iAOQAAkDtapzCAOwAAkDlak1iAOQAAkD5azmCAPgAAkD5ak1iAPgAAkD1apzCAPQAAkDtapzCAOwAAkDlapzCAOQAAkDlapzCAOQAAkDtak1iAOwAAkDtapzCAOwAAkDtapzCAOwAAkDlak1iAOQAAkDdak1iANwAAkDdapzCANwAAkDZapzCANgAAkDZazmCANgAAkDlak1iAOQAAkDtapzCAOwAAkDlak1iAOQDOYP8vAE1UcmsAAACSAP8DAADgAEDOYJA+WoGdQIA+AACQOVqBnUCAOQAAkDtak1iAOwAAkDtagZ1AgDsAAJA2WpNYgDYAAJA2WqcwgDYAAJA2Ws5ggDYAAJA+WoGdQIA+AACQOVqBnUCAOQAAkDtak1iAOwAAkDtagZ1AgDsAAJA2WpNYgDYAAJA2WqcwgDYAAJA2Ws5ggDYAzmD/LwBNVHJrAAAA+AD/AwAA4ABAzmCQPloAkEJaAJBFWoGdQIA+AACAQgAAgEUAAJA5WgCQPVoAkEBagZ1AgDkAAIA9AACAQAAAkDtaAJA+WgCQQlqBnUCAOwAAgD4AAIBCAACQNloAkDlaAJA9WoGdQIA2AACAOQAAgD0AAJA3WgCQO1oAkD5agZ1AgDcAAIA7AACAPgAAkDJaAJA2WgCQOVqBnUCAMgAAgDYAAIA5AACQN1oAkDtaAJA+WoGdQIA3AACAOwAAgD4AAJA5WgCQPVoAkEBagZ1AgDkAAIA9AACAQAAAkD5aAJBCWgCQRVqBnUCAPgAAgEIAAIBFAM5g/y8A");
+        mp.addPlayer("#midiPlayerDiv4736");
+        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQAFJ2BNVHJrAAAALwD/UQMHoSAA/1gEBAIYCIXEYP9RAwehIIaTQP9RAwehIIbiIP9RAwehIM5g/y8ATVRyawAAAOwA/wMAAOAAQIGdQJA+WgCQPlqTWIA+AACAPgAAkD5aAJA+WqcwgD4AAIA+AACQPVoAkD1azmCAPQAAgD0AAJA5WgCQOVqnMIA5AACAOQAAkDlaAJA5Ws5ggDkAAIA5AACQPVoAkD1apzCAPQAAgD0AAJA9WgCQPVqnMIA9AACAPQAAkDlaAJA5WqcwgDkAAIA5AACQNFoAkDRapzCANAAAgDQAAJAyWgCQMlrOYIAyAACAMgAAkDdaAJA3WpNYgDcAAIA3AACQOVoAkDlazmCAOQAAgDkAAJA3WgCQN1qnMIA3AACANwDOYP8vAE1UcmsAAACZAP8DAADgAECB7CCQPloAkD5agZ1AgD4AAIA+AACQOVoAkDlapzCAOQAAgDkAAJA3WgCQN1qTWIA3AACANwAAkDlaAJA5Ws5ggDkAAIA5AACQO1oAkDtagZ1AgDsAAIA7AACQNloAkDZazmCANgAAgDYAAJA5WgCQOVrOYIA5AACAOQAAkDlaAJA5WpNYgDkAAIA5AM5g/y8ATVRyawAAAJkA/wMAAOAAQIK7AJA+WgCQPlqBnUCAPgAAgD4AAJA5WgCQOVrOYIA5AACAOQAAkDlaAJA5WqcwgDkAAIA5AACQO1oAkDtagZ1AgDsAAIA7AACQNloAkDZak1iANgAAgDYAAJA2WgCQNlrOYIA2AACANgAAkDZaAJA2Ws5ggDYAAIA2AACQN1oAkDdak1iANwAAgDcAzmD/LwBNVHJrAAAA+AD/AwAA4ABAzmCQPloAkEJaAJBFWoGdQIA+AACAQgAAgEUAAJA5WgCQPVoAkEBagZ1AgDkAAIA9AACAQAAAkDtaAJA+WgCQQlqBnUCAOwAAgD4AAIBCAACQNloAkDlaAJA9WoGdQIA2AACAOQAAgD0AAJA3WgCQO1oAkD5agZ1AgDcAAIA7AACAPgAAkDJaAJA2WgCQOVqBnUCAMgAAgDYAAIA5AACQN1oAkDtaAJA+WoGdQIA3AACAOwAAgD4AAJA5WgCQPVoAkEBagZ1AgDkAAIA9AACAQAAAkD5aAJBCWgCQRVqBnUCAPgAAgEIAAIBFAM5g/y8A");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv15211_play, 2000);
+    setTimeout(midiPlayerDiv4736_play, 2000);
 } else {
-    midiPlayerDiv15211_play();
+    midiPlayerDiv4736_play();
 }
 </script></div>
 </div>
+<iframe width="560" height="202" src="https://www.bandlab.com/embed/?id=e35cedad-7602-ef11-aaf0-000d3aa5105b" frameborder="0" allowfullscreen></iframe></section>
 </section>
+<section id="Celestial">
+<h2>Celestial<a class="headerlink" href="#Celestial" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">CelestialBody</span></code> and <code class="docutils literal notranslate"><span class="pre">SolarSystem</span></code> classes in the walk module simulates the distance and angles of celestials bodies in a solar system, given their orbital radius, orbital speed and the celestial body it is orbiting around. Let’s start by creating the smallest celestial body of our solar system.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+<span class="kn">from</span> <span class="nn">plotly.subplots</span> <span class="kn">import</span> <span class="n">make_subplots</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">astronaut</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">walk</span><span class="o">.</span><span class="n">CelestialBody</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Our astronaut is orbiting a moon, the moon is orbiting a planet, and they all belong to a solar system.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">astronaut</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">walk</span><span class="o">.</span><span class="n">CelestialBody</span><span class="p">(</span><span class="n">distance</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">orbital_speed</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">moon</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">walk</span><span class="o">.</span><span class="n">CelestialBody</span><span class="p">(</span><span class="n">distance</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">orbital_speed</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">moons</span><span class="o">=</span><span class="p">[</span><span class="n">astronaut</span><span class="p">])</span>
+<span class="n">planet</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">walk</span><span class="o">.</span><span class="n">CelestialBody</span><span class="p">(</span><span class="n">distance</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span> <span class="n">orbital_speed</span><span class="o">=</span><span class="mf">4.0</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">moons</span><span class="o">=</span><span class="p">[</span><span class="n">moon</span><span class="p">])</span>
+<span class="n">solar_system</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">walk</span><span class="o">.</span><span class="n">SolarSystem</span><span class="p">()</span>
+<span class="n">solar_system</span><span class="o">.</span><span class="n">add_planet</span><span class="p">(</span><span class="n">planet</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>We run the simulation to obtain distances an angles of the astronaut from the sun.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># From time 0 to 100 in 400 steps</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">solar_system</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">times</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>These attributes can be turned to music at will.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Iterate through the results to create separate plots for each celestial object</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="n">angles</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
+    <span class="c1"># Create a subplot figure with 1 row and 2 columns</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">make_subplots</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">subplot_titles</span><span class="o">=</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Object </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1"> Distance&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Object </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1"> Angle&#39;</span><span class="p">))</span>
+
+    <span class="c1"># Add distance plot on the first column</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span>
+        <span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">times</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">distances</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Distance&#39;</span><span class="p">),</span>
+        <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Add angle plot on the second column</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span>
+        <span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">times</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">angles</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;lines&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Angle&#39;</span><span class="p">),</span>
+        <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">2</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Update layout to better display the data</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span>
+        <span class="n">title_text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Simulation Results for Object </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Time&quot;</span><span class="p">,</span>
+        <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Distance&quot;</span><span class="p">,</span>
+        <span class="n">xaxis2_title</span><span class="o">=</span><span class="s2">&quot;Time&quot;</span><span class="p">,</span>
+        <span class="n">yaxis2_title</span><span class="o">=</span><span class="s2">&quot;Angle (degrees)&quot;</span><span class="p">,</span>
+        <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="mi">1000</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Style the x-axis and y-axes</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_xaxes</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="s2">&quot;Time&quot;</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="s2">&quot;Distance&quot;</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_xaxes</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="s2">&quot;Time&quot;</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">update_yaxes</span><span class="p">(</span><span class="n">title_text</span><span class="o">=</span><span class="s2">&quot;Angle (degrees)&quot;</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Show plot</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">write_image</span><span class="p">(</span><span class="s2">&quot;_images/celestial.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="admonition warning">
+<p>Data type cannot be displayed: application/vnd.plotly.v1+json</p>
+</div>
+</div>
+</div>
+<p><img alt="plot of a celestial walk." src="_images/celestial.png" /></p>
 </section>
 </section>
 
@@ -806,11 +910,12 @@ if (typeof require === 'undefined') {
 <li class="toctree-l1 current"><a class="current reference internal" href="#">5. Walks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_fractals.html">6. Fractals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07_genetic.html">7. Genetic algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_ai.html">8. 🤖 Machine learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 </ul>
 
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
@@ -818,7 +923,7 @@ if (typeof require === 'undefined') {
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script><div>
 <br/>
 <a href="https://www.buymeacoffee.com/essicolo">☕ Buy me a coffee</a>
@@ -831,7 +936,7 @@ if (typeof require === 'undefined') {
       &#169;2024, Essi Parent.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
       &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
       
       |

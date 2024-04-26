@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=12dfc556" />
     <script src="../../_static/documentation_options.js?v=737112c1"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
@@ -233,6 +233,132 @@
         <span class="k">return</span> <span class="n">sequence</span></div>
 </div>
 
+    
+<div class="viewcode-block" id="CelestialBody">
+<a class="viewcode-back" href="../../api.html#djalgo.walk.CelestialBody">[docs]</a>
+<span class="k">class</span> <span class="nc">CelestialBody</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a celestial body in space.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        distance (float): The distance of the celestial body from its parent body.</span>
+<span class="sd">        orbital_speed (float): The orbital speed of the celestial body.</span>
+<span class="sd">        phase (float, optional): The phase of the celestial body&#39;s orbit (default is 0).</span>
+<span class="sd">        moons (list, optional): A list of CelestialBody objects representing the moons of the celestial body (default is None).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">distance</span><span class="p">,</span> <span class="n">orbital_speed</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">moons</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a new instance of the CelestialBody class.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            distance (float): The distance of the celestial body from its parent body.</span>
+<span class="sd">            orbital_speed (float): The orbital speed of the celestial body.</span>
+<span class="sd">            phase (float, optional): The phase of the celestial body&#39;s orbit (default is 0).</span>
+<span class="sd">            moons (list, optional): A list of CelestialBody objects representing the moons of the celestial body (default is None).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="n">distance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">orbital_speed</span> <span class="o">=</span> <span class="n">orbital_speed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">phase</span> <span class="o">=</span> <span class="n">phase</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">moons</span> <span class="o">=</span> <span class="n">moons</span> <span class="k">if</span> <span class="n">moons</span> <span class="k">else</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="CelestialBody.position">
+<a class="viewcode-back" href="../../api.html#djalgo.walk.CelestialBody.position">[docs]</a>
+    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the position of the celestial body at the given times.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            times (array-like): An array-like object containing the times at which to calculate the position.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple: A tuple containing the x and y coordinates of the celestial body&#39;s position at the given times.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Vectorize the position calculations</span>
+        <span class="n">angles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">orbital_speed</span> <span class="o">*</span> <span class="n">times</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">phase</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distance</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span></div>
+
+
+<div class="viewcode-block" id="CelestialBody.simulate">
+<a class="viewcode-back" href="../../api.html#djalgo.walk.CelestialBody.simulate">[docs]</a>
+    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">times</span><span class="p">,</span> <span class="n">parent_position</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simulates the motion of the celestial body over the given times.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            times (array-like): An array-like object containing the times at which to simulate the motion.</span>
+<span class="sd">            parent_position (tuple, optional): A tuple containing the x and y coordinates of the parent body&#39;s position (default is None).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of tuples representing the distances and angles of the celestial body at the given times.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">parent_position</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">parent_position</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">times</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">times</span><span class="p">))</span>
+
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">position</span><span class="p">(</span><span class="n">times</span><span class="p">)</span>
+        <span class="n">x_total</span> <span class="o">=</span> <span class="n">parent_position</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span>
+        <span class="n">y_total</span> <span class="o">=</span> <span class="n">parent_position</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">y</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">moon</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">moons</span><span class="p">:</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">moon</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="p">(</span><span class="n">x_total</span><span class="p">,</span> <span class="n">y_total</span><span class="p">)))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">moons</span><span class="p">:</span>
+            <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x_total</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y_total</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">y_total</span><span class="p">,</span> <span class="n">x_total</span><span class="p">)</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>  <span class="c1"># Convert to degrees</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="n">distances</span><span class="p">,</span> <span class="n">angles</span> <span class="o">%</span> <span class="mi">360</span><span class="p">)]</span>  <span class="c1"># Ensure angles are from 0 to 360</span>
+        <span class="k">return</span> <span class="n">results</span></div>
+</div>
+
+
+<div class="viewcode-block" id="SolarSystem">
+<a class="viewcode-back" href="../../api.html#djalgo.walk.SolarSystem">[docs]</a>
+<span class="k">class</span> <span class="nc">SolarSystem</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a solar system.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        planets (list): A list of celestial bodies in the solar system.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a new instance of the SolarSystem class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">planets</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="SolarSystem.add_planet">
+<a class="viewcode-back" href="../../api.html#djalgo.walk.SolarSystem.add_planet">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_planet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">planet</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a new planet to the solar system.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            planet (CelestialBody): A CelestialBody object representing the planet to add.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">planets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">planet</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SolarSystem.simulate">
+<a class="viewcode-back" href="../../api.html#djalgo.walk.SolarSystem.simulate">[docs]</a>
+    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">times</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simulates the motion of all planets in the solar system.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            times (list): A list of time points at which to simulate the motion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: A list of simulation results for all planets.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">planet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">planets</span><span class="p">:</span>
+            <span class="n">results</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">planet</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">times</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">results</span></div>
+</div>
+
 </pre></div>
 
           </div>
@@ -252,11 +378,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../04_minimalism.html">4. Minimalism</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../05_walks.html">5. Walks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../06_fractals.html">6. Fractals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_genetic.html">7. Genetic algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_ai.html">8. 🤖 Machine learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>
 
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
@@ -264,7 +392,7 @@
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script><div>
 <br/>
 <a href="https://www.buymeacoffee.com/essicolo">☕ Buy me a coffee</a>
@@ -277,7 +405,7 @@
       &#169;2024, Essi Parent.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
       &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
       
     </div>
