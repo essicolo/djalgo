@@ -91,8 +91,6 @@ def tuple_to_music21_element(note_tuple):
         note.duration.quarterLength = note_tuple[1]
         return note
 
-
-
 def sequence_to_music21_stream(notes, bpm=120):
     """Convert a sequence of musical notes to a music21 Stream, with a tempo mark."""
     stream = m21.stream.Part()
@@ -137,11 +135,27 @@ def tuple_to_prettymidi_element(note_tuple, bpm=120, velocity=64):
     elif isinstance(note_tuple, (list, tuple)) and isinstance(note_tuple[0], list):  # Chord
         for pitch in note_tuple[0]:
             # Assuming note_tuple structure is (pitches, start, end)
-            note = pm.Note(velocity=64, pitch=pitch, start=note_tuple[1]*60/bpm, end=note_tuple[2]*60/bpm)
+            note = pm.Note(velocity=64, pitch=pitch, start=note_tuple[2]*60/bpm, end=(note_tuple[2]+note_tuple[1])*60/bpm)
             elements.append(note)
     else:  # Single note
         if isinstance(note_tuple, (list, tuple)):
-            note = pm.Note(velocity=velocity, pitch=note_tuple[0], start=note_tuple[1]*60/bpm, end=note_tuple[2]*60/bpm)
+            note = pm.Note(velocity=velocity, pitch=note_tuple[0], start=note_tuple[2]*60/bpm, end=(note_tuple[2]+note_tuple[1])*60/bpm)
+            elements.append(note)
+    return elements
+
+def tuple_to_prettymidi_element(note_tuple, bpm=120, velocity=64):
+    """Convert a single note tuple to a list of PrettyMIDI Note objects."""
+    elements = []
+    if isinstance(note_tuple, (list, tuple)) and note_tuple[0] is None:  # Rest, so no note is created
+        return elements
+    elif isinstance(note_tuple, (list, tuple)) and isinstance(note_tuple[0], list):  # Chord
+        for pitch in note_tuple[0]:
+            # Assuming note_tuple structure is (pitches, duration, offset)
+            note = pm.Note(velocity=64, pitch=pitch, start=note_tuple[2]*60/bpm, end=(note_tuple[2]+note_tuple[1])*60/bpm)
+            elements.append(note)
+    else:  # Single note
+        if isinstance(note_tuple, (list, tuple)):
+            note = pm.Note(velocity=velocity, pitch=note_tuple[0], start=note_tuple[2]*60/bpm, end=(note_tuple[2]+note_tuple[1])*60/bpm)
             elements.append(note)
     return elements
 
@@ -186,14 +200,14 @@ def tuple_to_mido_messages(note_tuple, bpm=120, velocity=64):
         return messages
     elif isinstance(note_tuple, (list, tuple)) and isinstance(note_tuple[0], list):  # Chord
         for pitch in note_tuple[0]:
-            # Assuming note_tuple structure is (pitches, start, end)
-            note_on = mido.Message('note_on', note=pitch, velocity=velocity, time=int(note_tuple[1]*60/bpm))
-            note_off = mido.Message('note_off', note=pitch, velocity=velocity, time=int(note_tuple[2]*60/bpm))
+            # Assuming note_tuple structure is (pitches, duration, offset)
+            note_on = mido.Message('note_on', note=pitch, velocity=velocity, time=int(note_tuple[2]*60/bpm))
+            note_off = mido.Message('note_off', note=pitch, velocity=velocity, time=int(note_tuple[1]*60/bpm))
             messages.extend([note_on, note_off])
     else:  # Single note
         if isinstance(note_tuple, (list, tuple)):
-            note_on = mido.Message('note_on', note=note_tuple[0], velocity=velocity, time=int(note_tuple[1]*60/bpm))
-            note_off = mido.Message('note_off', note=note_tuple[0], velocity=velocity, time=int(note_tuple[2]*60/bpm))
+            note_on = mido.Message('note_on', note=note_tuple[0], velocity=velocity, time=int(note_tuple[2]*60/bpm))
+            note_off = mido.Message('note_off', note=note_tuple[0], velocity=velocity, time=int(note_tuple[1]*60/bpm))
             messages.extend([note_on, note_off])
     return messages
 
@@ -235,12 +249,16 @@ def tuple_to_miditoolkit_notes(note_tuple, bpm=120, velocity=64):
         return notes
     elif isinstance(note_tuple, (list, tuple)) and isinstance(note_tuple[0], list):  # Chord
         for pitch in note_tuple[0]:
-            # Assuming note_tuple structure is (pitches, start, end)
-            note = miditoolkit.midi.containers.Note(pitch, int(note_tuple[1]*60/bpm), int(note_tuple[2]*60/bpm), velocity)
+            # Assuming note_tuple structure is (pitches, duration, offset)
+            start = int(note_tuple[2]*60/bpm)
+            end = int((note_tuple[2]+note_tuple[1])*60/bpm)
+            note = miditoolkit.midi.containers.Note(pitch, start, end, velocity)
             notes.append(note)
     else:  # Single note
         if isinstance(note_tuple, (list, tuple)):
-            note = miditoolkit.midi.containers.Note(note_tuple[0], int(note_tuple[1]*60/bpm), int(note_tuple[2]*60/bpm), velocity)
+            start = int(note_tuple[2]*60/bpm)
+            end = int((note_tuple[2]+note_tuple[1])*60/bpm)
+            note = miditoolkit.midi.containers.Note(note_tuple[0], start, end, velocity)
             notes.append(note)
     return notes
 

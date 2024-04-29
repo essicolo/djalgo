@@ -57,6 +57,7 @@ infinity and a coherent structure. This approach to music composition allows for
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">djalgo</span> <span class="k">as</span> <span class="nn">dj</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </pre></div>
 </div>
 </div>
@@ -271,7 +272,7 @@ infinity and a coherent structure. This approach to music composition allows for
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv5941"></div>
+<div id="midiPlayerDiv2069"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -279,7 +280,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv5941_play() {
+function midiPlayerDiv2069_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -287,14 +288,14 @@ function midiPlayerDiv5941_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv5941");
-        mp.base64Load("data:audio/midi;base64,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");
+        mp.addPlayer("#midiPlayerDiv2069");
+        mp.base64Load("data:audio/midi;base64,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");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv5941_play, 2000);
+    setTimeout(midiPlayerDiv2069_play, 2000);
 } else {
-    midiPlayerDiv5941_play();
+    midiPlayerDiv2069_play();
 }
 </script></div>
 </div>
@@ -311,12 +312,100 @@ if (typeof require === 'undefined') {
 <iframe width="100%" height="200" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1429599889&amp;color=%23ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_rateateeposts=false&amp;show_teaser=true&amp;visual=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><p>motife · T-Cells vogue</p>
 </div><p>Because cellular automata generate repeating patterns, they perform nicely for rhythmic parts. However, they will fall short for melodies.</p>
 </section>
+<section id="Rotating-CA">
+<h3>Rotating CA<a class="headerlink" href="#Rotating-CA" title="Link to this heading">¶</a></h3>
+<p>Another way of transforming cellular automata to music is to rotate the strips. We will use drum CA to create drums. In the following code block, I used three different rules initiated randomly for kick, snare and hit-hat.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+
+<span class="n">instruments</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;kick&#39;</span><span class="p">,</span> <span class="s1">&#39;snare&#39;</span><span class="p">,</span> <span class="s1">&#39;hat&#39;</span><span class="p">]</span>
+<span class="n">ca_drum_rule</span> <span class="o">=</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">150</span><span class="p">]</span>
+<span class="n">drum_width</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">drum_length</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">drum_init</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">drum_width</span>
+
+<span class="n">ca_drum</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">axs</span> <span class="o">=</span> <span class="n">axs</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ca_drum_rule</span><span class="p">)):</span>
+    <span class="n">drum_init</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choices</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="n">drum_width</span><span class="p">)</span>
+    <span class="n">ca_drum</span><span class="p">[</span><span class="n">instruments</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">fractal</span><span class="o">.</span><span class="n">CellularAutomata</span><span class="p">(</span><span class="n">ca_drum_rule</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">drum_width</span><span class="p">,</span> <span class="n">drum_init</span><span class="p">)</span>
+    <span class="n">ca_drum</span><span class="p">[</span><span class="n">instruments</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">drum_length</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">title</span><span class="o">=</span><span class="n">instruments</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;: rule &#39;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ca_drum_rule</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">show_axis</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/06_fractals_28_0.png" class="no-scaled-link" src="_images/06_fractals_28_0.png" style="width: 484px; height: 451px;" />
+</div>
+</div>
+<p>Now instead of extracting a strip as we have done before, we can flatten the 0 and 1 array on the iteration (length) axis to generate a single line of 0 and 1 per instrument.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drum_01</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">ca_drum</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">drum_01i</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">generate_01</span><span class="p">(</span><span class="n">drum_length</span><span class="p">)</span>
+    <span class="n">drum_01i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">drum_01i</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">drum_01</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">drum_01i</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">drum_01i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+kick : [0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 1 1 1 0 1 1 1 0 0 0 0 1 1 0 0 0 1 0 0 1 0 0
+ 1 1 0 1 0 1 1 1 1 1 1]
+snare : [0 0 0 0 0 0 0 0 1 0 0 1 1 0 0 0 0 0 0 1 1 1 1 1 0 1 0 0 0 0 1 0 0 0 0 0 1
+ 1 1 0 0 1 1 1 0 0 0 0]
+hat : [0 1 0 0 1 1 0 1 0 0 0 1 0 1 1 1 0 0 0 1 1 0 1 1 0 0 1 0 1 0 1 0 0 0 0 0 0
+ 1 1 0 1 0 1 1 0 0 0 0]
+</pre></div></div>
+</div>
+<p>In my instrument, a kick is pitch 36, a snare is pitch 38 and a hat is pitch 42. Each beat is of quarter length 1.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">drum_p</span> <span class="o">=</span> <span class="p">[</span><span class="mi">36</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">42</span><span class="p">]</span>
+<span class="n">drum_d</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<p>We just have to inssert notes at the right offset to create Djalgo tracks, then convert to an exportable midi format, here Pretty-midi (to be installed with <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span> <span class="pre">pretty-midi</span></code>).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tracks</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">drum</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">drum_01</span><span class="p">):</span>
+    <span class="n">current_offset</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">track_i</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">hit</span> <span class="ow">in</span> <span class="n">drum</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">hit</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">track_i</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">drum_p</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">drum_d</span><span class="p">,</span> <span class="n">current_offset</span><span class="p">))</span>
+        <span class="n">current_offset</span> <span class="o">+=</span> <span class="n">drum_d</span>
+    <span class="n">tracks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track_i</span><span class="p">)</span>
+<span class="n">dj</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">tracks</span><span class="p">,</span> <span class="s1">&#39;pretty-midi&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;music/ca-drums.mid&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
 </section>
 <section id="Mandelbrot">
 <h2>Mandelbrot<a class="headerlink" href="#Mandelbrot" title="Link to this heading">¶</a></h2>
 <p>You might already have seen the intriguing plot of the Mandelbrot ensemble. Djalgo implements a Mandelbrot fractal generator, which can creatively be used to generate musical patterns based on the fractal data.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">djalgo</span> <span class="k">as</span> <span class="nn">dj</span>
@@ -328,12 +417,12 @@ if (typeof require === 'undefined') {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/06_fractals_28_0.png" class="no-scaled-link" src="_images/06_fractals_28_0.png" style="width: 618px; height: 623px;" />
+<img alt="_images/06_fractals_36_0.png" class="no-scaled-link" src="_images/06_fractals_36_0.png" style="width: 618px; height: 623px;" />
 </div>
 </div>
 <p>By zooming the plot, you can find unexplored regions.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -358,12 +447,12 @@ if (typeof require === 'undefined') {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/06_fractals_30_0.png" class="no-scaled-link" src="_images/06_fractals_30_0.png" style="width: 874px; height: 854px;" />
+<img alt="_images/06_fractals_38_0.png" class="no-scaled-link" src="_images/06_fractals_38_0.png" style="width: 874px; height: 854px;" />
 </div>
 </div>
 <p>By scanning the Mandelbrot matrix to subtract the numbers (horizontally, vertically or diagonally), you can generate a sequence of integers. The smaller value used for lenght pixelizes the last Mandelbrot plot to create a smaller matrix, since we need fewer values for a musical sequence.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span> <span class="o">=</span> <span class="n">ranges</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
@@ -390,12 +479,12 @@ if (typeof require === 'undefined') {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/06_fractals_32_0.png" class="no-scaled-link" src="_images/06_fractals_32_0.png" style="width: 1630px; height: 700px;" />
+<img alt="_images/06_fractals_40_0.png" class="no-scaled-link" src="_images/06_fractals_40_0.png" style="width: 1630px; height: 700px;" />
 </div>
 </div>
 <p>These numbers can be set as midi pitches, index on scales, etc. If you need a scale, make sure the indexes are included in the scale. You can scale them to range between index 0 and index 20.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -413,14 +502,14 @@ if (typeof require === 'undefined') {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/06_fractals_34_0.png" class="no-scaled-link" src="_images/06_fractals_34_0.png" style="width: 697px; height: 58px;" />
+<img alt="_images/06_fractals_42_0.png" class="no-scaled-link" src="_images/06_fractals_42_0.png" style="width: 697px; height: 83px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv476"></div>
+<div id="midiPlayerDiv4014"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -428,7 +517,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv476_play() {
+function midiPlayerDiv4014_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -436,14 +525,14 @@ function midiPlayerDiv476_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv476");
+        mp.addPlayer("#midiPlayerDiv4014");
         mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQACJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAAMYA/wMAAOAAQM5gkDxapzCAPAAAkDtapzCAOwAAkDxazmCAPAAAkEBagZ1AgEAAAJBDWs5ggEMAAJA+WqcwgD4AAJBCWqcwgEIAAJBFWs5ggEUAAJBFWoGdQIBFAACQSFrOYIBIAACQTlqnMIBOAACQRVqnMIBFAACQQlrOYIBCAACQPFqBnUCAPAAAkDlazmCAOQAAkDlapzCAOQAAkDlapzCAOQAAkDdazmCANwAAkDdagZ1AgDcAAJA3Ws5ggDcAzmD/LwA=");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv476_play, 2000);
+    setTimeout(midiPlayerDiv4014_play, 2000);
 } else {
-    midiPlayerDiv476_play();
+    midiPlayerDiv4014_play();
 }
 </script></div>
 </div>
@@ -455,7 +544,7 @@ if (typeof require === 'undefined') {
 \[🐇_{t+1} = r \times 🐇_t\]</div>
 <p>That means that population <span class="math notranslate nohighlight">\(x\)</span> at the next step depends on population <span class="math notranslate nohighlight">\(x\)</span> at the current step times a growth rate, expressed in proprotion of the population per step.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">growth</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">r</span><span class="p">):</span>
@@ -476,7 +565,7 @@ if (typeof require === 'undefined') {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/06_fractals_36_0.png" class="no-scaled-link" src="_images/06_fractals_36_0.png" style="width: 578px; height: 413px;" />
+<img alt="_images/06_fractals_44_0.png" class="no-scaled-link" src="_images/06_fractals_44_0.png" style="width: 578px; height: 413px;" />
 </div>
 </div>
 <p>The growth is exponential. The more the population, the more it reproduces. But populations never grows to infinite. There are always limits to population growth. We might want to decrease the growth rate over time. Or, a better way to think of it would be to decrease the growth rate according to the population: the more the population, the less the growth rate. Let’s call it the limit of the environment <span class="math notranslate nohighlight">\(limit\)</span>. This is where the logistic equation is useful.</p>
@@ -484,7 +573,7 @@ if (typeof require === 'undefined') {
 \[🐇_{t+1} = r \times 🐇_t \times \frac{(limit - 🐇_t)}{limit}\]</div>
 <p>When <span class="math notranslate nohighlight">\(🐇_t\)</span> comes close to the <span class="math notranslate nohighlight">\(limit\)</span>, the term <span class="math notranslate nohighlight">\(\frac{(limit - 🐇_t)}{limit}\)</span> comes close to zero.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">logistic_growth</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
@@ -507,12 +596,12 @@ if (typeof require === 'undefined') {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/06_fractals_38_0.png" class="no-scaled-link" src="_images/06_fractals_38_0.png" style="width: 561px; height: 434px;" />
+<img alt="_images/06_fractals_46_0.png" class="no-scaled-link" src="_images/06_fractals_46_0.png" style="width: 561px; height: 434px;" />
 </div>
 </div>
 <p>You might have remarked that the population never reaches 5000, but only half of it. Thats because the growth rate is decreased so much that population can’t reach the maximum allowed. Let’s see what happens with different growth rates.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">growth_rates</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">3.25</span><span class="p">]</span>
@@ -533,15 +622,15 @@ if (typeof require === 'undefined') {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/06_fractals_40_0.png" class="no-scaled-link" src="_images/06_fractals_40_0.png" style="width: 561px; height: 434px;" />
+<img alt="_images/06_fractals_48_0.png" class="no-scaled-link" src="_images/06_fractals_48_0.png" style="width: 561px; height: 434px;" />
 </div>
 </div>
 <p>When growth rate increases, an oscillating convergence to a stabilized value occurs, and this value depends on the growth rate.. If we focus our interest on this stabilized value depending on growth rates, we get a very intriguing pattern.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[98]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lm</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">fractals</span><span class="o">.</span><span class="n">LogisticMap</span><span class="p">(</span><span class="n">rates</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">last_n</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lm</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">fractal</span><span class="o">.</span><span class="n">LogisticMap</span><span class="p">(</span><span class="n">rates</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">last_n</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 <span class="n">lm</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span>
 </pre></div>
 </div>
@@ -550,17 +639,17 @@ if (typeof require === 'undefined') {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/06_fractals_42_0.png" class="no-scaled-link" src="_images/06_fractals_42_0.png" style="width: 547px; height: 376px;" />
+<img alt="_images/06_fractals_50_0.png" class="no-scaled-link" src="_images/06_fractals_50_0.png" style="width: 547px; height: 376px;" />
 </div>
 </div>
 <p>An explaination of this behaviour can be find on the Veritasium YouTube channel.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/ovJcsL7vyrk?si=EQoJddVSfTCDMeox" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><p>The logistic map can be used to create notes. Here, we lower the resolution to create a list of pitches.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[112]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">length</span> <span class="o">=</span> <span class="mi">20</span>
-<span class="n">lm</span> <span class="o">=</span> <span class="n">LogisticMap</span><span class="p">(</span><span class="n">rates</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">3.5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">length</span><span class="p">),</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">last_n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">lm</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">fractal</span><span class="o">.</span><span class="n">LogisticMap</span><span class="p">(</span><span class="n">rates</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">3.5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">length</span><span class="p">),</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">last_n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">_</span><span class="p">,</span> <span class="n">lm_values</span> <span class="o">=</span> <span class="n">lm</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">),</span> <span class="n">lm_values</span><span class="p">,</span> <span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">);</span>
 </pre></div>
@@ -570,11 +659,11 @@ if (typeof require === 'undefined') {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/06_fractals_45_0.png" class="no-scaled-link" src="_images/06_fractals_45_0.png" style="width: 547px; height: 413px;" />
+<img alt="_images/06_fractals_53_0.png" class="no-scaled-link" src="_images/06_fractals_53_0.png" style="width: 547px; height: 413px;" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[113]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lm_index</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">scale_list</span><span class="p">(</span><span class="n">lm_values</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">13</span><span class="p">)]</span>
@@ -590,14 +679,14 @@ if (typeof require === 'undefined') {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/06_fractals_46_0.png" class="no-scaled-link" src="_images/06_fractals_46_0.png" style="width: 697px; height: 58px;" />
+<img alt="_images/06_fractals_54_0.png" class="no-scaled-link" src="_images/06_fractals_54_0.png" style="width: 697px; height: 83px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv948"></div>
+<div id="midiPlayerDiv4304"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -605,7 +694,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv948_play() {
+function midiPlayerDiv4304_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -613,14 +702,14 @@ function midiPlayerDiv948_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv948");
+        mp.addPlayer("#midiPlayerDiv4304");
         mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQACJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAAMYA/wMAAOAAQM5gkEpapzCASgAAkEpapzCASgAAkEpazmCASgAAkEpagZ1AgEoAAJBMWs5ggEwAAJBKWqcwgEoAAJBIWqcwgEgAAJA+Ws5ggD4AAJBMWoGdQIBMAACQQ1rOYIBDAACQSlqnMIBKAACQSlqnMIBKAACQSFrOYIBIAACQO1qBnUCAOwAAkExazmCATAAAkE5apzCATgAAkENapzCAQwAAkExazmCATAAAkExagZ1AgEwAAJA3Ws5ggDcAzmD/LwA=");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv948_play, 2000);
+    setTimeout(midiPlayerDiv4304_play, 2000);
 } else {
-    midiPlayerDiv948_play();
+    midiPlayerDiv4304_play();
 }
 </script></div>
 </div>
