@@ -29,13 +29,13 @@ def get_degree_from_pitch(pitch, scale_list, tonic_pitch):
 
     tonic_index = scale_list.index(tonic_pitch)
 
-    # If the pitch is in the scale_type
+    # If the pitch is in the mode
     if pitch in scale_list:
         # Find its index and compute the degree
         pitch_index = scale_list.index(pitch)
         degree = pitch_index - tonic_index
     else:
-        # If the pitch is not in the scale_type, find the two pitches it falls between
+        # If the pitch is not in the mode, find the two pitches it falls between
         upper_pitch = round_to_list(pitch, scale_list)
         upper_index = scale_list.index(upper_pitch)
         lower_index = upper_index - 1 if upper_index > 0 else upper_index

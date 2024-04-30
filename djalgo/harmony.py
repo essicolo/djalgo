@@ -28,6 +28,15 @@ class MusicTheoryConstants():
     intervals = {'P1': 0, 'm2': 1, 'M2': 2, 'm3': 3, 'M3': 4, 'P4': 5, 'P5': 7, 'm6': 8, 'M6': 9, 'm7': 10, 'M7': 11, 'P8': 12}
 
     @staticmethod
+    def convert_flat_to_sharp(note):
+        # Mapping of flat notes to their equivalent sharp notes
+        flat_to_sharp = {
+            'Bb': 'A#', 'Db': 'C#', 'Eb': 'D#', 'Gb': 'F#', 'Ab': 'G#',
+            'B-': 'A#', 'D-': 'C#', 'E-': 'D#', 'G-': 'F#', 'A-': 'G#'
+        }
+        return flat_to_sharp.get(note, note) 
+
+    @staticmethod
     def scale_to_triad(scale):
         """Returns the intervals for a triad based on the given scale intervals."""
         return [scale[i] for i in [0, 2, 4]]  # root, third, fifth
@@ -39,28 +48,30 @@ class Scale(MusicTheoryConstants):
 
     Args:
         tonic (str): The tonic note of the scale.
-        scale_type (str or list): The type of scale. Defaults to 'major'. If a list is provided, it represents a custom scale.
+        mode (str or list): The type of scale. Defaults to 'major'. If a list is provided, it represents a custom scale.
 
     Raises:
         ValueError: If the tonic note is not a valid note or if the scale type is not a valid scale.
 
     Attributes:
         tonic (str): The tonic note of the scale.
-        scale_type (str or list): The type of scale.
+        mode (str or list): The type of scale.
     """
 
-    def __init__(self, tonic, scale_type='major'):
+    def __init__(self, tonic, mode='major'):
         if tonic not in self.chromatic_scale:
-            raise ValueError(f"'{tonic}' is not a valid tonic note. Select one among '{self.chromatic_scale}'.")
+            tonic = self.convert_flat_to_sharp(tonic)
+            if tonic not in self.chromatic_scale:
+                raise ValueError(f"'{tonic}' is not a valid tonic note. Select one among '{self.chromatic_scale}'.")
         self.tonic = tonic
 
-        if isinstance(scale_type, list):
-            self.scale_intervals['custom'] = scale_type
-            scale_type = 'custom'
-        elif scale_type not in self.scale_intervals.keys():
-            raise ValueError(f"'{scale_type}' is not a valid scale. Select one among '{self.scale_intervals.keys()}' or a list of half steps such as [0, 2, 4, 5, 7, 9, 11] for a major scale.")
+        if isinstance(mode, list):
+            self.scale_intervals['custom'] = mode
+            mode = 'custom'
+        elif mode not in self.scale_intervals.keys():
+            raise ValueError(f"'{mode}' is not a valid scale. Select one among '{self.scale_intervals.keys()}' or a list of half steps such as [0, 2, 4, 5, 7, 9, 11] for a major scale.")
             
-        self.scale_type = scale_type
+        self.mode = mode
 
     def generate(self):
         """
@@ -70,7 +81,7 @@ class Scale(MusicTheoryConstants):
             list: A list of MIDI note numbers representing the full range of the scale.
         """
         tonic_note = self.chromatic_scale.index(self.tonic)
-        scale = self.scale_intervals.get(self.scale_type, self.scale_intervals['major'])
+        scale = self.scale_intervals.get(self.mode, self.scale_intervals['major'])
     
         full_range_scale = []
         added_notes = set()  # Keep track of added notes
@@ -197,13 +208,13 @@ class Voice(MusicTheoryConstants):
 
     """  
 
-    def __init__(self, scale_type='major', tonic='C', degrees=[0, 2, 4]):
+    def __init__(self, mode='major', tonic='C', degrees=[0, 2, 4]):
         """
         Constructs all the necessary attributes for the voice object.
 
         Parameters
         ----------
-            scale_type : str, optional
+            mode : str, optional
                 The type of the scale (default is 'major').
             tonic : str, optional
                 The tonic note of the scale (default is 'C').
@@ -211,7 +222,7 @@ class Voice(MusicTheoryConstants):
                 Relative degrees for chord formation (default is [0, 2, 4]).
         """
         self.tonic = tonic
-        self.scale = harmony.Scale(tonic, scale_type).generate()  # a list of MIDI notes for the scale
+        self.scale = harmony.Scale(tonic, mode).generate()  # a list of MIDI notes for the scale
         self.degrees = degrees  # relative degrees for chord formation
 
     def pitch_to_chord(self, pitch):
@@ -287,7 +298,7 @@ class Voice(MusicTheoryConstants):
 class Ornament(MusicTheoryConstants):
 
     def __init__(
-            self, type='grace_note', tonic=None, scale_type=None, by=1.0,
+            self, type='grace_note', tonic=None, mode=None, by=1.0,
             grace_note_type='acciaccatura', grace_pitches=None, trill_rate=0.125, arpeggio_degrees=None, slide_length=4.0
         ):
         """
@@ -296,7 +307,7 @@ class Ornament(MusicTheoryConstants):
         Args:
             type (str): The type of ornament to be processed. Supported types include 'grace_note', 'trill', and 'mordent'.
             tonic (str): The tonic note for the scale.
-            scale_type (str): The type of scale to generate.
+            mode (str): The type of scale to generate.
             by (float): The pitch step for the trill.
             grace_note_type (str): Specifies the type of grace note ('acciaccatura' or 'appoggiatura') if applicable.
             grace_pitches (list): The list of pitches for the grace note.
@@ -305,11 +316,11 @@ class Ornament(MusicTheoryConstants):
             slide_length (float): length of the slide
         """
         self.type = type
-        if tonic and scale_type:
+        if tonic and mode:
             self.tonic_index = self.chromatic_scale.index(tonic)  # Index in chromatic scale
-            self.scale = self.generate_scale(tonic, scale_type)  # This will be a list of MIDI notes for the scale
+            self.scale = self.generate_scale(tonic, mode)  # This will be a list of MIDI notes for the scale
             if arpeggio_degrees:
-                self.arpeggio_voice = Voice(scale_type=scale_type, tonic=tonic, degrees=arpeggio_degrees)
+                self.arpeggio_voice = Voice(mode=mode, tonic=tonic, degrees=arpeggio_degrees)
             else:
                 self.arpeggio_voice = None
         else:
@@ -322,18 +333,18 @@ class Ornament(MusicTheoryConstants):
         self.slide_length = slide_length
         
 
-    def generate_scale(self, tonic, scale_type):
+    def generate_scale(self, tonic, mode):
         """
         Generate a complete scale based on the tonic and scale type. This function is the same as the one in the Voice class.
 
         Args:
             tonic (str): The tonic note for the scale.
-            scale_type (str): The type of scale to generate.
+            mode (str): The type of scale to generate.
         
         Returns:
             list: A list of MIDI notes for the complete scale.
         """
-        scale_pattern = self.scale_intervals[scale_type]
+        scale_pattern = self.scale_intervals[mode]
         scale_notes = [(self.tonic_index + interval) % 12 for interval in scale_pattern]  # Pitch classes
         complete_scale = []  # This will store the full scale in MIDI numbers
         for octave in range(-1, 10):  # Covering all MIDI octaves
