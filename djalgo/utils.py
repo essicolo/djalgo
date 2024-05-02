@@ -159,6 +159,7 @@ def adjust_note_durations_to_prevent_overlaps(notes):
 
     return notes
 
+
 def repair_notes(s: list) -> list:
     """
     Apply the fill_gaps_with_rests and adjust_note_durations_to_prevent_overlaps functions to a stream.
@@ -170,6 +171,7 @@ def repair_notes(s: list) -> list:
         stream.Stream: The modified stream with gaps filled and note durations adjusted.
     """
     return adjust_note_durations_to_prevent_overlaps(fill_gaps_with_rests(s))
+
 
 def cde_to_midi(pitch):
     # Mapping of note names to MIDI numbers with sharps
@@ -205,6 +207,7 @@ def midi_to_cde(midi):
     pitch = pitches[key] + str(octave)
     return pitch
 
+
 def no_overlap(notes, adjust='offsets'):
     """
     Adjusts the offsets of the notes to prevent overlap.
@@ -225,6 +228,7 @@ def no_overlap(notes, adjust='offsets'):
 
     return adjusted_notes
 
+
 def check_input(input_list):
     """
     Checks if the input is a list of simple elements or a list of tuples.
@@ -244,6 +248,7 @@ def check_input(input_list):
     else:
         return 'unknown'
 
+
 def scale_list(numbers, to_min, to_max, min_numbers=None, max_numbers=None):
     """
     Scale a list of numbers so that its range is between min_value and max_value.
@@ -262,6 +267,7 @@ def scale_list(numbers, to_min, to_max, min_numbers=None, max_numbers=None):
         max_numbers = max(numbers)
 
     return [(num - min_numbers) * (to_max - to_min) / (max_numbers - min_numbers) + to_min for num in numbers]
+
 
 def offset_list_of_notes(list, by):
     """

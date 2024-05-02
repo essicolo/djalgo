@@ -205,7 +205,6 @@ class Progression(MusicTheoryConstants):
 class Voice(MusicTheoryConstants):
     """
     A class to represent a musical voice.
-
     """  
 
     def __init__(self, mode='major', tonic='C', degrees=[0, 2, 4]):

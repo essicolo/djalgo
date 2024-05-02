@@ -1,6 +1,6 @@
 import os
 import json
-import pretty_midi
+import music21 as m21
 import tensorflow as tf
 import numpy as np
 import random
@@ -28,8 +28,7 @@ def scan_midi_files(directory, max_files=None):
 
     return midi_files
 
-import numpy as np
-import music21 as m21
+
 
 class DataProcessor:
     def __init__(self, sequence_length_i, sequence_length_o, n_instruments, scale_mins=None, scale_maxs=None):
@@ -89,6 +88,38 @@ class DataProcessor:
         features = np.column_stack((pitches, durations, tick_deltas))
         instrument_features = np.tile(instrument_vector, (len(pitches), 1))
         return np.column_stack((features, instrument_features))
+    
+    def extract_features_rest(self, notes, instrument_vector):
+        pitches = []
+        durations = []
+        is_rests = []
+        
+        # Ensure that notes are sorted correctly by their offsets
+        notes.sort(key=lambda x: x.offset)
+
+        for i, note in enumerate(notes):
+            if note.isChord:
+                # If it's a chord, process each note in the chord
+                for chord_note in note.notes:
+                    if len(pitches) < self.total_sequence_length:
+                        pitches.append(chord_note.pitch.midi)
+                        durations.append(chord_note.duration.quarterLength)
+                        is_rests.append(0)  # Not a rest
+            elif note.isNote:
+                if len(pitches) < self.total_sequence_length:
+                    pitches.append(note.pitch.midi)
+                    durations.append(note.duration.quarterLength)
+                    is_rests.append(0)  # Not a rest
+            elif note.isRest:
+                if len(pitches) < self.total_sequence_length:
+                    pitches.append(0)  # No pitch for a rest
+                    durations.append(note.duration.quarterLength)
+                    is_rests.append(1)  # It's a rest
+
+        # Combine features and tile the instrument vector
+        features = np.column_stack((pitches, durations, is_rests))
+        instrument_features = np.tile(instrument_vector, (len(pitches), 1))
+        return np.column_stack((features, instrument_features))
 
 
     def midi_files_to_sequences(self, midi_files):
@@ -105,7 +136,7 @@ class DataProcessor:
                 # Iterate through the notes to extract all possible sequences of the defined length
                 for i in range(len(notes) - self.total_sequence_length + 1):
                     sequence = notes[i:i + self.total_sequence_length]
-                    features = self.extract_features(sequence, instrument_vector)
+                    features = self.extract_features_rest(sequence, instrument_vector)
                     if features.shape[0] == self.total_sequence_length:  # Ensure only complete sequences are added
                         all_sequences.append(features)
 
@@ -208,7 +239,7 @@ class ModelManager:
             positional_encoding_layer = PositionalEncoding(self.sequence_length_i, n_features_onehot)
             x = positional_encoding_layer(x)
             for i in range(n_layers):
-                attention_output = tf.keras.layers.MultiHeadAttention(n_heads=n_heads, key_dim=n_units)(x, x)
+                attention_output = tf.keras.layers.MultiHeadAttention(num_heads=n_heads, key_dim=n_units)(x, x)
                 x = tf.keras.layers.Dropout(dropout)(x)
                 x = tf.keras.layers.LayerNormalization(epsilon=1e-6)(x + attention_output)
                 ff_output = tf.keras.Sequential([
@@ -226,7 +257,8 @@ class ModelManager:
         x = x[:, -self.sequence_length_o:]
 
         outputs = [
-            tf.keras.layers.Dense(1, name=f"{feature}")(x) for feature in ["pitch", "duration", "tick_delta"]
+            #tf.keras.layers.Dense(1, name=f"{feature}")(x) for feature in ["pitch", "duration", "tick_delta"]
+            tf.keras.layers.Dense(1, name=f"{feature}")(x) for feature in ["pitch", "duration", "is_rest"]
         ]
         if n_instruments > 1:
             instruments_output = tf.keras.layers.TimeDistributed(
@@ -246,7 +278,8 @@ class ModelManager:
         
         loss_dict = {'pitch': 'mean_squared_error',
                     'duration': 'mean_squared_error',
-                    'tick_delta': 'mean_squared_error'}
+                    #'tick_delta': 'mean_squared_error'}
+                    'is_rest': 'categorical_crossentropy'}
         if n_instruments > 1:
             loss_dict['instrument_index'] = 'categorical_crossentropy'
         

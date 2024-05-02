@@ -355,6 +355,9 @@ class Minimalism:
             
             t_voice = []
             for m in pitch_sequence:
+                if m is None:
+                    t_voice.append(None)
+                    continue
                 differences = [t - m for t in self.t_chord]
                 sorted_differences = sorted(enumerate(differences), key=lambda x: abs(x[1]))
 
