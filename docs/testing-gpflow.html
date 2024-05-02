@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>&lt;no title&gt; &#8212; Djalgo 0.1-alpha documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <script src="_static/documentation_options.js?v=737112c1"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  !pip install gpflow tf_keras<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scamp</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+WARNING:root:python-rtmidi was not found; streaming midi input / output will not be available.
+WARNING:root:pynput was not found; mouse and keyboard input will not be available.
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">scamp</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+<span class="n">clarinet</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">new_part</span><span class="p">(</span><span class="s1">&#39;clarinet&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Using preset Clarinet for clarinet
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">clarinet</span><span class="o">.</span><span class="n">play_note</span><span class="p">(</span><span class="mi">64</span><span class="o">+</span><span class="n">a</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span> <span class="o">%</span> <span class="mi">6</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">music21</span> <span class="k">as</span> <span class="nn">m21</span>
+<span class="kn">import</span> <span class="nn">djalgo</span> <span class="k">as</span> <span class="nn">dj</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">gpflow</span>
+
+<span class="k">def</span> <span class="nf">scan_midi_files</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">max_files</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Scans the specified directory for MIDI files using glob with a while loop.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        directory (str): The directory to scan for MIDI files.</span>
+<span class="sd">        max_files (int, optional): The maximum number of files to scan. If None, all files are scanned.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: The list of MIDI files found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">search_pattern</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s1">&#39;**&#39;</span><span class="p">,</span> <span class="s1">&#39;*.mid*&#39;</span><span class="p">)</span>
+    <span class="n">midi_files</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Utiliser glob.iglob pour obtenir un itérateur</span>
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">iglob</span><span class="p">(</span><span class="n">search_pattern</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">midi_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">max_files</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">max_files</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="k">return</span> <span class="n">midi_files</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2024-05-02 11:06:21.588468: I external/local_tsl/tsl/cuda/cudart_stub.cc:32] Could not find cuda drivers on your machine, GPU will not be used.
+2024-05-02 11:06:21.592514: I external/local_tsl/tsl/cuda/cudart_stub.cc:32] Could not find cuda drivers on your machine, GPU will not be used.
+2024-05-02 11:06:21.635266: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-05-02 11:06:22.738453: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_files</span> <span class="o">=</span> <span class="n">scan_midi_files</span><span class="p">(</span><span class="s1">&#39;_midi&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mido</span>
+<span class="kn">from</span> <span class="nn">mido</span> <span class="kn">import</span> <span class="n">MidiFile</span><span class="p">,</span> <span class="n">MidiTrack</span>
+
+<span class="k">def</span> <span class="nf">repair_midi</span><span class="p">(</span><span class="n">input_path</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">split_channels</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">change_instruments</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Repairs a MIDI file by splitting or merging tracks and optionally changing instruments.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        input_path (str): Path to the input MIDI file.</span>
+<span class="sd">        output_path (str): Path to save the repaired MIDI file.</span>
+<span class="sd">        split_channels (bool): If True, splits tracks into separate tracks based on channel.</span>
+<span class="sd">        change_instruments (dict): Optional dictionary mapping from channel to new instrument program number.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mid</span> <span class="o">=</span> <span class="n">MidiFile</span><span class="p">(</span><span class="n">input_path</span><span class="p">)</span>
+    <span class="n">new_mid</span> <span class="o">=</span> <span class="n">MidiFile</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">split_channels</span><span class="p">:</span>
+        <span class="c1"># Create a track for each channel (0-15)</span>
+        <span class="n">tracks_per_channel</span> <span class="o">=</span> <span class="p">[</span><span class="n">MidiTrack</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">)]</span>
+
+        <span class="c1"># Distribute messages to appropriate track based on channel</span>
+        <span class="k">for</span> <span class="n">track</span> <span class="ow">in</span> <span class="n">mid</span><span class="o">.</span><span class="n">tracks</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">track</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">msg</span><span class="o">.</span><span class="n">is_meta</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="s1">&#39;channel&#39;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">change_instruments</span> <span class="ow">and</span> <span class="n">msg</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;program_change&#39;</span> <span class="ow">and</span> <span class="n">msg</span><span class="o">.</span><span class="n">channel</span> <span class="ow">in</span> <span class="n">change_instruments</span><span class="p">:</span>
+                        <span class="n">msg</span><span class="o">.</span><span class="n">program</span> <span class="o">=</span> <span class="n">change_instruments</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">channel</span><span class="p">]</span>
+                    <span class="n">tracks_per_channel</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">channel</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Append meta messages to all tracks</span>
+                    <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tracks_per_channel</span><span class="p">]</span>
+
+        <span class="c1"># Add non-empty tracks to the new MIDI file</span>
+        <span class="k">for</span> <span class="n">track</span> <span class="ow">in</span> <span class="n">tracks_per_channel</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="ow">not</span> <span class="n">msg</span><span class="o">.</span><span class="n">is_meta</span> <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">track</span><span class="p">):</span>  <span class="c1"># Ensuring the track is not empty</span>
+                <span class="n">new_mid</span><span class="o">.</span><span class="n">tracks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">track</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Merge all tracks into one or keep as is, based on the MIDI file&#39;s structure</span>
+        <span class="n">combined_track</span> <span class="o">=</span> <span class="n">MidiTrack</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">track</span> <span class="ow">in</span> <span class="n">mid</span><span class="o">.</span><span class="n">tracks</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">track</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">change_instruments</span> <span class="ow">and</span> <span class="n">msg</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;program_change&#39;</span> <span class="ow">and</span> <span class="n">msg</span><span class="o">.</span><span class="n">channel</span> <span class="ow">in</span> <span class="n">change_instruments</span><span class="p">:</span>
+                    <span class="n">msg</span><span class="o">.</span><span class="n">program</span> <span class="o">=</span> <span class="n">change_instruments</span><span class="p">[</span><span class="n">msg</span><span class="o">.</span><span class="n">channel</span><span class="p">]</span>
+                <span class="n">combined_track</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">new_mid</span><span class="o">.</span><span class="n">tracks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">combined_track</span><span class="p">)</span>
+
+    <span class="c1"># Save the repaired MIDI file</span>
+    <span class="n">new_mid</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
+
+<span class="c1"># Example usage:</span>
+
+<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">midi_files</span><span class="p">:</span>
+    <span class="n">repair_midi</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_midi/&#39;</span><span class="p">,</span> <span class="s1">&#39;_midi-repaired/&#39;</span><span class="p">),</span> <span class="n">split_channels</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_files</span> <span class="o">=</span> <span class="n">scan_midi_files</span><span class="p">(</span><span class="s1">&#39;_midi-repaired&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">music21</span> <span class="k">as</span> <span class="nn">m21</span>
+
+<span class="k">def</span> <span class="nf">replace_none_with_weighted_value</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="c1"># Copy data to avoid modifying the original array directly</span>
+    <span class="n">modified_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">modified_data</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">modified_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">nearest_prev</span> <span class="o">=</span> <span class="n">nearest_next</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">dist_prev</span> <span class="o">=</span> <span class="n">dist_next</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">modified_data</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">nearest_prev</span> <span class="o">=</span> <span class="n">modified_data</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                    <span class="n">dist_prev</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="n">j</span>
+                    <span class="k">break</span>
+
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">modified_data</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">modified_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">nearest_next</span> <span class="o">=</span> <span class="n">modified_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                    <span class="n">dist_next</span> <span class="o">=</span> <span class="n">k</span> <span class="o">-</span> <span class="n">i</span>
+                    <span class="k">break</span>
+
+            <span class="k">if</span> <span class="n">nearest_prev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">nearest_next</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">total_weight</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">dist_prev</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">dist_next</span>
+                <span class="n">weighted_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">nearest_prev</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">dist_prev</span><span class="p">)</span> <span class="o">+</span> <span class="n">nearest_next</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">dist_next</span><span class="p">))</span> <span class="o">/</span> <span class="n">total_weight</span>
+            <span class="k">elif</span> <span class="n">nearest_prev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">weighted_value</span> <span class="o">=</span> <span class="n">nearest_prev</span>
+            <span class="k">elif</span> <span class="n">nearest_next</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">weighted_value</span> <span class="o">=</span> <span class="n">nearest_next</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">weighted_value</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Default or handle as needed</span>
+
+            <span class="n">modified_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">weighted_value</span>
+    <span class="k">return</span> <span class="n">modified_data</span>
+
+
+<span class="k">def</span> <span class="nf">prepare_data_for_gpflow</span><span class="p">(</span><span class="n">midi_files</span><span class="p">,</span> <span class="n">num_instruments</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Will hold the input features</span>
+    <span class="n">targets</span> <span class="o">=</span> <span class="p">[]</span>   <span class="c1"># Will hold the targets with instrument index</span>
+
+    <span class="k">for</span> <span class="n">midi_file</span> <span class="ow">in</span> <span class="n">midi_files</span><span class="p">:</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="n">m21</span><span class="o">.</span><span class="n">converter</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">midi_file</span><span class="p">)</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">score</span><span class="o">.</span><span class="n">getElementsByClass</span><span class="p">(</span><span class="n">m21</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">Part</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">part</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">parts</span><span class="p">[:</span><span class="n">num_instruments</span><span class="p">]):</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">part</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">)</span>
+            <span class="n">scale_list</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">harmony</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">tonic</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">part</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">notesAndRests</span><span class="p">:</span>
+                <span class="n">offset</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span>
+                <span class="n">duration</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">duration</span><span class="o">.</span><span class="n">quarterLength</span><span class="p">)</span>
+                <span class="n">activity</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">m21</span><span class="o">.</span><span class="n">note</span><span class="o">.</span><span class="n">Rest</span><span class="p">)</span> <span class="k">else</span> <span class="mi">1</span>
+
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">m21</span><span class="o">.</span><span class="n">note</span><span class="o">.</span><span class="n">Note</span><span class="p">):</span>
+                    <span class="n">pitch</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">pitch</span><span class="o">.</span><span class="n">midi</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">m21</span><span class="o">.</span><span class="n">chord</span><span class="o">.</span><span class="n">Chord</span><span class="p">):</span>
+                    <span class="n">pitch</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">pitches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">midi</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">pitch</span> <span class="o">=</span> <span class="kc">None</span>
+
+                <span class="n">degree</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">get_degree_from_pitch</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">scale_list</span><span class="o">=</span><span class="n">scale_list</span><span class="p">,</span> <span class="n">tonic_pitch</span><span class="o">=</span><span class="n">key</span><span class="o">.</span><span class="n">tonic</span><span class="o">.</span><span class="n">midi</span><span class="p">)</span> <span class="k">if</span> <span class="n">pitch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+                <span class="k">if</span> <span class="n">num_instruments</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">offset</span><span class="p">])</span>  <span class="c1"># Features (time offset)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">offset</span><span class="p">,</span> <span class="n">idx</span><span class="p">])</span>  <span class="c1"># Features (time offset)</span>
+
+                <span class="c1"># Concatenating instrument index with each target</span>
+                <span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">degree</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">activity</span><span class="p">])</span>
+
+    <span class="c1"># Replace None values in degrees with a weighted average of the nearest non-None values</span>
+    <span class="n">all_degrees</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">]</span>
+    <span class="n">all_degrees_noNone</span> <span class="o">=</span> <span class="n">replace_none_with_weighted_value</span><span class="p">(</span><span class="n">all_degrees</span><span class="p">)</span>
+    <span class="n">targets</span> <span class="o">=</span> <span class="p">[[</span><span class="n">all_degrees_noNone</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">targets</span><span class="p">)]</span>
+
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">features</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span>
+
+<span class="k">def</span> <span class="nf">scaling</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">std</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span>
+
+<span class="k">def</span> <span class="nf">minmax_scaling</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">min_range</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_range</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">min_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">max_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">scaled_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span> <span class="o">-</span> <span class="n">min_vals</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_vals</span> <span class="o">-</span> <span class="n">min_vals</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_range</span> <span class="o">-</span> <span class="n">min_range</span><span class="p">)</span> <span class="o">+</span> <span class="n">min_range</span>
+    <span class="k">return</span> <span class="n">scaled_data</span><span class="p">,</span> <span class="n">min_vals</span><span class="p">,</span> <span class="n">max_vals</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">midi_files</span> <span class="o">=</span> <span class="n">scan_midi_files</span><span class="p">(</span><span class="s1">&#39;_midi-repaired&#39;</span><span class="p">)</span>
+<span class="n">midi_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">midi_files</span><span class="p">[</span><span class="mi">4</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">midi_files</span><span class="p">)</span>
+<span class="n">num_instruments</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">prepare_data_for_gpflow</span><span class="p">(</span><span class="n">midi_files</span><span class="p">,</span> <span class="n">num_instruments</span><span class="o">=</span><span class="n">num_instruments</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;_midi-repaired/tetris.mid&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Y_sc</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">Y_sc</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">min_Y</span><span class="p">,</span> <span class="n">max_y</span> <span class="o">=</span> <span class="n">minmax_scaling</span><span class="p">(</span><span class="n">Y</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="n">X_sc</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">X_sc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">min_X</span><span class="p">,</span> <span class="n">max_X</span> <span class="o">=</span> <span class="n">minmax_scaling</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="k">if</span> <span class="n">num_instruments</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_sc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Y_sc</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Feature </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Feature </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+            <span class="n">filter_instr</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">j</span>
+            <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_sc</span><span class="p">[</span><span class="n">filter_instr</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Y_sc</span><span class="p">[</span><span class="n">filter_instr</span><span class="p">,</span> <span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Feature </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">, Instrument </span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Feature </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/testing-gpflow_11_0.png" class="no-scaled-link" src="_images/testing-gpflow_11_0.png" style="width: 1002px; height: 373px;" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpflow</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set_default_jitter</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">)</span>
+
+<span class="n">matern_kernel</span> <span class="o">=</span> <span class="n">gpflow</span><span class="o">.</span><span class="n">kernels</span><span class="o">.</span><span class="n">Matern32</span><span class="p">(</span><span class="n">lengthscales</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">variance</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)</span>  <span class="c1"># Increased variance</span>
+<span class="n">periodic_kernel_short</span> <span class="o">=</span> <span class="n">gpflow</span><span class="o">.</span><span class="n">kernels</span><span class="o">.</span><span class="n">Periodic</span><span class="p">(</span>
+    <span class="n">base_kernel</span><span class="o">=</span><span class="n">gpflow</span><span class="o">.</span><span class="n">kernels</span><span class="o">.</span><span class="n">Matern32</span><span class="p">(</span><span class="n">lengthscales</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">variance</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>  <span class="c1"># Increase base kernel variance</span>
+    <span class="n">period</span><span class="o">=</span><span class="mf">0.001</span>
+<span class="p">)</span>
+<span class="n">periodic_kernel_long</span> <span class="o">=</span> <span class="n">gpflow</span><span class="o">.</span><span class="n">kernels</span><span class="o">.</span><span class="n">Periodic</span><span class="p">(</span>
+    <span class="n">base_kernel</span><span class="o">=</span><span class="n">gpflow</span><span class="o">.</span><span class="n">kernels</span><span class="o">.</span><span class="n">Matern32</span><span class="p">(</span><span class="n">lengthscales</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">variance</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>  <span class="c1"># Increase base kernel variance</span>
+    <span class="n">period</span><span class="o">=</span><span class="mf">0.5</span>
+<span class="p">)</span>
+
+<span class="c1"># Combine kernels</span>
+<span class="n">complex_kernel</span> <span class="o">=</span> <span class="n">gpflow</span><span class="o">.</span><span class="n">kernels</span><span class="o">.</span><span class="n">Sum</span><span class="p">([</span><span class="n">matern_kernel</span><span class="p">,</span> <span class="n">periodic_kernel_short</span><span class="p">,</span> <span class="n">periodic_kernel_long</span><span class="p">])</span>
+
+
+<span class="k">if</span> <span class="n">num_instruments</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">num_outputs</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Single output for a single instrument</span>
+    <span class="n">kernel_degrees</span> <span class="o">=</span> <span class="n">complex_kernel</span>
+    <span class="n">kernel_durations</span> <span class="o">=</span> <span class="n">complex_kernel</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">num_outputs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">X_sc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Assuming column 1 is the index of instruments</span>
+    <span class="c1"># Coregionalization kernel setup</span>
+    <span class="n">coreg_kernel</span> <span class="o">=</span> <span class="n">gpflow</span><span class="o">.</span><span class="n">kernels</span><span class="o">.</span><span class="n">Coregion</span><span class="p">(</span><span class="n">output_dim</span><span class="o">=</span><span class="n">num_outputs</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="n">num_outputs</span><span class="p">,</span> <span class="n">active_dims</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">coreg_kernel</span><span class="o">.</span><span class="n">W</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">num_outputs</span><span class="p">,</span> <span class="n">num_outputs</span><span class="p">))</span>
+    <span class="n">kernel_degrees</span> <span class="o">=</span> <span class="n">complex_kernel</span> <span class="o">*</span> <span class="n">coreg_kernel</span>
+    <span class="n">kernel_durations</span> <span class="o">=</span> <span class="n">complex_kernel</span> <span class="o">*</span> <span class="n">coreg_kernel</span>
+    <span class="n">kernel_activities</span> <span class="o">=</span> <span class="n">complex_kernel</span> <span class="o">*</span> <span class="n">coreg_kernel</span>
+
+<span class="c1"># Setup the GP models for each output</span>
+<span class="c1"># Use X_sc which contains the scaled features including time and instrument index</span>
+<span class="n">model_degrees</span> <span class="o">=</span> <span class="n">gpflow</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">VGP</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">X_sc</span><span class="p">,</span> <span class="n">Y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]),</span> <span class="n">kernel</span><span class="o">=</span><span class="n">kernel_degrees</span><span class="p">,</span> <span class="n">likelihood</span><span class="o">=</span><span class="n">gpflow</span><span class="o">.</span><span class="n">likelihoods</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">())</span>
+<span class="n">model_durations</span> <span class="o">=</span> <span class="n">gpflow</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">VGP</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">X_sc</span><span class="p">,</span> <span class="n">Y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]),</span> <span class="n">kernel</span><span class="o">=</span><span class="n">kernel_durations</span><span class="p">,</span> <span class="n">likelihood</span><span class="o">=</span><span class="n">gpflow</span><span class="o">.</span><span class="n">likelihoods</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">())</span>
+<span class="k">if</span> <span class="n">num_instruments</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">model_activities</span> <span class="o">=</span> <span class="n">gpflow</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">VGP</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">(</span><span class="n">X_sc</span><span class="p">,</span> <span class="n">Y</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]),</span> <span class="n">kernel</span><span class="o">=</span><span class="n">kernel_activities</span><span class="p">,</span> <span class="n">likelihood</span><span class="o">=</span><span class="n">gpflow</span><span class="o">.</span><span class="n">likelihoods</span><span class="o">.</span><span class="n">Bernoulli</span><span class="p">())</span>
+
+<span class="c1"># Define training data for each model using the appropriate columns from Y</span>
+<span class="n">training_data_degrees</span> <span class="o">=</span> <span class="p">(</span><span class="n">X_sc</span><span class="p">,</span> <span class="n">Y_sc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># First column of Y for degrees</span>
+<span class="n">training_data_durations</span> <span class="o">=</span> <span class="p">(</span><span class="n">X_sc</span><span class="p">,</span> <span class="n">Y_sc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>  <span class="c1"># Second column of Y for durations</span>
+<span class="k">if</span> <span class="n">num_instruments</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">training_data_activities</span> <span class="o">=</span> <span class="p">(</span><span class="n">X_sc</span><span class="p">,</span> <span class="n">Y_sc</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>  <span class="c1"># Third column of Y for activities</span>
+
+<span class="c1"># Optimization using GPflow&#39;s built-in optimizer for each model</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">gpflow</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Scipy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fitting degrees model...&#39;</span><span class="p">)</span>
+<span class="n">optimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">model_degrees</span><span class="o">.</span><span class="n">training_loss_closure</span><span class="p">(),</span>
+                   <span class="n">variables</span><span class="o">=</span><span class="n">model_degrees</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">,</span>
+                   <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">maxiter</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fitting durations model...&#39;</span><span class="p">)</span>
+<span class="n">optimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">model_durations</span><span class="o">.</span><span class="n">training_loss_closure</span><span class="p">(),</span>
+                   <span class="n">variables</span><span class="o">=</span><span class="n">model_durations</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">,</span>
+                   <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">maxiter</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
+<span class="k">if</span> <span class="n">num_instruments</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fitting activities model...&#39;</span><span class="p">)</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">minimize</span><span class="p">(</span><span class="n">model_activities</span><span class="o">.</span><span class="n">training_loss_closure</span><span class="p">(),</span>
+                    <span class="n">variables</span><span class="o">=</span><span class="n">model_activities</span><span class="o">.</span><span class="n">trainable_variables</span><span class="p">,</span>
+                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">maxiter</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
+<br/><br/></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Fitting degrees model...
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2024-05-02 11:14:49.329811: W tensorflow/core/kernels/linalg/cholesky_op.cc:56] Cholesky decomposition was not successful. Eigen::LLT failed with error code 1. Filling lower-triangular output with NaNs.
+2024-05-02 11:14:49.348457: W tensorflow/core/kernels/linalg/cholesky_op.cc:56] Cholesky decomposition was not successful. Eigen::LLT failed with error code 1. Filling lower-triangular output with NaNs.
+2024-05-02 11:14:49.368820: W tensorflow/core/kernels/linalg/cholesky_op.cc:56] Cholesky decomposition was not successful. Eigen::LLT failed with error code 1. Filling lower-triangular output with NaNs.
+2024-05-02 11:14:49.391460: W tensorflow/core/kernels/linalg/cholesky_op.cc:56] Cholesky decomposition was not successful. Eigen::LLT failed with error code 1. Filling lower-triangular output with NaNs.
+2024-05-02 11:14:49.413135: W tensorflow/core/kernels/linalg/cholesky_op.cc:56] Cholesky decomposition was not successful. Eigen::LLT failed with error code 1. Filling lower-triangular output with NaNs.
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Fitting durations model...
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2024-05-02 11:14:51.408610: W tensorflow/core/kernels/linalg/cholesky_op.cc:56] Cholesky decomposition was not successful. Eigen::LLT failed with error code 1. Filling lower-triangular output with NaNs.
+2024-05-02 11:14:51.442271: W tensorflow/core/kernels/linalg/cholesky_op.cc:56] Cholesky decomposition was not successful. Eigen::LLT failed with error code 1. Filling lower-triangular output with NaNs.
+2024-05-02 11:14:51.459431: W tensorflow/core/kernels/linalg/cholesky_op.cc:56] Cholesky decomposition was not successful. Eigen::LLT failed with error code 1. Filling lower-triangular output with NaNs.
+2024-05-02 11:14:51.476941: W tensorflow/core/kernels/linalg/cholesky_op.cc:56] Cholesky decomposition was not successful. Eigen::LLT failed with error code 1. Filling lower-triangular output with NaNs.
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Fitting activities model...
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2024-05-02 11:14:53.462665: W tensorflow/core/kernels/linalg/cholesky_op.cc:56] Cholesky decomposition was not successful. Eigen::LLT failed with error code 1. Filling lower-triangular output with NaNs.
+2024-05-02 11:14:53.482666: W tensorflow/core/kernels/linalg/cholesky_op.cc:56] Cholesky decomposition was not successful. Eigen::LLT failed with error code 1. Filling lower-triangular output with NaNs.
+2024-05-02 11:14:53.499449: W tensorflow/core/kernels/linalg/cholesky_op.cc:56] Cholesky decomposition was not successful. Eigen::LLT failed with error code 1. Filling lower-triangular output with NaNs.
+</pre></div></div>
+</div>
+tf.saved_model.save(model_degrees, '_models/model_degrees')
+tf.saved_model.save(model_durations, '_models/model_durations')
+tf.saved_model.save(model_activities, '_models/model_activities')<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_values</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_values</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">num_instruments</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">X_new</span> <span class="o">=</span> <span class="n">values</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">X_new_instruments</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_instruments</span><span class="p">):</span>
+        <span class="n">X_new_instruments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">values</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_values</span><span class="p">)</span> <span class="o">*</span> <span class="n">i</span><span class="p">)))</span>
+    <span class="n">X_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">X_new_instruments</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_new</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[-1.        ,  0.        ],
+       [-0.97979798,  0.        ],
+       [-0.95959596,  0.        ],
+       [-0.93939394,  0.        ],
+       [-0.91919192,  0.        ],
+       [-0.8989899 ,  0.        ],
+       [-0.87878788,  0.        ],
+       [-0.85858586,  0.        ],
+       [-0.83838384,  0.        ],
+       [-0.81818182,  0.        ],
+       [-0.7979798 ,  0.        ],
+       [-0.77777778,  0.        ],
+       [-0.75757576,  0.        ],
+       [-0.73737374,  0.        ],
+       [-0.71717172,  0.        ],
+       [-0.6969697 ,  0.        ],
+       [-0.67676768,  0.        ],
+       [-0.65656566,  0.        ],
+       [-0.63636364,  0.        ],
+       [-0.61616162,  0.        ],
+       [-0.5959596 ,  0.        ],
+       [-0.57575758,  0.        ],
+       [-0.55555556,  0.        ],
+       [-0.53535354,  0.        ],
+       [-0.51515152,  0.        ],
+       [-0.49494949,  0.        ],
+       [-0.47474747,  0.        ],
+       [-0.45454545,  0.        ],
+       [-0.43434343,  0.        ],
+       [-0.41414141,  0.        ],
+       [-0.39393939,  0.        ],
+       [-0.37373737,  0.        ],
+       [-0.35353535,  0.        ],
+       [-0.33333333,  0.        ],
+       [-0.31313131,  0.        ],
+       [-0.29292929,  0.        ],
+       [-0.27272727,  0.        ],
+       [-0.25252525,  0.        ],
+       [-0.23232323,  0.        ],
+       [-0.21212121,  0.        ],
+       [-0.19191919,  0.        ],
+       [-0.17171717,  0.        ],
+       [-0.15151515,  0.        ],
+       [-0.13131313,  0.        ],
+       [-0.11111111,  0.        ],
+       [-0.09090909,  0.        ],
+       [-0.07070707,  0.        ],
+       [-0.05050505,  0.        ],
+       [-0.03030303,  0.        ],
+       [-0.01010101,  0.        ],
+       [ 0.01010101,  0.        ],
+       [ 0.03030303,  0.        ],
+       [ 0.05050505,  0.        ],
+       [ 0.07070707,  0.        ],
+       [ 0.09090909,  0.        ],
+       [ 0.11111111,  0.        ],
+       [ 0.13131313,  0.        ],
+       [ 0.15151515,  0.        ],
+       [ 0.17171717,  0.        ],
+       [ 0.19191919,  0.        ],
+       [ 0.21212121,  0.        ],
+       [ 0.23232323,  0.        ],
+       [ 0.25252525,  0.        ],
+       [ 0.27272727,  0.        ],
+       [ 0.29292929,  0.        ],
+       [ 0.31313131,  0.        ],
+       [ 0.33333333,  0.        ],
+       [ 0.35353535,  0.        ],
+       [ 0.37373737,  0.        ],
+       [ 0.39393939,  0.        ],
+       [ 0.41414141,  0.        ],
+       [ 0.43434343,  0.        ],
+       [ 0.45454545,  0.        ],
+       [ 0.47474747,  0.        ],
+       [ 0.49494949,  0.        ],
+       [ 0.51515152,  0.        ],
+       [ 0.53535354,  0.        ],
+       [ 0.55555556,  0.        ],
+       [ 0.57575758,  0.        ],
+       [ 0.5959596 ,  0.        ],
+       [ 0.61616162,  0.        ],
+       [ 0.63636364,  0.        ],
+       [ 0.65656566,  0.        ],
+       [ 0.67676768,  0.        ],
+       [ 0.6969697 ,  0.        ],
+       [ 0.71717172,  0.        ],
+       [ 0.73737374,  0.        ],
+       [ 0.75757576,  0.        ],
+       [ 0.77777778,  0.        ],
+       [ 0.7979798 ,  0.        ],
+       [ 0.81818182,  0.        ],
+       [ 0.83838384,  0.        ],
+       [ 0.85858586,  0.        ],
+       [ 0.87878788,  0.        ],
+       [ 0.8989899 ,  0.        ],
+       [ 0.91919192,  0.        ],
+       [ 0.93939394,  0.        ],
+       [ 0.95959596,  0.        ],
+       [ 0.97979798,  0.        ],
+       [ 1.        ,  0.        ],
+       [-1.        ,  1.        ],
+       [-0.97979798,  1.        ],
+       [-0.95959596,  1.        ],
+       [-0.93939394,  1.        ],
+       [-0.91919192,  1.        ],
+       [-0.8989899 ,  1.        ],
+       [-0.87878788,  1.        ],
+       [-0.85858586,  1.        ],
+       [-0.83838384,  1.        ],
+       [-0.81818182,  1.        ],
+       [-0.7979798 ,  1.        ],
+       [-0.77777778,  1.        ],
+       [-0.75757576,  1.        ],
+       [-0.73737374,  1.        ],
+       [-0.71717172,  1.        ],
+       [-0.6969697 ,  1.        ],
+       [-0.67676768,  1.        ],
+       [-0.65656566,  1.        ],
+       [-0.63636364,  1.        ],
+       [-0.61616162,  1.        ],
+       [-0.5959596 ,  1.        ],
+       [-0.57575758,  1.        ],
+       [-0.55555556,  1.        ],
+       [-0.53535354,  1.        ],
+       [-0.51515152,  1.        ],
+       [-0.49494949,  1.        ],
+       [-0.47474747,  1.        ],
+       [-0.45454545,  1.        ],
+       [-0.43434343,  1.        ],
+       [-0.41414141,  1.        ],
+       [-0.39393939,  1.        ],
+       [-0.37373737,  1.        ],
+       [-0.35353535,  1.        ],
+       [-0.33333333,  1.        ],
+       [-0.31313131,  1.        ],
+       [-0.29292929,  1.        ],
+       [-0.27272727,  1.        ],
+       [-0.25252525,  1.        ],
+       [-0.23232323,  1.        ],
+       [-0.21212121,  1.        ],
+       [-0.19191919,  1.        ],
+       [-0.17171717,  1.        ],
+       [-0.15151515,  1.        ],
+       [-0.13131313,  1.        ],
+       [-0.11111111,  1.        ],
+       [-0.09090909,  1.        ],
+       [-0.07070707,  1.        ],
+       [-0.05050505,  1.        ],
+       [-0.03030303,  1.        ],
+       [-0.01010101,  1.        ],
+       [ 0.01010101,  1.        ],
+       [ 0.03030303,  1.        ],
+       [ 0.05050505,  1.        ],
+       [ 0.07070707,  1.        ],
+       [ 0.09090909,  1.        ],
+       [ 0.11111111,  1.        ],
+       [ 0.13131313,  1.        ],
+       [ 0.15151515,  1.        ],
+       [ 0.17171717,  1.        ],
+       [ 0.19191919,  1.        ],
+       [ 0.21212121,  1.        ],
+       [ 0.23232323,  1.        ],
+       [ 0.25252525,  1.        ],
+       [ 0.27272727,  1.        ],
+       [ 0.29292929,  1.        ],
+       [ 0.31313131,  1.        ],
+       [ 0.33333333,  1.        ],
+       [ 0.35353535,  1.        ],
+       [ 0.37373737,  1.        ],
+       [ 0.39393939,  1.        ],
+       [ 0.41414141,  1.        ],
+       [ 0.43434343,  1.        ],
+       [ 0.45454545,  1.        ],
+       [ 0.47474747,  1.        ],
+       [ 0.49494949,  1.        ],
+       [ 0.51515152,  1.        ],
+       [ 0.53535354,  1.        ],
+       [ 0.55555556,  1.        ],
+       [ 0.57575758,  1.        ],
+       [ 0.5959596 ,  1.        ],
+       [ 0.61616162,  1.        ],
+       [ 0.63636364,  1.        ],
+       [ 0.65656566,  1.        ],
+       [ 0.67676768,  1.        ],
+       [ 0.6969697 ,  1.        ],
+       [ 0.71717172,  1.        ],
+       [ 0.73737374,  1.        ],
+       [ 0.75757576,  1.        ],
+       [ 0.77777778,  1.        ],
+       [ 0.7979798 ,  1.        ],
+       [ 0.81818182,  1.        ],
+       [ 0.83838384,  1.        ],
+       [ 0.85858586,  1.        ],
+       [ 0.87878788,  1.        ],
+       [ 0.8989899 ,  1.        ],
+       [ 0.91919192,  1.        ],
+       [ 0.93939394,  1.        ],
+       [ 0.95959596,  1.        ],
+       [ 0.97979798,  1.        ],
+       [ 1.        ,  1.        ]])
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">degrees_sc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">model_degrees</span><span class="o">.</span><span class="n">predict_y</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span>
+<span class="n">durations_sc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">model_durations</span><span class="o">.</span><span class="n">predict_y</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span>
+<span class="n">predictions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">degrees_sc</span><span class="p">)</span>
+<span class="n">predictions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">durations_sc</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">num_instruments</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">activities</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">model_activities</span><span class="o">.</span><span class="n">predict_f_samples</span><span class="p">(</span><span class="n">X_new</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">instrument_01</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">activities</span><span class="p">)</span>
+    <span class="n">predictions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">instrument_01</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[73]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="k">if</span> <span class="n">num_instruments</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_sc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Y_sc</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training data&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_new</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">predictions</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Prediction feature </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Feature </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_instruments</span><span class="p">):</span>
+            <span class="n">filter_instr_tr</span> <span class="o">=</span> <span class="n">X_sc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">j</span>
+            <span class="n">filter_instr_pr</span> <span class="o">=</span> <span class="n">X_new</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">j</span>
+            <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_sc</span><span class="p">[</span><span class="n">filter_instr_tr</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Y_sc</span><span class="p">[</span><span class="n">filter_instr_tr</span><span class="p">,</span> <span class="n">i</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training data&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_new</span><span class="p">[</span><span class="n">filter_instr_pr</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">predictions</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="n">filter_instr_pr</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Prediction feature </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Feature </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/testing-gpflow_17_0.png" class="no-scaled-link" src="_images/testing-gpflow_17_0.png" style="width: 980px; height: 373px;" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_sc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Y_sc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;kx&#39;</span><span class="p">,</span> <span class="n">mew</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training data&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_new</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">degrees_sc</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Degrees prediction&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Degrees&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.legend.Legend at 0x7f40c3f2ebd0&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/testing-gpflow_18_1.png" class="no-scaled-link" src="_images/testing-gpflow_18_1.png" style="width: 844px; height: 448px;" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_sc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Y_sc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;kx&#39;</span><span class="p">,</span> <span class="n">mew</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training data&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_new</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">durations_sc</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Durations prediction&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Durations&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.legend.Legend at 0x7f40aabcb650&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/testing-gpflow_19_1.png" class="no-scaled-link" src="_images/testing-gpflow_19_1.png" style="width: 858px; height: 448px;" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/logo.png" alt="Logo"/>
+            </a></p>
+<h3><a href="index.html">Table of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01_getting-started.html">1. Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_harmony.html">2. Harmonies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_loops.html">3. Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_minimalism.html">4. Minimalism</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_walks.html">5. Walks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_fractals.html">6. Fractals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_genetic.html">7. Genetic algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_ai.html">8. 🤖 Machine learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
+</ul>
+
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><div>
+<br/>
+<a href="https://www.buymeacoffee.com/essicolo">☕ Buy me a coffee</a>
+</div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Essi Parent.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/testing-gpflow.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

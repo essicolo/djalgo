@@ -262,7 +262,7 @@ frog.swim()
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c_major</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">harmony</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">tonic</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="n">scale_type</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c_major</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">harmony</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">tonic</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">c_major</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -354,7 +354,7 @@ frog.swim()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/02_harmony_23_0.png" class="no-scaled-link" src="_images/02_harmony_23_0.png" style="width: 697px; height: 49px;" />
+<img alt="_images/02_harmony_23_0.png" class="no-scaled-link" src="_images/02_harmony_23_0.png" style="width: 697px; height: 68px;" />
 </div>
 </div>
 </section>
@@ -374,7 +374,7 @@ frog.swim()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/02_harmony_25_0.png" class="no-scaled-link" src="_images/02_harmony_25_0.png" style="width: 119px; height: 49px;" />
+<img alt="_images/02_harmony_25_0.png" class="no-scaled-link" src="_images/02_harmony_25_0.png" style="width: 85px; height: 68px;" />
 </div>
 </div>
 <div class="tip docutils container">
@@ -405,7 +405,7 @@ frog.swim()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/02_harmony_29_0.png" class="no-scaled-link" src="_images/02_harmony_29_0.png" style="width: 697px; height: 49px;" />
+<img alt="_images/02_harmony_29_0.png" class="no-scaled-link" src="_images/02_harmony_29_0.png" style="width: 697px; height: 68px;" />
 </div>
 </div>
 <p><strong>Trill</strong> gets the degree given by <code class="docutils literal notranslate"><span class="pre">by</span></code> from the note at <code class="docutils literal notranslate"><span class="pre">note_index</span></code> and oscillates at rate of <code class="docutils literal notranslate"><span class="pre">trill_rate</span></code> between the note and its degree.</p>
@@ -418,7 +418,7 @@ frog.swim()
     <span class="n">trill_rate</span><span class="o">=</span><span class="mf">0.125</span><span class="p">,</span>
     <span class="n">by</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="n">tonic</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">,</span>
-    <span class="n">scale_type</span><span class="o">=</span><span class="s1">&#39;major&#39;</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;major&#39;</span>
 <span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
     <span class="n">notes</span><span class="o">=</span><span class="n">c_major_sub_notes</span><span class="p">,</span>
     <span class="n">note_index</span><span class="o">=</span><span class="mi">4</span>
@@ -431,7 +431,7 @@ frog.swim()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/02_harmony_31_0.png" class="no-scaled-link" src="_images/02_harmony_31_0.png" style="width: 697px; height: 49px;" />
+<img alt="_images/02_harmony_31_0.png" class="no-scaled-link" src="_images/02_harmony_31_0.png" style="width: 697px; height: 68px;" />
 </div>
 </div>
 <p><strong>Mordent</strong> rapidly alternates between the original pitch and one step defined <code class="docutils literal notranslate"><span class="pre">by</span></code>.</p>
@@ -443,7 +443,7 @@ frog.swim()
     <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;mordent&#39;</span><span class="p">,</span>
     <span class="n">by</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
     <span class="n">tonic</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">,</span>
-    <span class="n">scale_type</span><span class="o">=</span><span class="s1">&#39;major&#39;</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;major&#39;</span>
 <span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
     <span class="n">notes</span><span class="o">=</span><span class="n">c_major_sub_notes</span><span class="p">,</span>
     <span class="n">note_index</span><span class="o">=</span><span class="mi">4</span>
@@ -456,7 +456,7 @@ frog.swim()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/02_harmony_33_0.png" class="no-scaled-link" src="_images/02_harmony_33_0.png" style="width: 697px; height: 54px;" />
+<img alt="_images/02_harmony_33_0.png" class="no-scaled-link" src="_images/02_harmony_33_0.png" style="width: 697px; height: 68px;" />
 </div>
 </div>
 <p><strong>Arpeggio</strong> transforms a note to an arpeggio given by a list of degrees.</p>
@@ -467,7 +467,7 @@ frog.swim()
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ornam</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">harmony</span><span class="o">.</span><span class="n">Ornament</span><span class="p">(</span>
     <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;arpeggio&#39;</span><span class="p">,</span>
     <span class="n">tonic</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">,</span>
-    <span class="n">scale_type</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span>
     <span class="n">arpeggio_degrees</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
 <span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
     <span class="n">notes</span><span class="o">=</span><span class="n">c_major_sub_notes</span><span class="p">,</span>
@@ -481,7 +481,7 @@ frog.swim()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/02_harmony_35_0.png" class="no-scaled-link" src="_images/02_harmony_35_0.png" style="width: 697px; height: 53px;" />
+<img alt="_images/02_harmony_35_0.png" class="no-scaled-link" src="_images/02_harmony_35_0.png" style="width: 697px; height: 72px;" />
 </div>
 </div>
 <p><strong>Turn</strong> is a transition of four notes betweem <code class="docutils literal notranslate"><span class="pre">note_index</span></code> and the next note.</p>
@@ -492,7 +492,7 @@ frog.swim()
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ornam</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">harmony</span><span class="o">.</span><span class="n">Ornament</span><span class="p">(</span>
     <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;turn&#39;</span><span class="p">,</span>
     <span class="n">tonic</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">,</span>
-    <span class="n">scale_type</span><span class="o">=</span><span class="s1">&#39;major&#39;</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;major&#39;</span>
 <span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
     <span class="n">notes</span><span class="o">=</span><span class="n">c_major_sub_notes</span><span class="p">,</span>
     <span class="n">note_index</span><span class="o">=</span><span class="mi">4</span>
@@ -505,7 +505,7 @@ frog.swim()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/02_harmony_37_0.png" class="no-scaled-link" src="_images/02_harmony_37_0.png" style="width: 697px; height: 49px;" />
+<img alt="_images/02_harmony_37_0.png" class="no-scaled-link" src="_images/02_harmony_37_0.png" style="width: 697px; height: 68px;" />
 </div>
 </div>
 <p><strong>Silde</strong> is a glissando. However, in Djalgo, glissandos should be defined at the instrument level with your prefered package (<code class="docutils literal notranslate"><span class="pre">Instrument</span></code> in Pretty-midi and <code class="docutils literal notranslate"><span class="pre">Stream</span></code> in Music21). Instead of sliding, slide in djalgo transits on the chromatic scale from a note to the next.</p>
@@ -528,7 +528,7 @@ frog.swim()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/02_harmony_39_0.png" class="no-scaled-link" src="_images/02_harmony_39_0.png" style="width: 172px; height: 55px;" />
+<img alt="_images/02_harmony_39_0.png" class="no-scaled-link" src="_images/02_harmony_39_0.png" style="width: 172px; height: 73px;" />
 </div>
 </div>
 </section>
@@ -541,7 +541,7 @@ frog.swim()
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pitch_chords</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">harmony</span><span class="o">.</span><span class="n">Voice</span><span class="p">(</span>
     <span class="n">tonic</span> <span class="o">=</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span>
-    <span class="n">scale_type</span> <span class="o">=</span> <span class="s1">&#39;major&#39;</span><span class="p">,</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;major&#39;</span><span class="p">,</span>
     <span class="n">degrees</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="c1"># triads</span>
 <span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">pitches</span><span class="o">=</span><span class="n">c_major_sub</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">pitch_chords</span><span class="p">)</span>
@@ -574,7 +574,7 @@ frog.swim()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/02_harmony_43_0.png" class="no-scaled-link" src="_images/02_harmony_43_0.png" style="width: 697px; height: 49px;" />
+<img alt="_images/02_harmony_43_0.png" class="no-scaled-link" src="_images/02_harmony_43_0.png" style="width: 697px; height: 68px;" />
 </div>
 </div>
 </section>
@@ -603,7 +603,7 @@ frog.swim()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/02_harmony_45_0.png" class="no-scaled-link" src="_images/02_harmony_45_0.png" style="width: 697px; height: 57px;" />
+<img alt="_images/02_harmony_45_0.png" class="no-scaled-link" src="_images/02_harmony_45_0.png" style="width: 697px; height: 63px;" />
 </div>
 </div>
 </section>
@@ -686,7 +686,7 @@ frog.swim()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/02_harmony_51_0.png" class="no-scaled-link" src="_images/02_harmony_51_0.png" style="width: 697px; height: 59px;" />
+<img alt="_images/02_harmony_51_0.png" class="no-scaled-link" src="_images/02_harmony_51_0.png" style="width: 697px; height: 69px;" />
 </div>
 </div>
 </section>
@@ -707,7 +707,7 @@ frog.swim()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/02_harmony_53_0.png" class="no-scaled-link" src="_images/02_harmony_53_0.png" style="width: 697px; height: 49px;" />
+<img alt="_images/02_harmony_53_0.png" class="no-scaled-link" src="_images/02_harmony_53_0.png" style="width: 697px; height: 72px;" />
 </div>
 </div>
 <p>We will add a voice to index 0 and index 7.</p>
@@ -718,7 +718,7 @@ frog.swim()
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">twinkle_pitches</span> <span class="o">=</span> <span class="p">[</span><span class="n">note</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">twinkle</span><span class="p">]</span>
 <span class="n">twinkle_chords</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">harmony</span><span class="o">.</span><span class="n">Voice</span><span class="p">(</span>
     <span class="n">tonic</span> <span class="o">=</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span>
-    <span class="n">scale_type</span> <span class="o">=</span> <span class="s1">&#39;major&#39;</span><span class="p">,</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;major&#39;</span><span class="p">,</span>
     <span class="n">degrees</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="c1"># triads</span>
 <span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">pitches</span><span class="o">=</span><span class="n">twinkle_pitches</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">]:</span>
@@ -731,7 +731,7 @@ frog.swim()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/02_harmony_55_0.png" class="no-scaled-link" src="_images/02_harmony_55_0.png" style="width: 697px; height: 49px;" />
+<img alt="_images/02_harmony_55_0.png" class="no-scaled-link" src="_images/02_harmony_55_0.png" style="width: 697px; height: 72px;" />
 </div>
 </div>
 <p>Some ornaments…</p>
@@ -740,24 +740,27 @@ frog.swim()
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">twinkle</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">harmony</span><span class="o">.</span><span class="n">Ornament</span><span class="p">(</span>
-    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;grace_note&#39;</span><span class="p">,</span>
-    <span class="n">grace_note_type</span><span class="o">=</span><span class="s1">&#39;acciaccatura&#39;</span><span class="p">,</span>
-    <span class="n">grace_pitches</span><span class="o">=</span><span class="p">[</span><span class="mi">72</span><span class="p">]</span>
-<span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
-    <span class="n">notes</span><span class="o">=</span><span class="n">twinkle</span><span class="p">,</span>
-    <span class="n">note_index</span><span class="o">=</span><span class="mi">11</span>
-<span class="p">)</span>
-
-<span class="n">twinkle</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">harmony</span><span class="o">.</span><span class="n">Ornament</span><span class="p">(</span>
     <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;trill&#39;</span><span class="p">,</span>
     <span class="n">trill_rate</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
     <span class="n">by</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="n">tonic</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">,</span>
-    <span class="n">scale_type</span><span class="o">=</span><span class="s1">&#39;major&#39;</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;major&#39;</span>
 <span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
     <span class="n">notes</span><span class="o">=</span><span class="n">twinkle</span><span class="p">,</span>
     <span class="n">note_index</span><span class="o">=</span><span class="mi">6</span>
 <span class="p">)</span>
+
+<span class="n">twinkle</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">harmony</span><span class="o">.</span><span class="n">Ornament</span><span class="p">(</span>
+    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;mordent&#39;</span><span class="p">,</span>
+    <span class="n">trill_rate</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+    <span class="n">by</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">tonic</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">,</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;major&#39;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+    <span class="n">notes</span><span class="o">=</span><span class="n">twinkle</span><span class="p">,</span>
+    <span class="n">note_index</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">twinkle</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="p">)</span>
+
 <span class="n">dj</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">twinkle</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s1">&#39;music21&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -766,12 +769,21 @@ frog.swim()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/02_harmony_57_0.png" class="no-scaled-link" src="_images/02_harmony_57_0.png" style="width: 697px; height: 58px;" />
+<img alt="_images/02_harmony_57_0.png" class="no-scaled-link" src="_images/02_harmony_57_0.png" style="width: 697px; height: 72px;" />
+</div>
+</div>
+<p>To avoid an abrupt ending, let’s alter the last duration to 4.667, so that the last note of the mordent ends up its measure and lasts another measure.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">twinkle</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">twinkle</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="mf">4.667</span><span class="p">,</span> <span class="n">twinkle</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
 </div>
 </div>
 <p>And let’s hear our masterpiece!</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dj</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">twinkle</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s1">&#39;music21&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;midi&#39;</span><span class="p">)</span>
@@ -782,7 +794,7 @@ frog.swim()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv2060"></div>
+<div id="midiPlayerDiv1799"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -790,7 +802,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv2060_play() {
+function midiPlayerDiv1799_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -798,20 +810,58 @@ function midiPlayerDiv2060_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv2060");
-        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQACJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAAPUA/wMAAOAAQM5gkDxaAJBAWgCQQ1rOYIA8AACAQAAAgEMAAJA8Ws5ggDwAAJBDWs5ggEMAAJBDWs5ggEMAAJBFWs5ggEUAAJBFWs5ggEUAAJBDWpNYgEMAAJBFWpNYgEUAAJBDWpNYgEMAAJBFWpNYgEUAAJBDWpNYgEMAAJBFWpNYgEUAAJBDWpNYgEMAAJBFWpNYgEUAAJBBWgCQRVoAkEhazmCAQQAAgEUAAIBIAACQQVrOYIBBAACQQFrOYIBAAACQQFrOYIBAAACQSFqJbIBIAACQPlrOYIA+AACQPlrOYIA+AACQPFqBnUCAPADOYP8vAA==");
+        mp.addPlayer("#midiPlayerDiv1799");
+        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQACJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAAP4A/wMAAOAAQM5gkDxaAJBAWgCQQ1rOYIA8AACAQAAAgEMAAJA8Ws5ggDwAAJBDWs5ggEMAAJBDWs5ggEMAAJBFWs5ggEUAAJBFWs5ggEUAAJBDWpNYgEMAAJBFWpNYgEUAAJBDWpNYgEMAAJBFWpNYgEUAAJBDWpNYgEMAAJBFWpNYgEUAAJBDWpNYgEMAAJBFWpNYgEUAAJBBWgCQRVoAkEhazmCAQQAAgEUAAIBIAACQQVrOYIBBAACQQFrOYIBAAACQQFrOYIBAAACQPlrOYIA+AACQPlrOYIA+AACQPFq0QIA8AACQPlq0QIA+AACQPFqC70OAPADOYP8vAA==");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv2060_play, 2000);
+    setTimeout(midiPlayerDiv1799_play, 2000);
 } else {
-    midiPlayerDiv2060_play();
+    midiPlayerDiv1799_play();
 }
 </script></div>
 </div>
+<p>Another way to hear it is using the (wonderful) SCAMP library.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scamp</span> <span class="c1"># make sure its installed with pip install scamp</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">scamp</span><span class="o">.</span><span class="n">Session</span><span class="p">(</span><span class="n">tempo</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span>
+<span class="n">instrument</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">new_part</span><span class="p">(</span><span class="s1">&#39;flute&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">twinkle</span><span class="p">):</span>
+    <span class="c1"># play either a note or a chord</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">instrument</span><span class="o">.</span><span class="n">play_chord</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">instrument</span><span class="o">.</span><span class="n">play_note</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="c1"># the following is not necessary here, it just assures that rests are respected</span>
+    <span class="c1">#if i &lt; (len(twinkle)-1):</span>
+    <span class="c1">#    scamp.wait(twinkle[i+1][2]-(n[1] + n[2]))</span>
+<span class="n">s</span><span class="o">.</span><span class="n">wait_for_children_to_finish</span><span class="p">()</span> <span class="c1"># end the SCAMP session in notebooks</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+WARNING:root:python-rtmidi was not found; streaming midi input / output will not be available.
+WARNING:root:pynput was not found; mouse and keyboard input will not be available.
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Using preset Flute Gold for flute
+</pre></div></div>
+</div>
 <p>Exporting your music to midi depends on the object you have converted your music to.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dj</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">twinkle</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s1">&#39;music21&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;midi&#39;</span><span class="p">,</span> <span class="s1">&#39;twinkle_m21.mid&#39;</span><span class="p">)</span> <span class="c1"># with music21</span>
@@ -821,14 +871,6 @@ if (typeof require === 'undefined') {
 </div>
 <p>You should now be able to modify a piece, decorate it, and export it. Next step:</p>
 <p>↳ <a class="reference external" href="03_loops.html">Loops</a></p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-</div>
 </section>
 </section>
 

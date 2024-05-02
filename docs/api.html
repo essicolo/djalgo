@@ -304,6 +304,11 @@
 <dd></dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="djalgo.djai.DataProcessor.extract_features_rest">
+<span class="sig-name descname"><span class="pre">extract_features_rest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument_vector</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DataProcessor.extract_features_rest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DataProcessor.extract_features_rest" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="djalgo.djai.DataProcessor.midi_files_to_sequences">
 <span class="sig-name descname"><span class="pre">midi_files_to_sequences</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi_files</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DataProcessor.midi_files_to_sequences"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DataProcessor.midi_files_to_sequences" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -750,6 +755,11 @@ containing the information needed to re-instantiate it.</p>
 <span class="sig-name descname"><span class="pre">chromatic_scale</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['C',</span> <span class="pre">'C#',</span> <span class="pre">'D',</span> <span class="pre">'D#',</span> <span class="pre">'E',</span> <span class="pre">'F',</span> <span class="pre">'F#',</span> <span class="pre">'G',</span> <span class="pre">'G#',</span> <span class="pre">'A',</span> <span class="pre">'A#',</span> <span class="pre">'B']</span></em><a class="headerlink" href="#djalgo.harmony.MusicTheoryConstants.chromatic_scale" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="djalgo.harmony.MusicTheoryConstants.convert_flat_to_sharp">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">convert_flat_to_sharp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#MusicTheoryConstants.convert_flat_to_sharp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.MusicTheoryConstants.convert_flat_to_sharp" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="djalgo.harmony.MusicTheoryConstants.intervals">
 <span class="sig-name descname"><span class="pre">intervals</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'M2':</span> <span class="pre">2,</span> <span class="pre">'M3':</span> <span class="pre">4,</span> <span class="pre">'M6':</span> <span class="pre">9,</span> <span class="pre">'M7':</span> <span class="pre">11,</span> <span class="pre">'P1':</span> <span class="pre">0,</span> <span class="pre">'P4':</span> <span class="pre">5,</span> <span class="pre">'P5':</span> <span class="pre">7,</span> <span class="pre">'P8':</span> <span class="pre">12,</span> <span class="pre">'m2':</span> <span class="pre">1,</span> <span class="pre">'m3':</span> <span class="pre">3,</span> <span class="pre">'m6':</span> <span class="pre">8,</span> <span class="pre">'m7':</span> <span class="pre">10}</span></em><a class="headerlink" href="#djalgo.harmony.MusicTheoryConstants.intervals" title="Link to this definition">¶</a></dt>
@@ -770,7 +780,7 @@ containing the information needed to re-instantiate it.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="djalgo.harmony.Ornament">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.harmony.</span></span><span class="sig-name descname"><span class="pre">Ornament</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'grace_note'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tonic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grace_note_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'acciaccatura'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grace_pitches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trill_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.125</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arpeggio_degrees</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slide_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Ornament"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Ornament" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.harmony.</span></span><span class="sig-name descname"><span class="pre">Ornament</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'grace_note'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tonic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grace_note_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'acciaccatura'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grace_pitches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trill_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.125</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arpeggio_degrees</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slide_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Ornament"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Ornament" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#djalgo.harmony.MusicTheoryConstants" title="djalgo.harmony.MusicTheoryConstants"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicTheoryConstants</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="djalgo.harmony.Ornament.add_arpeggiation">
@@ -916,13 +926,13 @@ containing the information needed to re-instantiate it.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="djalgo.harmony.Ornament.generate_scale">
-<span class="sig-name descname"><span class="pre">generate_scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tonic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Ornament.generate_scale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Ornament.generate_scale" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">generate_scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tonic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Ornament.generate_scale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Ornament.generate_scale" title="Link to this definition">¶</a></dt>
 <dd><p>Generate a complete scale based on the tonic and scale type. This function is the same as the one in the Voice class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>tonic</strong> (<em>str</em>) – The tonic note for the scale.</p></li>
-<li><p><strong>scale_type</strong> (<em>str</em>) – The type of scale to generate.</p></li>
+<li><p><strong>mode</strong> (<em>str</em>) – The type of scale to generate.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -999,14 +1009,14 @@ containing the information needed to re-instantiate it.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="djalgo.harmony.Scale">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.harmony.</span></span><span class="sig-name descname"><span class="pre">Scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tonic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'major'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Scale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Scale" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.harmony.</span></span><span class="sig-name descname"><span class="pre">Scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tonic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'major'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Scale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Scale" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#djalgo.harmony.MusicTheoryConstants" title="djalgo.harmony.MusicTheoryConstants"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicTheoryConstants</span></code></a></p>
 <p>Represents a musical scale.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>tonic</strong> (<em>str</em>) – The tonic note of the scale.</p></li>
-<li><p><strong>scale_type</strong> (<em>str</em><em> or </em><em>list</em>) – The type of scale. Defaults to ‘major’. If a list is provided, it represents a custom scale.</p></li>
+<li><p><strong>mode</strong> (<em>str</em><em> or </em><em>list</em>) – The type of scale. Defaults to ‘major’. If a list is provided, it represents a custom scale.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
@@ -1025,8 +1035,8 @@ containing the information needed to re-instantiate it.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="djalgo.harmony.Scale.scale_type">
-<span class="sig-name descname"><span class="pre">scale_type</span></span><a class="headerlink" href="#djalgo.harmony.Scale.scale_type" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="djalgo.harmony.Scale.mode">
+<span class="sig-name descname"><span class="pre">mode</span></span><a class="headerlink" href="#djalgo.harmony.Scale.mode" title="Link to this definition">¶</a></dt>
 <dd><p>The type of scale.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -1053,7 +1063,7 @@ containing the information needed to re-instantiate it.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="djalgo.harmony.Voice">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.harmony.</span></span><span class="sig-name descname"><span class="pre">Voice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'major'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tonic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'C'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degrees</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0,</span> <span class="pre">2,</span> <span class="pre">4]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Voice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Voice" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.harmony.</span></span><span class="sig-name descname"><span class="pre">Voice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'major'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tonic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'C'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degrees</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[0,</span> <span class="pre">2,</span> <span class="pre">4]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Voice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Voice" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#djalgo.harmony.MusicTheoryConstants" title="djalgo.harmony.MusicTheoryConstants"><code class="xref py py-class docutils literal notranslate"><span class="pre">MusicTheoryConstants</span></code></a></p>
 <p>A class to represent a musical voice.</p>
 <dl class="py method">
@@ -1398,30 +1408,6 @@ containing the information needed to re-instantiate it.</p>
 </dd></dl>
 
 <dl class="py class" id="module-djalgo.rhythm">
-<dt class="sig sig-object py" id="djalgo.rhythm.Fibonacci">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.rhythm.</span></span><span class="sig-name descname"><span class="pre">Fibonacci</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measure_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">possible_durations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_fibonacci</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">21</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#Fibonacci"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.Fibonacci" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="djalgo.rhythm.Fibonacci.generate">
-<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#Fibonacci.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.Fibonacci.generate" title="Link to this definition">¶</a></dt>
-<dd><p>Generates a rhythm based on the Fibonacci sequence and fits it into the measure.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="djalgo.rhythm.Fibonacci.generate_fibonacci_sequence">
-<span class="sig-name descname"><span class="pre">generate_fibonacci_sequence</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#Fibonacci.generate_fibonacci_sequence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.Fibonacci.generate_fibonacci_sequence" title="Link to this definition">¶</a></dt>
-<dd><p>Generates a Fibonacci sequence up to the maximum Fibonacci number.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="djalgo.rhythm.Fibonacci.map_fibonacci_to_durations">
-<span class="sig-name descname"><span class="pre">map_fibonacci_to_durations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#Fibonacci.map_fibonacci_to_durations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.Fibonacci.map_fibonacci_to_durations" title="Link to this definition">¶</a></dt>
-<dd><p>Maps Fibonacci numbers to musical durations based on the list of possible durations.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="djalgo.rhythm.GeneticRhythm">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.rhythm.</span></span><span class="sig-name descname"><span class="pre">GeneticRhythm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">population_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measure_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_generations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">durations</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#GeneticRhythm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.GeneticRhythm" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
@@ -1596,26 +1582,6 @@ containing the information needed to re-instantiate it.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="djalgo.rhythm.Rhythm.fibonacci">
-<span class="sig-name descname"><span class="pre">fibonacci</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reverse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#Rhythm.fibonacci"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.Rhythm.fibonacci" title="Link to this definition">¶</a></dt>
-<dd><p>Generates a rhythm based on the Fibonacci sequence.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>base</strong> (<em>int</em>) – The base duration for the rhythm.</p></li>
-<li><p><strong>reverse</strong> (<em>bool</em>) – If True, the generated rhythm will have increasing durations.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A list of (duration, offset) tuples representing the rhythm.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="djalgo.rhythm.Rhythm.random">
 <span class="sig-name descname"><span class="pre">random</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rest_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/rhythm.html#Rhythm.random"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.rhythm.Rhythm.random" title="Link to this definition">¶</a></dt>
 <dd><p>Generate a random rhythm as a list of (duration, offset) tuples.</p>
@@ -1720,6 +1686,26 @@ to prevent overlaps, while keeping their offsets intact.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="djalgo.utils.fibonacci">
+<span class="sig-prename descclassname"><span class="pre">djalgo.utils.</span></span><span class="sig-name descname"><span class="pre">fibonacci</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/utils.html#fibonacci"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.utils.fibonacci" title="Link to this definition">¶</a></dt>
+<dd><p>Generate a Fibonacci iterator.</p>
+<p>This function generates a Fibonacci iterator that yields the next Fibonacci number in the sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>a</strong> (<em>int</em>) – The first number in the Fibonacci sequence (default is 0).</p></li>
+<li><p><strong>b</strong> (<em>int</em>) – The second number in the Fibonacci sequence (default is 1).</p></li>
+<li><p><strong>base</strong> (<em>int</em>) – The base value to be added to each Fibonacci number (default is 0).</p></li>
+<li><p><strong>scale</strong> (<em>int</em>) – The scale factor to be multiplied with each Fibonacci number (default is 1).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>int</em> – The next Fibonacci number in the sequence.</p>
 </dd>
 </dl>
 </dd></dl>

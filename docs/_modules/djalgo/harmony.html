@@ -63,6 +63,18 @@
     <span class="p">}</span>
     <span class="n">intervals</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;P1&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;m2&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;M2&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;m3&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;M3&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;P4&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;P5&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;m6&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;M6&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s1">&#39;m7&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;M7&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span> <span class="s1">&#39;P8&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">}</span>
 
+<div class="viewcode-block" id="MusicTheoryConstants.convert_flat_to_sharp">
+<a class="viewcode-back" href="../../api.html#djalgo.harmony.MusicTheoryConstants.convert_flat_to_sharp">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">convert_flat_to_sharp</span><span class="p">(</span><span class="n">note</span><span class="p">):</span>
+        <span class="c1"># Mapping of flat notes to their equivalent sharp notes</span>
+        <span class="n">flat_to_sharp</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;Bb&#39;</span><span class="p">:</span> <span class="s1">&#39;A#&#39;</span><span class="p">,</span> <span class="s1">&#39;Db&#39;</span><span class="p">:</span> <span class="s1">&#39;C#&#39;</span><span class="p">,</span> <span class="s1">&#39;Eb&#39;</span><span class="p">:</span> <span class="s1">&#39;D#&#39;</span><span class="p">,</span> <span class="s1">&#39;Gb&#39;</span><span class="p">:</span> <span class="s1">&#39;F#&#39;</span><span class="p">,</span> <span class="s1">&#39;Ab&#39;</span><span class="p">:</span> <span class="s1">&#39;G#&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;B-&#39;</span><span class="p">:</span> <span class="s1">&#39;A#&#39;</span><span class="p">,</span> <span class="s1">&#39;D-&#39;</span><span class="p">:</span> <span class="s1">&#39;C#&#39;</span><span class="p">,</span> <span class="s1">&#39;E-&#39;</span><span class="p">:</span> <span class="s1">&#39;D#&#39;</span><span class="p">,</span> <span class="s1">&#39;G-&#39;</span><span class="p">:</span> <span class="s1">&#39;F#&#39;</span><span class="p">,</span> <span class="s1">&#39;A-&#39;</span><span class="p">:</span> <span class="s1">&#39;G#&#39;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">flat_to_sharp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">note</span><span class="p">,</span> <span class="n">note</span><span class="p">)</span> </div>
+
+
 <div class="viewcode-block" id="MusicTheoryConstants.scale_to_triad">
 <a class="viewcode-back" href="../../api.html#djalgo.harmony.MusicTheoryConstants.scale_to_triad">[docs]</a>
     <span class="nd">@staticmethod</span>
@@ -81,28 +93,30 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        tonic (str): The tonic note of the scale.</span>
-<span class="sd">        scale_type (str or list): The type of scale. Defaults to &#39;major&#39;. If a list is provided, it represents a custom scale.</span>
+<span class="sd">        mode (str or list): The type of scale. Defaults to &#39;major&#39;. If a list is provided, it represents a custom scale.</span>
 
 <span class="sd">    Raises:</span>
 <span class="sd">        ValueError: If the tonic note is not a valid note or if the scale type is not a valid scale.</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        tonic (str): The tonic note of the scale.</span>
-<span class="sd">        scale_type (str or list): The type of scale.</span>
+<span class="sd">        mode (str or list): The type of scale.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tonic</span><span class="p">,</span> <span class="n">scale_type</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tonic</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">tonic</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromatic_scale</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">tonic</span><span class="si">}</span><span class="s2">&#39; is not a valid tonic note. Select one among &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">chromatic_scale</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+            <span class="n">tonic</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_flat_to_sharp</span><span class="p">(</span><span class="n">tonic</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">tonic</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromatic_scale</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">tonic</span><span class="si">}</span><span class="s2">&#39; is not a valid tonic note. Select one among &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">chromatic_scale</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tonic</span> <span class="o">=</span> <span class="n">tonic</span>
 
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scale_type</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="p">[</span><span class="s1">&#39;custom&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scale_type</span>
-            <span class="n">scale_type</span> <span class="o">=</span> <span class="s1">&#39;custom&#39;</span>
-        <span class="k">elif</span> <span class="n">scale_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">scale_type</span><span class="si">}</span><span class="s2">&#39; is not a valid scale. Select one among &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&#39; or a list of half steps such as [0, 2, 4, 5, 7, 9, 11] for a major scale.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="p">[</span><span class="s1">&#39;custom&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mode</span>
+            <span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;custom&#39;</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2">&#39; is not a valid scale. Select one among &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span><span class="si">}</span><span class="s2">&#39; or a list of half steps such as [0, 2, 4, 5, 7, 9, 11] for a major scale.&quot;</span><span class="p">)</span>
             
-        <span class="bp">self</span><span class="o">.</span><span class="n">scale_type</span> <span class="o">=</span> <span class="n">scale_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
 
 <div class="viewcode-block" id="Scale.generate">
 <a class="viewcode-back" href="../../api.html#djalgo.harmony.Scale.generate">[docs]</a>
@@ -114,7 +128,7 @@
 <span class="sd">            list: A list of MIDI note numbers representing the full range of the scale.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">tonic_note</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromatic_scale</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tonic</span><span class="p">)</span>
-        <span class="n">scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">])</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">])</span>
     
         <span class="n">full_range_scale</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">added_notes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>  <span class="c1"># Keep track of added notes</span>
@@ -254,16 +268,15 @@
 <span class="k">class</span> <span class="nc">Voice</span><span class="p">(</span><span class="n">MusicTheoryConstants</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to represent a musical voice.</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>  
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale_type</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">tonic</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="n">degrees</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">tonic</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="n">degrees</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructs all the necessary attributes for the voice object.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">            scale_type : str, optional</span>
+<span class="sd">            mode : str, optional</span>
 <span class="sd">                The type of the scale (default is &#39;major&#39;).</span>
 <span class="sd">            tonic : str, optional</span>
 <span class="sd">                The tonic note of the scale (default is &#39;C&#39;).</span>
@@ -271,7 +284,7 @@
 <span class="sd">                Relative degrees for chord formation (default is [0, 2, 4]).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tonic</span> <span class="o">=</span> <span class="n">tonic</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">harmony</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">tonic</span><span class="p">,</span> <span class="n">scale_type</span><span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>  <span class="c1"># a list of MIDI notes for the scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">harmony</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">tonic</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>  <span class="c1"># a list of MIDI notes for the scale</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">degrees</span> <span class="o">=</span> <span class="n">degrees</span>  <span class="c1"># relative degrees for chord formation</span>
 
 <div class="viewcode-block" id="Voice.pitch_to_chord">
@@ -359,7 +372,7 @@
 <span class="k">class</span> <span class="nc">Ornament</span><span class="p">(</span><span class="n">MusicTheoryConstants</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;grace_note&#39;</span><span class="p">,</span> <span class="n">tonic</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scale_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;grace_note&#39;</span><span class="p">,</span> <span class="n">tonic</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
             <span class="n">grace_note_type</span><span class="o">=</span><span class="s1">&#39;acciaccatura&#39;</span><span class="p">,</span> <span class="n">grace_pitches</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trill_rate</span><span class="o">=</span><span class="mf">0.125</span><span class="p">,</span> <span class="n">arpeggio_degrees</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">slide_length</span><span class="o">=</span><span class="mf">4.0</span>
         <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -368,7 +381,7 @@
 <span class="sd">        Args:</span>
 <span class="sd">            type (str): The type of ornament to be processed. Supported types include &#39;grace_note&#39;, &#39;trill&#39;, and &#39;mordent&#39;.</span>
 <span class="sd">            tonic (str): The tonic note for the scale.</span>
-<span class="sd">            scale_type (str): The type of scale to generate.</span>
+<span class="sd">            mode (str): The type of scale to generate.</span>
 <span class="sd">            by (float): The pitch step for the trill.</span>
 <span class="sd">            grace_note_type (str): Specifies the type of grace note (&#39;acciaccatura&#39; or &#39;appoggiatura&#39;) if applicable.</span>
 <span class="sd">            grace_pitches (list): The list of pitches for the grace note.</span>
@@ -377,11 +390,11 @@
 <span class="sd">            slide_length (float): length of the slide</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="nb">type</span>
-        <span class="k">if</span> <span class="n">tonic</span> <span class="ow">and</span> <span class="n">scale_type</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">tonic</span> <span class="ow">and</span> <span class="n">mode</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">tonic_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chromatic_scale</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">tonic</span><span class="p">)</span>  <span class="c1"># Index in chromatic scale</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_scale</span><span class="p">(</span><span class="n">tonic</span><span class="p">,</span> <span class="n">scale_type</span><span class="p">)</span>  <span class="c1"># This will be a list of MIDI notes for the scale</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_scale</span><span class="p">(</span><span class="n">tonic</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>  <span class="c1"># This will be a list of MIDI notes for the scale</span>
             <span class="k">if</span> <span class="n">arpeggio_degrees</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">arpeggio_voice</span> <span class="o">=</span> <span class="n">Voice</span><span class="p">(</span><span class="n">scale_type</span><span class="o">=</span><span class="n">scale_type</span><span class="p">,</span> <span class="n">tonic</span><span class="o">=</span><span class="n">tonic</span><span class="p">,</span> <span class="n">degrees</span><span class="o">=</span><span class="n">arpeggio_degrees</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">arpeggio_voice</span> <span class="o">=</span> <span class="n">Voice</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">tonic</span><span class="o">=</span><span class="n">tonic</span><span class="p">,</span> <span class="n">degrees</span><span class="o">=</span><span class="n">arpeggio_degrees</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">arpeggio_voice</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
@@ -396,18 +409,18 @@
 
 <div class="viewcode-block" id="Ornament.generate_scale">
 <a class="viewcode-back" href="../../api.html#djalgo.harmony.Ornament.generate_scale">[docs]</a>
-    <span class="k">def</span> <span class="nf">generate_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tonic</span><span class="p">,</span> <span class="n">scale_type</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">generate_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tonic</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate a complete scale based on the tonic and scale type. This function is the same as the one in the Voice class.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            tonic (str): The tonic note for the scale.</span>
-<span class="sd">            scale_type (str): The type of scale to generate.</span>
+<span class="sd">            mode (str): The type of scale to generate.</span>
 <span class="sd">        </span>
 <span class="sd">        Returns:</span>
 <span class="sd">            list: A list of MIDI notes for the complete scale.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">scale_pattern</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="p">[</span><span class="n">scale_type</span><span class="p">]</span>
+        <span class="n">scale_pattern</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale_intervals</span><span class="p">[</span><span class="n">mode</span><span class="p">]</span>
         <span class="n">scale_notes</span> <span class="o">=</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">tonic_index</span> <span class="o">+</span> <span class="n">interval</span><span class="p">)</span> <span class="o">%</span> <span class="mi">12</span> <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="n">scale_pattern</span><span class="p">]</span>  <span class="c1"># Pitch classes</span>
         <span class="n">complete_scale</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># This will store the full scale in MIDI numbers</span>
         <span class="k">for</span> <span class="n">octave</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>  <span class="c1"># Covering all MIDI octaves</span>

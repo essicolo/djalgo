@@ -74,13 +74,13 @@
 
     <span class="n">tonic_index</span> <span class="o">=</span> <span class="n">scale_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">tonic_pitch</span><span class="p">)</span>
 
-    <span class="c1"># If the pitch is in the scale_type</span>
+    <span class="c1"># If the pitch is in the mode</span>
     <span class="k">if</span> <span class="n">pitch</span> <span class="ow">in</span> <span class="n">scale_list</span><span class="p">:</span>
         <span class="c1"># Find its index and compute the degree</span>
         <span class="n">pitch_index</span> <span class="o">=</span> <span class="n">scale_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span>
         <span class="n">degree</span> <span class="o">=</span> <span class="n">pitch_index</span> <span class="o">-</span> <span class="n">tonic_index</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="c1"># If the pitch is not in the scale_type, find the two pitches it falls between</span>
+        <span class="c1"># If the pitch is not in the mode, find the two pitches it falls between</span>
         <span class="n">upper_pitch</span> <span class="o">=</span> <span class="n">round_to_list</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">scale_list</span><span class="p">)</span>
         <span class="n">upper_index</span> <span class="o">=</span> <span class="n">scale_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">upper_pitch</span><span class="p">)</span>
         <span class="n">lower_index</span> <span class="o">=</span> <span class="n">upper_index</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">upper_index</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">upper_index</span>
@@ -217,6 +217,7 @@
     <span class="k">return</span> <span class="n">notes</span></div>
 
 
+
 <div class="viewcode-block" id="repair_notes">
 <a class="viewcode-back" href="../../api.html#djalgo.utils.repair_notes">[docs]</a>
 <span class="k">def</span> <span class="nf">repair_notes</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
@@ -230,6 +231,7 @@
 <span class="sd">        stream.Stream: The modified stream with gaps filled and note durations adjusted.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">adjust_note_durations_to_prevent_overlaps</span><span class="p">(</span><span class="n">fill_gaps_with_rests</span><span class="p">(</span><span class="n">s</span><span class="p">))</span></div>
+
 
 
 <div class="viewcode-block" id="cde_to_midi">
@@ -272,6 +274,7 @@
     <span class="k">return</span> <span class="n">pitch</span></div>
 
 
+
 <div class="viewcode-block" id="no_overlap">
 <a class="viewcode-back" href="../../api.html#djalgo.utils.no_overlap">[docs]</a>
 <span class="k">def</span> <span class="nf">no_overlap</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">adjust</span><span class="o">=</span><span class="s1">&#39;offsets&#39;</span><span class="p">):</span>
@@ -293,6 +296,7 @@
         <span class="n">current_offset</span> <span class="o">+=</span> <span class="n">duration</span>
 
     <span class="k">return</span> <span class="n">adjusted_notes</span></div>
+
 
 
 <div class="viewcode-block" id="check_input">
@@ -317,6 +321,7 @@
         <span class="k">return</span> <span class="s1">&#39;unknown&#39;</span></div>
 
 
+
 <div class="viewcode-block" id="scale_list">
 <a class="viewcode-back" href="../../api.html#djalgo.utils.scale_list">[docs]</a>
 <span class="k">def</span> <span class="nf">scale_list</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="n">to_min</span><span class="p">,</span> <span class="n">to_max</span><span class="p">,</span> <span class="n">min_numbers</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_numbers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -337,6 +342,7 @@
         <span class="n">max_numbers</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="p">[(</span><span class="n">num</span> <span class="o">-</span> <span class="n">min_numbers</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">to_max</span> <span class="o">-</span> <span class="n">to_min</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_numbers</span> <span class="o">-</span> <span class="n">min_numbers</span><span class="p">)</span> <span class="o">+</span> <span class="n">to_min</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">]</span></div>
+
 
 
 <div class="viewcode-block" id="offset_list_of_notes">
@@ -459,6 +465,28 @@
 <span class="sd">        float: Duration in seconds.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="mi">60</span> <span class="o">/</span> <span class="n">bpm</span> <span class="o">*</span> <span class="n">ql</span></div>
+
+
+<div class="viewcode-block" id="fibonacci">
+<a class="viewcode-back" href="../../api.html#djalgo.utils.fibonacci">[docs]</a>
+<span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">base</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate a Fibonacci iterator.</span>
+
+<span class="sd">    This function generates a Fibonacci iterator that yields the next Fibonacci number in the sequence.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        a (int): The first number in the Fibonacci sequence (default is 0).</span>
+<span class="sd">        b (int): The second number in the Fibonacci sequence (default is 1).</span>
+<span class="sd">        base (int): The base value to be added to each Fibonacci number (default is 0).</span>
+<span class="sd">        scale (int): The scale factor to be multiplied with each Fibonacci number (default is 1).</span>
+
+<span class="sd">    Yields:</span>
+<span class="sd">        int: The next Fibonacci number in the sequence.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">base</span> <span class="o">+</span> <span class="n">scale</span> <span class="o">*</span> <span class="n">a</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span></div>
 
 
 <span class="c1"># Instrument mapping (from https://raw.githubusercontent.com/FoxLisk/midifier/b8b276fe3ff9b8fe159b9dc4046c1d9f0e62ea29/midifier/instruments.py)</span>

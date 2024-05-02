@@ -376,6 +376,25 @@ def ql_to_seconds(ql, bpm):
     """
     return 60 / bpm * ql
 
+def fibonacci(a = 0, b = 1, base = 0, scale = 1):
+    """
+    Generate a Fibonacci iterator.
+
+    This function generates a Fibonacci iterator that yields the next Fibonacci number in the sequence.
+
+    Args:
+        a (int): The first number in the Fibonacci sequence (default is 0).
+        b (int): The second number in the Fibonacci sequence (default is 1).
+        base (int): The base value to be added to each Fibonacci number (default is 0).
+        scale (int): The scale factor to be multiplied with each Fibonacci number (default is 1).
+
+    Yields:
+        int: The next Fibonacci number in the sequence.
+    """
+    while True:
+        yield base + scale * a
+        a, b = b, a + b
+
 # Instrument mapping (from https://raw.githubusercontent.com/FoxLisk/midifier/b8b276fe3ff9b8fe159b9dc4046c1d9f0e62ea29/midifier/instruments.py)
 instrument_mapping = {
   'Acoustic Grand Piano': 0,

@@ -58,7 +58,7 @@ environment. <code class="docutils literal notranslate"><span class="pre">djai</
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2024-04-24 11:52:38.056833: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+2024-04-30 15:00:38.225849: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
 To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
 </pre></div></div>
 </div>
@@ -118,9 +118,9 @@ functionalities for model training, prediction, and music generation. The third 
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_manager</span> <span class="o">=</span> <span class="n">djai</span><span class="o">.</span><span class="n">ModelManager</span><span class="p">(</span>
     <span class="n">sequence_length_i</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">sequence_length_o</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
-    <span class="n">n_instruments</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">model_type</span><span class="o">=</span><span class="s1">&#39;gru&#39;</span><span class="p">,</span>
-    <span class="n">n_layers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">n_units</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
-    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.0001</span>
+    <span class="n">n_instruments</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">model_type</span><span class="o">=</span><span class="s1">&#39;transformer&#39;</span><span class="p">,</span>
+    <span class="n">n_layers</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">n_units</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">dropout</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span> <span class="n">n_heads</span><span class="o">=</span><span class="mi">8</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -180,53 +180,26 @@ forcing</em>. The autoregressive approach removes the first item of the sequence
 <section id="🏋️-Fitting-the-Model">
 <h3>🏋️ Fitting the Model<a class="headerlink" href="#🏋️-Fitting-the-Model" title="Link to this heading">¶</a></h3>
 <p>To train the model, you use the <code class="docutils literal notranslate"><span class="pre">.fit()</span></code> method with a list of MIDI file paths. The number of epochs, which represent complete passes over the entire dataset, can be adjusted according to the complexity of the task and desired accuracy. More epochs typically lead to better model performance but require more time to complete.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">history</span> <span class="o">=</span> <span class="n">model_manager</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">midi_files</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">history</span> <span class="o">=</span> <span class="n">model_manager</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">midi_files</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Epoch 1/10
-<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">8s</span> 71ms/step - loss: 0.1528
-Epoch 2/10
-<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">1s</span> 70ms/step - loss: 0.0665
-Epoch 3/10
-<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">2s</span> 73ms/step - loss: 0.0585
-Epoch 4/10
-<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">2s</span> 73ms/step - loss: 0.0552
-Epoch 5/10
-<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">1s</span> 71ms/step - loss: 0.0537
-Epoch 6/10
-<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">2s</span> 71ms/step - loss: 0.0516
-Epoch 7/10
-<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">2s</span> 71ms/step - loss: 0.0523
-Epoch 8/10
-<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">2s</span> 80ms/step - loss: 0.0508
-Epoch 9/10
-<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">2s</span> 77ms/step - loss: 0.0503
-Epoch 10/10
-<span class="ansi-bold">21/21</span> <span class="ansi-green-fg">━━━━━━━━━━━━━━━━━━━━</span> <span class="ansi-bold">2s</span> 85ms/step - loss: 0.0506
-</pre></div></div>
 </div>
 <p>Models are long to fit, so you might want to save it for future use.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_manager</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;_output/lstm.keras&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_manager</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;_output/transformer.keras&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <p>To predict a new sequence, you can use the <code class="docutils literal notranslate"><span class="pre">.generate()</span></code> method of the <code class="docutils literal notranslate"><span class="pre">djai.ModelManager</span></code> object. The generate method takes the first notes of a MIDI file (defined in <code class="docutils literal notranslate"><span class="pre">sequence_length_i</span></code>) and returns a Djalgo track or, for multiple instruments, a list of tracks. Make sure that the MIDI file has enough notes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">model_manager</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="s1">&#39;_output/polyloop.mid&#39;</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -235,21 +208,21 @@ Epoch 10/10
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[(68, 0.9924258, 0.28069848),
- (68, 0.99277496, 0.28115964),
- (68, 0.9936436, 0.28131378),
- (69, 0.99493337, 0.28136227),
- (69, 0.9964782, 0.28146863),
- (69, 0.9980702, 0.28165814),
- (69, 0.9995358, 0.28189823),
- (69, 1.0007924, 0.28215533),
- (69, 1.0018008, 0.28239486),
- (69, 1.0025604, 0.28259254)]
+[(46, 0.922152, 0.54616755),
+ (46, 0.9221335, 0.546182),
+ (46, 0.9220556, 0.5462458),
+ (46, 0.9221041, 0.54620606),
+ (46, 0.9221695, 0.54615307),
+ (46, 0.9225299, 0.5458617),
+ (46, 0.92227435, 0.5460685),
+ (46, 0.9221095, 0.546202),
+ (46, 0.9220371, 0.5462603),
+ (46, 0.9221659, 0.5461564)]
 </pre></div></div>
 </div>
 <p>Predictions are uniform and clearly not suited yet for music yet.</p>

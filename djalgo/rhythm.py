@@ -111,21 +111,7 @@ class Rhythm:
 
         ga = GeneticRhythm(seed, population_size, self.measure_length, max_generations, mutation_rate, self.durations)
         best_rhythm = ga.generate()
-        return best_rhythm
-
-    def fibonacci(self, base=1, reverse=False):
-        """
-        Generates a rhythm based on the Fibonacci sequence.
-
-        Args:
-            base (int): The base duration for the rhythm.
-            reverse (bool): If True, the generated rhythm will have increasing durations.
-
-        Returns:
-            list: A list of (duration, offset) tuples representing the rhythm.
-        """
-        fib = Fibonacci(self.measure_length, self.durations, reverse=reverse)
-        return fib.generate()
+        return best_rhythms
 
 
 class GeneticRhythm:
@@ -271,50 +257,3 @@ class GeneticRhythm:
         return best_rhythm_sorted
 
 
-class Fibonacci:
-    def __init__(self, measure_length, possible_durations, max_fibonacci=21, reverse=False):
-        """
-        Initializes the Fibonacci class to generate rhythms based on the Fibonacci sequence.
-
-        Args:
-            measure_length (float): The total length of the measure.
-            possible_durations (list): List of possible note durations.
-            max_fibonacci (int): The maximum Fibonacci number to consider for the sequence.
-            reverse (bool): If True, the generated rhythm will have increasing durations.
-        """
-        self.measure_length = measure_length
-        self.possible_durations = possible_durations
-        self.max_fibonacci = max_fibonacci
-        self.reverse = reverse
-        self.fib_sequence = self.generate_fibonacci_sequence()
-
-    def generate_fibonacci_sequence(self):
-        """Generates a Fibonacci sequence up to the maximum Fibonacci number."""
-        fib_sequence = [1, 1]
-        while fib_sequence[-1] + fib_sequence[-2] <= self.max_fibonacci:
-            fib_sequence.append(fib_sequence[-1] + fib_sequence[-2])
-        return fib_sequence
-
-    def map_fibonacci_to_durations(self):
-        """Maps Fibonacci numbers to musical durations based on the list of possible durations."""
-        duration_sequence = []
-        for fib_number in reversed(self.fib_sequence):
-            possible_matches = [d for d in self.possible_durations if d <= fib_number]
-            if possible_matches:
-                duration_sequence.append(max(possible_matches))
-        return duration_sequence if not self.reverse else reversed(duration_sequence)
-
-    def generate(self):
-        """Generates a rhythm based on the Fibonacci sequence and fits it into the measure."""
-        duration_sequence = self.map_fibonacci_to_durations()
-        rhythm = []
-        total_length = 0
-        offset = 0
-        for duration in duration_sequence:
-            if total_length + duration <= self.measure_length:
-                rhythm.append((duration, offset))
-                total_length += duration
-                offset += duration
-            else:
-                break  # Stop if adding another note would exceed the measure length
-        return list(rhythm)  # Ensure it's a list, especially if reversed

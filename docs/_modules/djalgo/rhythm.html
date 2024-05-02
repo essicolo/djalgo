@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
     <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=12dfc556" />
     <script src="../../_static/documentation_options.js?v=737112c1"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
@@ -158,24 +158,7 @@
 
         <span class="n">ga</span> <span class="o">=</span> <span class="n">GeneticRhythm</span><span class="p">(</span><span class="n">seed</span><span class="p">,</span> <span class="n">population_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_length</span><span class="p">,</span> <span class="n">max_generations</span><span class="p">,</span> <span class="n">mutation_rate</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">durations</span><span class="p">)</span>
         <span class="n">best_rhythm</span> <span class="o">=</span> <span class="n">ga</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">best_rhythm</span></div>
-
-
-<div class="viewcode-block" id="Rhythm.fibonacci">
-<a class="viewcode-back" href="../../api.html#djalgo.rhythm.Rhythm.fibonacci">[docs]</a>
-    <span class="k">def</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generates a rhythm based on the Fibonacci sequence.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            base (int): The base duration for the rhythm.</span>
-<span class="sd">            reverse (bool): If True, the generated rhythm will have increasing durations.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            list: A list of (duration, offset) tuples representing the rhythm.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">fib</span> <span class="o">=</span> <span class="n">Fibonacci</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">measure_length</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">durations</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">fib</span><span class="o">.</span><span class="n">generate</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="n">best_rhythms</span></div>
 </div>
 
 
@@ -350,65 +333,6 @@
 
 
 
-<div class="viewcode-block" id="Fibonacci">
-<a class="viewcode-back" href="../../api.html#djalgo.rhythm.Fibonacci">[docs]</a>
-<span class="k">class</span> <span class="nc">Fibonacci</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">measure_length</span><span class="p">,</span> <span class="n">possible_durations</span><span class="p">,</span> <span class="n">max_fibonacci</span><span class="o">=</span><span class="mi">21</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initializes the Fibonacci class to generate rhythms based on the Fibonacci sequence.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            measure_length (float): The total length of the measure.</span>
-<span class="sd">            possible_durations (list): List of possible note durations.</span>
-<span class="sd">            max_fibonacci (int): The maximum Fibonacci number to consider for the sequence.</span>
-<span class="sd">            reverse (bool): If True, the generated rhythm will have increasing durations.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">measure_length</span> <span class="o">=</span> <span class="n">measure_length</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">possible_durations</span> <span class="o">=</span> <span class="n">possible_durations</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">max_fibonacci</span> <span class="o">=</span> <span class="n">max_fibonacci</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reverse</span> <span class="o">=</span> <span class="n">reverse</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fib_sequence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_fibonacci_sequence</span><span class="p">()</span>
-
-<div class="viewcode-block" id="Fibonacci.generate_fibonacci_sequence">
-<a class="viewcode-back" href="../../api.html#djalgo.rhythm.Fibonacci.generate_fibonacci_sequence">[docs]</a>
-    <span class="k">def</span> <span class="nf">generate_fibonacci_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates a Fibonacci sequence up to the maximum Fibonacci number.&quot;&quot;&quot;</span>
-        <span class="n">fib_sequence</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-        <span class="k">while</span> <span class="n">fib_sequence</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">fib_sequence</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_fibonacci</span><span class="p">:</span>
-            <span class="n">fib_sequence</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fib_sequence</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">fib_sequence</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">fib_sequence</span></div>
-
-
-<div class="viewcode-block" id="Fibonacci.map_fibonacci_to_durations">
-<a class="viewcode-back" href="../../api.html#djalgo.rhythm.Fibonacci.map_fibonacci_to_durations">[docs]</a>
-    <span class="k">def</span> <span class="nf">map_fibonacci_to_durations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Maps Fibonacci numbers to musical durations based on the list of possible durations.&quot;&quot;&quot;</span>
-        <span class="n">duration_sequence</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">fib_number</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fib_sequence</span><span class="p">):</span>
-            <span class="n">possible_matches</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">possible_durations</span> <span class="k">if</span> <span class="n">d</span> <span class="o">&lt;=</span> <span class="n">fib_number</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">possible_matches</span><span class="p">:</span>
-                <span class="n">duration_sequence</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">possible_matches</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">duration_sequence</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">reverse</span> <span class="k">else</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">duration_sequence</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="Fibonacci.generate">
-<a class="viewcode-back" href="../../api.html#djalgo.rhythm.Fibonacci.generate">[docs]</a>
-    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates a rhythm based on the Fibonacci sequence and fits it into the measure.&quot;&quot;&quot;</span>
-        <span class="n">duration_sequence</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_fibonacci_to_durations</span><span class="p">()</span>
-        <span class="n">rhythm</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">total_length</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">duration</span> <span class="ow">in</span> <span class="n">duration_sequence</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">total_length</span> <span class="o">+</span> <span class="n">duration</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure_length</span><span class="p">:</span>
-                <span class="n">rhythm</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">duration</span><span class="p">,</span> <span class="n">offset</span><span class="p">))</span>
-                <span class="n">total_length</span> <span class="o">+=</span> <span class="n">duration</span>
-                <span class="n">offset</span> <span class="o">+=</span> <span class="n">duration</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">break</span>  <span class="c1"># Stop if adding another note would exceed the measure length</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">rhythm</span><span class="p">)</span>  <span class="c1"># Ensure it&#39;s a list, especially if reversed</span></div>
-</div>
-
 </pre></div>
 
           </div>
@@ -428,11 +352,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../04_minimalism.html">4. Minimalism</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../05_walks.html">5. Walks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../06_fractals.html">6. Fractals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../07_genetic.html">7. Genetic algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../08_ai.html">8. 🤖 Machine learning</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
 </ul>
 
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
@@ -440,7 +366,7 @@
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script><div>
 <br/>
 <a href="https://www.buymeacoffee.com/essicolo">☕ Buy me a coffee</a>
@@ -453,7 +379,7 @@
       &#169;2024, Essi Parent.
       
       |
-      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.2.6</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
       &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
       
     </div>
