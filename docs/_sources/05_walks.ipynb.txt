@@ -1246,7 +1246,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "<iframe width=\"560\" height=\"202\" src=\"https://www.bandlab.com/embed/?id=e35cedad-7602-ef11-aaf0-000d3aa5105b\" frameborder=\"0\" allowfullscreen></iframe>"
+    "<iframe width=\"560\" height=\"202\" src=\"https://www.bandlab.com/embed/?id=eab7175c-1003-ef11-aaf0-000d3aa5105b\" frameborder=\"0\" allowfullscreen></iframe>"
    ]
   },
   {
@@ -1552,6 +1552,13 @@
     "notes_m21 = dj.conversion.convert(notes, to='music21')\n",
     "notes_m21.show()\n",
     "notes_m21.show('midi')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "↳ [Fractals](06_fractals.html)"
    ]
   }
  ],

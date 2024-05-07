@@ -1113,6 +1113,13 @@
     "lm_m21.show()\n",
     "lm_m21.show('midi')"
    ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "↳ [Genetic algorithms](07_genetic.html)"
+   ]
   }
  ],
  "metadata": {

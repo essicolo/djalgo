@@ -111,7 +111,7 @@ class Rhythm:
 
         ga = GeneticRhythm(seed, population_size, self.measure_length, max_generations, mutation_rate, self.durations)
         best_rhythm = ga.generate()
-        return best_rhythms
+        return best_rhythm
 
 
 class GeneticRhythm:
