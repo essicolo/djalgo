@@ -1068,60 +1068,31 @@ containing the information needed to re-instantiate it.</p>
 <p>A class to represent a musical voice.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="djalgo.harmony.Voice.generate">
-<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pitches</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Voice.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Voice.generate" title="Link to this definition">¶</a></dt>
-<dd><p>Convert the pitches to a list of chords based on the pitches.</p>
-<section id="parameters">
-<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
-<blockquote>
-<div><dl class="simple">
-<dt>pitches<span class="classifier">list</span></dt><dd><p>A list of MIDI notes to convert.</p>
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">durations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arpeggios</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Voice.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Voice.generate" title="Link to this definition">¶</a></dt>
+<dd><p>Generate chords or arpeggios based on the given notes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>notes</strong> (<em>list</em><em> or </em><em>tuple</em>) – The notes to generate chords or arpeggios from.</p></li>
+<li><p><strong>durations</strong> (<em>list</em><em>, </em><em>optional</em>) – The durations of each note. If not provided, defaults to [1].</p></li>
+<li><p><strong>arpeggios</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, generate arpeggios instead of chords. Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The generated chords or arpeggios.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
-</div></blockquote>
-</section>
-<section id="returns">
-<h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
-<blockquote>
-<div><dl class="simple">
-<dt>list</dt><dd><p>A list of chords, each represented as a list of MIDI notes.</p>
-</dd>
-</dl>
-</div></blockquote>
-</section>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="djalgo.harmony.Voice.generate_arpeggio">
-<span class="sig-name descname"><span class="pre">generate_arpeggio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pitch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Voice.generate_arpeggio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Voice.generate_arpeggio" title="Link to this definition">¶</a></dt>
-<dd><p>Generate an arpeggio based on the voice’s scale and degrees.</p>
-<section id="id1">
-<h2>Parameters<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
-<blockquote>
-<div><dl class="simple">
-<dt>pitch<span class="classifier">int</span></dt><dd><p>The root pitch of the arpeggio.</p>
-</dd>
-<dt>pattern_length<span class="classifier">int, optional</span></dt><dd><p>The length of the arpeggio pattern (default is None, which means use the length of the degrees).</p>
-</dd>
-</dl>
-</div></blockquote>
-</section>
-<section id="id2">
-<h2>Returns<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
-<blockquote>
-<div><dl class="simple">
-<dt>list</dt><dd><p>A list of MIDI notes representing the arpeggio.</p>
-</dd>
-</dl>
-</div></blockquote>
-</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="djalgo.harmony.Voice.pitch_to_chord">
 <span class="sig-name descname"><span class="pre">pitch_to_chord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pitch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/harmony.html#Voice.pitch_to_chord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.harmony.Voice.pitch_to_chord" title="Link to this definition">¶</a></dt>
 <dd><p>Convert a MIDI note to a chord based on the scale using the specified degrees.</p>
-<section id="id3">
-<h2>Parameters<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
 <blockquote>
 <div><dl class="simple">
 <dt>pitch<span class="classifier">int</span></dt><dd><p>The MIDI note to convert.</p>
@@ -1129,8 +1100,8 @@ containing the information needed to re-instantiate it.</p>
 </dl>
 </div></blockquote>
 </section>
-<section id="id4">
-<h2>Returns<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
 <blockquote>
 <div><dl class="simple">
 <dt>list</dt><dd><p>A list of MIDI notes representing the chord.</p>
@@ -2042,7 +2013,7 @@ a duration (quarterLength), and an offset.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="djalgo.walk.Chain">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.walk.</span></span><span class="sig-name descname"><span class="pre">Chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">walk_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">round_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branching_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merging_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Chain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Chain" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.walk.</span></span><span class="sig-name descname"><span class="pre">Chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">walk_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">walk_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">round_to</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branching_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merging_probability</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Chain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Chain" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class representing a chain of sequences generated using random walks.</p>
 <dl class="py attribute">
@@ -2080,17 +2051,6 @@ Can be a list of step choices or a random variable object. Defaults to [-1, 0, 1
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="djalgo.walk.Chain.length">
-<span class="sig-name descname"><span class="pre">length</span></span><a class="headerlink" href="#djalgo.walk.Chain.length" title="Link to this definition">¶</a></dt>
-<dd><p>The length of each sequence in the chain. Defaults to 10.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="djalgo.walk.Chain.branching_probability">
 <span class="sig-name descname"><span class="pre">branching_probability</span></span><a class="headerlink" href="#djalgo.walk.Chain.branching_probability" title="Link to this definition">¶</a></dt>
 <dd><p>The probability of branching at each step. Defaults to 0.0.</p>
@@ -2114,11 +2074,14 @@ Can be a list of step choices or a random variable object. Defaults to [-1, 0, 1
 
 <dl class="py method">
 <dt class="sig sig-object py" id="djalgo.walk.Chain.generate">
-<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Chain.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Chain.generate" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Chain.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Chain.generate" title="Link to this definition">¶</a></dt>
 <dd><p>Generates a chain of sequences using random walks.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>seed</strong> (<em>int</em>) – The seed value for the random number generator. Defaults to None.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>length</strong> (<em>int</em>) – The length of each sequence in the chain. Defaults to 10.</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – The seed value for the random number generator. Defaults to None.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A list of sequences generated using random walks.</p>
@@ -2133,7 +2096,7 @@ Can be a list of step choices or a random variable object. Defaults to [-1, 0, 1
 
 <dl class="py class">
 <dt class="sig sig-object py" id="djalgo.walk.Kernel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.walk.</span></span><span class="sig-name descname"><span class="pre">Kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">walk_around</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Kernel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Kernel" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.walk.</span></span><span class="sig-name descname"><span class="pre">Kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">walk_around</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Kernel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Kernel" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class representing a kernel for generating sequences.</p>
 <dl class="py attribute">
@@ -2143,17 +2106,6 @@ Can be a list of step choices or a random variable object. Defaults to [-1, 0, 1
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="djalgo.walk.Kernel.length">
-<span class="sig-name descname"><span class="pre">length</span></span><a class="headerlink" href="#djalgo.walk.Kernel.length" title="Link to this definition">¶</a></dt>
-<dd><p>The length of the sequence.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2193,11 +2145,12 @@ Can be a list of step choices or a random variable object. Defaults to [-1, 0, 1
 
 <dl class="py method">
 <dt class="sig sig-object py" id="djalgo.walk.Kernel.generate">
-<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsamples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Kernel.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Kernel.generate" title="Link to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsamples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/walk.html#Kernel.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.walk.Kernel.generate" title="Link to this definition">¶</a></dt>
 <dd><p>Generates a sequence using the kernel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>length</strong> (<em>int</em>) – The length of the sequence.</p></li>
 <li><p><strong>data</strong> (<em>ndarray</em>) – The input data used for generating the sequence.</p></li>
 <li><p><strong>nsamples</strong> (<em>int</em>) – The number of samples to generate.</p></li>
 <li><p><strong>seed</strong> (<em>int</em>) – The seed value for random number generation.</p></li>

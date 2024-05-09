@@ -33,6 +33,7 @@
             
   <h1>Source code for djalgo.harmony</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">utils</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">harmony</span>
 
@@ -323,47 +324,52 @@
 
 <div class="viewcode-block" id="Voice.generate">
 <a class="viewcode-back" href="../../api.html#djalgo.harmony.Voice.generate">[docs]</a>
-    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pitches</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">notes</span><span class="p">,</span> <span class="n">durations</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">arpeggios</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Convert the pitches to a list of chords based on the pitches.</span>
+<span class="sd">        Generate chords or arpeggios based on the given notes.</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">            pitches : list</span>
-<span class="sd">                A list of MIDI notes to convert.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            notes (list or tuple): The notes to generate chords or arpeggios from.</span>
+<span class="sd">            durations (list, optional): The durations of each note. If not provided, defaults to [1].</span>
+<span class="sd">            arpeggios (bool, optional): If True, generate arpeggios instead of chords. Defaults to False.</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">            list</span>
-<span class="sd">                A list of chords, each represented as a list of MIDI notes.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            list: The generated chords or arpeggios.</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pitch_to_chord</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span> <span class="k">for</span> <span class="n">pitch</span> <span class="ow">in</span> <span class="n">pitches</span><span class="p">]</span></div>
-
-    
-<div class="viewcode-block" id="Voice.generate_arpeggio">
-<a class="viewcode-back" href="../../api.html#djalgo.harmony.Voice.generate_arpeggio">[docs]</a>
-    <span class="k">def</span> <span class="nf">generate_arpeggio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">pattern_length</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Generate an arpeggio based on the voice&#39;s scale and degrees.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">            pitch : int</span>
-<span class="sd">                The root pitch of the arpeggio.</span>
-<span class="sd">            pattern_length : int, optional</span>
-<span class="sd">                The length of the arpeggio pattern (default is None, which means use the length of the degrees).</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">            list</span>
-<span class="sd">                A list of MIDI notes representing the arpeggio.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">scale_degree</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_degree_from_pitch</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">scale_list</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span> <span class="n">tonic_pitch</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tonic</span><span class="p">)</span>
-        <span class="c1"># If pattern_length is specified, extend the degrees to match the pattern length</span>
-        <span class="n">extended_degrees</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">degrees</span> <span class="o">*</span> <span class="p">(</span><span class="n">pattern_length</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">degrees</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">pattern_length</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">degrees</span>
-        <span class="n">arpeggio_midi</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">[(</span><span class="n">scale_degree</span> <span class="o">+</span> <span class="n">degree</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)]</span> <span class="k">for</span> <span class="n">degree</span> <span class="ow">in</span> <span class="n">extended_degrees</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">arpeggio_midi</span><span class="p">[:</span><span class="n">pattern_length</span><span class="p">]</span>  <span class="c1"># Trim the arpeggio to the pattern length if specified</span></div>
+        
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">notes</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">notes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">):</span> <span class="c1"># if notes are in fact pitches</span>
+            <span class="k">if</span> <span class="n">durations</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">durations</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">durations_cycle</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span>
+            <span class="n">current_offset</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">notes</span><span class="p">):</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">durations_cycle</span><span class="p">)</span>
+                <span class="n">notes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">current_offset</span><span class="p">)</span>
+                <span class="n">current_offset</span> <span class="o">=</span> <span class="n">current_offset</span> <span class="o">+</span> <span class="n">d</span>
+        
+        <span class="n">chords</span> <span class="o">=</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">pitch_to_chord</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="n">d</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">notes</span><span class="p">]</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">arpeggios</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">chords</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">arpeggios_p</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">chords</span><span class="p">:</span>
+                <span class="n">pitches</span> <span class="o">=</span> <span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pitches</span><span class="p">:</span>
+                    <span class="n">arpeggios_p</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="n">arpeggios_n</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">durations_cycle</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span> <span class="c1"># reset cycle</span>
+            <span class="n">current_offset</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">arpeggios_p</span><span class="p">:</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">durations_cycle</span><span class="p">)</span>
+                <span class="n">arpeggios_n</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">p</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">current_offset</span><span class="p">))</span>
+                <span class="n">current_offset</span> <span class="o">=</span> <span class="n">current_offset</span> <span class="o">+</span> <span class="n">d</span>
+            <span class="k">return</span> <span class="n">arpeggios_n</span></div>
 </div>
+
 
 
 

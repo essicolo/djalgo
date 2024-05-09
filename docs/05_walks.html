@@ -134,14 +134,14 @@ C4: 60
 C8: 108
 </pre></div></div>
 </div>
-<p>The random walk will be conducted between numbers 36 to 108 through 20 steps, starting at 60. Through the walk, each step will branch with a probability of 0.1 and when branches fall to the same pitch, they will merge with a probability of 0.9.</p>
+<p>The random walk will be conducted between numbers 36 to 108, starting at 60. Through the walk, each step will branch with a probability of 0.1 and when branches fall to the same pitch, they will merge with a probability of 0.9.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rw</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">walk</span><span class="o">.</span><span class="n">Chain</span><span class="p">(</span>
     <span class="n">walk_range</span><span class="o">=</span><span class="p">[</span><span class="mi">36</span><span class="p">,</span> <span class="mi">108</span><span class="p">],</span> <span class="n">walk_start</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">walk_probability</span><span class="o">=</span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
-    <span class="n">length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">round_to</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">branching_probability</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">merging_probability</span><span class="o">=</span><span class="mf">0.9</span>
+    <span class="n">round_to</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">branching_probability</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">merging_probability</span><span class="o">=</span><span class="mf">0.9</span>
 <span class="p">)</span>
 <span class="n">rw</span>
 </pre></div>
@@ -153,7 +153,7 @@ C8: 108
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;djalgo.walk.Chain at 0x12bfa3020&gt;
+&lt;djalgo.walk.Chain at 0x134742b70&gt;
 </pre></div></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">rw</span></code> is a random walk object, which can be used to generate many random walks, although only one will be generated in this example.</p>
@@ -161,7 +161,7 @@ C8: 108
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rw_sequences</span> <span class="o">=</span> <span class="n">rw</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rw_sequences</span> <span class="o">=</span> <span class="n">rw</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
 <span class="nb">len</span><span class="p">(</span><span class="n">rw_sequences</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -266,8 +266,8 @@ if (typeof require === 'undefined') {
     <span class="n">walk_range</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">g_major</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
     <span class="n">walk_start</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="c1"># the seventh index on the scale</span>
     <span class="n">walk_probability</span><span class="o">=</span><span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
-    <span class="n">length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">round_to</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">branching_probability</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">merging_probability</span><span class="o">=</span><span class="mf">0.9</span>
-<span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">round_to</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">branching_probability</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">merging_probability</span><span class="o">=</span><span class="mf">0.9</span>
+<span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">len</span><span class="p">(</span><span class="n">rw_index</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -307,7 +307,7 @@ if (typeof require === 'undefined') {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv2969"></div>
+<div id="midiPlayerDiv2964"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -315,7 +315,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv2969_play() {
+function midiPlayerDiv2964_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -323,14 +323,14 @@ function midiPlayerDiv2969_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv2969");
-        mp.base64Load("data:audio/midi;base64,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");
+        mp.addPlayer("#midiPlayerDiv2964");
+        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQAIJ2BNVHJrAAAASgD/UQMHoSAA/1gEBAIYCJK6QP9RAwehIKOIYP9RAwehIJf/IP9RAwehIJDOIP9RAwehIIHsIP9RAwehIIHsIP9RAwehIM5g/y8ATVRyawAAASYA/wMAAOAAQM5gkE9apzCATwAAkFRagZ1AgFQAAJBTWqcwgFMAAJBRWqcwgFEAAJBOWoGdQIBOAACQUVqnMIBRAACQSFqnMIBIAACQTlqBnUCATgAAkEpapzCASgAAkExapzCATAAAkExagZ1AgEwAAJBRWqcwgFEAAJBKWqcwgEoAAJBIWoGdQIBIAACQRVqnMIBFAACQRVqnMIBFAACQSFqBnUCASAAAkExapzCATAAAkEhapzCASAAAkEdagZ1AgEcAAJBDWqcwgEMAAJBDWqcwgEMAAJBFWoGdQIBFAACQSlqnMIBKAACQUVqnMIBRAACQT1qBnUCATwAAkFNapzCAUwAAkFhapzCAWAAAkFpagZ1AgFoAAJBaWqcwgFoAzmD/LwBNVHJrAAACugD/AwAA4ABAzmCQUVqnMIBRAACQT1rOYIBPAACQU1rOYIBTAACQU1qnMIBTAACQVFqnMIBUAACQWFrOYIBYAACQVlrOYIBWAACQVFqnMIBUAACQU1qnMIBTAACQUVrOYIBRAACQUVrOYIBRAACQUVqnMIBRAACQUVqnMIBRAACQUVrOYIBRAACQTlrOYIBOAACQT1qnMIBPAACQUVqnMIBRAACQUVrOYIBRAACQWFrOYIBYAACQUVqnMIBRAACQT1qnMIBPAACQU1rOYIBTAACQU1rOYIBTAACQVFqnMIBUAACQWFqnMIBYAACQVlrOYIBWAACQVFrOYIBUAACQU1qnMIBTAACQUVqnMIBRAACQUVrOYIBRAACQUVrOYIBRAACQUVqnMIBRAACQUVqnMIBRAACQTlrOYIBOAACQT1rOYIBPAACQUVqnMIBRAACQUVqnMIBRAACQWFrOYIBYAACQUVrOYIBRAACQT1qnMIBPAACQU1qnMIBTAACQU1rOYIBTAACQVFrOYIBUAACQWFqnMIBYAACQVlqnMIBWAACQVFrOYIBUAACQU1rOYIBTAACQUVqnMIBRAACQUVqnMIBRAACQUVrOYIBRAACQUVrOYIBRAACQUVqnMIBRAACQTlqnMIBOAACQT1rOYIBPAACQUVrOYIBRAACQUVqnMIBRAACQWFqnMIBYAACQUVrOYIBRAACQT1rOYIBPAACQU1qnMIBTAACQU1qnMIBTAACQVFrOYIBUAACQWFrOYIBYAACQVlqnMIBWAACQVFqnMIBUAACQU1rOYIBTAACQUVrOYIBRAACQUVqnMIBRAACQUVqnMIBRAACQUVrOYIBRAACQUVrOYIBRAACQTlqnMIBOAACQT1qnMIBPAACQUVrOYIBRAACQUVrOYIBRAACQWFqnMIBYAM5g/y8ATVRyawAAAeIA/wMAAOAAQM5gkFNazmCAUwAAkE9azmCATwAAkExapzCATAAAkE5apzCATgAAkE5azmCATgAAkE9azmCATwAAkE5apzCATgAAkE5apzCATgAAkFNazmCAUwAAkE9azmCATwAAkE5apzCATgAAkE9apzCATwAAkE5azmCATgAAkFNazmCAUwAAkE9apzCATwAAkExapzCATAAAkE5azmCATgAAkE5azmCATgAAkE9apzCATwAAkE5apzCATgAAkE5azmCATgAAkFNazmCAUwAAkE9apzCATwAAkE5apzCATgAAkE9azmCATwAAkE5azmCATgAAkFNapzCAUwAAkE9apzCATwAAkExazmCATAAAkE5azmCATgAAkE5apzCATgAAkE9apzCATwAAkE5azmCATgAAkE5azmCATgAAkFNapzCAUwAAkE9apzCATwAAkE5azmCATgAAkE9azmCATwAAkE5apzCATgAAkFNapzCAUwAAkE9azmCATwAAkExazmCATAAAkE5apzCATgAAkE5apzCATgAAkE9azmCATwAAkE5azmCATgAAkE5apzCATgAAkFNapzCAUwAAkE9azmCATwAAkE5azmCATgAAkE9apzCATwAAkE5apzCATgDOYP8vAE1UcmsAAAC5AP8DAADgAEDOYJBDWoGdQIBDAACQQ1rOYIBDAACQQ1qBnUCAQwAAkEVazmCARQAAkEVagZ1AgEUAAJBIWs5ggEgAAJBHWoGdQIBHAACQSlrOYIBKAACQRVqBnUCARQAAkENazmCAQwAAkENagZ1AgEMAAJBDWs5ggEMAAJBFWoGdQIBFAACQRVrOYIBFAACQSFqBnUCASAAAkEdazmCARwAAkEpagZ1AgEoAAJBFWs5ggEUAzmD/LwBNVHJrAAAAKgD/AwAA4ABAzmCQUVqnMIBRAACQU1qnMIBTAACQT1qBnUCATwDOYP8vAE1UcmsAAAAhAP8DAADgAEDOYJBPWs5ggE8AAJBTWoGdQIBTAM5g/y8ATVRyawAAADIA/wMAAOAAQM5gkFpazmCAWgAAkFRazmCAVAAAkFpapzCAWgAAkFRapzCAVADOYP8vAA==");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv2969_play, 2000);
+    setTimeout(midiPlayerDiv2964_play, 2000);
 } else {
-    midiPlayerDiv2969_play();
+    midiPlayerDiv2964_play();
 }
 </script></div>
 </div>
@@ -372,10 +372,9 @@ go even further, since time is continuous, our multivariate normal will contain 
             <span class="n">kernel_walks</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
                 <span class="n">dj</span><span class="o">.</span><span class="n">walk</span><span class="o">.</span><span class="n">Kernel</span><span class="p">(</span>
                     <span class="n">walk_around</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
-                    <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
                     <span class="n">length_scale</span><span class="o">=</span><span class="n">ls</span><span class="p">,</span>
                     <span class="n">amplitude</span><span class="o">=</span><span class="n">amp</span>
-                <span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,)[</span><span class="mi">0</span><span class="p">]</span>
             <span class="p">)</span>
 
 <span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
@@ -418,10 +417,9 @@ and <code class="docutils literal notranslate"><span class="pre">length_scale</s
 <span class="n">ntracks</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">blues_tracks_i</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">walk</span><span class="o">.</span><span class="n">Kernel</span><span class="p">(</span>
     <span class="n">walk_around</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="c1"># sixth index</span>
-    <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
     <span class="n">length_scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
     <span class="n">amplitude</span><span class="o">=</span><span class="mf">5.0</span>
-<span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">nsamples</span><span class="o">=</span><span class="n">ntracks</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span> <span class="n">nsamples</span><span class="o">=</span><span class="n">ntracks</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
 <span class="c1"># blues_tracks_i are list indexes. I must make sure that indexes are integer and between the range og the scale list</span>
 <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ntracks</span><span class="p">):</span>
@@ -525,7 +523,7 @@ and <code class="docutils literal notranslate"><span class="pre">length_scale</s
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv4022"></div>
+<div id="midiPlayerDiv4017"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -533,7 +531,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv4022_play() {
+function midiPlayerDiv4017_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -541,14 +539,14 @@ function midiPlayerDiv4022_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv4022");
+        mp.addPlayer("#midiPlayerDiv4017");
         mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQACJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAABU4A/wMAAOAAQM5gkEJaAJBMWpNYgEIAAIBMAACQO1oAkEVaAJBHWs5ggDsAAIBFAACARwAAkDtaAJBAWgCQSlrOYIA7AACAQAAAgEoAAJBAWgCQO1oAkEJapzCAQAAAgDsAAIBCAACQO1oAkEBaAJBBWqcwgDsAAIBAAACAQQAAkDtaAJBFWgCQQlqTWIA7AACARQAAgEIAAJA7WgCQQloAkEFapzCAOwAAgEIAAIBBAACQO1oAkEBaAJBCWpNYgDsAAIBAAACAQgAAkEJaAJBMWs5ggEIAAIBMAACQO1oAkEVaAJBHWs5ggDsAAIBFAACARwAAkDtaAJBAWgCQSlqnMIA7AACAQAAAgEoAAJBAWgCQO1oAkEJapzCAQAAAgDsAAIBCAACQO1oAkEBaAJBBWpNYgDsAAIBAAACAQQAAkDtaAJBFWgCQQlqnMIA7AACARQAAgEIAAJA7WgCQQloAkEFak1iAOwAAgEIAAIBBAACQO1oAkEBaAJBCWs5ggDsAAIBAAACAQgAAkEJaAJBMWs5ggEIAAIBMAACQO1oAkEVaAJBHWqcwgDsAAIBFAACARwAAkDtaAJBAWgCQSlqnMIA7AACAQAAAgEoAAJBAWgCQO1oAkEJak1iAQAAAgDsAAIBCAACQO1oAkEBaAJBBWqcwgDsAAIBAAACAQQAAkDtaAJBFWgCQQlqTWIA7AACARQAAgEIAAJA7WgCQQloAkEFazmCAOwAAgEIAAIBBAACQO1oAkEBaAJBCWs5ggDsAAIBAAACAQgAAkEJaAJBMWqcwgEIAAIBMAACQO1oAkEVaAJBHWqcwgDsAAIBFAACARwAAkDtaAJBAWgCQSlqTWIA7AACAQAAAgEoAAJBAWgCQO1oAkEJapzCAQAAAgDsAAIBCAACQO1oAkEBaAJBBWpNYgDsAAIBAAACAQQAAkDtaAJBFWgCQQlrOYIA7AACARQAAgEIAAJA7WgCQQloAkEFazmCAOwAAgEIAAIBBAACQO1oAkEBaAJBCWqcwgDsAAIBAAACAQgAAkEJaAJBMWqcwgEIAAIBMAACQO1oAkEVaAJBHWpNYgDsAAIBFAACARwAAkDtaAJBAWgCQSlqnMIA7AACAQAAAgEoAAJBAWgCQO1oAkEJak1iAQAAAgDsAAIBCAACQO1oAkEBaAJBBWs5ggDsAAIBAAACAQQAAkDtaAJBFWgCQQlrOYIA7AACARQAAgEIAAJA7WgCQQloAkEFapzCAOwAAgEIAAIBBAACQO1oAkEBaAJBCWqcwgDsAAIBAAACAQgAAkEJaAJBMWpNYgEIAAIBMAACQO1oAkEVaAJBHWqcwgDsAAIBFAACARwAAkDtaAJBAWgCQSlqTWIA7AACAQAAAgEoAAJBAWgCQO1oAkEJazmCAQAAAgDsAAIBCAACQO1oAkEBaAJBBWs5ggDsAAIBAAACAQQAAkDtaAJBFWgCQQlqnMIA7AACARQAAgEIAAJA7WgCQQloAkEFapzCAOwAAgEIAAIBBAACQO1oAkEBaAJBCWpNYgDsAAIBAAACAQgAAkEJaAJBMWqcwgEIAAIBMAACQO1oAkEVaAJBHWpNYgDsAAIBFAACARwAAkDtaAJBAWgCQSlrOYIA7AACAQAAAgEoAAJBAWgCQO1oAkEJazmCAQAAAgDsAAIBCAACQO1oAkEBaAJBBWqcwgDsAAIBAAACAQQAAkDtaAJBFWgCQQlqnMIA7AACARQAAgEIAAJA7WgCQQloAkEFak1iAOwAAgEIAAIBBAACQO1oAkEBaAJBCWqcwgDsAAIBAAACAQgDOYP8vAA==");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv4022_play, 2000);
+    setTimeout(midiPlayerDiv4017_play, 2000);
 } else {
-    midiPlayerDiv4022_play();
+    midiPlayerDiv4017_play();
 }
 </script></div>
 </div>
@@ -597,7 +595,7 @@ fundamental question you ask as the modeller is what function the temperature mi
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv4227"></div>
+<div id="midiPlayerDiv4220"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -605,7 +603,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv4227_play() {
+function midiPlayerDiv4220_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -613,14 +611,14 @@ function midiPlayerDiv4227_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv4227");
+        mp.addPlayer("#midiPlayerDiv4220");
         mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQACJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAAPgA/wMAAOAAQM5gkD5aAJBCWgCQRVqBnUCAPgAAgEIAAIBFAACQOVoAkD1aAJBAWoGdQIA5AACAPQAAgEAAAJA7WgCQPloAkEJagZ1AgDsAAIA+AACAQgAAkDZaAJA5WgCQPVqBnUCANgAAgDkAAIA9AACQN1oAkDtaAJA+WoGdQIA3AACAOwAAgD4AAJAyWgCQNloAkDlagZ1AgDIAAIA2AACAOQAAkDdaAJA7WgCQPlqBnUCANwAAgDsAAIA+AACQOVoAkD1aAJBAWoGdQIA5AACAPQAAgEAAAJA+WgCQQloAkEVagZ1AgD4AAIBCAACARQDOYP8vAA==");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv4227_play, 2000);
+    setTimeout(midiPlayerDiv4220_play, 2000);
 } else {
-    midiPlayerDiv4227_play();
+    midiPlayerDiv4220_play();
 }
 </script></div>
 </div>
@@ -664,10 +662,9 @@ array([[ 0, 36],
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ntracks</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">length</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">pachelbel_tracks_pt</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">walk</span><span class="o">.</span><span class="n">Kernel</span><span class="p">(</span>
-    <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span>
     <span class="n">length_scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
     <span class="n">amplitude</span><span class="o">=</span><span class="mi">1</span>
-<span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">nsamples</span><span class="o">=</span><span class="n">ntracks</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">,</span> <span class="n">nsamples</span><span class="o">=</span><span class="n">ntracks</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">pachelbel_tracks_t</span> <span class="o">=</span> <span class="n">pachelbel_tracks_pt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">pachelbel_tracks_p</span> <span class="o">=</span> <span class="n">pachelbel_tracks_pt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 </pre></div>
@@ -759,7 +756,7 @@ sequence = [
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv4580"></div>
+<div id="midiPlayerDiv4613"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -767,7 +764,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv4580_play() {
+function midiPlayerDiv4613_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -775,14 +772,14 @@ function midiPlayerDiv4580_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv4580");
-        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQAFJ2BNVHJrAAAALwD/UQMHoSAA/1gEBAIYCIXEYP9RAwehIIaTQP9RAwehIIbiIP9RAwehIM5g/y8ATVRyawAAAMsA/wMAAOAAQIGdQJA+WgCQPlqTWIA+AACAPgAAkD5aAJA+Ws5ggD4AAIA+AACQO1oAkDtak1iAOwAAgDsAAJA7WgCQO1qBnUCAOwAAgDsAAJA9WgCQPVqnMIA9AACAPQAAkDtaAJA7WpNYgDsAAIA7AACQOVoAkDlazmCAOQAAgDkAAJAyWgCQMlrOYIAyAACAMgAAkDdaAJA3WpNYgDcAAIA3AACQOVoAkDlazmCAOQAAgDkAAJA3WgCQN1qnMIA3AACANwDOYP8vAE1UcmsAAACpAP8DAADgAECB7CCQPloAkD5azmCAPgAAgD4AAJA+WgCQPlrOYIA+AACAPgAAkDlaAJA5WpNYgDkAAIA5AACQOVoAkDlazmCAOQAAgDkAAJA7WgCQO1rOYIA7AACAOwAAkDtaAJA7WoGdQIA7AACAOwAAkDZaAJA2WqcwgDYAAIA2AACQOVoAkDlak1iAOQAAgDkAAJA5WgCQOVrOYIA5AACAOQDOYP8vAE1UcmsAAACJAP8DAADgAECCuwCQPloAkD5azmCAPgAAgD4AAJA7WgCQO1qTWIA7AACAOwAAkDtaAJA7WqcwgDsAAIA7AACQOVoAkDlagZ1AgDkAAIA5AACQO1oAkDtagZ1AgDsAAIA7AACQNloAkDZagZ1AgDYAAIA2AACQN1oAkDdak1iANwAAgDcAzmD/LwBNVHJrAAAA+AD/AwAA4ABAzmCQPloAkEJaAJBFWoGdQIA+AACAQgAAgEUAAJA5WgCQPVoAkEBagZ1AgDkAAIA9AACAQAAAkDtaAJA+WgCQQlqBnUCAOwAAgD4AAIBCAACQNloAkDlaAJA9WoGdQIA2AACAOQAAgD0AAJA3WgCQO1oAkD5agZ1AgDcAAIA7AACAPgAAkDJaAJA2WgCQOVqBnUCAMgAAgDYAAIA5AACQN1oAkDtaAJA+WoGdQIA3AACAOwAAgD4AAJA5WgCQPVoAkEBagZ1AgDkAAIA9AACAQAAAkD5aAJBCWgCQRVqBnUCAPgAAgEIAAIBFAM5g/y8A");
+        mp.addPlayer("#midiPlayerDiv4613");
+        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQAFJ2BNVHJrAAAALwD/UQMHoSAA/1gEBAIYCIXEYP9RAwehIIaTQP9RAwehIIbiIP9RAwehIM5g/y8ATVRyawAAAHgA/wMAAOAAQIGdQJA+WgCQPlqBnUCAPgAAgD4AAJA5WgCQOVqBnUCAOQAAgDkAAJA7WgCQO1qBnUCAOwAAgDsAAJA2WgCQNlqnMIA2AACANgAAkDlaAJA5WqcwgDkAAIA5AACQOVoAkDlazmCAOQAAgDkAzmD/LwBNVHJrAAAA/QD/AwAA4ABAgewgkD5aAJA+Ws5ggD4AAIA+AACQPloAkD5apzCAPgAAgD4AAJA9WgCQPVrOYIA9AACAPQAAkDdaAJA3WqcwgDcAAIA3AACQOVoAkDlak1iAOQAAgDkAAJA7WgCQO1rOYIA7AACAOwAAkDtaAJA7WpNYgDsAAIA7AACQOVoAkDlapzCAOQAAgDkAAJA3WgCQN1qnMIA3AACANwAAkDZaAJA2Ws5ggDYAAIA2AACQN1oAkDdapzCANwAAgDcAAJA5WgCQOVqTWIA5AACAOQAAkDtaAJA7WqcwgDsAAIA7AACQOVoAkDlak1iAOQAAgDkAzmD/LwBNVHJrAAAAywD/AwAA4ABAgrsAkD5aAJA+WqcwgD4AAIA+AACQPVoAkD1agZ1AgD0AAIA9AACQOVoAkDlak1iAOQAAgDkAAJA5WgCQOVrOYIA5AACAOQAAkDtaAJA7WpNYgDsAAIA7AACQO1oAkDtazmCAOwAAgDsAAJA3WgCQN1rOYIA3AACANwAAkDZaAJA2WpNYgDYAAIA2AACQNloAkDZazmCANgAAgDYAAJA2WgCQNlqnMIA2AACANgAAkDdaAJA3WpNYgDcAAIA3AM5g/y8ATVRyawAAAPgA/wMAAOAAQM5gkD5aAJBCWgCQRVqBnUCAPgAAgEIAAIBFAACQOVoAkD1aAJBAWoGdQIA5AACAPQAAgEAAAJA7WgCQPloAkEJagZ1AgDsAAIA+AACAQgAAkDZaAJA5WgCQPVqBnUCANgAAgDkAAIA9AACQN1oAkDtaAJA+WoGdQIA3AACAOwAAgD4AAJAyWgCQNloAkDlagZ1AgDIAAIA2AACAOQAAkDdaAJA7WgCQPlqBnUCANwAAgDsAAIA+AACQOVoAkD1aAJBAWoGdQIA5AACAPQAAgEAAAJA+WgCQQloAkEVagZ1AgD4AAIBCAACARQDOYP8vAA==");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv4580_play, 2000);
+    setTimeout(midiPlayerDiv4613_play, 2000);
 } else {
-    midiPlayerDiv4580_play();
+    midiPlayerDiv4613_play();
 }
 </script></div>
 </div>
@@ -966,7 +963,7 @@ if (typeof require === 'undefined') {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv4986"></div>
+<div id="midiPlayerDiv5019"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -974,7 +971,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv4986_play() {
+function midiPlayerDiv5019_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -982,14 +979,14 @@ function midiPlayerDiv4986_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv4986");
+        mp.addPlayer("#midiPlayerDiv5019");
         mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQACJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAASIA/wMAAOAAQM5gkDxazmCAPAAAkD5ak1iAPgAAkD5ak1iAPgAAkEBapzCAQAAAkEFagZ1AgEEAAJBFWs5ggEUAAJA+WpNYgD4AAJBHWpNYgEcAAJA8WqcwgDwAAJBHWoGdQIBHAACQR1rOYIBHAACQRVqTWIBFAACQQ1qTWIBDAACQQFqnMIBAAACQR1qBnUCARwAAkD5azmCAPgAAkDxak1iAPAAAkD5ak1iAPgAAkD5apzCAPgAAkEBagZ1AgEAAAJBBWs5ggEEAAJBFWpNYgEUAAJA+WpNYgD4AAJBHWqcwgEcAAJA8WoGdQIA8AACQR1rOYIBHAACQR1qTWIBHAACQRVqTWIBFAACQQ1qnMIBDAACQQFqBnUCAQADOYP8vAA==");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv4986_play, 2000);
+    setTimeout(midiPlayerDiv5019_play, 2000);
 } else {
-    midiPlayerDiv4986_play();
+    midiPlayerDiv5019_play();
 }
 </script></div>
 </div>

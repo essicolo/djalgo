@@ -1,4 +1,5 @@
 import random
+import itertools
 from . import utils
 from . import harmony
 
@@ -255,43 +256,51 @@ class Voice(MusicTheoryConstants):
             chord.append(self.scale[absolute_index])
         return chord  # Chord is now directly from the scale
 
-    def generate(self, pitches):
+    def generate(self, notes, durations=None, arpeggios=False):
         """
-        Convert the pitches to a list of chords based on the pitches.
+        Generate chords or arpeggios based on the given notes.
 
-        Parameters
-        ----------
-            pitches : list
-                A list of MIDI notes to convert.
+        Args:
+            notes (list or tuple): The notes to generate chords or arpeggios from.
+            durations (list, optional): The durations of each note. If not provided, defaults to [1].
+            arpeggios (bool, optional): If True, generate arpeggios instead of chords. Defaults to False.
 
-        Returns
-        -------
-            list
-                A list of chords, each represented as a list of MIDI notes.
+        Returns:
+            list: The generated chords or arpeggios.
+
         """
-        return [self.pitch_to_chord(pitch) for pitch in pitches]
-    
-    def generate_arpeggio(self, pitch, pattern_length=None):
-        """
-        Generate an arpeggio based on the voice's scale and degrees.
+        
+        if isinstance(notes, tuple):
+            notes = [notes]
+        if isinstance(notes[0], int): # if notes are in fact pitches
+            if durations is None:
+                durations = [1]
+            durations_cycle = itertools.cycle(durations)
+            current_offset = 0
+            for i,p in enumerate(notes):
+                d = next(durations_cycle)
+                notes[i] = (p, d, current_offset)
+                current_offset = current_offset + d
+        
+        chords = [(self.pitch_to_chord(p), d, o) for p, d, o in notes]
+        
+        if not arpeggios:
+            return chords
+        else:
+            arpeggios_p = []
+            for n in chords:
+                pitches = n[0]
+                for p in pitches:
+                    arpeggios_p.append(p)
+            arpeggios_n = []
+            durations_cycle = itertools.cycle(durations) # reset cycle
+            current_offset = 0
+            for p in arpeggios_p:
+                d = next(durations_cycle)
+                arpeggios_n.append((p, d, current_offset))
+                current_offset = current_offset + d
+            return arpeggios_n
 
-        Parameters
-        ----------
-            pitch : int
-                The root pitch of the arpeggio.
-            pattern_length : int, optional
-                The length of the arpeggio pattern (default is None, which means use the length of the degrees).
-
-        Returns
-        -------
-            list
-                A list of MIDI notes representing the arpeggio.
-        """
-        scale_degree = utils.get_degree_from_pitch(pitch, scale_list=self.scale, tonic_pitch=self.tonic)
-        # If pattern_length is specified, extend the degrees to match the pattern length
-        extended_degrees = self.degrees * (pattern_length // len(self.degrees) + 1) if pattern_length else self.degrees
-        arpeggio_midi = [self.scale[(scale_degree + degree) % len(self.scale)] for degree in extended_degrees]
-        return arpeggio_midi[:pattern_length]  # Trim the arpeggio to the pattern length if specified
 
 
 class Ornament(MusicTheoryConstants):
