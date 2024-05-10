@@ -1181,7 +1181,7 @@
    "metadata": {},
    "outputs": [],
    "source": [
-    "dj.conversion.convert(twinkle, to='music21').write('midi', 'twinkle_m21.mid') # with music21\n",
+    "dj.conversion.convert(twinkle, to='music21').write('midi', '_midi-output/twinkle_m21.mid') # with music21\n",
     "dj.conversion.convert(twinkle, to='pretty_midi').write('twinkle_pm.mid') # with pretty-midi"
    ]
   },

@@ -69,8 +69,11 @@ def get_pitch_from_degree(degree, scale_list, tonic_pitch):
         # Compute the pitch as the weighted average of the two pitches
         distance_to_upper = upper_index - pitch_index
         distance_to_lower = pitch_index - lower_index
-        upper_weight = 1 - distance_to_upper / (distance_to_upper + distance_to_lower)
-        lower_weight = 1 - distance_to_lower / (distance_to_upper + distance_to_lower)
+        if distance_to_upper + distance_to_lower == 0:
+            upper_weight = lower_weight = 0.5
+        else:
+            upper_weight = 1 - distance_to_upper / (distance_to_upper + distance_to_lower)
+            lower_weight = 1 - distance_to_lower / (distance_to_upper + distance_to_lower)
         pitch = upper_pitch * upper_weight + lower_pitch * lower_weight
 
     return pitch
@@ -265,22 +268,24 @@ def scale_list(numbers, to_min, to_max, min_numbers=None, max_numbers=None):
         min_numbers = min(numbers)
     if max_numbers is None:
         max_numbers = max(numbers)
+    if min_numbers == max_numbers:
+        return [(min_numbers + max_numbers) / 2] * len(numbers)
+    else:
+        return [(num - min_numbers) * (to_max - to_min) / (max_numbers - min_numbers) + to_min for num in numbers]
 
-    return [(num - min_numbers) * (to_max - to_min) / (max_numbers - min_numbers) + to_min for num in numbers]
 
-
-def offset_list_of_notes(list, by):
+def offset_track(track, by):
     """
     Offset the notes in a list by a given amount.
 
     Args:
-        list (list): List of notes to offset.
+        track (list): List of notes to offset.
         by (float): Amount to offset the notes.
 
     Returns:
         list: List of notes with adjusted offsets.
     """
-    return [(pitch, duration, offset + by) for pitch, duration, offset in list]
+    return [(pitch, duration, offset + by) for pitch, duration, offset in track]
 
 
 def quantize_notes(notes, measure_length, time_resolution):
@@ -318,11 +323,14 @@ def find_closest_pitch_at_measure_start(notes, measure_length):
     Returns:
         list: A list of pitches, each representing the closest pitch at the start of a measure.
     """
+    # Filter out notes with None offset or pitch
+    notes = [note for note in notes if note[2] is not None and note[0] is not None]
+
     # Sort the notes by offset to ensure they are in order
     notes_sorted_by_offset = sorted(notes, key=lambda x: x[2])
 
     # Find the maximum offset to determine how many measures we have
-    max_offset = max(notes, key=lambda x: x[2])[2]
+    max_offset = max(notes_sorted_by_offset, key=lambda x: x[2])[2]
     num_measures = int(max_offset // measure_length) + 1
 
     closest_pitches = []

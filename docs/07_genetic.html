@@ -250,7 +250,7 @@ to be zero in offsets. The <code class="docutils literal notranslate"><span clas
 </div>
 <p>Upon the conclusion of the evolutionary cycles, it’s crucial to evaluate the transformed musical material.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p_final</span> <span class="o">=</span> <span class="p">[</span><span class="n">note</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">evolver</span><span class="o">.</span><span class="n">best_individuals</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
@@ -299,7 +299,7 @@ to be zero in offsets. The <code class="docutils literal notranslate"><span clas
 </div>
 <p>Although rhythmic got farther from the target, other indices got closer. Here our final piece!</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">galapagos_stars</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">quantize_notes</span><span class="p">(</span><span class="n">evolver</span><span class="o">.</span><span class="n">best_individuals</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">0.125</span><span class="p">)</span>
@@ -312,14 +312,14 @@ to be zero in offsets. The <code class="docutils literal notranslate"><span clas
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/07_genetic_22_0.png" class="no-scaled-link" src="_images/07_genetic_22_0.png" style="width: 697px; height: 51px;" />
+<img alt="_images/07_genetic_22_0.png" class="no-scaled-link" src="_images/07_genetic_22_0.png" style="width: 697px; height: 79px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv277"></div>
+<div id="midiPlayerDiv151"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -327,7 +327,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv277_play() {
+function midiPlayerDiv151_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -335,20 +335,20 @@ function midiPlayerDiv277_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv277");
-        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQACJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAAF0A/wMAAOAAQM5gkDtagZ1AgDsAAJBFWoGdQIBFAACQRVqBnUCARQAAkDtazmCAOwAAkEVagewggEUAAJA8WoGdQIA8AACQPFqBnUCAPAAAkDxagZ1AgDwAzmD/LwA=");
+        mp.addPlayer("#midiPlayerDiv151");
+        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQACJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAAE4A/wMAAOAAQM5gkDlazmCAOQAAkENazmCAQwAAkDlazmCAOQAAkDtazmCAOwAAkENagrsAgEMAAJA5Ws5ggDkAAJBAWs5ggEAAzmD/LwA=");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv277_play, 2000);
+    setTimeout(midiPlayerDiv151_play, 2000);
 } else {
-    midiPlayerDiv277_play();
+    midiPlayerDiv151_play();
 }
 </script></div>
 </div>
 <p>The result is quite boring. But seeing how pitches evolved grasps the underlying process.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">evolver</span><span class="o">.</span><span class="n">best_individuals</span><span class="p">)):</span>
@@ -361,7 +361,7 @@ if (typeof require === 'undefined') {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/07_genetic_24_0.png" class="no-scaled-link" src="_images/07_genetic_24_0.png" style="width: 543px; height: 413px;" />
+<img alt="_images/07_genetic_24_0.png" class="no-scaled-link" src="_images/07_genetic_24_0.png" style="width: 556px; height: 413px;" />
 </div>
 </div>
 <p>Through this structured evolutionary process, the <code class="docutils literal notranslate"><span class="pre">Darwin</span></code> class facilitates the generation of new and innovative musical compositions that evolve over time, guided by the principles of genetic variation, selection, and inheritance. The end result is a dynamic exploration of musical possibilities that extends beyond traditional composition techniques.</p>

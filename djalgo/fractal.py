@@ -326,10 +326,7 @@ class Mandelbrot:
         if ax is None:
             fig, ax = plt.subplots(figsize=figsize)
         fractal = self.generate_mandelbrot()
-        if zoom_rect:
-            extent = (self.x_range[0], self.x_range[1], self.y_range[0], self.y_range[1])
-        else:
-            extent = None
+        extent = (self.x_range[0], self.x_range[1], self.y_range[0], self.y_range[1])
         if zoom_rect and show_numbers:
             warnings.warn("Both zoom rectangle and showing numbers are enabled. Numbers are hidden.", UserWarning)
         im = ax.imshow(
