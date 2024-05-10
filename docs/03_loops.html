@@ -41,7 +41,7 @@
 <h1>3. Loops<a class="headerlink" href="#3.-Loops" title="Link to this heading">¶</a></h1>
 <p>Let’s delve into a technique centred around numbers, but essentially visual, steering clear of mathematical functions. Multilevel rhythms in music and mathematics are about orchestrating beats, durations, and accents across various tiers or facets of a composition or sequence. These rhythmic patterns often manifest as polygons nestled within a circle, symbolizing the loop’s periodic nature. I’ve coined the term polyloops for these looping polygons (poly) to capture the essence of looping
 multiple shapes. Imagine a radar plot, as depicted in the next figure, that emits a beep each time a rotating line intersects a point on the circle’s perimeter. This setup allows us to: (1) introduce any number of points, (2) layer multiple polygons, each associated with a distinct instrument, (3) create triggered notes with tailored pitches and durations, and (4) adjust the rotation’s velocity to our liking.</p>
-<p><img alt="8387507220884e0c87b1d314ad70a0b3" src="_images/polyloops.svg" /></p>
+<p><img alt="1bbdbfd0acdd45718f5fede7fe962abc" src="_images/polyloops.svg" /></p>
 <p>In Djalgo, we represent each polyloop as a track, i.e. a list of note tuples, each tuple being a note defined as (pitch, duration, offset). A first polyloop might cover the basic rhythmic pattern of a loop. A second, as another layer of rhythms, and a third that leans towards the melodic side. The latter polyloop could incorporate varying pitches, adding a melodic layer to our rhythmic foundation. By carefully selecting the timing, we can craft a composition that not only has rhythmic interest
 but also melodic movement.</p>
 <div class="nbinput nblast docutils container">
@@ -103,7 +103,7 @@ but also melodic movement.</p>
 </pre></div>
 </div>
 </div>
-<p><img alt="9be74f9ec6024ddd91dbcca5bcca7a23" src="_images/pl1.png" /></p>
+<p><img alt="5dd3b2473dc641528aaeb223cc62da03" src="_images/pl1.png" /></p>
 <p>The plot show the structure of the loop in terms of durations and offsets. The pitch information is purposely excluded to simplify the visualization and prevent the plot from becoming too cluttered. The polyloops are displayed starting from the innermost loop, featuring the shortest radius, progressing outward to the final loop according to the order of the list in the <code class="docutils literal notranslate"><span class="pre">polyloops</span></code> argument. Each loop’s shape is delineated by a polygon to represent its structure. For instance, polyloop 0, which
 initiates four notes, forms a polygon that appears as a square. Since the four segments are equal, this loop is said to be <em>Euclidean</em>. The durations are depicted by arcs, with tiny radial marks denoting the start of the arc and its conclusion. Upon closer inspection, you might notice that some arcs appear darker than others. This indicates moments where one note sustains as the next begins. While this overlap is intentional, it’s worth noting that traditional western music notation sometimes
 struggles to accurately represent such overlapping notes. We might correct that manually. I’d also like to make polyloop0 to be less Euclidean.</p>
@@ -230,7 +230,7 @@ struggles to accurately represent such overlapping notes. We might correct that 
 </pre></div>
 </div>
 </div>
-<p><img alt="b2ea9121b28848169429098ae2b3ccaf" src="_images/pl2.png" /></p>
+<p><img alt="2bd309c3f11d4599ad8355cf8fb16b1a" src="_images/pl2.png" /></p>
 <p>The following code block uses another approach for stacking loops. Instead of appending new notes to the Polyloop object as we did earlier, the stacking is done with Music21. Notice how the key signature and tempo are stacked horizontally in parts before measures are themselves stacking horizontally, and how parts are stacking vertically in a score. The first polyloop had a measure length of 4, and was repeated 6 times. The second has a measure length of 6, so it must be repeated 4 times to have
 de same length.</p>
 <div class="nbinput docutils container">
@@ -308,7 +308,7 @@ if (typeof require === 'undefined') {
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pl_score</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;midi&#39;</span><span class="p">,</span> <span class="s1">&#39;_output/polyloop.mid&#39;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pl_score</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;midi&#39;</span><span class="p">,</span> <span class="s1">&#39;_midi-output/polyloop.mid&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -421,7 +421,7 @@ Equal:    0.0
 </pre></div>
 </div>
 </div>
-<p><img alt="71cb519aa1684479a22900dceda8f460" src="_images/gini.png" /></p>
+<p><img alt="52d2bdba44684010962dbc3c0c61c0f7" src="_images/gini.png" /></p>
 </section>
 <section id="Balance">
 <h2>Balance<a class="headerlink" href="#Balance" title="Link to this heading">¶</a></h2>
@@ -472,7 +472,7 @@ rhythm being centrally located. The mathematical condition for perfect balance i
 </pre></div>
 </div>
 </div>
-<p><img alt="06e2ca6b14d046bf8bbca5d828dc938c" src="_images/balance.png" /></p>
+<p><img alt="d125b1d9d3924afba395e03e02727c35" src="_images/balance.png" /></p>
 <p>When designing polyloops, lower levels (the first ones) are characterized by lower pitches, with darker (warmer) timbres (which are richer in low pitches) and more regular. Going higher is level (last polyloops), pitches become higher, timbres become brighter, and beats become less well-formed.</p>
 <p>The design helpers are not made to reach equality and balance. They are made to reach a desired approximation for indices. As a composer, you may desire to have imbalance and inequality, for wilder music, but balance and equality for more predictable parts.</p>
 <p>↳ <a class="reference external" href="04_minimalism.html">Minimalism</a></p>

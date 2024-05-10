@@ -42,7 +42,7 @@
 <p>The Djalgo package includes well-known minimalistic mathematical operations on notes to create no less rich musical scores. We will cover and merge two kinds of minimalistic operations: deterministic, where the outputs are consistently determined by the inputs, and stochastic, where we induce randomness. Of course, deterministic composition can be mixed with randomness. We would then refer to generative composition. In this section, I explain how to compose minimalistic, but powerful music with
 Djalgo.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">djalgo</span> <span class="k">as</span> <span class="nn">dj</span>
@@ -57,7 +57,7 @@ Djalgo.</p>
 <section id="Example">
 <h3>Example<a class="headerlink" href="#Example" title="Link to this heading">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pitches_cmajor</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">harmony</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">tonic</span><span class="o">=</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">()[</span><span class="mi">35</span><span class="p">:</span><span class="mi">43</span><span class="p">]</span>
@@ -71,12 +71,12 @@ Djalgo.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/04_minimalism_5_0.png" class="no-scaled-link" src="_images/04_minimalism_5_0.png" style="width: 697px; height: 49px;" />
+<img alt="_images/04_minimalism_5_0.png" class="no-scaled-link" src="_images/04_minimalism_5_0.png" style="width: 697px; height: 68px;" />
 </div>
 </div>
 <p>If the lengths are not factors to each other, the score will expand with interesting patterns.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">durations</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">8</span>
@@ -89,7 +89,7 @@ Djalgo.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/04_minimalism_7_0.png" class="no-scaled-link" src="_images/04_minimalism_7_0.png" style="width: 697px; height: 49px;" />
+<img alt="_images/04_minimalism_7_0.png" class="no-scaled-link" src="_images/04_minimalism_7_0.png" style="width: 697px; height: 69px;" />
 </div>
 </div>
 </section>
@@ -97,7 +97,7 @@ Djalgo.</p>
 <h3>Composition<a class="headerlink" href="#Composition" title="Link to this heading">¶</a></h3>
 <p>I use to name my objects as <code class="docutils literal notranslate"><span class="pre">track1a_</span></code> for the first (<code class="docutils literal notranslate"><span class="pre">a</span></code>) part of track <code class="docutils literal notranslate"><span class="pre">1</span></code>, then the description of the object after the underscore <code class="docutils literal notranslate"><span class="pre">_</span></code>. This helps me organizing my composition. Because the lenght of the note list (6 items) differs from that of durations (10 items), and durations sum to 8 with the default time signature, each measure will contain the same durations, but with different notes, providing interesting evolving patterns. In the plan, I aimed to create a melody in E major.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">track1a_p</span> <span class="o">=</span> <span class="p">[</span><span class="mi">68</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">73</span><span class="p">]</span> <span class="c1"># _p for pitch, 30 items in E major</span>
@@ -112,14 +112,14 @@ Djalgo.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/04_minimalism_9_0.png" class="no-scaled-link" src="_images/04_minimalism_9_0.png" style="width: 732px; height: 239px;" />
+<img alt="_images/04_minimalism_9_0.png" class="no-scaled-link" src="_images/04_minimalism_9_0.png" style="width: 732px; height: 258px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv34091"></div>
+<div id="midiPlayerDiv755"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -127,7 +127,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv34091_play() {
+function midiPlayerDiv755_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -135,14 +135,14 @@ function midiPlayerDiv34091_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv34091");
+        mp.addPlayer("#midiPlayerDiv755");
         mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQACJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAAR8A/wMAAOAAQM5gkERazmCARAAAkEBapzCAQAAAkEdak1iARwAAkEVapzCARQAAkEtazmCASwAAkElauwiASQAAkERapzCARAAAkEBapzCAQAAAkEdazmCARwAAkEVagZ1AgEUAAJBLWs5ggEsAAJBJWqcwgEkAAJBEWpNYgEQAAJBAWqcwgEAAAJBHWs5ggEcAAJBFWrsIgEUAAJBLWqcwgEsAAJBJWqcwgEkAAJBEWs5ggEQAAJBAWoGdQIBAAACQR1rOYIBHAACQRVqnMIBFAACQS1qTWIBLAACQSVqnMIBJAACQRFrOYIBEAACQQFq7CIBAAACQR1qnMIBHAACQRVqnMIBFAACQS1rOYIBLAACQSVqBnUCASQDOYP8vAA==");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv34091_play, 2000);
+    setTimeout(midiPlayerDiv755_play, 2000);
 } else {
-    midiPlayerDiv34091_play();
+    midiPlayerDiv755_play();
 }
 </script></div>
 </div>
@@ -165,7 +165,7 @@ C4, D4, E4, F4, G4, A4, B4, C5
 </pre></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">af_process</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">minimalism</span><span class="o">.</span><span class="n">Minimalism</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">operation</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;forward&#39;</span><span class="p">)</span>
@@ -177,7 +177,7 @@ C4, D4, E4, F4, G4, A4, B4, C5
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/04_minimalism_13_0.png" class="no-scaled-link" src="_images/04_minimalism_13_0.png" style="width: 732px; height: 238px;" />
+<img alt="_images/04_minimalism_13_0.png" class="no-scaled-link" src="_images/04_minimalism_13_0.png" style="width: 732px; height: 262px;" />
 </div>
 </div>
 <p>The <strong>additive backward process</strong> grows from the end of the melody and iteratively adds the previous one.</p>
@@ -192,7 +192,7 @@ C4, D4, E4, F4, G4, A4, B4, C5
 </pre></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ab_process</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">minimalism</span><span class="o">.</span><span class="n">Minimalism</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">operation</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;backward&#39;</span><span class="p">)</span>
@@ -204,7 +204,7 @@ C4, D4, E4, F4, G4, A4, B4, C5
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/04_minimalism_15_0.png" class="no-scaled-link" src="_images/04_minimalism_15_0.png" style="width: 732px; height: 238px;" />
+<img alt="_images/04_minimalism_15_0.png" class="no-scaled-link" src="_images/04_minimalism_15_0.png" style="width: 732px; height: 262px;" />
 </div>
 </div>
 <p>Subtractive processes inverse the triangles I presented. The <strong>subtractive forward process</strong> plays the whole melody then iteratively removes the <strong>first</strong> note.</p>
@@ -219,7 +219,7 @@ C5
 </pre></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sf_process</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">minimalism</span><span class="o">.</span><span class="n">Minimalism</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">operation</span><span class="o">=</span><span class="s1">&#39;subtractive&#39;</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;forward&#39;</span><span class="p">)</span>
@@ -232,7 +232,7 @@ C5
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/04_minimalism_17_0.png" class="no-scaled-link" src="_images/04_minimalism_17_0.png" style="width: 732px; height: 238px;" />
+<img alt="_images/04_minimalism_17_0.png" class="no-scaled-link" src="_images/04_minimalism_17_0.png" style="width: 732px; height: 258px;" />
 </div>
 </div>
 <p>The <strong>subtractive backward process</strong> plays the whole melody then iteratively removes the <strong>last</strong> note.</p>
@@ -247,7 +247,7 @@ C4
 </pre></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sf_process</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">minimalism</span><span class="o">.</span><span class="n">Minimalism</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">operation</span><span class="o">=</span><span class="s1">&#39;subtractive&#39;</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;forward&#39;</span><span class="p">)</span>
@@ -260,7 +260,7 @@ C4
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/04_minimalism_19_0.png" class="no-scaled-link" src="_images/04_minimalism_19_0.png" style="width: 732px; height: 238px;" />
+<img alt="_images/04_minimalism_19_0.png" class="no-scaled-link" src="_images/04_minimalism_19_0.png" style="width: 732px; height: 258px;" />
 </div>
 </div>
 <p>There are four other use cases involving inward and outward directions in additive and subtracting processes, as well as an option for repetitions, which are covered in the API of the <a class="reference external" href="api.html#djalgo.minimalism.Minimalism">minimalism module of Djalgo</a>. While the outcome of additive and subtractive processes is predictible for simple melodies, complex melodies can expand or shrink to intersting patterns. Unless you have a precise mathematical framework in mind, my suggestion is to empirically
@@ -271,7 +271,7 @@ try combinaisions of processes and arguments that sound good to your ears, then 
 <h3>Composition<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
 <p>I planned to append an additive and a subtractive process to track 1, in E minor. Let’s first create a melody.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
@@ -289,7 +289,7 @@ try combinaisions of processes and arguments that sound good to your ears, then 
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">base_pitches</span> <span class="o">=</span> <span class="p">[</span><span class="mi">71</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">83</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">63</span><span class="p">]</span> <span class="c1"># 8 notes in E minor</span>
@@ -303,12 +303,12 @@ try combinaisions of processes and arguments that sound good to your ears, then 
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/04_minimalism_23_0.png" class="no-scaled-link" src="_images/04_minimalism_23_0.png" style="width: 697px; height: 62px;" />
+<img alt="_images/04_minimalism_23_0.png" class="no-scaled-link" src="_images/04_minimalism_23_0.png" style="width: 697px; height: 68px;" />
 </div>
 </div>
 <p>I use an additive forward process and a subtractive backward process. But I prefer to keep durations steady instead of hardly attaching durations to notes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">track1b_n</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">minimalism</span><span class="o">.</span><span class="n">Minimalism</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span><span class="n">operation</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;forward&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">track1b_base</span><span class="p">)</span>
@@ -333,14 +333,14 @@ try combinaisions of processes and arguments that sound good to your ears, then 
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/04_minimalism_25_0.png" class="no-scaled-link" src="_images/04_minimalism_25_0.png" style="width: 732px; height: 541px;" />
+<img alt="_images/04_minimalism_25_0.png" class="no-scaled-link" src="_images/04_minimalism_25_0.png" style="width: 732px; height: 544px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv37511"></div>
+<div id="midiPlayerDiv3264"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -348,7 +348,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv37511_play() {
+function midiPlayerDiv3264_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -356,14 +356,14 @@ function midiPlayerDiv37511_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv37511");
+        mp.addPlayer("#midiPlayerDiv3264");
         mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQACJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAAqgA/wMAAOAAQM5gkEda9hCARwAAkEdak1iARwAAkEBagbEYgEAAAJBHWs5ggEcAAJBAWpNYgEAAAJBQWpNYgFAAAJBHWqcwgEcAAJBAWoGdQIBAAACQUFr2EIBQAACQSVqTWIBJAACQR1qBsRiARwAAkEBazmCAQAAAkFBak1iAUAAAkElak1iASQAAkFVapzCAVQAAkEdagZ1AgEcAAJBAWvYQgEAAAJBQWpNYgFAAAJBJWoGxGIBJAACQVVrOYIBVAACQU1qTWIBTAACQR1qTWIBHAACQQFqnMIBAAACQUFqBnUCAUAAAkEla9hCASQAAkFVak1iAVQAAkFNagbEYgFMAAJBOWs5ggE4AAJBHWpNYgEcAAJBAWpNYgEAAAJBQWqcwgFAAAJBJWoGdQIBJAACQVVr2EIBVAACQU1qTWIBTAACQTlqBsRiATgAAkD9azmCAPwAAkEdak1iARwAAkEBak1iAQAAAkFBapzCAUAAAkElagZ1AgEkAAJBVWvYQgFUAAJBTWpNYgFMAAJBOWoGxGIBOAACQP1rOYIA/AACQQFqTWIBAAACQUFqTWIBQAACQSVqnMIBJAACQVVqBnUCAVQAAkFNa9hCAUwAAkE5ak1iATgAAkD9agbEYgD8AAJBQWs5ggFAAAJBJWpNYgEkAAJBVWpNYgFUAAJBTWqcwgFMAAJBOWoGdQIBOAACQP1r2EIA/AACQSVqTWIBJAACQVVqBsRiAVQAAkFNazmCAUwAAkE5ak1iATgAAkD9ak1iAPwAAkFVapzCAVQAAkFNagZ1AgFMAAJBOWvYQgE4AAJA/WpNYgD8AAJBTWoGxGIBTAACQTlrOYIBOAACQP1qTWIA/AACQTlqTWIBOAACQP1qnMIA/AACQP1qBnUCAPwDOYP8vAA==");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv37511_play, 2000);
+    setTimeout(midiPlayerDiv3264_play, 2000);
 } else {
-    midiPlayerDiv37511_play();
+    midiPlayerDiv3264_play();
 }
 </script></div>
 </div>
@@ -377,7 +377,7 @@ if (typeof require === 'undefined') {
 <h3>Example<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
 <p>I create a function that extracts the pitches, shuffles them, then assembles them again in a new list. Just like the <code class="docutils literal notranslate"><span class="pre">.append()</span></code> method, <code class="docutils literal notranslate"><span class="pre">random.shuffle()</span></code> is done <em>in place</em> (in place means that the object is modified by the applied method - assigning inplace methods to a new variable will likely cause an error). I use a seed number so that each time I run the random process, I obtain the exact same result.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[62]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">4698801</span><span class="p">)</span>
@@ -397,7 +397,7 @@ if (typeof require === 'undefined') {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/04_minimalism_28_0.png" class="no-scaled-link" src="_images/04_minimalism_28_0.png" style="width: 697px; height: 49px;" />
+<img alt="_images/04_minimalism_28_0.png" class="no-scaled-link" src="_images/04_minimalism_28_0.png" style="width: 697px; height: 68px;" />
 </div>
 </div>
 </section>
@@ -405,7 +405,7 @@ if (typeof require === 'undefined') {
 <h3>Composition<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
 <p>I use shuffling here to give a sence of completion after the additive / subtractive processes, by randomly moving the notes a <code class="docutils literal notranslate"><span class="pre">track1a_m</span></code>. I changed the seed until I obtain something I like.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">38745638</span><span class="p">)</span>
@@ -419,14 +419,14 @@ if (typeof require === 'undefined') {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/04_minimalism_30_0.png" class="no-scaled-link" src="_images/04_minimalism_30_0.png" style="width: 732px; height: 248px;" />
+<img alt="_images/04_minimalism_30_0.png" class="no-scaled-link" src="_images/04_minimalism_30_0.png" style="width: 732px; height: 258px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv38370"></div>
+<div id="midiPlayerDiv3788"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -434,7 +434,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv38370_play() {
+function midiPlayerDiv3788_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -442,14 +442,14 @@ function midiPlayerDiv38370_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv38370");
+        mp.addPlayer("#midiPlayerDiv3788");
         mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQACJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAAR8A/wMAAOAAQM5gkERazmCARAAAkEtapzCASwAAkERak1iARAAAkEVapzCARQAAkElazmCASQAAkEBauwiAQAAAkERapzCARAAAkEVapzCARQAAkEtazmCASwAAkEVagZ1AgEUAAJBAWs5ggEAAAJBEWqcwgEQAAJBAWpNYgEAAAJBFWqcwgEUAAJBLWs5ggEsAAJBHWrsIgEcAAJBJWqcwgEkAAJBHWqcwgEcAAJBHWs5ggEcAAJBJWoGdQIBJAACQR1rOYIBHAACQSVqnMIBJAACQS1qTWIBLAACQQFqnMIBAAACQQFrOYIBAAACQRVq7CIBFAACQRFqnMIBEAACQS1qnMIBLAACQR1rOYIBHAACQSVqBnUCASQDOYP8vAA==");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv38370_play, 2000);
+    setTimeout(midiPlayerDiv3788_play, 2000);
 } else {
-    midiPlayerDiv38370_play();
+    midiPlayerDiv3788_play();
 }
 </script></div>
 </div>
@@ -466,7 +466,7 @@ Tintinnabuli Python object, for each note in the <em>m-voice</em>, the <em>t-voi
 <p>For instance, I define the t-chord of my t-voice as a C major triad C, E G, I set direction to “up” and the rank to 1. The first note of my melody (m-voice) is a C4. Can you guess the t-voice? You go up from the C4, the next in your chord is E. But you chose position 2, so you look for the next, G. And it will be a G4 since you went up from the C4.</p>
 <p>Let’s try the same t-voice properties on a simple monotonic C scale as the m-voice.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m_voice</span> <span class="o">=</span> <span class="n">solfege</span>
@@ -481,7 +481,7 @@ Tintinnabuli Python object, for each note in the <em>m-voice</em>, the <em>t-voi
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/04_minimalism_33_0.png" class="no-scaled-link" src="_images/04_minimalism_33_0.png" style="width: 697px; height: 142px;" />
+<img alt="_images/04_minimalism_33_0.png" class="no-scaled-link" src="_images/04_minimalism_33_0.png" style="width: 697px; height: 182px;" />
 </div>
 </div>
 <p>While the m-voice grows continuously, the t-voice grows more stepwise. See how the t-voice is restricted to the notes we set in <code class="docutils literal notranslate"><span class="pre">t_chord</span> <span class="pre">=</span> <span class="pre">[64,</span> <span class="pre">68,</span> <span class="pre">71]</span></code>. You can choose any chord and position and going up with <code class="docutils literal notranslate"><span class="pre">direction</span> <span class="pre">=</span> <span class="pre">&quot;up&quot;</span></code> or down with <code class="docutils literal notranslate"><span class="pre">direction</span> <span class="pre">=</span> <span class="pre">&quot;down&quot;</span></code>. Djalgo even allows alternating between up and down with <code class="docutils literal notranslate"><span class="pre">&quot;alternate&quot;</span></code> or to the nearest on <code class="docutils literal notranslate"><span class="pre">&quot;any&quot;</span></code> direction.</p>
@@ -490,7 +490,7 @@ Tintinnabuli Python object, for each note in the <em>m-voice</em>, the <em>t-voi
 <h3>Composition<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
 <p>I will add t-voices to track 1 as the m-voice. I’ll add an up t-voice on a E major triad on position 1 for <code class="docutils literal notranslate"><span class="pre">track1a_m</span></code>. For <code class="docutils literal notranslate"><span class="pre">track1b_m</span></code> the t-voice will be down at rank 1 on E minor triad and augmented 7th. And for the <em>c</em> part, let’s be fancy and use an up alternate on E major augmented 7th with rank 2 while increasing the pitch to a full octave (perfect 8).</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">track2a_n</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">minimalism</span><span class="o">.</span><span class="n">Minimalism</span><span class="o">.</span><span class="n">Tintinnabuli</span><span class="p">(</span>
@@ -510,7 +510,7 @@ Tintinnabuli Python object, for each note in the <em>m-voice</em>, the <em>t-voi
 </div>
 <p>Before assembling the a, b and c parts of the tracks, I need to correct the offset since <code class="docutils literal notranslate"><span class="pre">track1a_n</span></code> ends at 24 <code class="docutils literal notranslate"><span class="pre">track1b_n</span></code> starts at zero.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[66]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Track 1a&#39;</span><span class="p">,</span> <span class="n">track1a_n</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">:])</span>
@@ -534,7 +534,7 @@ Track 1c [(68, 1, 0), (75, 0.5, 1), (68, 0.25, 1.5), (69, 0.5, 1.75), (73, 1, 2.
 </div>
 <p>In fact, I want <code class="docutils literal notranslate"><span class="pre">track1b_n</span></code> to start at 48 and <code class="docutils literal notranslate"><span class="pre">track1c_n</span></code> to start at 48+36. I will fix this in the next cell.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[67]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">track1b_n</span> <span class="o">=</span> <span class="p">[(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">offset</span> <span class="o">+</span> <span class="mi">24</span><span class="p">)</span> <span class="k">for</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">offset</span> <span class="ow">in</span> <span class="n">track1b_n</span><span class="p">]</span>
@@ -547,7 +547,7 @@ Track 1c [(68, 1, 0), (75, 0.5, 1), (68, 0.25, 1.5), (69, 0.5, 1.75), (73, 1, 2.
 </div>
 <p>The following block creates the tracks, then assembles them together.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[68]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">track1</span> <span class="o">=</span> <span class="n">track1a_n</span> <span class="o">+</span> <span class="n">track1b_n</span> <span class="o">+</span> <span class="n">track1c_n</span>
@@ -560,7 +560,7 @@ Track 1c [(68, 1, 0), (75, 0.5, 1), (68, 0.25, 1.5), (69, 0.5, 1.75), (73, 1, 2.
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv42215"></div>
+<div id="midiPlayerDiv5332"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -568,7 +568,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv42215_play() {
+function midiPlayerDiv5332_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -576,20 +576,20 @@ function midiPlayerDiv42215_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv42215");
-        mp.base64Load("data:audio/midi;base64,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");
+        mp.addPlayer("#midiPlayerDiv5332");
+        mp.base64Load("data:audio/midi;base64,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");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv42215_play, 2000);
+    setTimeout(midiPlayerDiv5332_play, 2000);
 } else {
-    midiPlayerDiv42215_play();
+    midiPlayerDiv5332_play();
 }
 </script></div>
 </div>
 <p>The music still sounds quite dull because the t-voice is always played at the same time steps as the m-voice. Let’s be a bit innovative here and offset the t-voice by a quarter length, on part <em>b</em> only.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[69]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">track2b_offset</span> <span class="o">=</span> <span class="p">[(</span><span class="n">note</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">note</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">note</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">track2b_n</span><span class="p">]</span>
@@ -602,7 +602,7 @@ if (typeof require === 'undefined') {
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv45833"></div>
+<div id="midiPlayerDiv6674"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -610,7 +610,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv45833_play() {
+function midiPlayerDiv6674_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -618,14 +618,14 @@ function midiPlayerDiv45833_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv45833");
-        mp.base64Load("data:audio/midi;base64,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");
+        mp.addPlayer("#midiPlayerDiv6674");
+        mp.base64Load("data:audio/midi;base64,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");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv45833_play, 2000);
+    setTimeout(midiPlayerDiv6674_play, 2000);
 } else {
-    midiPlayerDiv45833_play();
+    midiPlayerDiv6674_play();
 }
 </script></div>
 </div>
@@ -640,7 +640,7 @@ second part of the split.</p>
 <h3>Example<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
 <p>For the example, I will alter the durations of the solfege. I’ll make a copy of it to avoid altering my initial object.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[70]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">solfege_alterdur</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">rhythm</span><span class="o">.</span><span class="n">isorhythm</span><span class="p">(</span><span class="n">pitches</span><span class="o">=</span><span class="p">[</span><span class="n">pitch</span> <span class="k">for</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">solfege</span><span class="p">],</span> <span class="n">durations</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
@@ -652,12 +652,12 @@ second part of the split.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/04_minimalism_47_0.png" class="no-scaled-link" src="_images/04_minimalism_47_0.png" style="width: 697px; height: 49px;" />
+<img alt="_images/04_minimalism_47_0.png" class="no-scaled-link" src="_images/04_minimalism_47_0.png" style="width: 697px; height: 68px;" />
 </div>
 </div>
 <p>A utility function cuts the measures, grabs the first note then spit out the note with the length of the measure. To dynamically create the adequate number of notes at the beginning of each measure, I computed the number of measures of the <code class="docutils literal notranslate"><span class="pre">solfege_alterdur</span></code> track, given the length of each measure.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[71]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span> <span class="c1"># to compute the rounded to up, i.e. ceiling, math.ceil</span>
@@ -675,12 +675,12 @@ second part of the split.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/04_minimalism_49_0.png" class="no-scaled-link" src="_images/04_minimalism_49_0.png" style="width: 150px; height: 49px;" />
+<img alt="_images/04_minimalism_49_0.png" class="no-scaled-link" src="_images/04_minimalism_49_0.png" style="width: 150px; height: 68px;" />
 </div>
 </div>
 <p>Voicing was introduced in the <a class="reference external" href="02_harmony.html">Pythonic Harmonies</a> section.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[72]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">voice</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">harmony</span><span class="o">.</span><span class="n">Voice</span><span class="p">(</span>
@@ -697,7 +697,7 @@ second part of the split.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/04_minimalism_51_0.png" class="no-scaled-link" src="_images/04_minimalism_51_0.png" style="width: 697px; height: 142px;" />
+<img alt="_images/04_minimalism_51_0.png" class="no-scaled-link" src="_images/04_minimalism_51_0.png" style="width: 697px; height: 182px;" />
 </div>
 </div>
 </section>
@@ -706,7 +706,7 @@ second part of the split.</p>
 <p>I created chords for each first notes of the whole track 1, then lower the pitch to an octave (pecfect 8). Because I want major chords on <em>a</em>, minor chords on <em>b</em> and back to major on <em>c</em>, I will split the operations in three parts. Note that this is not how music theory really works, and some of the chords will sound dissonant. But I’m fine with some dissonance for this piece, so let this question simmer. Because in my previous operations the tracks are in fact streams of streams, I used the
 <code class="docutils literal notranslate"><span class="pre">.flatten()</span></code> method, which remove a hierarchical level in streams.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[73]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">measure_length</span> <span class="o">=</span> <span class="mi">4</span>
@@ -731,7 +731,7 @@ second part of the split.</p>
 <div><p>The <code class="docutils literal notranslate"><span class="pre">.show()</span></code> method caused an error that I’m not sure how to handle.</p>
 </div></blockquote>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[74]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">max_offset</span> <span class="o">=</span> <span class="mi">30</span>
@@ -750,7 +750,7 @@ second part of the split.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv47845"></div>
+<div id="midiPlayerDiv7528"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -758,7 +758,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv47845_play() {
+function midiPlayerDiv7528_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -766,29 +766,29 @@ function midiPlayerDiv47845_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv47845");
-        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQAEJ2BNVHJrAAAAFAD/UQMHoSAA/1gEBAIYCM5g/y8ATVRyawAAAZYA/wMAAOAAQM5gkERazmCARAAAkEBapzCAQAAAkEdak1iARwAAkEVapzCARQAAkEtazmCASwAAkElauwiASQAAkERapzCARAAAkEBapzCAQAAAkEdazmCARwAAkEVagZ1AgEUAAJBLWs5ggEsAAJBJWqcwgEkAAJBEWpNYgEQAAJBAWqcwgEAAAJBHWs5ggEcAAJBFWrsIgEUAAJBLWqcwgEsAAJBJWqcwgEkAAJBEWs5ggEQAAJBAWoGdQIBAAACQR1rOYIBHAACQRVqnMIBFAACQS1qTWIBLAACQSVqnMIBJAACQRFrOYIBEAACQQFq7CIBAAACQR1qnMIBHAACQRVqnMIBFAACQS1rOYIBLAACQSVqBnUCASQAAkEda9hCARwAAkEda9hCARwAAkEBak1iAQAAAkEda9hCARwAAkEBak1iAQAAAkFBagbEYgFAAAJBHWvYQgEcAAJBAWpNYgEAAAJBQWoGxGIBQAACQSVrOYIBJAACQVVqTWIBVAACQU1qTWIBTAACQTlqnMIBOAM5g/y8ATVRyawAAAXEA/wMAAOAAQM5gkERazmCARAAAkEBapzCAQAAAkEdak1iARwAAkEdapzCARwAAkEdazmCARwAAkEdauwiARwAAkERapzCARAAAkEBapzCAQAAAkEdazmCARwAAkEdagZ1AgEcAAJBHWs5ggEcAAJBHWqcwgEcAAJBEWpNYgEQAAJBAWqcwgEAAAJBHWs5ggEcAAJBHWrsIgEcAAJBHWqcwgEcAAJBHWqcwgEcAAJBEWs5ggEQAAJBAWoGdQIBAAACQR1rOYIBHAACQR1qnMIBHAACQR1qTWIBHAACQR1qnMIBHAACQRFrOYIBEAACQQFq7CIBAAACQR1qnMIBHAACQR1qnMIBHAACQR1rOYIBHAACQR1qBnUCARwAAkENa9hCAQwAAkENa9hCAQwAAkEBak1iAQAAAkENa9hCAQwAAkEBak1iAQAAAkENa9hCAQwAAkEBak1iAQAAAkEdagbEYgEcAAJBDWs5ggEMAzmD/LwBNVHJrAAACSgD/AwAA4ABAzmCQRFoAkEdaAJBLWoK7AIBEAACARwAAgEsAAJBEWgCQR1oAkEtagrsAgEQAAIBHAACASwAAkEtaAJBOWgCQUVqCuwCASwAAgE4AAIBRAACQS1oAkE5aAJBRWoK7AIBLAACATgAAgFEAAJBHWgCQS1oAkE5agrsAgEcAAIBLAACATgAAkEdaAJBLWgCQTlqCuwCARwAAgEsAAIBOAACQR1oAkEpaAJBOWoK7AIBHAACASgAAgE4AAJBKWgCQTloAkFFagrsAgEoAAIBOAACAUQAAkEBaAJBDWgCQR1qCuwCAQAAAgEMAAIBHAACQTloAkFFaAJBUWoK7AIBOAACAUQAAgFQAAJBRWgCQVFoAkFhagrsAgFEAAIBUAACAWAAAkFFaAJBUWgCQWFqCuwCAUQAAgFQAAIBYAACQR1oAkEpaAJBOWoK7AIBHAACASgAAgE4AAJBWWgCQWloAkF1agrsAgFYAAIBaAACAXQAAkERaAJBHWgCQS1qCuwCARAAAgEcAAIBLAACQRFoAkEdaAJBLWoK7AIBEAACARwAAgEsAAJBAWgCQRFoAkEdagrsAgEAAAIBEAACARwAAkElaAJBMWgCQUFqCuwCASQAAgEwAAIBQAACQR1oAkEtaAJBOWoK7AIBHAACASwAAgE4AAJBEWgCQR1oAkEtagrsAgEQAAIBHAACASwAAkERaAJBHWgCQS1qCuwCARAAAgEcAAIBLAACQRFoAkEdaAJBLWoK7AIBEAACARwAAgEsAzmD/LwA=");
+        mp.addPlayer("#midiPlayerDiv7528");
+        mp.base64Load("data:audio/midi;base64,TVRoZAAAAAYAAQAEJ2BNVHJrAAAAJgD/UQMHoSAA/1gEBAIYCJOceP9RAwehIJK6QP9RAwehIM5g/y8ATVRyawAAAZIA/wMAAOAAQM5gkERazmCARAAAkEBapzCAQAAAkEdak1iARwAAkEVapzCARQAAkEtazmCASwAAkElauwiASQAAkERapzCARAAAkEBapzCAQAAAkEdazmCARwAAkEVagZ1AgEUAAJBLWs5ggEsAAJBJWqcwgEkAAJBEWpNYgEQAAJBAWqcwgEAAAJBHWs5ggEcAAJBFWrsIgEUAAJBLWqcwgEsAAJBJWqcwgEkAAJBEWs5ggEQAAJBAWoGdQIBAAACQR1rOYIBHAACQRVqnMIBFAACQS1qTWIBLAACQSVqnMIBJAACQRFrOYIBEAACQQFq7CIBAAACQR1qnMIBHAACQRVqnMIBFAACQS1rOYIBLAACQSVqBnUCASQAAkEdaAJBHWvYQgEcAAIBHAACQR1oAkEBak1iAQAAAkFBa4jiARwAAkEBak1iAQAAAkEdauwiAUAAAkElauwiARwAAkEBak1iASQAAgEAAAJBQWgCQVVqTWIBVAACQU1qTWIBTAACQTlqnMIBOAOI4gFAAzmD/LwBNVHJrAAABbwD/AwAA4ABAzmCQRFrOYIBEAACQQFqnMIBAAACQR1qTWIBHAACQR1qnMIBHAACQR1rOYIBHAACQR1q7CIBHAACQRFqnMIBEAACQQFqnMIBAAACQR1rOYIBHAACQR1qBnUCARwAAkEdazmCARwAAkEdapzCARwAAkERak1iARAAAkEBapzCAQAAAkEdazmCARwAAkEdauwiARwAAkEdapzCARwAAkEdapzCARwAAkERazmCARAAAkEBagZ1AgEAAAJBHWs5ggEcAAJBHWqcwgEcAAJBHWpNYgEcAAJBHWqcwgEcAAJBEWs5ggEQAAJBAWrsIgEAAAJBHWqcwgEcAAJBHWqcwgEcAAJBHWs5ggEcAAJBHWoGdQIBHAM5gkENaAJBDWvYQgEMAAIBDAACQQ1oAkEBak1iAQAAAkEda4jiAQwAAkEBak1iAQAAAkENauwiARwAAkENauwiAQwAAkEBak1iAQwAAgEAAzmD/LwBNVHJrAAACLgD/AwAA4ABAzmCQRFoAkEdaAJBLWgCQR1oAkEpaAJBOWgCQRFoAkEdaAJBLWoK7AIBEAACARwAAgEsAAIBHAACASgAAgE4AAIBEAACARwAAgEsAAJBEWgCQR1oAkEtaAJBKWgCQTloAkFFaAJBEWgCQR1oAkEtagrsAgEQAAIBHAACASwAAgEoAAIBOAACAUQAAgEQAAIBHAACASwAAkEtaAJBOWgCQUVoAkEBaAJBDWgCQR1oAkEBaAJBEWgCQR1qCuwCASwAAgE4AAIBRAACAQAAAgEMAAIBHAACAQAAAgEQAAIBHAACQS1oAkE5aAJBRWgCQTloAkFFaAJBUWgCQSVoAkExaAJBQWoK7AIBLAACATgAAgFEAAIBOAACAUQAAgFQAAIBJAACATAAAgFAAAJBHWgCQS1oAkE5aAJBRWgCQVFoAkFhaAJBHWgCQS1oAkE5agrsAgEcAAIBLAACATgAAgFEAAIBUAACAWAAAgEcAAIBLAACATgAAkEdaAJBLWgCQTloAkFFaAJBUWgCQWFoAkERaAJBHWgCQS1qCuwCARwAAgEsAAIBOAACAUQAAgFQAAIBYAACARAAAgEcAAIBLAACQR1oAkEpaAJBOWgCQRFoAkEdaAJBLWoK7AIBHAACASgAAgE4AAIBEAACARwAAgEsAAJBWWgCQWloAkF1aAJBEWgCQR1oAkEtagrsAgFYAAIBaAACAXQAAgEQAAIBHAACASwDOYP8vAA==");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv47845_play, 2000);
+    setTimeout(midiPlayerDiv7528_play, 2000);
 } else {
-    midiPlayerDiv47845_play();
+    midiPlayerDiv7528_play();
 }
 </script></div>
 </div>
 <p>It’s kind of messy, but sounds pretty good to me! Since I’m satisfied with this piece, I export the tracks to the midi format in the aim of import them in my digital audio workstation (DAW).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[75]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># !mkdir music</span>
-<span class="n">dj</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">tracks</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s1">&#39;music21&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;midi&quot;</span><span class="p">,</span> <span class="n">fp</span> <span class="o">=</span> <span class="s2">&quot;music/minimalism_tracks.midi&quot;</span><span class="p">)</span>
+<span class="n">dj</span><span class="o">.</span><span class="n">conversion</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="n">tracks</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s1">&#39;music21&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;midi&quot;</span><span class="p">,</span> <span class="n">fp</span> <span class="o">=</span> <span class="s2">&quot;_midi-output/minimalism_tracks.midi&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[75]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
