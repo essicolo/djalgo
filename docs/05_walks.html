@@ -8,7 +8,7 @@
     <title>5. Walks &#8212; Djalgo 0.1-alpha documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
-    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
     <script src="_static/documentation_options.js?v=737112c1"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -787,7 +787,7 @@ if (typeof require === 'undefined') {
 </section>
 <section id="Celestial">
 <h2>Celestial<a class="headerlink" href="#Celestial" title="Link to this heading">¶</a></h2>
-<p><code class="docutils literal notranslate"><span class="pre">CelestialBody</span></code> and <code class="docutils literal notranslate"><span class="pre">SolarSystem</span></code> classes in the walk module simulates the distance and angles of celestials bodies in a solar system, given their orbital radius, orbital speed and the celestial body it is orbiting around. Let’s start by creating the smallest celestial body of our solar system.</p>
+<p><code class="docutils literal notranslate"><span class="pre">CelestialBody</span></code> and <code class="docutils literal notranslate"><span class="pre">SolarSystem</span></code> classes in the walk module simulates the distance and angles of celestials bodies in a solar system, given their orbital radius, orbital speed and the celestial body it is orbiting around. I created celestial walks after watching a <a class="reference external" href="https://www.youtube.com/watch?v=wn3td88w19E">video from Marc Evanstein</a>, who explained concepts of circular music. Let’s start by creating the smallest celestial body of our solar system.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
 </pre></div>
@@ -876,7 +876,7 @@ if (typeof require === 'undefined') {
 </section>
 <section id="Fibonacci">
 <h2>Fibonacci<a class="headerlink" href="#Fibonacci" title="Link to this heading">¶</a></h2>
-<p>In Djalgo, <code class="docutils literal notranslate"><span class="pre">dj.utils.fibonacci()</span></code> is not a walk <em>per se</em>, but an iterator. This means that calling <code class="docutils literal notranslate"><span class="pre">next</span></code> to it will return the next number of the sequence. An iterator is useful when it is usually used in a loop, as usually done with Fibonacci numbers. Don’t worry, iterators are quite easy to use.</p>
+<p>Just like celestial walks, I identified prospects of the Fibonacci sequence in music by watching <a class="reference external" href="https://www.youtube.com/watch?v=mE3r5E6794U">a video from Marc Evanstein</a>. In Djalgo, <code class="docutils literal notranslate"><span class="pre">dj.utils.fibonacci()</span></code> is not a walk <em>per se</em>, but an iterator. This means that calling <code class="docutils literal notranslate"><span class="pre">next</span></code> to it will return the next number of the sequence. An iterator is useful when it is usually used in a loop, as usually done with Fibonacci numbers. Don’t worry, iterators are quite easy to use.</p>
 <p>In the following code block, I instanciate the iterator to the name <code class="docutils literal notranslate"><span class="pre">fibonacci</span></code>, initiate a liste to store <em>degrees</em> (placement in a scale), then ask 30 times to add the next Fibonacci number to it.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:

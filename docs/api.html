@@ -285,124 +285,363 @@
 </dd></dl>
 
 <dl class="py class" id="module-djalgo.djai">
-<dt class="sig sig-object py" id="djalgo.djai.DataProcessor">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.djai.</span></span><span class="sig-name descname"><span class="pre">DataProcessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence_length_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequence_length_o</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_instruments</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_mins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_maxs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DataProcessor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DataProcessor" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="djalgo.djai.DataProcessor.compute_scaling_parameters">
-<span class="sig-name descname"><span class="pre">compute_scaling_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DataProcessor.compute_scaling_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DataProcessor.compute_scaling_parameters" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="djalgo.djai.GRUModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.djai.</span></span><span class="sig-name descname"><span class="pre">GRUModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nn_units</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#GRUModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.GRUModel" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Defines a GRU model for sequence generation.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.GRUModel.layers">
+<span class="sig-name descname"><span class="pre">layers</span></span><a class="headerlink" href="#djalgo.djai.GRUModel.layers" title="Link to this definition">¶</a></dt>
+<dd><p>List of GRU layers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.ModuleList</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.GRUModel.fc">
+<span class="sig-name descname"><span class="pre">fc</span></span><a class="headerlink" href="#djalgo.djai.GRUModel.fc" title="Link to this definition">¶</a></dt>
+<dd><p>Fully connected layer for output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Linear</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="djalgo.djai.DataProcessor.encode_instruments">
-<span class="sig-name descname"><span class="pre">encode_instruments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">part</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DataProcessor.encode_instruments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DataProcessor.encode_instruments" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="djalgo.djai.GRUModel.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#GRUModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.GRUModel.forward" title="Link to this definition">¶</a></dt>
+<dd><p>Defines the forward pass of the GRUModel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>torch.Tensor</em>) – Input tensor.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Output tensor.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="djalgo.djai.LSTMModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.djai.</span></span><span class="sig-name descname"><span class="pre">LSTMModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nn_units</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#LSTMModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.LSTMModel" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Defines an LSTM model for sequence generation.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.LSTMModel.layers">
+<span class="sig-name descname"><span class="pre">layers</span></span><a class="headerlink" href="#djalgo.djai.LSTMModel.layers" title="Link to this definition">¶</a></dt>
+<dd><p>List of LSTM layers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.ModuleList</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.LSTMModel.fc">
+<span class="sig-name descname"><span class="pre">fc</span></span><a class="headerlink" href="#djalgo.djai.LSTMModel.fc" title="Link to this definition">¶</a></dt>
+<dd><p>Fully connected layer for output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Linear</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="djalgo.djai.DataProcessor.extract_features">
-<span class="sig-name descname"><span class="pre">extract_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument_vector</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DataProcessor.extract_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DataProcessor.extract_features" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="djalgo.djai.DataProcessor.extract_features_rest">
-<span class="sig-name descname"><span class="pre">extract_features_rest</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">notes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrument_vector</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DataProcessor.extract_features_rest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DataProcessor.extract_features_rest" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="djalgo.djai.DataProcessor.midi_files_to_sequences">
-<span class="sig-name descname"><span class="pre">midi_files_to_sequences</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi_files</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DataProcessor.midi_files_to_sequences"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DataProcessor.midi_files_to_sequences" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="djalgo.djai.DataProcessor.prepare_data">
-<span class="sig-name descname"><span class="pre">prepare_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi_files</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DataProcessor.prepare_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DataProcessor.prepare_data" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="djalgo.djai.DataProcessor.scale_numerical_features">
-<span class="sig-name descname"><span class="pre">scale_numerical_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#DataProcessor.scale_numerical_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.DataProcessor.scale_numerical_features" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="djalgo.djai.LSTMModel.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#LSTMModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.LSTMModel.forward" title="Link to this definition">¶</a></dt>
+<dd><p>Defines the forward pass of the LSTMModel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>torch.Tensor</em>) – Input tensor.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Output tensor.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="djalgo.djai.ModelManager">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.djai.</span></span><span class="sig-name descname"><span class="pre">ModelManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence_length_i</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequence_length_o</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_instruments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'lstm'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_units</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.005</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_heads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#ModelManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.ModelManager" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.djai.</span></span><span class="sig-name descname"><span class="pre">ModelManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence_length_input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequence_length_output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nn_units</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_heads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#ModelManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.ModelManager" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Manages the initialization, training, and generation of a neural network model for MIDI sequence generation.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.ModelManager.seq_len_input">
+<span class="sig-name descname"><span class="pre">seq_len_input</span></span><a class="headerlink" href="#djalgo.djai.ModelManager.seq_len_input" title="Link to this definition">¶</a></dt>
+<dd><p>Length of input sequences.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.ModelManager.seq_len_output">
+<span class="sig-name descname"><span class="pre">seq_len_output</span></span><a class="headerlink" href="#djalgo.djai.ModelManager.seq_len_output" title="Link to this definition">¶</a></dt>
+<dd><p>Length of output sequences.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.ModelManager.model_type">
+<span class="sig-name descname"><span class="pre">model_type</span></span><a class="headerlink" href="#djalgo.djai.ModelManager.model_type" title="Link to this definition">¶</a></dt>
+<dd><p>Type of model to use (‘lstm’, ‘gru’, ‘transformer’).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.ModelManager.nn_units">
+<span class="sig-name descname"><span class="pre">nn_units</span></span><a class="headerlink" href="#djalgo.djai.ModelManager.nn_units" title="Link to this definition">¶</a></dt>
+<dd><p>Number of units in each layer of the neural network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.ModelManager.dropout">
+<span class="sig-name descname"><span class="pre">dropout</span></span><a class="headerlink" href="#djalgo.djai.ModelManager.dropout" title="Link to this definition">¶</a></dt>
+<dd><p>Dropout rate for the neural network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.ModelManager.batch_size">
+<span class="sig-name descname"><span class="pre">batch_size</span></span><a class="headerlink" href="#djalgo.djai.ModelManager.batch_size" title="Link to this definition">¶</a></dt>
+<dd><p>Number of samples per batch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.ModelManager.learning_rate">
+<span class="sig-name descname"><span class="pre">learning_rate</span></span><a class="headerlink" href="#djalgo.djai.ModelManager.learning_rate" title="Link to this definition">¶</a></dt>
+<dd><p>Learning rate for the optimizer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.ModelManager.n_heads">
+<span class="sig-name descname"><span class="pre">n_heads</span></span><a class="headerlink" href="#djalgo.djai.ModelManager.n_heads" title="Link to this definition">¶</a></dt>
+<dd><p>Number of attention heads (used for transformer model).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.ModelManager.tokenizer">
+<span class="sig-name descname"><span class="pre">tokenizer</span></span><a class="headerlink" href="#djalgo.djai.ModelManager.tokenizer" title="Link to this definition">¶</a></dt>
+<dd><p>Tokenizer for MIDI files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>miditok.REMI</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.ModelManager.input_size">
+<span class="sig-name descname"><span class="pre">input_size</span></span><a class="headerlink" href="#djalgo.djai.ModelManager.input_size" title="Link to this definition">¶</a></dt>
+<dd><p>Size of the input vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.ModelManager.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#djalgo.djai.ModelManager.model" title="Link to this definition">¶</a></dt>
+<dd><p>Neural network model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.ModelManager.optimizer">
+<span class="sig-name descname"><span class="pre">optimizer</span></span><a class="headerlink" href="#djalgo.djai.ModelManager.optimizer" title="Link to this definition">¶</a></dt>
+<dd><p>Optimizer for training the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.optim.Optimizer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.ModelManager.loss_fn">
+<span class="sig-name descname"><span class="pre">loss_fn</span></span><a class="headerlink" href="#djalgo.djai.ModelManager.loss_fn" title="Link to this definition">¶</a></dt>
+<dd><p>Loss function for training the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Module</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="djalgo.djai.ModelManager.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi_files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#ModelManager.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.ModelManager.fit" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi_files_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#ModelManager.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.ModelManager.fit" title="Link to this definition">¶</a></dt>
+<dd><p>Trains the model on the specified MIDI files for a given number of epochs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>midi_files_path</strong> (<em>str</em>) – Path to the directory containing MIDI files.</p></li>
+<li><p><strong>epochs</strong> (<em>int</em>) – Number of epochs to train the model.</p></li>
+<li><p><strong>verbose</strong> (<em>int</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – Number of steps between progress messages or None for no messages (default: None).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Trained model.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Module</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="djalgo.djai.ModelManager.generate">
-<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">midi_file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#ModelManager.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.ModelManager.generate" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="djalgo.djai.ModelManager.load">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#ModelManager.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.ModelManager.load" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primer_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#ModelManager.generate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.ModelManager.generate" title="Link to this definition">¶</a></dt>
+<dd><p>Generates a MIDI sequence based on a primer file and saves it to an output file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>length</strong> (<em>int</em>) – Length of the sequence to generate.</p></li>
+<li><p><strong>primer_file</strong> (<em>str</em>) – Path to the primer MIDI file.</p></li>
+<li><p><strong>output_file</strong> (<em>str</em>) – Path to save the generated MIDI file.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="djalgo.djai.ModelManager.save">
-<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#ModelManager.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.ModelManager.save" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="djalgo.djai.ModelManager.scale_back">
-<span class="sig-name descname"><span class="pre">scale_back</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predicted_outputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#ModelManager.scale_back"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.ModelManager.scale_back" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#ModelManager.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.ModelManager.save" title="Link to this definition">¶</a></dt>
+<dd><p>Saves the model state to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – Path to save the model state.</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="djalgo.djai.PositionalEncoding">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.djai.</span></span><span class="sig-name descname"><span class="pre">PositionalEncoding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#PositionalEncoding"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.PositionalEncoding" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Layer</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="djalgo.djai.PositionalEncoding.call">
-<span class="sig-name descname"><span class="pre">call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#PositionalEncoding.call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.PositionalEncoding.call" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="djalgo.djai.TransformerModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">djalgo.djai.</span></span><span class="sig-name descname"><span class="pre">TransformerModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nn_units</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_heads</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#TransformerModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.TransformerModel" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Defines a Transformer model for sequence generation.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.TransformerModel.embedding">
+<span class="sig-name descname"><span class="pre">embedding</span></span><a class="headerlink" href="#djalgo.djai.TransformerModel.embedding" title="Link to this definition">¶</a></dt>
+<dd><p>Embedding layer to project input size to embedding dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Linear</p>
+</dd>
+</dl>
+</dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="djalgo.djai.PositionalEncoding.get_angles">
-<span class="sig-name descname"><span class="pre">get_angles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#PositionalEncoding.get_angles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.PositionalEncoding.get_angles" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.TransformerModel.encoder_layers">
+<span class="sig-name descname"><span class="pre">encoder_layers</span></span><a class="headerlink" href="#djalgo.djai.TransformerModel.encoder_layers" title="Link to this definition">¶</a></dt>
+<dd><p>Transformer encoder layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.TransformerEncoderLayer</p>
+</dd>
+</dl>
+</dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="djalgo.djai.PositionalEncoding.get_config">
-<span class="sig-name descname"><span class="pre">get_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#PositionalEncoding.get_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.PositionalEncoding.get_config" title="Link to this definition">¶</a></dt>
-<dd><p>Returns the config of the object.</p>
-<p>An object config is a Python dictionary (serializable)
-containing the information needed to re-instantiate it.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.TransformerModel.transformer_encoder">
+<span class="sig-name descname"><span class="pre">transformer_encoder</span></span><a class="headerlink" href="#djalgo.djai.TransformerModel.transformer_encoder" title="Link to this definition">¶</a></dt>
+<dd><p>Transformer encoder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.TransformerEncoder</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="djalgo.djai.TransformerModel.fc">
+<span class="sig-name descname"><span class="pre">fc</span></span><a class="headerlink" href="#djalgo.djai.TransformerModel.fc" title="Link to this definition">¶</a></dt>
+<dd><p>Fully connected layer for output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Linear</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="djalgo.djai.PositionalEncoding.positional_encoding">
-<span class="sig-name descname"><span class="pre">positional_encoding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#PositionalEncoding.positional_encoding"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.PositionalEncoding.positional_encoding" title="Link to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="djalgo.djai.scan_midi_files">
-<span class="sig-prename descclassname"><span class="pre">djalgo.djai.</span></span><span class="sig-name descname"><span class="pre">scan_midi_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_files</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#scan_midi_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.scan_midi_files" title="Link to this definition">¶</a></dt>
-<dd><p>Scans the specified directory for MIDI files using glob with a while loop.</p>
+<dt class="sig sig-object py" id="djalgo.djai.TransformerModel.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attention_mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/djalgo/djai.html#TransformerModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#djalgo.djai.TransformerModel.forward" title="Link to this definition">¶</a></dt>
+<dd><p>Defines the forward pass of the TransformerModel.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>directory</strong> (<em>str</em>) – The directory to scan for MIDI files.</p></li>
-<li><p><strong>max_files</strong> (<em>int</em><em>, </em><em>optional</em>) – The maximum number of files to scan. If None, all files are scanned.</p></li>
+<li><p><strong>x</strong> (<em>torch.Tensor</em>) – Input tensor.</p></li>
+<li><p><strong>attention_mask</strong> (<em>torch.Tensor</em><em>, </em><em>optional</em>) – Attention mask for the transformer.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The list of MIDI files found.</p>
+<dd class="field-even"><p>Output tensor.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list</p>
+<dd class="field-odd"><p>torch.Tensor</p>
 </dd>
 </dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class" id="module-djalgo.fractal">

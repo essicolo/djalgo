@@ -8,7 +8,7 @@
     <title>3. Loops &#8212; Djalgo 0.1-alpha documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
-    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
     <script src="_static/documentation_options.js?v=737112c1"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -41,7 +41,7 @@
 <h1>3. Loops<a class="headerlink" href="#3.-Loops" title="Link to this heading">¶</a></h1>
 <p>Let’s delve into a technique centred around numbers, but essentially visual, steering clear of mathematical functions. Multilevel rhythms in music and mathematics are about orchestrating beats, durations, and accents across various tiers or facets of a composition or sequence. These rhythmic patterns often manifest as polygons nestled within a circle, symbolizing the loop’s periodic nature. I’ve coined the term polyloops for these looping polygons (poly) to capture the essence of looping
 multiple shapes. Imagine a radar plot, as depicted in the next figure, that emits a beep each time a rotating line intersects a point on the circle’s perimeter. This setup allows us to: (1) introduce any number of points, (2) layer multiple polygons, each associated with a distinct instrument, (3) create triggered notes with tailored pitches and durations, and (4) adjust the rotation’s velocity to our liking.</p>
-<p><img alt="1bbdbfd0acdd45718f5fede7fe962abc" src="_images/polyloops.svg" /></p>
+<p><img alt="67f6acb50ad74b73a5aa95c28a051c3e" src="_images/polyloops.svg" /></p>
 <p>In Djalgo, we represent each polyloop as a track, i.e. a list of note tuples, each tuple being a note defined as (pitch, duration, offset). A first polyloop might cover the basic rhythmic pattern of a loop. A second, as another layer of rhythms, and a third that leans towards the melodic side. The latter polyloop could incorporate varying pitches, adding a melodic layer to our rhythmic foundation. By carefully selecting the timing, we can craft a composition that not only has rhythmic interest
 but also melodic movement.</p>
 <div class="nbinput nblast docutils container">
@@ -103,7 +103,7 @@ but also melodic movement.</p>
 </pre></div>
 </div>
 </div>
-<p><img alt="5dd3b2473dc641528aaeb223cc62da03" src="_images/pl1.png" /></p>
+<p><img alt="85b2bcdf7a794b538aecd71599b9076f" src="_images/pl1.png" /></p>
 <p>The plot show the structure of the loop in terms of durations and offsets. The pitch information is purposely excluded to simplify the visualization and prevent the plot from becoming too cluttered. The polyloops are displayed starting from the innermost loop, featuring the shortest radius, progressing outward to the final loop according to the order of the list in the <code class="docutils literal notranslate"><span class="pre">polyloops</span></code> argument. Each loop’s shape is delineated by a polygon to represent its structure. For instance, polyloop 0, which
 initiates four notes, forms a polygon that appears as a square. Since the four segments are equal, this loop is said to be <em>Euclidean</em>. The durations are depicted by arcs, with tiny radial marks denoting the start of the arc and its conclusion. Upon closer inspection, you might notice that some arcs appear darker than others. This indicates moments where one note sustains as the next begins. While this overlap is intentional, it’s worth noting that traditional western music notation sometimes
 struggles to accurately represent such overlapping notes. We might correct that manually. I’d also like to make polyloop0 to be less Euclidean.</p>
@@ -153,7 +153,7 @@ struggles to accurately represent such overlapping notes. We might correct that 
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/03_loops_12_0.png" class="no-scaled-link" src="_images/03_loops_12_0.png" style="width: 697px; height: 255px;" />
+<img alt="_images/03_loops_12_0.png" class="no-scaled-link" src="_images/03_loops_12_0.png" style="width: 674px; height: 315px;" />
 </div>
 </div>
 <p>Once a loop is created, repetitions are usually desired. For this purpose, the <code class="docutils literal notranslate"><span class="pre">polyscore</span></code> object can be exported to MIDI, then imported in a DAW, in which you would either copy-paste the MIDI block, or extend it through the time direction with some loop widget toggled on. You could either do it in Python before the exportation. In the following code block, each polyloop is stacked one after the other, with an adjusted offset. There are multiple ways this operation could be done.</p>
@@ -167,7 +167,7 @@ struggles to accurately represent such overlapping notes. We might correct that 
     <span class="n">repeated_polyloop</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_measures</span><span class="p">):</span>
         <span class="n">measure_offset</span> <span class="o">=</span> <span class="n">m</span> <span class="o">*</span> <span class="n">measure_length</span>
-        <span class="n">offseted_polyloop</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">offset_list_of_notes</span><span class="p">(</span><span class="n">polyloop</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="n">measure_offset</span><span class="p">)</span>
+        <span class="n">offseted_polyloop</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">offset_track</span><span class="p">(</span><span class="n">polyloop</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="n">measure_offset</span><span class="p">)</span>
         <span class="n">repeated_polyloop</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">offseted_polyloop</span><span class="p">)</span>
     <span class="n">pl1_loop</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">repeated_polyloop</span><span class="p">)</span>
 <span class="n">pl1_loop</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">loop</span><span class="o">.</span><span class="n">Polyloop</span><span class="p">(</span><span class="n">polyloops</span><span class="o">=</span><span class="n">pl1_loop</span><span class="p">,</span> <span class="n">measure_length</span><span class="o">=</span><span class="n">pl1</span><span class="o">.</span><span class="n">measure_length</span><span class="p">)</span>
@@ -182,7 +182,7 @@ struggles to accurately represent such overlapping notes. We might correct that 
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/03_loops_14_0.png" class="no-scaled-link" src="_images/03_loops_14_0.png" style="width: 732px; height: 635px;" />
+<img alt="_images/03_loops_14_0.png" class="no-scaled-link" src="_images/03_loops_14_0.png" style="width: 709px; height: 945px;" />
 </div>
 </div>
 <section id="Many-polyloops">
@@ -230,7 +230,7 @@ struggles to accurately represent such overlapping notes. We might correct that 
 </pre></div>
 </div>
 </div>
-<p><img alt="2bd309c3f11d4599ad8355cf8fb16b1a" src="_images/pl2.png" /></p>
+<p><img alt="595a2414516544ca82c1e220a3695f04" src="_images/pl2.png" /></p>
 <p>The following code block uses another approach for stacking loops. Instead of appending new notes to the Polyloop object as we did earlier, the stacking is done with Music21. Notice how the key signature and tempo are stacked horizontally in parts before measures are themselves stacking horizontally, and how parts are stacking vertically in a score. The first polyloop had a measure length of 4, and was repeated 6 times. The second has a measure length of 6, so it must be repeated 4 times to have
 de same length.</p>
 <div class="nbinput docutils container">
@@ -243,7 +243,7 @@ de same length.</p>
     <span class="n">repeated_polyloop</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_measures</span><span class="p">):</span>
         <span class="n">measure_offset</span> <span class="o">=</span> <span class="n">m</span> <span class="o">*</span> <span class="n">measure_length</span>
-        <span class="n">offseted_polyloop</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">offset_list_of_notes</span><span class="p">(</span><span class="n">polyloop</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="n">measure_offset</span><span class="p">)</span>
+        <span class="n">offseted_polyloop</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">offset_track</span><span class="p">(</span><span class="n">polyloop</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="n">measure_offset</span><span class="p">)</span>
         <span class="n">repeated_polyloop</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">offseted_polyloop</span><span class="p">)</span>
     <span class="n">pl2_loop</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">repeated_polyloop</span><span class="p">)</span>
 <span class="n">pl2_loop</span> <span class="o">=</span> <span class="n">dj</span><span class="o">.</span><span class="n">loop</span><span class="o">.</span><span class="n">Polyloop</span><span class="p">(</span><span class="n">polyloops</span><span class="o">=</span><span class="n">pl2_loop</span><span class="p">,</span> <span class="n">measure_length</span><span class="o">=</span><span class="n">pl1</span><span class="o">.</span><span class="n">measure_length</span><span class="p">)</span>
@@ -258,7 +258,7 @@ de same length.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/03_loops_19_0.png" class="no-scaled-link" src="_images/03_loops_19_0.png" style="width: 732px; height: 633px;" />
+<img alt="_images/03_loops_19_0.png" class="no-scaled-link" src="_images/03_loops_19_0.png" style="width: 709px; height: 945px;" />
 </div>
 </div>
 <p>In Music21, you can stack vertically (like stacking tracks) by inserting score at offset 0.</p>
@@ -277,7 +277,7 @@ de same length.</p>
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area rendered_html docutils container">
-<div id="midiPlayerDiv3958"></div>
+<div id="midiPlayerDiv3620"></div>
 <link rel="stylesheet" href="https://cuthbertLab.github.io/music21j/css/m21.css">
 
 <script
@@ -285,7 +285,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
 ></script>
 
 <script>
-function midiPlayerDiv3958_play() {
+function midiPlayerDiv3620_play() {
     const rq = require.config({
         paths: {
             'music21': 'https://cuthbertLab.github.io/music21j/releases/music21.debug',
@@ -293,14 +293,14 @@ function midiPlayerDiv3958_play() {
     });
     rq(['music21'], function(music21) {
         mp = new music21.miditools.MidiPlayer();
-        mp.addPlayer("#midiPlayerDiv3958");
-        mp.base64Load("data:audio/midi;base64,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");
+        mp.addPlayer("#midiPlayerDiv3620");
+        mp.base64Load("data:audio/midi;base64,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");
     });
 }
 if (typeof require === 'undefined') {
-    setTimeout(midiPlayerDiv3958_play, 2000);
+    setTimeout(midiPlayerDiv3620_play, 2000);
 } else {
-    midiPlayerDiv3958_play();
+    midiPlayerDiv3620_play();
 }
 </script></div>
 </div>
@@ -318,7 +318,7 @@ if (typeof require === 'undefined') {
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&#39;_output/polyloop.mid&#39;
+&#39;_midi-output/polyloop.mid&#39;
 </pre></div></div>
 </div>
 <section id="Signal-analysis">
@@ -421,7 +421,7 @@ Equal:    0.0
 </pre></div>
 </div>
 </div>
-<p><img alt="52d2bdba44684010962dbc3c0c61c0f7" src="_images/gini.png" /></p>
+<p><img alt="4b12f938f80b4c5c93e5e56a586d73cc" src="_images/gini.png" /></p>
 </section>
 <section id="Balance">
 <h2>Balance<a class="headerlink" href="#Balance" title="Link to this heading">¶</a></h2>
@@ -472,7 +472,7 @@ rhythm being centrally located. The mathematical condition for perfect balance i
 </pre></div>
 </div>
 </div>
-<p><img alt="d125b1d9d3924afba395e03e02727c35" src="_images/balance.png" /></p>
+<p><img alt="cef5fd355c8b409eb38a0473a52e8706" src="_images/balance.png" /></p>
 <p>When designing polyloops, lower levels (the first ones) are characterized by lower pitches, with darker (warmer) timbres (which are richer in low pitches) and more regular. Going higher is level (last polyloops), pitches become higher, timbres become brighter, and beats become less well-formed.</p>
 <p>The design helpers are not made to reach equality and balance. They are made to reach a desired approximation for indices. As a composer, you may desire to have imbalance and inequality, for wilder music, but balance and equality for more predictable parts.</p>
 <p>↳ <a class="reference external" href="04_minimalism.html">Minimalism</a></p>
