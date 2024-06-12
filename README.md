@@ -12,4 +12,4 @@ pip install git+https://github.com/essicolo/djalgo.git
 
 ## Usage
 
-To get started, you might follow the companion website at essicolo.github.io/djalgo/01_getting-started.html. Happy composing! 🎼
+To get started, you might follow the companion website at [essicolo.github.io/djalgo/01_getting-started.html](https://essicolo.github.io/djalgo/01_getting-started.html). Happy composing! 🎼
