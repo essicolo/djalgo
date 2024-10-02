@@ -3,11 +3,30 @@ import itertools
 import warnings
 import json
 import numpy as np
-from numba import jit # Just-in-time compilation for faster execution of the Mandelbrot fractal generator
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib.axes
 from . import utils
+
+try:
+    from numba import jit
+    NUMBA_AVAILABLE = True
+except ImportError:
+    NUMBA_AVAILABLE = False
+    def jit(*args, **kwargs):
+        def decorator(func):
+            return func
+        return decorator
+
+def optional_jit(*args, **kwargs):
+    """
+    Applies a jit decorator only if numba is installed
+    """
+    def decorator(func):
+        if NUMBA_AVAILABLE:
+            return jit(*args, **kwargs)(func)
+        return func
+    return decorator
 
 
 # Cellular automata
@@ -267,7 +286,7 @@ class CellularAutomata:
 
 # Mandelbrot fractal
 # ------------------
-@jit
+@optional_jit(nopython=True)
 def generate_mandelbrot_jit(x_range, y_range, dimensions, max_iter):
     x_lin = np.linspace(x_range[0], x_range[1], dimensions[0])
     y_lin = np.linspace(y_range[0], y_range[1], dimensions[1])
@@ -354,7 +373,7 @@ class Mandelbrot:
 
 # Logistic map
 # ------------
-@jit(nopython=True)
+@optional_jit(nopython=True)
 def logistic_map(growth_rate, pop, iterations):
     """Compute logistic map iteratively for a given rate over many iterations."""
     final_pop = np.empty(iterations)
@@ -363,7 +382,7 @@ def logistic_map(growth_rate, pop, iterations):
         final_pop[i] = pop
     return final_pop
 
-@jit(nopython=True)
+@optional_jit(nopython=True)
 def compute_logistic(rate_values, iterations, last_n):
     """Compute the logistic map for a range of r values, collecting the last `last_n` iterations."""
     num_rate = len(rate_values)

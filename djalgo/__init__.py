@@ -5,7 +5,9 @@ from . import genetic
 from . import harmony
 from . import loop
 from . import minimalism
+from . import player
 from . import rhythm
+from . import score
 from . import utils
 from . import walk
 

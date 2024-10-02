@@ -8,7 +8,7 @@
     <title>3. Loops &#8212; Djalgo 0.1-alpha documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
-    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
     <script src="_static/documentation_options.js?v=737112c1"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
@@ -41,7 +41,7 @@
 <h1>3. Loops<a class="headerlink" href="#3.-Loops" title="Link to this heading">¶</a></h1>
 <p>Let’s delve into a technique centred around numbers, but essentially visual, steering clear of mathematical functions. Multilevel rhythms in music and mathematics are about orchestrating beats, durations, and accents across various tiers or facets of a composition or sequence. These rhythmic patterns often manifest as polygons nestled within a circle, symbolizing the loop’s periodic nature. I’ve coined the term polyloops for these looping polygons (poly) to capture the essence of looping
 multiple shapes. Imagine a radar plot, as depicted in the next figure, that emits a beep each time a rotating line intersects a point on the circle’s perimeter. This setup allows us to: (1) introduce any number of points, (2) layer multiple polygons, each associated with a distinct instrument, (3) create triggered notes with tailored pitches and durations, and (4) adjust the rotation’s velocity to our liking.</p>
-<p><img alt="cd086d0b7259488a93c184c5bead71dd" src="_images/polyloops.svg" /></p>
+<p><img alt="a8bb5a8ab33f4bc0a888f2827018030e" src="_images/polyloops.svg" /></p>
 <p>In Djalgo, we represent each polyloop as a track, i.e. a list of note tuples, each tuple being a note defined as (pitch, duration, offset). A first polyloop might cover the basic rhythmic pattern of a loop. A second, as another layer of rhythms, and a third that leans towards the melodic side. The latter polyloop could incorporate varying pitches, adding a melodic layer to our rhythmic foundation. By carefully selecting the timing, we can craft a composition that not only has rhythmic interest
 but also melodic movement.</p>
 <div class="nbinput nblast docutils container">
@@ -103,7 +103,7 @@ but also melodic movement.</p>
 </pre></div>
 </div>
 </div>
-<p><img alt="57e3274a5f654c5283f667f730403f4f" src="_images/pl1.png" /></p>
+<p><img alt="76d887537cd94fd6b72e80987de73515" src="_images/pl1.png" /></p>
 <p>The plot show the structure of the loop in terms of durations and offsets. The pitch information is purposely excluded to simplify the visualization and prevent the plot from becoming too cluttered. The polyloops are displayed starting from the innermost loop, featuring the shortest radius, progressing outward to the final loop according to the order of the list in the <code class="docutils literal notranslate"><span class="pre">polyloops</span></code> argument. Each loop’s shape is delineated by a polygon to represent its structure. For instance, polyloop 0, which
 initiates four notes, forms a polygon that appears as a square. Since the four segments are equal, this loop is said to be <em>Euclidean</em>. The durations are depicted by arcs, with tiny radial marks denoting the start of the arc and its conclusion. Upon closer inspection, you might notice that some arcs appear darker than others. This indicates moments where one note sustains as the next begins. While this overlap is intentional, it’s worth noting that traditional western music notation sometimes
 struggles to accurately represent such overlapping notes. We might correct that manually. I’d also like to make polyloop0 to be less Euclidean.</p>
@@ -230,7 +230,7 @@ struggles to accurately represent such overlapping notes. We might correct that 
 </pre></div>
 </div>
 </div>
-<p><img alt="8e56bea446b64e06bc4f5fdc007ba1fe" src="_images/pl2.png" /></p>
+<p><img alt="3fd82d2f548f4cfea32f0fcb8d5e3405" src="_images/pl2.png" /></p>
 <p>The following code block uses another approach for stacking loops. Instead of appending new notes to the Polyloop object as we did earlier, the stacking is done with Music21. Notice how the key signature and tempo are stacked horizontally in parts before measures are themselves stacking horizontally, and how parts are stacking vertically in a score. The first polyloop had a measure length of 4, and was repeated 6 times. The second has a measure length of 6, so it must be repeated 4 times to have
 de same length.</p>
 <div class="nbinput docutils container">
@@ -421,7 +421,7 @@ Equal:    0.0
 </pre></div>
 </div>
 </div>
-<p><img alt="4201c76814f941edb8b2f20900aa03ff" src="_images/gini.png" /></p>
+<p><img alt="d94f3942375e4287bb91ebcfa4649939" src="_images/gini.png" /></p>
 </section>
 <section id="Balance">
 <h2>Balance<a class="headerlink" href="#Balance" title="Link to this heading">¶</a></h2>
@@ -472,7 +472,7 @@ rhythm being centrally located. The mathematical condition for perfect balance i
 </pre></div>
 </div>
 </div>
-<p><img alt="53d0dcaf96a740b2a1ea8a7c4b733488" src="_images/balance.png" /></p>
+<p><img alt="39c3474af46d4d868b306f1c87aa3c91" src="_images/balance.png" /></p>
 <p>When designing polyloops, lower levels (the first ones) are characterized by lower pitches, with darker (warmer) timbres (which are richer in low pitches) and more regular. Going higher is level (last polyloops), pitches become higher, timbres become brighter, and beats become less well-formed.</p>
 <p>The design helpers are not made to reach equality and balance. They are made to reach a desired approximation for indices. As a composer, you may desire to have imbalance and inequality, for wilder music, but balance and equality for more predictable parts.</p>
 <p>↳ <a class="reference external" href="04_minimalism.html">Minimalism</a></p>

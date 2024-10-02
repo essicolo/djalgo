@@ -4,20 +4,21 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "djalgo"
-version = "0.2-beta"
+version = "0.2.0b0"
 dependencies = [
+    "anywidget",
     "numpy",
-    "numba",
     "scipy",
     "matplotlib",
-    "plotly"
+    "plotly",
+    "traitlets",
+    "djalgo",
 ]
 requires-python = ">=3.8"
 authors = [
     {name = "Essi Parent", email = "3pp0qk4a@duck.com"}
 ]
 description = "A music composition toolkit"
-
 readme = "README.md"
 license = {file = "LICENSE"}
 keywords = ["midi", "music"]
@@ -43,3 +44,9 @@ tensorflow = ["tensorflow"]
 Documentation = "https://essicolo.github.io/djalgo/"
 Repository = "https://github.com/essicolo/djalgo.git"
 Issues = "https://github.com/essicolo/djalgo/issues"
+
+[tool.setuptools.package-data]
+"djalgo" = ["static/js/*.js"]
+
+[tool.uv.sources]
+djalgo = { workspace = true }
