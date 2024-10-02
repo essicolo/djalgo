@@ -1,0 +1,45 @@
+name: Build and Deploy Sphinx Documentation
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install sphinx sphinx_rtd_theme nbsphinx
+        pip install .
+        pip freeze
+        sudo apt-get install pandoc
+    - name: Build Documentation
+      run: |
+        cd docs
+        make html
+        echo "Contents of _build/html directory:"
+        ls -R _build/html
+      continue-on-error: true
+    - name: Check build output
+      run: |
+        ls -R docs/_build/html
+    - name: Setup Pages
+      uses: actions/configure-pages@v3
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v2
+      with:
+        path: 'docs/_build/html'
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v2
+      

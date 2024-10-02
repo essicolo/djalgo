@@ -1,31 +1,22 @@
 [build-system]
-requires = ["setuptools>=42", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "djalgo"
-version = "0.2.0b0"
-dependencies = [
-    "anywidget",
-    "numpy",
-    "scipy",
-    "matplotlib",
-    "plotly",
-    "traitlets",
-    "djalgo",
-]
-requires-python = ">=3.8"
-authors = [
-    {name = "Essi Parent", email = "3pp0qk4a@duck.com"}
-]
+version = "0.3.0b0"
 description = "A music composition toolkit"
+authors = [
+    {name = "Essi Parent", email = "3pp0qk4a@duck.com"},
+]
+license = "GPL-3.0-or-later"
 readme = "README.md"
-license = {file = "LICENSE"}
+requires-python = ">=3.11"
 keywords = ["midi", "music"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-    "Development Status :: 2 - Pre-Alpha",
+    "Development Status :: 4 - Beta",
     "Operating System :: OS Independent",
     "Intended Audience :: Developers",
     "Intended Audience :: Education",
@@ -33,20 +24,33 @@ classifiers = [
     "Topic :: Multimedia :: Sound/Audio :: MIDI",
     "Natural Language :: English"
 ]
+dependencies = [
+    "anywidget",
+    "numpy",
+    "scipy",
+    "matplotlib",
+    "plotly",
+    "traitlets",
+]
 
 [project.optional-dependencies]
-music21 = ["music21"]
-pretty_midi = ["pretty-midi"]
-scamp = ["scamp"]
-tensorflow = ["tensorflow"]
+convert = ["mido", "music21", "pretty-midi"]
+live_coding = ["scamp"]
+ai = ["tensorflow"]
+marimo = ["marimo"]
+jupyter = ["ipykernel", "ipywidgets"]
+dev = ["sphinx", "sphinx_rtd_theme", "nbsphinx"]
 
 [project.urls]
 Documentation = "https://essicolo.github.io/djalgo/"
 Repository = "https://github.com/essicolo/djalgo.git"
-Issues = "https://github.com/essicolo/djalgo/issues"
+"Bug Tracker" = "https://github.com/essicolo/djalgo/issues"
 
-[tool.setuptools.package-data]
-"djalgo" = ["static/js/*.js"]
+[tool.hatch.metadata]
+allow-direct-references = true
 
-[tool.uv.sources]
-djalgo = { workspace = true }
+[tool.hatch.build.targets.wheel]
+packages = ["src/djalgo"]
+
+[tool.uv]
+# uv-specific configurations, if any

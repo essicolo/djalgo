@@ -1,7 +1,0 @@
-numpy
-numba
-scipy
-tensorflow
-music21
-pretty-midi
-scamp
