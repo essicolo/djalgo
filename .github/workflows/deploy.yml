@@ -32,7 +32,7 @@ jobs:
       run: python -m build
     - name: Publish package to PyPI
       env:
-        TWINE_USERNAME: personnal
+        TWINE_USERNAME: octobre
         TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
       run: twine upload dist/*
     - name: Create GitHub Release
