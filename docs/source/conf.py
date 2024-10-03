@@ -5,21 +5,11 @@ import sys
 import tomli
 sys.path.insert(0, os.path.abspath('../..'))  # Adjust this path to your project root
 
-def get_version_from_pyproject():
-    pyproject_path = os.path.join(os.path.dirname(__file__), '..', '..', 'pyproject.toml')
-    try:
-        with open(pyproject_path, 'rb') as f:
-            pyproject_data = tomli.load(f)
-        return pyproject_data['project']['version']
-    except (FileNotFoundError, KeyError):
-        print("Warning: Unable to read version from pyproject.toml")
-        return "unknown"
-
 # Project information
 project = 'djalgo'
 copyright = '2024, Essi Parent'
 author = 'Essi Parent'
-release = get_version_from_pyproject()
+release = "0.2"
 
 # Extensions
 extensions = [
