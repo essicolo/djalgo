@@ -24,6 +24,7 @@ jobs:
         uv venv
         source .venv/bin/activate
         uv pip install -e ".[dev]"
+        sudo apt-get install pandoc
     
     - name: Build documentation
       run: |
