@@ -1,45 +1,43 @@
-name: Build and Deploy Sphinx Documentation
+name: Build and Deploy Documentation
+
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  pull_request:
+    branches: [main]
+
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v2
+    
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v2
       with:
-        python-version: '3.x'
+        python-version: '3.12'
+    
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install sphinx sphinx_rtd_theme nbsphinx
-        pip install .
-        pip freeze
-        sudo apt-get install pandoc
-    - name: Build Documentation
+        pip install uv
+        uv venv
+        source .venv/bin/activate
+        uv pip install -e ".[dev]"
+    
+    - name: Build documentation
       run: |
+        source .venv/bin/activate
         cd docs
         make html
-        echo "Contents of _build/html directory:"
-        ls -R _build/html
-      continue-on-error: true
-    - name: Check build output
+    
+    - name: Debug - List contents
       run: |
-        ls -R docs/_build/html
-    - name: Setup Pages
-      uses: actions/configure-pages@v3
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v2
-      with:
-        path: 'docs/_build/html'
+        ls -R docs
+    
     - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v2
-      
+      if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs/_build/html

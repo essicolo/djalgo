@@ -1,4 +1,3 @@
-import marimo as mo
 import anywidget
 import traitlets
 from typing import List, Dict, Union, Tuple

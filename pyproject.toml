@@ -39,7 +39,7 @@ live_coding = ["scamp"]
 ai = ["tensorflow"]
 marimo = ["marimo"]
 jupyter = ["ipykernel", "ipywidgets"]
-dev = ["sphinx", "sphinx_rtd_theme", "nbsphinx"]
+dev = ["bump-my-version", "piccolo_theme", "nbsphinx", "sphinx", "tomli"]
 
 [project.urls]
 Documentation = "https://essicolo.github.io/djalgo/"
