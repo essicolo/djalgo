@@ -2,8 +2,8 @@
 
 import os
 import sys
-import tomli
-sys.path.insert(0, os.path.abspath('../..'))  # Adjust this path to your project root
+
+sys.path.insert(0, os.path.abspath('..'))
 
 # Project information
 project = 'djalgo'
@@ -22,7 +22,10 @@ extensions = [
 
 # General configuration
 master_doc = 'index'
-source_suffix = ['.rst', '.md']
+source_suffix = ['.rst', '.md', '.ipynb']
+source_encoding = 'utf-8'
+source_parsers = {'.md': 'recommonmark.parser.CommonMarkParser'}
+source_dir = 'source'
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # HTML output configuration
@@ -30,8 +33,10 @@ html_theme = 'furo'
 htmlhelp_basename = 'djalgoDoc'
 html_static_path = ['_static']
 templates_path = ['_templates']
-html_output_path = '../_build/html'
+html_output_path = '_build/html'
 html_logo = '_static/logo.png'
+
+
 
 # Sidebar configuration
 html_sidebars = {
@@ -70,5 +75,3 @@ napoleon_attr_annotations = True
 
 # NBSphinx settings
 nbsphinx_execute = 'auto'
-
-html_css_files = ["custom.css"]
