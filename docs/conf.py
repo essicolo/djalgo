@@ -36,8 +36,6 @@ templates_path = ['_templates']
 html_output_path = '_build/html'
 html_logo = '_static/logo.png'
 
-
-
 # Sidebar configuration
 html_sidebars = {
     "**": [
@@ -74,4 +72,4 @@ napoleon_type_aliases = None
 napoleon_attr_annotations = True
 
 # NBSphinx settings
-nbsphinx_execute = 'auto'
+nbsphinx_execute = 'never'
