@@ -6,10 +6,10 @@ Djalgo is a Python toolkit for music composition. Crafted for musicians and deve
 
 ## Install
 
-Djalgo is not on PyPi yet. You should install it directly from the main branch of the GitHub project.
+Djalgo is on PyPi.
 
 ```
-pip install git+https://github.com/essicolo/djalgo.git
+pip install djalgo
 ```
 
 ## Usage
