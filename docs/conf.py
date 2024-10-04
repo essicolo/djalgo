@@ -22,7 +22,7 @@ extensions = [
 
 # General configuration
 master_doc = 'index'
-source_suffix = ['.rst', '.md', '.ipynb']
+source_suffix = ['.rst', '.md']
 source_encoding = 'utf-8'
 source_parsers = {'.md': 'recommonmark.parser.CommonMarkParser'}
 source_dir = 'source'
