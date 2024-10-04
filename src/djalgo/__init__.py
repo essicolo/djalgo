@@ -19,4 +19,4 @@ from . import walk
 #else:
 #    warnings.warn("Tensorflow is not installed. Djai cannot be imported.")
 
-__version__ =  "0.2.0"
+__version__ =  "0.2.1"
