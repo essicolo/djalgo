@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.abspath('..'))
 project = 'djalgo'
 copyright = '2024, Essi Parent'
 author = 'Essi Parent'
-release = "0.2"
+release = "0.2.0"
 
 # Extensions
 extensions = [
@@ -35,3 +35,4 @@ templates_path = ['_templates']
 
 # Nbsphinx settings
 nbsphinx_execute = 'never'
+html_logo = '_static/logo.png'
