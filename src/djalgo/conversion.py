@@ -288,36 +288,29 @@ def to_miditoolkit(notes, bpm=120, velocity=64):
 
 # ABC conversion
 # --------------
-
 def to_abc(
-    tracks: Union[List[Tuple[int, float, float]], List[List[Tuple[int, float, float]]]],
+    tracks: Union[List[Tuple[Union[int, List[int], None], float, float]], List[List[Tuple[Union[int, List[int], None], float, float]]]],
     key: str = "C",
     clef: str = "treble",
     time_signature: str = "4/4",
     title: str = "Untitled",
     tempo: int = 120
 ) -> str:
-    """
-    Convert MIDI-like notation to ABC notation.
-
-    Args:
-    tracks: List of notes (midi_pitch, duration, offset) or list of such lists for multiple tracks
-    key: Key signature (default "C")
-    clef: Clef to use (default "treble")
-    time_signature: Time signature (default "4/4")
-    title: Title of the piece (default "Untitled")
-    tempo: Tempo in BPM (default 120)
-
-    Returns:
-    ABC notation as a string
-    """
     if not isinstance(tracks[0], list):
         tracks = [tracks]
-
-    midi_to_abc_note = {
-        60: "C", 62: "D", 64: "E", 65: "F", 67: "G", 69: "A", 71: "B", 72: "c"
-    }
-
+    
+    def midi_to_abc(midi_pitch: Union[int, None]) -> str:
+        if midi_pitch is None:
+            return 'z'  # Represent silence with 'z'
+        notes = ['C', '^C', 'D', '^D', 'E', 'F', '^F', 'G', '^G', 'A', '^A', 'B']
+        note = notes[midi_pitch % 12]
+        octave = midi_pitch // 12 - 5
+        if octave < 0:
+            return note.lower() + ',' * abs(octave)
+        elif octave > 0:
+            return note + "'" * octave
+        return note
+    
     def duration_to_abc(duration: float) -> str:
         if duration == 1:
             return ""
@@ -333,7 +326,7 @@ def to_abc(
             return "4"
         else:
             return f"{int(duration * 4)}/4"
-
+    
     abc_output = [
         f"X:1",
         f"T:{title}",
@@ -343,27 +336,47 @@ def to_abc(
         f"K:{key}",
         f"%%score {' '.join([f'T{i+1}' for i in range(len(tracks))])}"
     ]
-
+    
     for track_num, track in enumerate(tracks, 1):
         abc_output.append(f"V:T{track_num} clef={clef}")
         measure = []
         measure_duration = 0
-        total_duration = 4  # Assuming 4/4 time signature
-
-        for note in track:
-            midi_pitch, duration, _ = note
-            abc_note = midi_to_abc_note.get(midi_pitch, "C")  # Default to C if not found
+        current_offset = 0
+        total_duration = sum(int(x) for x in time_signature.split('/'))
+        sorted_track = sorted(track, key=lambda x: x[2])  # Sort by offset
+        
+        for note in sorted_track:
+            midi_pitch, duration, offset = note
+            
+            # Insert rest if there's a gap
+            if offset > current_offset:
+                rest_duration = offset - current_offset
+                rest_abc = 'z' + duration_to_abc(rest_duration)
+                measure.append(rest_abc)
+                measure_duration += rest_duration
+            
+            # Add note, chord, or silence
+            if midi_pitch is None:
+                abc_chord = 'z'  # Represent silence
+            elif isinstance(midi_pitch, list):  # It's a chord
+                abc_notes = [midi_to_abc(pitch) for pitch in midi_pitch if pitch is not None]
+                abc_chord = f"[{' '.join(abc_notes)}]" if abc_notes else 'z'
+            else:  # It's a single note
+                abc_chord = midi_to_abc(midi_pitch)
+            
             abc_duration = duration_to_abc(duration)
-            measure.append(f"{abc_note}{abc_duration}")
+            measure.append(f"{abc_chord}{abc_duration}")
             measure_duration += duration
-
-            if measure_duration >= total_duration:
-                abc_output.append(" ".join(measure) + " |")
-                measure = []
-                measure_duration = 0
-
+            current_offset = offset + duration
+            
+            # Start a new measure if needed
+            while measure_duration >= total_duration:
+                abc_output.append(" ".join(measure[:int(total_duration / 0.25)]) + " |")
+                measure = measure[int(total_duration / 0.25):]
+                measure_duration -= total_duration
+        
         # Add any remaining notes in the last measure
         if measure:
             abc_output.append(" ".join(measure) + " |")
-
+    
     return "\n".join(abc_output)

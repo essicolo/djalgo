@@ -35,10 +35,9 @@ dependencies = [
 
 [project.optional-dependencies]
 convert = ["mido", "music21", "pretty-midi"]
-live_coding = ["scamp"]
+musician = ["music21", "pretty-midi", "scamp"]
 ai = ["tensorflow"]
-marimo = ["marimo"]
-jupyter = ["ipykernel", "ipywidgets"]
+notebook = ["ipykernel", "ipywidgets", "jupyter", "jupyterlab", "marimo"]
 dev = ["bump-my-version", "furo", "nbsphinx", "recommonmark", "sphinx", "tomli"] # tomli?
 
 [project.urls]

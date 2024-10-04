@@ -193,10 +193,27 @@ export async function render({ model, el }) {
             synths.push(synth);
 
             const part = new Tone.Part((time, note) => {
-                synth.triggerAttackRelease(note.noteName, note.duration, time);
+                if (note.noteName === null) {
+                    // C'est un silence, ne rien jouer
+                    return;
+                }
+                if (Array.isArray(note.noteName)) {
+                    // C'est un accord
+                    note.noteName.forEach(n => {
+                        if (n !== null) {
+                            synth.triggerAttackRelease(n, note.duration, time);
+                        }
+                    });
+                } else {
+                    // C'est une note simple
+                    synth.triggerAttackRelease(note.noteName, note.duration, time);
+                }
             }, instrumentData.map(([midi, duration, time]) => ({
                 time,
-                noteName: Tone.Frequency(midi, "midi").toNote(),
+                noteName: midi === null ? null :
+                    (Array.isArray(midi) 
+                        ? midi.map(m => m !== null ? Tone.Frequency(m, "midi").toNote() : null)
+                        : Tone.Frequency(midi, "midi").toNote()),
                 duration
             }))).start(0);
             parts.push(part);
@@ -270,7 +287,21 @@ export async function render({ model, el }) {
         musicData.forEach(instrumentData => {
             const track = midi.addTrack();
             instrumentData.forEach(([midiNote, duration, time]) => {
-                track.addNote({ midi: midiNote, time, duration });
+                if (midiNote === null) {
+                    // C'est un silence, ne rien ajouter à la piste MIDI
+                    return;
+                }
+                if (Array.isArray(midiNote)) {
+                    // C'est un accord
+                    midiNote.forEach(note => {
+                        if (note !== null) {
+                            track.addNote({ midi: note, time, duration });
+                        }
+                    });
+                } else {
+                    // C'est une note simple
+                    track.addNote({ midi: midiNote, time, duration });
+                }
             });
         });
         midi.header.setTempo(bpm);
@@ -347,11 +378,29 @@ export async function render({ model, el }) {
                 const synth = customInstruments[synthType] 
                     ? createCustomInstrument(customInstruments[synthType].config)
                     : new Tone[synthType]().toDestination();
+
                 new Tone.Part((time, note) => {
-                    synth.triggerAttackRelease(note.noteName, note.duration, time);
+                    if (note.noteName === null) {
+                        // C'est un silence, ne rien jouer
+                        return;
+                    }
+                    if (Array.isArray(note.noteName)) {
+                        // C'est un accord
+                        note.noteName.forEach(n => {
+                            if (n !== null) {
+                                synth.triggerAttackRelease(n, note.duration, time);
+                            }
+                        });
+                    } else {
+                        // C'est une note simple
+                        synth.triggerAttackRelease(note.noteName, note.duration, time);
+                    }
                 }, instrumentData.map(([midi, duration, time]) => ({
                     time,
-                    noteName: Tone.Frequency(midi, "midi").toNote(),
+                    noteName: midi === null ? null :
+                        (Array.isArray(midi) 
+                            ? midi.map(m => m !== null ? Tone.Frequency(m, "midi").toNote() : null)
+                            : Tone.Frequency(midi, "midi").toNote()),
                     duration
                 }))).start(0);
             });
@@ -397,7 +446,7 @@ export default { render };
 
 @staticmethod
 def show(
-    tracks: Union[List[Tuple[int, float, float]], List[List[Tuple[int, float, float]]]],
+    tracks: Union[List[Tuple[Union[int, List[int], None], float, float]], List[List[Tuple[Union[int, List[int], None], float, float]]]],
     custom_instruments: Dict[str, Dict] = None,
     initial_bpm: int = 120
 ) -> anywidget.AnyWidget:
