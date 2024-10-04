@@ -24,10 +24,14 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -e ".[dev]"
+      - name: List source directory
+        run: |
+          cd docs
+          ls -R source
       - name: Build documentation
         run: |
           cd docs
-          make html
+          make html SPHINXOPTS="-v"
       - name: Debug - List contents after build
         run: |
           pwd
