@@ -18,12 +18,13 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.intersphinx',
     'recommonmark',
+    'nbsphinx',
 ]
 
 # General configuration
 source_dir = 'source'
 master_doc = 'index'
-source_suffix = ['.rst', '.md']
+source_suffix = ['.rst', '.md', '.ipynb']
 source_encoding = 'utf-8'
 source_parsers = {'.md': 'recommonmark.parser.CommonMarkParser'}
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
@@ -72,5 +73,4 @@ napoleon_type_aliases = None
 napoleon_attr_annotations = True
 
 # NBSphinx settings
-nbsphinx_execute = 'auto'
-#nbsphinx_timeout = 60 
+nbsphinx_execute = 'never'
