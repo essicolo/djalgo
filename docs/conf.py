@@ -23,8 +23,9 @@ master_doc = 'index'
 source_suffix = {
     '.rst': 'restructuredtext',
     '.md': 'markdown',
-    '.ipynb': 'nbsphinx',
+    '.ipynb': 'jupyter_notebook',
 }
+
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # HTML output configuration
