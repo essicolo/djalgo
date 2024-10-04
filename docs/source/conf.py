@@ -26,7 +26,7 @@ source_suffix = ['.rst', '.md']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # HTML output configuration
-html_theme = 'piccolo_theme'
+html_theme = 'furo'
 htmlhelp_basename = 'djalgoDoc'
 html_static_path = ['_static']
 templates_path = ['_templates']
