@@ -27,15 +27,25 @@ jobs:
           source .venv/bin/activate
           uv pip install -e ".[dev]"
           sudo apt-get install pandoc
+      - name: Create build directory
+        run: mkdir -p docs/_build/html
+
       - name: Build documentation
         run: |
           source .venv/bin/activate
           cd docs
           make html
+          cd ..
+
+      - name: Debug - List contents
+        run: |
+          pwd
+          ls -R docs
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: './docs/_build/html'
+          path: '${{ github.workspace }}/docs/_build/html'
 
   deploy:
     needs: build
