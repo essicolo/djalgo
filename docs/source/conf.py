@@ -35,11 +35,13 @@ html_logo = '_static/logo.png'
 
 # Sidebar configuration
 html_sidebars = {
-    '**': [
-        'about.html',
-        'navigation.html',
-        'searchbox.html',
-        'custom_sidebar.html'
+    "**": [
+        "sidebar/scroll-start.html",
+        "sidebar/brand.html",
+        "sidebar/search.html",
+        "sidebar/navigation.html",
+        "sidebar/ethical-ads.html",
+        "sidebar/scroll-end.html",
     ]
 }
 
