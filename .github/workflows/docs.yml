@@ -23,17 +23,8 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[dev]"
-      - name: List source directory
-        run: |
-          cd docs
-          ls -R source
-      - name: Convert notebooks to markdown
-        run: |
-          pip install nbconvert
-          for file in docs/source/*.ipynb; do
-            jupyter nbconvert --to markdown "$file"
-          done
+          pip install uv
+          uv pip install -e ".[dev]"
       - name: Build documentation
         run: |
           cd docs
