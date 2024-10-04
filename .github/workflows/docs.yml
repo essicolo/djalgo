@@ -28,6 +28,12 @@ jobs:
         run: |
           cd docs
           ls -R source
+      - name: Convert notebooks to markdown
+        run: |
+          pip install nbconvert
+          for file in docs/source/*.ipynb; do
+            jupyter nbconvert --to markdown "$file"
+          done
       - name: Build documentation
         run: |
           cd docs

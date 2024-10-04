@@ -15,9 +15,9 @@ release = "0.2"
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
-    'nbsphinx',
-    'sphinx.ext.viewcode',  # Adds links to highlighted source code
-    'sphinx.ext.intersphinx',  # Allows linking between different Sphinx projects
+    'sphinx.ext.viewcode',
+    'sphinx.ext.intersphinx',
+    'recommonmark',
 ]
 
 # General configuration
