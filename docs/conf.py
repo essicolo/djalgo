@@ -72,4 +72,5 @@ napoleon_type_aliases = None
 napoleon_attr_annotations = True
 
 # NBSphinx settings
-nbsphinx_execute = 'never'
+nbsphinx_execute = 'auto'
+#nbsphinx_timeout = 60 

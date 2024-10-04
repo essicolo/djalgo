@@ -39,7 +39,7 @@ live_coding = ["scamp"]
 ai = ["tensorflow"]
 marimo = ["marimo"]
 jupyter = ["ipykernel", "ipywidgets"]
-dev = ["bump-my-version", "furo", "nbsphinx", "sphinx", "tomli"]
+dev = ["bump-my-version", "furo", "nbsphinx", "numba", "sphinx", "tomli"]
 
 [project.urls]
 Documentation = "https://essicolo.github.io/djalgo/"
