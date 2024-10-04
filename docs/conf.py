@@ -21,11 +21,11 @@ extensions = [
 ]
 
 # General configuration
+source_dir = 'source'
 master_doc = 'index'
 source_suffix = ['.rst', '.md']
 source_encoding = 'utf-8'
 source_parsers = {'.md': 'recommonmark.parser.CommonMarkParser'}
-source_dir = 'source'
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # HTML output configuration
