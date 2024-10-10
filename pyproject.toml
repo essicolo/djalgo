@@ -38,7 +38,7 @@ convert = ["mido", "music21", "pretty-midi"]
 musician = ["music21", "pretty-midi", "scamp"]
 ai = ["tensorflow"]
 notebook = ["ipykernel", "ipywidgets", "jupyter", "jupyterlab", "marimo"]
-dev = ["bump-my-version", "furo", "nbsphinx", "recommonmark", "sphinx", "tomli"] # tomli?
+dev = ["bump-my-version", "furo", "ipynbname", "ipywidgets", "kaleido", "nbsphinx", "recommonmark", "sphinx", "tomli"] # tomli?
 
 [project.urls]
 Documentation = "https://essicolo.github.io/djalgo/"

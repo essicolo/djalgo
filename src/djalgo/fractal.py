@@ -281,7 +281,10 @@ class CellularAutomata:
             plt.tight_layout()
             plt.subplots_adjust(hspace=0.5)  # Adjust horizontal space if needed
 
-        return ax
+        if ax is None:
+            return fig
+        else:
+            return ax
     
 
 # Mandelbrot fractal
