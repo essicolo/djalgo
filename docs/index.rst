@@ -6,14 +6,14 @@ Djalgo is a Python toolkit for music composition. Crafted for musicians and deve
 User guide
 ==========
 
-- `<a href="https://marimo.app/l/nfajvl" target="_blank">01. Getting started</a>`
-- `<a href="https://marimo.app/l/lyjxk4" target="_blank">02. Harmonies</a>`
-- `<a href="https://marimo.app/l/vkcwnb" target="_blank">03. Loops</a>`
-- `<a href="https://marimo.app/l/hrs8fo" target="_blank">04. Minimallism</a>`
-- `<a href="#" target="_blank">05. Walks</a>`
-- `<a href="https://marimo.app/l/vo9dv2" target="_blank">06. Fractals</a>`
-- `<a href="https://marimo.app/l/q3j5il" target="_blank">07. Genetic algorithms</a>`
-- `<a href="https://marimo.app/l/3i82tv" target="_blank">08. AI</a>`
+- <a href="https://marimo.app/l/nfajvl" target="_blank">01. Getting started</a>
+- <a href="https://marimo.app/l/lyjxk4" target="_blank">02. Harmonies</a>
+- <a href="https://marimo.app/l/vkcwnb" target="_blank">03. Loops</a>
+- <a href="https://marimo.app/l/hrs8fo" target="_blank">04. Minimallism</a>
+- <a href="#" target="_blank">05. Walks</a>
+- <a href="https://marimo.app/l/vo9dv2" target="_blank">06. Fractals</a>
+- <a href="https://marimo.app/l/q3j5il" target="_blank">07. Genetic algorithms</a>
+- <a href="https://marimo.app/l/3i82tv" target="_blank">08. AI</a>
 
 .. toctree::
    :maxdepth: 2
