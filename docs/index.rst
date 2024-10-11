@@ -11,21 +11,4 @@ One of Djalgo's key features is its ability to run in the browser through `marim
 
 The name Djalgo was chosen after musician `Django Reinhardt <https://en.wikipedia.org/wiki/Django_Reinhardt>`_, and a mix of *DJ* (disk jockey) and *algorithm*.
 
-User guide
-----------
-- `01. Getting started <https://marimo.io/p/@djalgo/notebook-a0jyt6>`_
-- `02. Harmonies <https://marimo.io/p/@djalgo/notebook-9pbax5>`_
-- `03. Loops <https://marimo.io/p/@djalgo/notebook-6hmu8z>`_
-- `04. Minimallism <https://marimo.io/p/@djalgo/notebook-1ehwep>`_
-- `05. Walks <https://marimo.io/p/@djalgo/notebook-xsbu6g>`_
-- `06. Fractals <https://marimo.io/p/@djalgo/notebook-rkm517>`_
-- `07. Genetic algorithms <https://marimo.io/p/@djalgo/notebook-yefoq7>`_
-- `08. AI <https://marimo.io/p/@djalgo/notebook-sbmu0j>`_
-
-Documentation
--------------
-.. toctree::
-   :maxdepth: 2
-
-   source/api
-   source/about
+Happy composing!

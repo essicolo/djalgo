@@ -17,7 +17,7 @@ I created Djalgo to explore how algorithms can shape emotional soundscapes. Djal
     </p>
 
 
-.. image:: /_images/portrait.png
+.. image:: ../_static/portrait.png
    :height: 250px
    :width: 250px
    :align: center
