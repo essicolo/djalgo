@@ -1,6 +1,14 @@
 Welcome to Djalgo's documentation!
 ==================================
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   about
+   user-guide
+   api
+
 Djalgo is a Python toolkit for music composition. Crafted for musicians and developers alike, Djalgo offers a versatile collection of tools for generating and manipulating musical notes and sequences. Without relying directly on MIDI files, it employs a MIDI-compatible format, enabling users to define each note through a trio of attributes: pitch (in MIDI notation), duration, and offset from the beginning of the track. Whether you're scripting a symphony, experimenting with algorithms to create melodies, or exploring the mathematical beauty of music, Djalgo makes the art of digital composition accessible and engaging.
 
 One of Djalgo's key features is its ability to run in the browser through `marimo notebooks <https://marimo.io>`_, a reactive framework for Python. This web-based functionality is enhanced by two powerful components, offering users both auditory and visual representations without leaving the browser:
